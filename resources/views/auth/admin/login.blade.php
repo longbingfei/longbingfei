@@ -8,7 +8,7 @@
 <body>
 <div class="login-main">
     <div>
-        <form action="{{url('admin/login')}}" method="post">
+        <form action="{{url('admin/auth/login')}}" method="post">
             <input type="text" name="username">
             <input type="password" name="password">
             <input type="hidden" name="_token" value="{{csrf_token()}}">

@@ -7,7 +7,8 @@
  */
 namespace App\Repositories\InterfacesBag;
 interface Administrator extends BaseInterface{
+    public function index();
     public function login(array $info);
-    public function register();
-    public function update();
+    public function register(array $info);
+    public function update($id,array $info);
 }

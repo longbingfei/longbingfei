@@ -11,17 +11,23 @@
 |
 */
 Route::get('/',function(){
-    dd(app('auth'));
+    return 111;
 });
 Route::any('db', '\Miroc\LaravelAdminer\AdminerController@index');
-Route::group(['namespace'=>'Auth','prefix'=>'admin','as'=>'admin'],function(){
-    Route::get('/',['as'=>'homepage',function(){
-        return view('auth.admin.homepage');
-    }]);
-    Route::get('login',function(){
-        return view('auth.admin.login');
+Route::group(['prefix'=>'admin'],function(){
+    Route::group(['namespace'=>'Auth','prefix'=>'auth','as'=>'admin'],function(){
+        Route::get('login',function(){
+            return view('auth.admin.login');
+        });
+        Route::post('login','AdminAuthController@login');
+        Route::post('register','AdminAuthController@register');
+        Route::get('list','AdminAuthController@index');
+        Route::post('update/{id}','AdminAuthController@update');
+        Route::post('avatar','AdminAuthController@avatar');
+        Route::get('logout','AdminAuthController@logout');
+        Route::get('/',function(){
+            return 123;
+        });
     });
-    Route::post('login',['as'=>'login','uses'=>'AdminAuthController@login']);
-    Route::post('register',['as'=>'register','uses'=>'AdminAuthController@register']);
-    Route::get('logout',['as'=>'logout','uses'=>'AdminAuthController@logout']);
 });
+

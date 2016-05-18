@@ -16,7 +16,21 @@ class Administrator extends Model implements AuthenticatableContract,Authorizabl
 
     protected $table = 'administrators';
 
-    protected $fillable = ['id','username','name','password','sex','email','tel','creator_id','status',
-        'last_login_time',
-        'last_login_ip'];
+    protected $fillable =
+        [
+            'username',
+            'name',
+            'password',
+            'sex',
+            'email',
+            'tel',
+            'creator_id',
+            'status',
+            'last_login_time',
+            'last_login_ip'
+        ];
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
 }

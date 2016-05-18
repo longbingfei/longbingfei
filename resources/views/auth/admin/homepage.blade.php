@@ -5,6 +5,7 @@
     <title>homepage</title>
     <link type="text/css" rel="stylesheet" href="{{url('default/css/main.css')}}">
     <script type="text/javascript"  src="{{url('default/js/jquery.js')}}"></script>
+    <script type="text/javascript"  src="{{url('default/js/less.js')}}"></script>
 </head>
 <body>
 <div>
