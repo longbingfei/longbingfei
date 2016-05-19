@@ -12,7 +12,7 @@ use App\Repositories\InterfacesBag\Administrator as AdminInterface;
 use Carbon\Carbon;
 
 class Administrator implements AdminInterface{
-
+    protected $module = 'auth';
     public function index(){
         return AdminModel::all();
     }
@@ -27,6 +27,7 @@ class Administrator implements AdminInterface{
                 AdminModel::where('id',Auth::User()->id)->update(['last_login_time'=>Carbon::now(),
                     'last_login_ip'=>$info['ip']]);
                 $verify = true;
+                event('log',[[$this->module,'l',Auth::User()->toArray()]]);
             }
         }
 
@@ -34,25 +35,29 @@ class Administrator implements AdminInterface{
     }
     public function register(array $info){
         if(AdminModel::where('username',$info['username'])->count()){
+            event('log',[[$this->module,'r','username has already exists',0]]);
+
             return 0;
         }
         $info['password'] = password_hash($info['password'],PASSWORD_BCRYPT);
-//        $info['creator_id'] = Auth::User()->id;
-        $info['creator_id'] = 1;
+        $info['creator_id'] = Auth::id();
         $info['last_login_time'] = Carbon::now();
         $info['last_login_ip'] = $info['ip'];
 
-        return AdminModel::create($info);
+        if($user = AdminModel::create($info)){
+            event('log',[[$this->module,'r',$user->toArray()]]);
+
+            return 1;
+        }
     }
     public function update($id,array $info)
     {
-        AdminModel::findOrFail($id);
-
-        if(AdminModel::where('username',$info['username'])->count()){
-            return 0;
-        }
+        $before = AdminModel::findOrFail($id);
         $info['password'] = password_hash($info['password'],PASSWORD_BCRYPT);
+        if(AdminModel::where('id',$id)->update($info)){
+            event('log',[[$this->module,'u',['before'=>$before,'after'=>AdminModel::findOrFail($id)->toArray()]]]);
 
-        return AdminModel::where('id',$id)->update($info);
+            return 1;
+        }
     }
 }

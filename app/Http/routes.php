@@ -26,8 +26,13 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('avatar','AdminAuthController@avatar');
         Route::get('logout','AdminAuthController@logout');
         Route::get('/',function(){
-            return 123;
+//            return 123;
         });
+    });
+    Route::group(['namespace'=>'Admin','prefix'=>'feature'],function(){
+        Route::resource('product_sort','ProductSortController');
+        Route::resource('article_sort','ArticleSortController');
+        Route::resource('article','ArticleController');
     });
 });
 

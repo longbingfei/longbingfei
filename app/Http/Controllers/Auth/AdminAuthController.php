@@ -40,7 +40,7 @@ class AdminAuthController extends Controller
     {
         //此处加修改者
         $keys = [
-            'username',
+//            'username',
             'name',
             'password',
             'sex',

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class AdminLoginRequest extends Request
+use App\Http\Requests\Request;
+
+class ArticleRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +24,7 @@ class AdminLoginRequest extends Request
     public function rules()
     {
         return [
-            'username'=>'min:2|max:12|required',
-            'password'=>'required',
+            'title'=>'min:1|max:40|required',
         ];
     }
 }
