@@ -11,7 +11,7 @@
 |
 */
 Route::get('/',function(){
-    return 111;
+    return \Illuminate\Foundation\Inspiring::quote();
 });
 Route::any('db', '\Miroc\LaravelAdminer\AdminerController@index');
 Route::group(['prefix'=>'admin'],function(){
@@ -30,9 +30,10 @@ Route::group(['prefix'=>'admin'],function(){
         });
     });
     Route::group(['namespace'=>'Admin','prefix'=>'feature'],function(){
-        Route::resource('product_sort','ProductSortController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');
+        Route::resource('product_sort','ProductSortController');
+        Route::resource('product','ProductController');
     });
 });
 

@@ -24,11 +24,12 @@ class CreateProductsTable extends Migration
             $tables->increments('id')->unsigned();
             $tables->string('name',40);
             $tables->integer('price')->unsigned();
+            $tables->string('describe',100)->nullable();
             $tables->integer('storage')->default(100);
             $tables->integer('sort_id')->unsigned();
             $tables->foreign('sort_id')->references('id')->on('product_sorts')->onDelete('cascade');
             $tables->tinyInteger('status')->default(0);
-            $tables->tinyInteger('evaluate')->default(0);
+            $tables->tinyInteger('evaluate')->default(5);
             $tables->integer('user_id');
             $tables->timestamps();
         });

@@ -10,7 +10,7 @@ use App\Repositories\InterfacesBag\ProductSort as ProductSortInterface;
 use App\Models\ProductSort as ProductSortModel;
 use Auth;
 class ProductSort implements ProductSortInterface{
-    protected $module = 'product_sorts';
+    protected $module = 'product-sort';
     public function index(){
         return ProductSortModel::all();
     }

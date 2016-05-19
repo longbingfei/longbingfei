@@ -24,7 +24,6 @@ class Article implements ArticleInterface{
         $data['author_id'] = Auth::id();
         $data['content'] = htmlspecialchars($data['content']);
         $data['sort_id'] = isset($data['sort_id']) ?  intval($data['sort_id']) : 1;
-        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
         if($article = ArticleModel::create($data)){
             event('log',[[$this->module,'c',$data]]);
 
@@ -34,7 +33,9 @@ class Article implements ArticleInterface{
     public function update($id,array $data){
         $before = ArticleModel::findOrFail($id)->toArray();
         $data['content'] = htmlspecialchars($data['content']);
-        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
+        if(isset($data['status'])){
+            $data['status'] = intval($data['status']);
+        }
         $data['editor_id'] = Auth::id();
         if(ArticleModel::where('id',$id)->update($data)){
             event('log',[[$this->module,'u',['before'=>$before,'after'=>ArticleModel::findOrFail($id)->toArray()]]]);

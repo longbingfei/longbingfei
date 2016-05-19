@@ -10,7 +10,7 @@ use App\Repositories\InterfacesBag\ArticleSort as ArticleSortInterface;
 use App\Models\ArticleSort as ArticleSortModel;
 use Auth;
 class ArticleSort implements ArticleSortInterface{
-    protected $module = 'article_sorts';
+    protected $module = 'article-sort';
     public function index(){
         return ArticleSortModel::all();
     }

@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Article;
 use App\Models\ArticleSort;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Inspiring;
 
 class ArticleSeeder extends Seeder
 {
@@ -26,7 +27,7 @@ class ArticleSeeder extends Seeder
         ]);
         Article::create([
             'title' => '还没有文章?赶快新增一篇吧!',
-            'content'=> '',
+            'content'=> Inspiring::quote(),
             'author_id'=>1,
             'sort_id'=>1,
         ]);
