@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         app()->bind('resp','App\Http\Response\Resping');
         app()->bind('App\Repositories\InterfacesBag\Administrator','App\Repositories\Eloquents\Administrator');
+        app()->bind('App\Repositories\InterfacesBag\Media','App\Repositories\Eloquents\Media');
         app()->bind('App\Repositories\InterfacesBag\ProductSort','App\Repositories\Eloquents\ProductSort');
         app()->bind('App\Repositories\InterfacesBag\Product','App\Repositories\Eloquents\Product');
         app()->bind('App\Repositories\InterfacesBag\ArticleSort','App\Repositories\Eloquents\ArticleSort');

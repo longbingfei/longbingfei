@@ -16,8 +16,7 @@ class Administrator implements AdminInterface{
     public function index(){
         return AdminModel::all();
     }
-    public function login(array $info)
-    {
+    public function login(array $info){
         $verify = false;
         $userInfo = AdminModel::where('username',trim($info['username']));
         if($userInfo->count()) {
@@ -50,8 +49,7 @@ class Administrator implements AdminInterface{
             return 1;
         }
     }
-    public function update($id,array $info)
-    {
+    public function update($id,array $info){
         $before = AdminModel::findOrFail($id);
         $info['password'] = password_hash($info['password'],PASSWORD_BCRYPT);
         if(AdminModel::where('id',$id)->update($info)){

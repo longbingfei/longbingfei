@@ -25,7 +25,8 @@ class LogIntoDatabase{
         $data = [
             'date' => Carbon::now(),
             'module' => $payload[0],
-            'info' => $action.'@'.$content,
+            'action' => $action,
+            'info' => $content,
             'status' => isset($payload[3]) ? (integer)$payload[3] : 1,
             'user_id' => Auth::id()
         ];

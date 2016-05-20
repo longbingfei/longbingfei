@@ -30,6 +30,7 @@ Route::group(['prefix'=>'admin'],function(){
         });
     });
     Route::group(['namespace'=>'Admin','prefix'=>'feature'],function(){
+        Route::resource('media','MediaController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');
         Route::resource('product_sort','ProductSortController');

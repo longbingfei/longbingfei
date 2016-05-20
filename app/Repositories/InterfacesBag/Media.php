@@ -7,8 +7,10 @@
  */
 namespace App\Repositories\InterfacesBag;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 interface Media extends BaseInterface{
     public function show($id);
-    public function create(array $data);
+    public function create(UploadedFile $file);
     public function delete($id);
 }

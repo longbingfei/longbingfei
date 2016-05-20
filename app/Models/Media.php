@@ -9,16 +9,9 @@ class Media extends Model
     protected $table = "medias";
 
     protected $fillable = [
-        'id',
         'name',
-        'type',
+        'sort',
         'path',
         'user_id'
-    ];
-
-    protected $types = [
-        1 => '视频',
-        2 => '音频',
-        3 => '图片',
     ];
 }

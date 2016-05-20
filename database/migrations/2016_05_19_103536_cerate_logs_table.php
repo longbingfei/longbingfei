@@ -16,6 +16,7 @@ class CerateLogsTable extends Migration
             $tables->dateTime('date');
             $tables->integer('user_id');
             $tables->string('module',20);
+            $tables->string('action',20);
             $tables->string('info',500);
             $tables->smallInteger('status');
         });
