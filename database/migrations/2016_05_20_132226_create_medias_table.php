@@ -13,12 +13,11 @@ class CreateMediasTable extends Migration
     public function up()
     {
         Schema::create('medias',function(Blueprint $tables){
-            $tables->increments('id')->unsigned();
-            $tables->integer('module_id')->unsigned();
-            $tables->string('type',10);
-            $tables->string('name',50);
-            $tables->string('path');
-            $tables->integer('user_id')->unsigned();
+            $tables->string('id',32)->unique();
+            $tables->string('name',32);
+            $tables->tinyInteger('type');
+            $tables->string('path',250);
+            $tables->integer('user_id');
             $tables->timestamps();
         });
     }
