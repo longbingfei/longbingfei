@@ -15,6 +15,7 @@ Route::get('/',function(){
 });
 Route::any('db', '\Miroc\LaravelAdminer\AdminerController@index');
 Route::group(['prefix'=>'admin'],function(){
+    Route::get('system/{info?}','System\SystemInfoController@index');
     Route::group(['namespace'=>'Auth','prefix'=>'auth','as'=>'admin'],function(){
         Route::get('login',function(){
             return view('auth.admin.login');
@@ -26,7 +27,6 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('avatar','AdminAuthController@avatar');
         Route::get('logout','AdminAuthController@logout');
         Route::get('/',function(){
-//            return 123;
         });
     });
     Route::group(['namespace'=>'Admin','prefix'=>'feature'],function(){
