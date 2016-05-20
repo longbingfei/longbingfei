@@ -16,6 +16,7 @@ class PermissionSeeder extends Seeder
         DB::table('roles')->truncate();
         DB::table('permissions')->truncate();
         DB::table('permission_groups')->truncate();
+        DB::table('roles_users')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
         DB::table('permission_groups')->insert([
@@ -65,5 +66,7 @@ class PermissionSeeder extends Seeder
             ['role_id'=>2,'permission_id'=>7],
         ];
         DB::table('roles_permissions')->insert(array_merge($admin_permissions,$user_permissions));
+        DB::table('roles_users')->insert(['user_id'=>1,'role_id'=>1]);
+        DB::table('roles_users')->insert(['user_id'=>2,'role_id'=>2]);
     }
 }

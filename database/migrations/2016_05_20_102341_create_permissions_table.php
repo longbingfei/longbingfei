@@ -35,6 +35,12 @@ class CreatePermissionsTable extends Migration
             $table->integer('permission_id')->unsigned();
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
         });
+        Schema::create('roles_users',function(Blueprint $table){
+            $table->integer('role_id')->unsigned();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('administrators')->onDelete('cascade');
+        });
     }
 
     /**
@@ -45,6 +51,7 @@ class CreatePermissionsTable extends Migration
     public function down()
     {
         Schema::drop('roles_permissions');
+        Schema::drop('roles_users');
         Schema::drop('permissions');
         Schema::drop('permission_groups');
         Schema::drop('roles');

@@ -12,7 +12,9 @@ class AuthSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('administrators')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         Administrator::create([
             'username'=>'sign',
             'name'=>'zx',
@@ -25,6 +27,19 @@ class AuthSeeder extends Seeder
             'last_login_time'=>\Carbon\Carbon::now(),
             'last_login_ip'=>'192.168.1.1',
             'creator_id'=>'99999'
+        ]);
+        Administrator::create([
+            'username'=>'kotana',
+            'name'=>'kk',
+            'password'=>password_hash('123321',PASSWORD_BCRYPT),
+            'sex'=>2,
+            'email'=>'sign_mail@163.com',
+            'tel'=>17601558524,
+            'status'=>1,
+            'avatar'=>public_path('avatar/default.jpg'),
+            'last_login_time'=>\Carbon\Carbon::now(),
+            'last_login_ip'=>'10.0.5.224',
+            'creator_id'=>'1'
         ]);
     }
 }
