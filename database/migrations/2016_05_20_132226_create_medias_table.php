@@ -16,6 +16,7 @@ class CreateMediasTable extends Migration
             $tables->increments('id')->unsigned();
             $tables->string('sort');
             $tables->string('path',250);
+            $tables->integer('frame_id')->nullable();
             $tables->integer('user_id');
             $tables->timestamps();
         });

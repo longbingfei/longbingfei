@@ -24,8 +24,15 @@ class Media implements MediaInterface{
 
             return 0;
         }
-        $name  = str_random(32).'.'.$file->guessExtension();
+        $basename = str_random(32);
+        $name  = $basename.'.'.$file->guessExtension();
         $file->move($path,$name);
+        //截图名称和视频相同
+        if($file->sort === 'video'){
+            if($framePath = $this->getFrameImage($path.'/'.$name,'media/video/frames',$basename)){
+                dd($framePath);
+            }
+        }
         $mediaInfo = [
             'sort'=>$file->sort,
             'path' => $path.'/'.$name,
@@ -53,5 +60,17 @@ class Media implements MediaInterface{
         }
 
         return is_dir($path) && is_writeable($path);
+    }
+
+    protected function getFrameImage($video,$path,$imageName){
+        $size = '640x480';
+        $type = 'png';
+        $framePath = public_path($path.'/'.$imageName.'.'.$type);
+        if($this->checkDir(public_path($path))){
+            $cmd = 'ffmpeg -i '.$video.' -r 1 -q:v 2 -f image2 -ss 10 -s '.$size.' '.$framePath;
+            @exec($cmd);
+        }
+
+        return is_file($framePath);
     }
 }
