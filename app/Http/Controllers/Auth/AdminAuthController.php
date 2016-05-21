@@ -25,7 +25,7 @@ class AdminAuthController extends Controller
         $info = $request->only(['username','password']);
         $info['ip'] = $request->getClientIp();
 
-        return $this->admin->login($info) ? redirect('admin/auth'): redirect()->back();
+        return $this->admin->login($info) ? redirect('admin/feature'): redirect()->back();
     }
 
     public function register(Requests\RegisterRequest $request)

@@ -26,6 +26,6 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
-        app('events')->listen('log','App\Events\LogIntoDatabase');
+        app('events')->listen('log','App\Events\LogIntoDataBase');
     }
 }

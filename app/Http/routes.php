@@ -18,7 +18,7 @@ Route::group(['prefix'=>'admin'],function(){
     Route::get('system/{info?}','System\SystemInfoController@index');
     Route::group(['namespace'=>'Auth','prefix'=>'auth','as'=>'admin'],function(){
         Route::get('login',function(){
-            return view('auth.admin.login');
+            return view('admin.login');
         });
         Route::post('login','AdminAuthController@login');
         Route::post('register','AdminAuthController@register');
@@ -30,6 +30,9 @@ Route::group(['prefix'=>'admin'],function(){
         });
     });
     Route::group(['namespace'=>'Admin','prefix'=>'feature'],function(){
+        Route::get('/',function(){
+            return view('admin.homepage');
+        });
         Route::resource('media','MediaController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');
