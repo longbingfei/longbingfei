@@ -22,12 +22,18 @@
                     </div>
                 </div>
                 <div class="menu">
+                    <div onclick="showArticle()">Article</div>
+                    <div >Product</div>
+                    <div >Media</div>
+                    <div >Role</div>
                 </div>
             </div>
             <div class="showbar">
             </div>
         </div>
         <div class="foot">
+            <p>@Designed By Sign</p>
+            <p>@email sign_mail@163.com</p>
         </div>
     </div>
 </div>
@@ -63,6 +69,25 @@
     function openInput(){
         var dom = document.getElementById('upload_avatar');
         dom.click();
+    }
+    $('.showbar').width($(window).width()-260);
+    $(window).resize(function(){ //shishijiankong
+        $('.showbar').width($(window).width()-260);
+    });
+
+    function showArticle(){
+        var p = $('.showbar');
+        $.getJSON('{{ url('admin/feature/article') }}',function(data){
+            if(data.length){
+//                var obj = $('<div></div>').css({width:p.width(),height:p.height()});
+                $.each(data,function(k,value){
+                    var obj = $('<div></div>').css({'width':p.width(),'height':'100px','background':'cyan','border':'1px solid red'});
+                    obj.html(value.title);
+                    $('.showbar').append(obj);
+                    console.log(value);
+                });
+            }
+        });
     }
 
 </script>
