@@ -21,18 +21,17 @@ Route::group(['prefix'=>'admin'],function(){
             return view('admin.login');
         });
         Route::post('login','AdminAuthController@login');
-        Route::post('register','AdminAuthController@register');
+        Route::post('register','AdminAuthController@registere');
         Route::get('list','AdminAuthController@index');
         Route::post('update/{id}','AdminAuthController@update');
-        Route::post('avatar','AdminAuthController@avatar');
         Route::get('logout','AdminAuthController@logout');
         Route::get('/',function(){
         });
     });
-    Route::group(['namespace'=>'Admin','prefix'=>'feature'],function(){
-        Route::get('/',function(){
+    Route::group(['namespace'=>'Admin','middleware'=>'auth','prefix'=>'feature'],function(){
+        Route::get('/',['as'=>'home',function(){
             return view('admin.homepage');
-        });
+        }]);
         Route::resource('media','MediaController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');

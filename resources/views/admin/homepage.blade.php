@@ -8,15 +8,17 @@
 </head>
 <body>
 <div>
-    <div class="container">
+    <div class="container" style="background:url({{ url('default/images/bg.gif') }})">
         <div class="head">
-            Sign ManageMent System
+           <div class="title"><h1>Sign ManageMent System</h1></div>
+           <div class="gif"><img src="{{ url('default/images/title.gif')  }}" title="you yi xiao chuan"></div>
         </div>
         <div class="content">
             <div class="sidebar">
-                <div class="userInfo" onclick="openInput()">
-                    <div class="userPic">
+                <div class="userInfo">
+                    <div class="userPic" onclick="openInput()" title="click to change avatar">
                         <input id="upload_avatar" type="file" onchange="uploadImage(this)">
+                        <img width=100 height=100 src="{{ url((new \App\Repositories\Eloquents\Media)->show(Auth::User()->avatar)->path) }}">
                     </div>
                 </div>
                 <div class="menu">
@@ -53,7 +55,7 @@
                     console.log(this.responseText);
                 }
             }
-            ajax.open('post','http://192.168.1.106:8000/admin/feature/media',true);
+            ajax.open('post','{{ url('/admin/auth/update/'.Auth::id())}}',true);
             ajax.send(form);
         }
     }

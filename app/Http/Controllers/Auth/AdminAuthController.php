@@ -25,7 +25,7 @@ class AdminAuthController extends Controller
         $info = $request->only(['username','password']);
         $info['ip'] = $request->getClientIp();
 
-        return $this->admin->login($info) ? redirect('admin/feature'): redirect()->back();
+        return $this->admin->login($info) ? redirect()->route('home'): redirect()->back();
     }
 
     public function register(Requests\RegisterRequest $request)
@@ -40,7 +40,6 @@ class AdminAuthController extends Controller
     {
         //此处加修改者
         $keys = [
-//            'username',
             'name',
             'password',
             'sex',
@@ -51,31 +50,11 @@ class AdminAuthController extends Controller
         ];
         $info = $request->all();
         $info = array_intersect_key($info,array_flip($keys));
+        if($request->hasFile('file') && in_array($request->file('file')->guessExtension(),['jpg','jpeg','png','gif'])){
+            $info['avatar'] = $request->file('file');
+        }
 
         return $this->admin->update($id,$info);
-    }
-
-    public function avatar(Request $request){
-        if(!$request->hasFile('avatar')){
-            die(0);
-        }else{
-            $file = $request->file('avatar');
-            $types = ['jpg','png','gif'];
-            $type = $file['type'];
-            if(!in_array($file['type'],$types)){
-                die(1);
-            }
-            if($file['size']>2*1024){
-                die(2);
-            }
-            $name = 'avatar-'.Auth::id().'.'.$type;
-            @unlink(public_path('avatar').'/'.$name);
-            if(move_uploaded_file($name,public_path('avatar'))){
-                $request->offsetSet('avatar', public_path('avatar').'/'.$name);
-
-                return !$this->update(Auth::id(),$request) ? 3 : 4;
-            }
-        }
     }
 
     public function logout()

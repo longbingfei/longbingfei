@@ -7,9 +7,11 @@
  */
 namespace App\Repositories\Eloquents;
 use Auth;
-use App\Models\Administrator as AdminModel;
-use App\Repositories\InterfacesBag\Administrator as AdminInterface;
 use Carbon\Carbon;
+use App\Models\Administrator as AdminModel;
+use App\Repositories\Eloquents\Media as MediaEloquent;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repositories\InterfacesBag\Administrator as AdminInterface;
 
 class Administrator implements AdminInterface{
     protected $module = 'auth';
@@ -23,8 +25,11 @@ class Administrator implements AdminInterface{
             $password = $userInfo->first()->password;
             if (password_verify(trim($info['password']), $password)) {
                 Auth::login($userInfo->first());
-                AdminModel::where('id',Auth::User()->id)->update(['last_login_time'=>Carbon::now(),
+                $currentUser = AdminModel::where('administrators.id',Auth::User()->id);
+                $currentUser->update(['last_login_time'=>Carbon::now(),
                     'last_login_ip'=>$info['ip']]);
+                $path = $currentUser->leftJoin('medias','administrators.avatar','=','medias.id')->select('administrators.*','medias.path')->first()->path;
+                session(['avatar'=>$path]);
                 $verify = true;
                 event('log',[[$this->module,'l',Auth::User()->toArray()]]);
             }
@@ -51,8 +56,23 @@ class Administrator implements AdminInterface{
     }
     public function update($id,array $info){
         $before = AdminModel::findOrFail($id);
-        $info['password'] = password_hash($info['password'],PASSWORD_BCRYPT);
+        if(isset($info['avatar']) && $info['avatar'] instanceof UploadedFile){
+            $media = new MediaEloquent ();
+            $info['avatar']->sort = 'image';
+            $info['avatar']->path = 'avatar/admin';
+            if($return = $media->create($info['avatar'])){
+                $info['avatar'] = $return[0];
+            }
+        }
+        if(isset($info['password'])) {
+            $info['password'] = password_hash($info['password'], PASSWORD_BCRYPT);
+        }
         if(AdminModel::where('id',$id)->update($info)){
+            if($info['avatar']){ //delete before avatar
+                $old_avatar = $media->show((integer)$before->avatar)->path;
+                $media->delete((integer)$before->avatar);
+                @unlink(public_path($old_avatar));
+            }
             event('log',[[$this->module,'u',['before'=>$before,'after'=>AdminModel::findOrFail($id)->toArray()]]]);
 
             return 1;

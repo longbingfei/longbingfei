@@ -18,7 +18,7 @@ class Media implements MediaInterface{
         return MediaModel::findOrFail($id);
     }
     public function create(UploadedFile $file){
-        $path = 'media/'.$file->sort.'/'.Date('Y/m/d');
+        $path = isset($file->path) ? $file->path : 'media/'.$file->sort.'/'.Date('Y/m/d');
         if(!$this->checkDir(public_path($path))){
             event('log',[[$this->module,'c','mkdir@'.public_path($path).'failed!',0]]);
 
