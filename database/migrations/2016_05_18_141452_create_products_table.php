@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $tables->increments('id')->unsigned();
             $tables->string('name',40);
             $tables->integer('price')->unsigned();
+            $tables->string('images',200);
             $tables->string('describe',100)->nullable();
             $tables->integer('storage')->default(100);
             $tables->integer('sort_id')->unsigned();
