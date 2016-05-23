@@ -27,17 +27,18 @@ class Media implements MediaInterface{
         $basename = str_random(32);
         $name  = $basename.'.'.$file->guessExtension();
         $file->move($path,$name);
-        //截图名称和视频相同
-        if($file->sort === 'video'){
-            if($framePath = $this->getFrameImage($path.'/'.$name,'media/video/frames',$basename)){
-                dd($framePath);
-            }
-        }
         $mediaInfo = [
             'sort'=>$file->sort,
             'path' => $path.'/'.$name,
             'user_id'=>Auth::id(),
         ];
+        //截图名称和视频相同
+        if($file->sort === 'video'){
+            if($framePath = $this->getFrameImage($path.'/'.$name,'media/video/frames',$basename)){
+                $mediaInfo['frame_id'] = MediaModel::create(['sort'=>'frame','path'=>$framePath,'user_id'=>Auth::id()])
+                    ->id;
+            }
+        }
 
         if($info = MediaModel::create($mediaInfo)){
             event('log',[[$this->module,'c',$info]]);
@@ -67,10 +68,10 @@ class Media implements MediaInterface{
         $type = 'png';
         $framePath = public_path($path.'/'.$imageName.'.'.$type);
         if($this->checkDir(public_path($path))){
-            $cmd = 'ffmpeg -i '.$video.' -r 1 -q:v 2 -f image2 -ss 10 -s '.$size.' '.$framePath;
+            $cmd = 'ffmpeg -i '.public_path($video).' -ss 2.1 -t 0.001 -q:v 2 -f image2 -s '.$size.' '.$framePath;
             @exec($cmd);
         }
 
-        return is_file($framePath);
+        return is_file($framePath) ? $path.'/'.$imageName.'.'.$type : false;
     }
 }
