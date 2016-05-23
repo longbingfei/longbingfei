@@ -16,7 +16,7 @@ class MediaSeeder extends Seeder
         DB::table('medias')->truncate();
         Media::create([
             'sort'=>'image',
-            'path'=>'avatar/admin/default_avatar.jpeg',
+            'path'=>'default/images/default_avatar.jpeg',
             'user_id'=>1
         ]);
     }
