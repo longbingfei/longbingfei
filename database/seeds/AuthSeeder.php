@@ -23,7 +23,6 @@ class AuthSeeder extends Seeder
             'email'=>'sign_mail@163.com',
             'tel'=>17601558524,
             'status'=>1,
-            'avatar'=>public_path('avatar/default.jpg'),
             'last_login_time'=>\Carbon\Carbon::now(),
             'last_login_ip'=>'192.168.1.1',
             'creator_id'=>'99999'
@@ -36,7 +35,6 @@ class AuthSeeder extends Seeder
             'email'=>'sign_mail@163.com',
             'tel'=>17601558524,
             'status'=>1,
-            'avatar'=>public_path('avatar/default.jpg'),
             'last_login_time'=>\Carbon\Carbon::now(),
             'last_login_ip'=>'10.0.5.224',
             'creator_id'=>'1'

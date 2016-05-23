@@ -21,7 +21,7 @@ class CreateAdministratorsTable extends Migration
             $table->tinyInteger('sex')->default(3);
             $table->bigInteger('tel')->nullable();
             $table->string('email')->nullable();
-            $table->string('avatar')->default(public_path('avatar/default.jpg'));
+            $table->integer('avatar')->default(1);
             $table->string('remember_token')->nullable();
             $table->integer('creator_id');
             $table->dateTime('last_login_time');

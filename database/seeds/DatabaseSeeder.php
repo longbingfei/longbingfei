@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         $this->call(ModuleSeeder::class);
         $this->call(AuthSeeder::class);
+        $this->call(MediaSeeder::class);
         $this->call(ArticleSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(PermissionSeeder::class);
