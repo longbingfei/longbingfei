@@ -39,4 +39,16 @@ Route::group(['prefix'=>'admin'],function(){
         Route::resource('product','ProductController');
     });
 });
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1',function($api){
+    $api->group(['namespace'=>'App\Http\Controllers\Auth'],function($api){
+        $api->post('login','AuthController@login');
+        $api->post('logout','AuthController@logout');
+    });
+    $api->group(['namespace'=>'App\Http\Controllers\Web','middleware'=>'validate'],function($api){
+        $api->post('getuserinfo',function(){
+            return 123;
+        });
+    });
+});
 

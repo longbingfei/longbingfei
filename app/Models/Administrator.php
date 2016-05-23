@@ -27,7 +27,8 @@ class Administrator extends Model implements AuthenticatableContract,Authorizabl
             'creator_id',
             'status',
             'last_login_time',
-            'last_login_ip'
+            'last_login_ip',
+            'avatar',
         ];
     protected $hidden = [
         'password',
