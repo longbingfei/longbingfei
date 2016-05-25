@@ -10,10 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/',function(){
-    return \Illuminate\Foundation\Inspiring::quote();
-});
+
 //后端管理员
+Route::get('admin',function(){
+    return redirect('admin/auth/login');
+});
 Route::any('admin/db', ['middleware'=>'auth','uses'=>'\Miroc\LaravelAdminer\AdminerController@index']);
 Route::group(['prefix'=>'admin'],function(){
     Route::get('system/{info?}','System\SystemInfoController@index');
@@ -31,8 +32,11 @@ Route::group(['prefix'=>'admin'],function(){
     });
     Route::group(['namespace'=>'Admin','middleware'=>'auth','prefix'=>'feature'],function(){
         Route::get('/',['as'=>'home',function(){
-            return view('admin.homepage');
+            return view('admin.home');
         }]);
+        Route::any('page_article',function(){
+            return view('admin.article');
+        });
         Route::resource('media','MediaController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');
@@ -42,6 +46,9 @@ Route::group(['prefix'=>'admin'],function(){
 });
 
 //前端
+Route::get('/',function(){
+    return view('web.homepage');
+});
 Route::group(['namespace'=>'Web'],function(){
     Route::get('article','WebController@articleIndex');
     Route::get('article/{id}','WebController@articleShow');
