@@ -10,5 +10,5 @@ namespace App\Repositories\InterfacesBag;
 interface User extends BaseInterface{
  public function validate(array $info);
  public function verifyToken($token);
- public function logout($token);
+ public function logout($user_id);
 }

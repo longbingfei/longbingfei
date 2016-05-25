@@ -30,6 +30,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        return $this->user->logout($request->get('access_token'));
+        $userInfo = $request->get('userInfo');
+
+        return $this->user->logout($userInfo['user_id']) ? '{"result":"success"}' : '{"Error":"Failed"}';
     }
 }

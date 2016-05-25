@@ -17,7 +17,7 @@ class User implements UserInterface{
         $verify = false;
         $userInfo = UserModel::where('username',$info['username'])->first();
         if($userInfo && password_verify($info['password'],$userInfo->password)){
-            $AccessToken = $this->makeToken($userInfo->id);
+            $AccessToken = $this->makeToken();
             AccessToken::create(['token'=>$AccessToken,'user_id'=>$userInfo->id]);
             $userInfo = $userInfo->toArray();
             $userInfo['AccessToken'] = $AccessToken;
@@ -27,11 +27,11 @@ class User implements UserInterface{
         return $verify ? $userInfo : false;
     }
 
-    public function logout($token){
-        return $this->verifyToken($token) ? $this->destroyToken($token) : false;
+    public function logout($user_id){ //删除表中所有token
+        return AccessToken::where('user_id',$user_id)->delete();
     }
 
-    private function makeToken($id){
+    private function makeToken(){
         $header = [
             "typ"=>"JWT",
             "alg"=>"H256",

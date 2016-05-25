@@ -13,7 +13,8 @@
 Route::get('/',function(){
     return \Illuminate\Foundation\Inspiring::quote();
 });
-Route::any('db', '\Miroc\LaravelAdminer\AdminerController@index');
+//后端管理员
+Route::any('admin/db', ['middleware'=>'auth','uses'=>'\Miroc\LaravelAdminer\AdminerController@index']);
 Route::group(['prefix'=>'admin'],function(){
     Route::get('system/{info?}','System\SystemInfoController@index');
     Route::group(['namespace'=>'Auth','prefix'=>'auth','as'=>'admin'],function(){
@@ -39,16 +40,26 @@ Route::group(['prefix'=>'admin'],function(){
         Route::resource('product','ProductController');
     });
 });
+
+//前端
+Route::group(['namespace'=>'Web'],function(){
+    Route::get('article','ArticleController@index');
+    Route::get('article/{id}','ArticleController@show');
+    Route::get('product','ProductController@index');
+    Route::get('product/{id}','ProductController@show');
+    Route::get('media','MediaController@index');
+    Route::get('media/{id}','MediaController@show');
+});
+
+//涉及到用户登录的操作
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1',function($api){
     $api->group(['namespace'=>'App\Http\Controllers\Auth'],function($api){
         $api->post('login','AuthController@login');
-        $api->post('logout','AuthController@logout');
+        $api->get('logout','AuthController@logout');
     });
     $api->group(['namespace'=>'App\Http\Controllers\Web','middleware'=>'validate'],function($api){
-        $api->post('getuserinfo',function(){
-            return 123;
-        });
+
     });
 });
 
