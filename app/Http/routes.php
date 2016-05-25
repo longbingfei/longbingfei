@@ -43,12 +43,11 @@ Route::group(['prefix'=>'admin'],function(){
 
 //前端
 Route::group(['namespace'=>'Web'],function(){
-    Route::get('article','ArticleController@index');
-    Route::get('article/{id}','ArticleController@show');
-    Route::get('product','ProductController@index');
-    Route::get('product/{id}','ProductController@show');
-    Route::get('media','MediaController@index');
-    Route::get('media/{id}','MediaController@show');
+    Route::get('article','WebController@articleIndex');
+    Route::get('article/{id}','WebController@articleShow');
+    Route::get('product','WebController@productIndex');
+    Route::get('product/{id}','WebController@productShow');
+    Route::get('media/{id}','WebController@mediaShow');
 });
 
 //涉及到用户登录的操作
