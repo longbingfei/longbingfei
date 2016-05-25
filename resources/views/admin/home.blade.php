@@ -46,11 +46,11 @@
     $(".article").bind('click',function(){
         $.getJSON("{{url('admin/feature/article')}}",function(data){
             var data = JSON.stringify(data);
-            console.log(data);
             //$dom.load(url,data,function(){}) -->data为对象则调用的post ,string则调用get
             $(".main").load("{{url('admin/feature/page_article')}}",{"data":data});
         });
     });
+    window.onload = $(".article").click();
 </script>
 </body>
 </html>

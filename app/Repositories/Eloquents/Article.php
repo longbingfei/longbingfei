@@ -12,7 +12,20 @@ use Auth;
 class Article implements ArticleInterface{
     protected $module = 'article';
     public function index(){
-        return ArticleModel::all();
+        $article_model = ArticleModel::orderBy('articles.id','DESC');
+        $count = $article_model->count();
+        $articles = $article_model
+            ->leftJoin('article_sorts','articles.sort_id','=','article_sorts.id')
+            ->leftJoin('administrators','articles.author_id','=','administrators.id')
+            ->select
+        (
+            'articles.*',
+            'article_sorts.name as sort_name',
+            'administrators.username as author_name'
+        )
+            ->paginate(10)->all();
+
+        return ['count'=>$count,'articles'=>$articles];
     }
     public function show($id){
         $article = ArticleModel::findOrFail($id)->toArray();
