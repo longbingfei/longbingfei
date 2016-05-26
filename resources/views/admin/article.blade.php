@@ -24,6 +24,9 @@ $data = $data['articles'];
     <div class="table-responsive">
         <table class="table">
             <thead>
+                <tr class="text-right">
+                    <th colspan="7"><button class="btn btn-default newArticle">新建文稿</button></th>
+                </tr>
                 <tr>
                     <th>选择</th>
                     <th>标题</th>
@@ -37,15 +40,15 @@ $data = $data['articles'];
             </thead>
             <tbody class="tbd">
             @foreach($data as $key => $vo)
-                <tr class="detail" data-id="{{$vo['id']}}">
-                    <td title={{$vo['id']}}><input class="checkbox" type="checkbox" value="{{$vo['id']}}"></td>
-                    <td>{{$vo['title']}}</td>
+                <tr>
+                    <td title="{{$vo['id']}}"><input class="checkbox" type="checkbox" value="{{$vo['id']}}"></td>
+                    <td class="detail" data-id="{{$vo['id']}}">{{$vo['title']}}</td>
                     <td>{{$vo['sort_name']}}</td>
                     <td>{{$vo['status']}}</td>
                     <td>{{$vo['author_name']}}</td>
                     <td>{{$vo['created_at']}}</td>
                     <td>{{$vo['updated_at']}}</td>
-                    <td>xxx</td>
+                    <td class="delete" data-id="{{$vo['id']}}"><i class="glyphicon glyphicon-remove"></i></td>
                 </tr>
             @endforeach
             </tbody>
@@ -107,57 +110,81 @@ $data = $data['articles'];
             $(".next").before(dom_li);
         }
     }
-    $(".page_a").bind('click',function(){
+    $(".page_a").on('click',function(){
         $.getJSON($(this).data('url'),function(data){
             var html = '';
             $.each(data.articles,function(k,value){
-                html+= '<tr class="detail" data-id="'+value.id+'">';
-                html+= '<td title="'+value.id+'"><input class="checkbox" type="checkbox" value="'+value.id+'"></td>';
-                html+= '<td>'+value.title+'</td>';
+                html+= '<tr>';
+                html+= '<td title="'+value.id+'"><input class="checkbox" ' +
+                        'type="checkbox" value="'+value.id+'"></td>';
+                html+= '<td class="detail" data-id="'+value.id+'">'+value.title+'</td>';
                 html+= '<td>'+value.sort_name+'</td>';
                 html+= '<td>'+value.status+'</td>';
                 html+= '<td>'+value.author_name+'</td>';
                 html+= '<td>'+value.created_at+'</td>';
                 html+= '<td>'+value.updated_at+'</td>';
-                html+= '<td>xxx</td></tr>';
+                html+= '<td class="delete" data-id="'+value.id+'"><i class="glyphicon glyphicon-remove '+'delete"></i></td></tr>';
             });
             $(".tbd").html(html);
         });
     })
-    //触发器必须是事先存在的
+    //文稿新建修改
+    var Article = {
+        Message:{},
+        Action : function (event){
+            var data = event.data;
+            Article.Message.method = data.method;
+            Article.Message.url = data.url;
+            switch(data.type){
+                case 'create':
+                    Article.CheckContent();
+                    return Article.Send(Article.Message);
+                    break;
+                case 'update':
+                    Article.CheckContent();
+                    return Article.Send(Article.Message);
+                    break;
+                case 'delete':
+                    return Article.Send(Article.Message);
+
+            }
+        },
+        CheckContent:function(){
+            if ($.trim($("#title").val()) == '') {
+                $("#title").css("border", "1px solid red");
+                return false;
+            }
+            Article.Message.title = $("#title").val();
+            if ($.trim($("#content").val()) == '') {
+                $("#content").css("border", "1px solid red");
+                return false;
+            }
+            Article.Message.content = $("#content").val();
+        },
+        Send:function(data){
+            $.ajax({
+                method: data.method,
+                url: data.url,
+                data: {title:data.title,content:data.content},
+                success: function (data) {
+                    if (data == 1) {
+                       window.location.reload()
+                    }
+                }
+            });
+        }
+    }
+    //更新文稿
     $("body").on("click",".detail",function(){
         $.getJSON("{{url('admin/feature/article')}}"+'/'+$(this).data('id'),function(data){
             $("#form").data('id',data.id);
             $("#title").val(data.title);
             $("#content").val(data.content);
-        });
-        $(".content").modal();
-    });
-    //modal
-    $(".submit").bind("click",function(){
-        var id =  $("#form").data('id');
-        if(id == ''){
-            return false;
-        }
-        var title = $("#title").val();
-        if($.trim(title) == ''){
-            $("#title").css("border","1px solid red");
-            return false;
-        }
-        var content = $("#content").val();
-        if($.trim(content) == ''){
-            $("#title").css("border","1px solid red");
-            return false;
-        }
-        $.ajax({
-            method:"PUT",
-            url:"{{ url('admin/feature/article') }}"+'/'+id,
-            data:{title:title,content:content},
-            success:function(data){
-                if(data == 1){
-                    window.location.reload()
-                }
-            }
+            $(".content").modal();
+            data.type = 'update';
+            data.url = "{{url('admin/feature/article')}}"+'/'+data.id;
+            data.method = 'PUT';
+            $(".submit").on('click',data,Article.Action);
         });
     });
 
@@ -166,7 +193,28 @@ $data = $data['articles'];
         $("#title").val('');
         $("#content").val('');
     }
-    $(".cancel").bind("click",resetModal);
+    $(".cancel").on("click",resetModal);
+
+    //新建文稿
+    $(".newArticle").on('click',function(){
+        $(".content").modal();
+        var data = {};
+        data.type = 'create';
+        data.url = "{{url('admin/feature/article')}}";
+        data.method = 'POST';
+        $(".submit").on('click',data,Article.Action);
+    });
+
+    //删除文稿
+    $("body").on("click",".delete",function(){
+        var data = {};
+        data.type = 'delete';
+        data.url = "{{url('admin/feature/article')}}"+'/'+$(this).data('id');
+        data.method = 'DELETE';
+        var event = {};
+        event.data = data;
+        Article.Action(event);
+    });
 </script>
 </body>
 </html>

@@ -55,4 +55,8 @@ class ArticleController extends Controller
 
         return $this->article->update($id,$data);
     }
+
+    public function destroy($id){
+        return $this->article->delete(intval($id));
+    }
 }

@@ -57,7 +57,7 @@ class Article implements ArticleInterface{
         }
     }
     public function delete($id){
-        $info = ArticleModel::findOrFail()->toArray();
+        $info = ArticleModel::findOrFail($id)->toArray();
         if(ArticleModel::destroy($id)){
             event('log',[[$this->module,'d',$info]]);
 
