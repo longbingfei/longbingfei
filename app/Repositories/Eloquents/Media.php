@@ -14,6 +14,9 @@ use Auth;
 class Media implements MediaInterface{
     protected $module = 'media';
 
+    public function index($condition = []){
+        return MediaModel::all()->groupBy('sort');
+    }
     public function show($id){
         return MediaModel::findOrFail($id);
     }

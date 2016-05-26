@@ -18,6 +18,11 @@ class Administrator implements AdminInterface{
     public function index(){
         return AdminModel::all();
     }
+
+    public function show(){
+        return AdminModel::where('administrators.id',Auth::id())->leftJoin('medias','administrators.avatar','=','medias.id')->select
+        ('administrators.*','medias.path as avatar_path')->first();
+    }
     public function login(array $info){
         $verify = false;
         $userInfo = AdminModel::where('username',trim($info['username']));

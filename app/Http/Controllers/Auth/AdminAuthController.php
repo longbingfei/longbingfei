@@ -20,6 +20,10 @@ class AdminAuthController extends Controller
     public function index(){
         return $this->admin->index();
     }
+
+    public function show(){
+        return $this->admin->show();
+    }
     public function login(Requests\AdminLoginRequest $request)
     {
         $info = $request->only(['username','password']);

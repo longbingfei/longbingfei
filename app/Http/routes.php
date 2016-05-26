@@ -25,6 +25,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('login','AdminAuthController@login');
         Route::post('register','AdminAuthController@registere');
         Route::get('list','AdminAuthController@index');
+        Route::get('zone','AdminAuthController@show');
         Route::post('update/{id}','AdminAuthController@update');
         Route::get('logout','AdminAuthController@logout');
         Route::get('/',function(){
@@ -37,6 +38,12 @@ Route::group(['prefix'=>'admin'],function(){
         //ajax获取模板url
         Route::any('page_article',function(){
             return view('admin.article');
+        });
+        Route::any('page_zone',function(){
+            return view('admin.zone');
+        });
+        Route::any('page_media',function(){
+            return view('admin.media');
         });
         //具体操作
         Route::resource('media','MediaController');

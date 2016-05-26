@@ -23,6 +23,9 @@ class MediaController extends Controller
         $this->media = $media;
     }
 
+    public function index(Request $request){
+        return $this->media->index();
+    }
     public function show($id){
         return $this->media->show($id);
     }
