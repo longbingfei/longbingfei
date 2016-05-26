@@ -11,7 +11,7 @@ use App\Models\Article as ArticleModel;
 use Auth;
 class Article implements ArticleInterface{
     protected $module = 'article';
-    public function index(){
+    public function index($page){
         $article_model = ArticleModel::orderBy('articles.id','DESC');
         $count = $article_model->count();
         $articles = $article_model
@@ -23,7 +23,7 @@ class Article implements ArticleInterface{
             'article_sorts.name as sort_name',
             'administrators.username as author_name'
         )
-            ->paginate(10)->all();
+            ->paginate(10,'*','page',$page)->all(); //paginate($per_page_num,array $colums,$pageName,$page);
 
         return ['count'=>$count,'articles'=>$articles];
     }

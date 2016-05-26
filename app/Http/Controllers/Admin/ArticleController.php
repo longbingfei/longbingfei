@@ -18,8 +18,10 @@ class ArticleController extends Controller
         $this->article = $article;
     }
 
-    public function index(){
-        return $this->article->index();
+    public function index(Request $request){
+        $page = intval($request->get('page'));
+
+        return $this->article->index($page);
     }
 
     public function show($id){

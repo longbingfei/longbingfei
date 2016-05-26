@@ -34,9 +34,11 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/',['as'=>'home',function(){
             return view('admin.home');
         }]);
+        //ajax获取模板url
         Route::any('page_article',function(){
             return view('admin.article');
         });
+        //具体操作
         Route::resource('media','MediaController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');

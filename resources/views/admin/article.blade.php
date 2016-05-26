@@ -27,6 +27,7 @@ $data = $data['articles'];
                 <tr>
                     <th>选择</th>
                     <th>标题</th>
+                    <th>分类</th>
                     <th>状态</th>
                     <th>作者</th>
                     <th>创建于</th>
@@ -34,11 +35,12 @@ $data = $data['articles'];
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="tbd">
             @foreach($data as $key => $vo)
                 <tr class="detail" data-id="{{$vo['id']}}">
                     <td title={{$vo['id']}}><input class="checkbox" type="checkbox" value="{{$vo['id']}}"></td>
                     <td>{{$vo['title']}}</td>
+                    <td>{{$vo['sort_name']}}</td>
                     <td>{{$vo['status']}}</td>
                     <td>{{$vo['author_name']}}</td>
                     <td>{{$vo['created_at']}}</td>
@@ -48,6 +50,20 @@ $data = $data['articles'];
             @endforeach
             </tbody>
         </table>
+        <nav class="nav-right">
+            <ul class="pagination">
+                <li class="pre">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="next">
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 {{--modal--}}
@@ -81,12 +97,35 @@ $data = $data['articles'];
     </div>
 </div>
 <script>
-    function resetModal(){
-        $("#form").data('id','');
-        $("#title").val('');
-        $("#content").val('');
+    window.onload = paginate();
+    //分页
+    function paginate(){
+        var count = Math.ceil("{{$count}}"/10); //10条一页
+        for(var i=1;i<=count;i++) {
+            var url = "{{ url('admin/feature/article') }}"+'?page='+i;
+            var dom_li = $('<li><a class="page_a" href="javascript:void(0)" data-url="'+url+'">'+i+'</a></li>');
+            $(".next").before(dom_li);
+        }
     }
-    $(".detail").bind("click",function(){
+    $(".page_a").bind('click',function(){
+        $.getJSON($(this).data('url'),function(data){
+            var html = '';
+            $.each(data.articles,function(k,value){
+                html+= '<tr class="detail" data-id="'+value.id+'">';
+                html+= '<td title="'+value.id+'"><input class="checkbox" type="checkbox" value="'+value.id+'"></td>';
+                html+= '<td>'+value.title+'</td>';
+                html+= '<td>'+value.sort_name+'</td>';
+                html+= '<td>'+value.status+'</td>';
+                html+= '<td>'+value.author_name+'</td>';
+                html+= '<td>'+value.created_at+'</td>';
+                html+= '<td>'+value.updated_at+'</td>';
+                html+= '<td>xxx</td></tr>';
+            });
+            $(".tbd").html(html);
+        });
+    })
+    //触发器必须是事先存在的
+    $("body").on("click",".detail",function(){
         $.getJSON("{{url('admin/feature/article')}}"+'/'+$(this).data('id'),function(data){
             $("#form").data('id',data.id);
             $("#title").val(data.title);
@@ -94,6 +133,7 @@ $data = $data['articles'];
         });
         $(".content").modal();
     });
+    //modal
     $(".submit").bind("click",function(){
         var id =  $("#form").data('id');
         if(id == ''){
@@ -120,6 +160,12 @@ $data = $data['articles'];
             }
         });
     });
+
+    function resetModal(){
+        $("#form").data('id','');
+        $("#title").val('');
+        $("#content").val('');
+    }
     $(".cancel").bind("click",resetModal);
 </script>
 </body>
