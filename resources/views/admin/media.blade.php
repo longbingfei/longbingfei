@@ -59,14 +59,27 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
             color:#cccccc;
             font-size:40px;
         }
+        .broadcast{
+            width:200px;
+            height:150px;
+            z-index:999;
+            position:absolute;
+            top:100px;
+            border: 1px solid red;
+        }
 
     </style>
+    <script>
+        var Image =JSON.parse('<?= json_encode($image)?>');
+        var Video =JSON.parse('<?= json_encode($video)?>');
+        var Frame =JSON.parse('<?= json_encode($frame)?>');
+    </script>
 </head>
 <body>
-<ul class="nav nav-tabs nav-justified">
-    <li role="presentation" class="active"><a href="#main">图片</a></li>
-    <li role="presentation"><a href="#main">视频</a></li>
-    <li role="presentation"><a href="#">音频</a></li>
+<ul class="nav nav-tabs nav-justified media_sort_li">
+    <li role="presentation" class="active" data-type="image"><a href="javascript:void(0)">图片</a></li>
+    <li role="presentation" data-type="video"><a href="javascript:void(0)">视频</a></li>
+    <li role="presentation" data-type="audio"><a href="javascript:void(0)">音频</a></li>
 </ul>
 <div class="panel panel-default media-menu">
     <div class="panel-body">
@@ -74,7 +87,7 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
     </div>
 </div>
 @foreach($image as $v)
-<div class="col-xs-4 col-md-2">
+<div class="col-xs-4 col-md-2 show-media">
     <a href="#" class="thumbnail image">
         <img src="{{url($v['path'])}}">
         <div class="cover"></div>
@@ -120,6 +133,46 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
     </div>
 </div>
 <script>
+    //nav切换类型
+    $("body").on('click','.media_sort_li li',function(){
+        $(this).addClass('active').siblings().removeClass('active');
+        //panel显示上传类型
+        switch($(this).data('type')){
+            case 'image':
+                $(".media-menu div").empty().html('<a class="btn btn-primary upload-pic">上传图片</a>');
+                break;
+            case 'video':
+                $(".media-menu div").empty().html('<a class="btn btn-primary upload-video">上传视频</a>');
+                $("body").find($(".show-media")).remove();
+                if(Video.length){
+                    $.each(Video,function(k,value){
+                        value.framePath = value.path.replace(/(\w+?\/\w+?\/)(\d+?\/\d+?\/\d+?)(\/\w+?\.)mp4/,'$1frames$3png');
+                        VideoFunc.Append(value);
+                    });
+                }
+                break;
+            default:
+                $(".media-menu div").empty().html('<a class="btn btn-primary upload-audio">上传音频</a>');
+                break;
+        }
+    })
+    var VideoFunc = {
+        Append:function(data){
+            var div = $('<div class="col-xs-4 col-md-2 show-media"></div>');
+            var a = $('<a href="#" class="thumbnail"></a>');
+            var title = $('<div></div>').html(data.title);
+            var img = $('<img class="video-frame" src="{{url('')}}/'+data.framePath+'">');
+            $("body").on('click','.video-frame',data,VideoFunc.Broadcast);
+            a.append(img);
+            div.append(a).append(title);
+            $(".media-menu").after(div);
+        },
+        Broadcast:function(event){
+//            var broadcast_frame = $("<div>1222222</div>").addClass("broadcast");
+//            $("body").append(broadcast_frame);
+        }
+    }
+    //image显示cover
     $("body").on('mouseover mouseout','.image',function(e){
         var div1 = $(this).children('div:eq(0)');
         var div2 = $(this).children('div:eq(1)');
@@ -132,7 +185,7 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
             div1.stop(0).animate({width:0},150);
         }
     });
-
+    //image upload
     var MediaUpload = {
         Preview:function(file,preview){
             if(file.length < 0){
@@ -185,7 +238,9 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
             $(".cancel").click();
         }
     }
-    $(".upload-pic").on('click',function(){
+
+    //image upload fire
+    $("body").on('click','.upload-pic',function(){
         $(".modal").modal();
         $("#preview").on('click',function(){
             $(".pic-input").click();
@@ -199,7 +254,6 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
                 $(".submit").on('click',data,MediaUpload.Upload);
             });
         });
-
     });
 
 </script>
