@@ -15,6 +15,7 @@ class MediaSeeder extends Seeder
     {
         DB::table('medias')->truncate();
         Media::create([
+            'title'=>'默认头像',
             'sort'=>'image',
             'path'=>'default/images/default_avatar.jpeg',
             'user_id'=>1

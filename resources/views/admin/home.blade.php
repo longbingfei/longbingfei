@@ -56,7 +56,6 @@
         $(".menu li").removeClass("active");
         $(this).addClass("active");
         $.getJSON("{{url('admin/auth/zone')}}",function(data){
-            console.log(data);
             $(".main").empty().load("{{url('admin/feature/page_zone')}}",{"data":data});
         })
     });
@@ -64,7 +63,6 @@
         $(".menu li").removeClass("active");
         $(this).addClass("active");
         $.getJSON("{{url('admin/feature/media')}}",function(data){
-            console.log(data);
             $(".main").empty().load("{{url('admin/feature/page_media')}}",{"data":data});
         })
     });

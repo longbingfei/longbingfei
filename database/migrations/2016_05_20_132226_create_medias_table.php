@@ -14,7 +14,8 @@ class CreateMediasTable extends Migration
     {
         Schema::create('medias',function(Blueprint $tables){
             $tables->increments('id')->unsigned();
-            $tables->string('sort');
+            $tables->string('title',100);
+            $tables->string('sort',20);
             $tables->string('path',250);
             $tables->integer('frame_id')->nullable();
             $tables->integer('user_id');

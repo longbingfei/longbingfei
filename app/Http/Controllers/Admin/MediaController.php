@@ -45,6 +45,7 @@ class MediaController extends Controller
         if(!$sort = $this->getMediaSort($type)){
             return '{"Error":"invalid sort"}';
         }
+        $file->title = trim($request->get('title')) ? trim($request->get('title')) : "新建".strtoupper($type)."文件";
         $file->sort = $sort;
 
         return $this->media->create($file);
