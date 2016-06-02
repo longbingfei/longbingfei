@@ -11,7 +11,7 @@ use App\Models\Article as ArticleModel;
 use Auth;
 class Article implements ArticleInterface{
     protected $module = 'article';
-    public function index($condition = []){
+    public function index($condition = ['page'=>0]){
         $article_model = ArticleModel::orderBy('articles.id','DESC');
         $count = $article_model->count();
         $articles = $article_model

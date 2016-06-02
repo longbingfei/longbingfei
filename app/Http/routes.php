@@ -39,6 +39,9 @@ Route::group(['prefix'=>'admin'],function(){
         Route::any('page_article',function(){
             return view('admin.article');
         });
+        Route::any('page_product',function(){
+            return view('admin.product');
+        });
         Route::any('page_zone',function(){
             return view('admin.zone');
         });
@@ -55,10 +58,8 @@ Route::group(['prefix'=>'admin'],function(){
 });
 
 //前端
-Route::get('/',function(){
-    return view('web.homepage');
-});
 Route::group(['namespace'=>'Web'],function(){
+    Route::get('/','WebController@index');
     Route::get('article','WebController@articleIndex');
     Route::get('article/{id}','WebController@articleShow');
     Route::get('product','WebController@productIndex');

@@ -22,6 +22,12 @@ class WebController extends Controller
         $this->product = $product;
     }
 
+    public function index(){
+        $articles = $this->articleIndex();
+
+        return view('web.homepage',['articles'=>$articles['articles']]);
+    }
+
     public function articleIndex(){
         return $this->article->index();
     }

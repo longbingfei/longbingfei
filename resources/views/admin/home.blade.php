@@ -52,6 +52,13 @@
             $(".main").load("{{url('admin/feature/page_article')}}",{"data":data});
         });
     });
+    $(".product").on('click',function(){
+        $(".menu li").removeClass("active");
+        $(this).addClass("active");
+        $.getJSON("{{url('admin/feature/product')}}",function(data){
+            $(".main").empty().load("{{url('admin/feature/page_product')}}",{"data":data});
+        })
+    });
     $(".zone").on('click',function(){
         $(".menu li").removeClass("active");
         $(this).addClass("active");
