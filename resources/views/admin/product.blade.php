@@ -60,41 +60,38 @@
                     <h4 class="modal-title" id="myModalLabel">添加</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="product-form" action="{{'product'}}" method="post"
-                          enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="sort" class="control-label">分类</label>
-                            <select class="form-control" id="sort">
-                                <option value="1">123</option>
-                                <option value="2">234</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="title" class="control-label">名称:</label>
-                            <input type="text" class="form-control" id="title">
-                        </div>
-                        <div class="form-group">
-                            <label for="describe" class="control-label">描述:</label>
-                            <input type="text" class="form-control" id="describe">
-                        </div>
-                        <div class="form-group">
-                            <label for="price" class="control-label">几何:</label>
-                            <input type="text" class="form-control" id="price">
-                        </div>
-                        <div class="form-group">
-                            <label for="product-preview" class="control-label">图片:</label>
-                            <div class="show-product">
-                                <div class="upload-button-div">
-                                    <div class="mark_">
-                                        <div class="plus-x"></div>
-                                        <div class="plus-y"></div>
-                                    </div>
-                                    <input id="product-preview" type="file" name="file[]">
+                    <div class="form-group">
+                        <label for="product-sort" class="control-label">分类</label>
+                        <select class="form-control" id="product-sort">
+                            <option value="1">123</option>
+                            <option value="2">234</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-title" class="control-label">名称:</label>
+                        <input type="text" class="form-control" id="product-title">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-describe" class="control-label">描述:</label>
+                        <input type="text" class="form-control" id="product-describe">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price" class="control-label">几何:</label>
+                        <input type="text" class="form-control" id="product-price">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-preview" class="control-label">图片:</label>
+                        <div class="show-product">
+                            <div class="upload-button-div">
+                                <div class="mark_">
+                                    <div class="plus-x"></div>
+                                    <div class="plus-y"></div>
                                 </div>
-                                <div style="clear:both;"></div>
+                                <input id="product-preview" type="file" name="file[]">
                             </div>
+                            <div style="clear:both;"></div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
@@ -105,26 +102,11 @@
     </div>
 </div>
 <script>
-    $("body").on("click",".new-product-a",function(){
-        $(".modal-product").modal();
-        $("body").on("change","#product-preview",function(){
-            ProductPic.Preview($(this));
-        });
-        $("body").on("click",".cancel_upload",function(){
-            var file_id = $(this).parent().data("id");
-            upload_files.files.splice(file_id,1);
-            $(this).parent().remove();
-        });
-        $(".submit").on('click',function(){
-            $(".product-form").submit();
-        });
-
-    })
     var upload_files = {i:0,files:[]};
     var ProductPic = {
             Preview:function(obj){
                 var file = obj.context.files[0];
-                upload_files.files.push(file);
+                upload_files.files[upload_files.i] = file;
                 var Reader = new FileReader();
                 Reader.readAsDataURL(file);
                 Reader.onload = function(e){
@@ -143,12 +125,53 @@
                     }).addClass("cancel_upload"));
                     $(".show-product").prepend(newDom);
                     upload_files.i++;
+                    console.log(upload_files.files,upload_files.i);
                 }
             },
+            Delete:function(obj){
+                var file_id = obj.parent().data("id");
+                upload_files.files.splice(file_id,1);
+                obj.parent().remove();
+            },
             Send:function(){
-
-        }
+                if(upload_files.files.length <1){
+                    return false;
+                }
+                var productSort = $.trim($("#product-sort").val());
+                var productTitle = $.trim($("#product-title").val());
+                var productDescribe = $.trim($("#product-describe").val());
+                var productPrice = $("#product-price").val();
+                var form = new FormData;
+                form.append('sort_id',1);
+                form.append('title',productTitle);
+                form.append('describe',productDescribe);
+                form.append('price',productPrice);
+                $.each(upload_files.files,function(x,v){form.append('file[]',v)});
+                $.ajax({
+                    method:'POST',
+                    url:"{{'feature/product'}}",
+                    data:form,
+                    processData:false,
+                    contentType:false,
+                    success:function(data){
+                        console.log(data);
+//                        window.location.reload();
+                    }
+                });
+            }
     }
+    $("body").on("click",".new-product-a",function(){
+        $(".modal-product").modal();
+        $("body").on("change","#product-preview",function(){
+            ProductPic.Preview($(this));
+        });
+        $("body").on("click",".cancel_upload",function(){
+            ProductPic.Delete($(this));
+        });
+        $(".submit").on('click',function(){
+            ProductPic.Send();
+        });
+    })
 </script>
 </body>
 </html>

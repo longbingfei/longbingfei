@@ -23,7 +23,7 @@ class ProductController extends Controller
         return $this->product->show($id);
     }
     public function store(Request $request){
-        dd($request->all());
+        dd($request->file());
 //        $keys = [
 //            'name',
 //            'describe',
