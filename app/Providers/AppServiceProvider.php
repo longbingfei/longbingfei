@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('App\Repositories\InterfacesBag\Product','App\Repositories\Eloquents\Product');
         app()->bind('App\Repositories\InterfacesBag\ArticleSort','App\Repositories\Eloquents\ArticleSort');
         app()->bind('App\Repositories\InterfacesBag\Article','App\Repositories\Eloquents\Article');
+        app()->bind('App\Repositories\InterfacesBag\Image','App\Repositories\Eloquents\Image');
+        app()->bind('App\Repositories\InterfacesBag\Video','App\Repositories\Eloquents\Video');
         //front
         app()->bind('App\Repositories\InterfacesBag\User','App\Repositories\Eloquents\User');
     }

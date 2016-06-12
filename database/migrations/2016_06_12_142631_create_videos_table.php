@@ -25,7 +25,7 @@ class CreateVideosTable extends Migration
             $tables->integer('sort_id')->unsigned()->default(0);
             $tables->foreign('sort_id')->references('id')->on('video_sorts')->onDelete('cascade');
             $tables->string('path',250);
-            $tables->integer('frame_id');
+            $tables->string('frame_path',250);
             $tables->tinyInteger('status')->default(1)->unsigned();
             $tables->integer('user_id');
             $tables->timestamps();

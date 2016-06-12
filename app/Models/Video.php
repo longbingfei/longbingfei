@@ -9,10 +9,10 @@ class Video extends Model
     protected $table = 'videos';
 
     protected $fillable = [
-        'title',
+        'name',
         'sort_id',
         'path',
-        'frame_id',
+        'frame_path',
         'user_id'
     ];
 }

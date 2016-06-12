@@ -50,6 +50,8 @@ Route::group(['prefix'=>'admin'],function(){
         });
         //具体操作
         Route::resource('media','MediaController');
+        Route::resource('image','ImageController');
+        Route::resource('video','VideoController');
         Route::resource('article_sort','ArticleSortController');
         Route::resource('article','ArticleController');
         Route::resource('product_sort','ProductSortController');

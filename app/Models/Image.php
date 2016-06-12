@@ -9,7 +9,7 @@ class Image extends Model
     protected $table = 'images';
 
     protected $fillable = [
-        'title',
+        'name',
         'sort_id',
         'path',
         'user_id'
