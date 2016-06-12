@@ -55,7 +55,9 @@ class Image implements ImageInterface{
 
     public function delete($id){
         $media = ImageModel::findOrFail($id);
+        $path = $media->path;
         if(ImageModel::destroy($id)){
+            @unlink(public_path($path));
             event('log',[[$this->module,'d',$media]]);
 
             return 1;

@@ -49,7 +49,7 @@
         $.getJSON("{{url('admin/feature/article')}}",function(data){
             var data = JSON.stringify(data);
             //$dom.load(url,data,function(){}) -->data为对象则调用的post ,string则调用get
-            $(".main").load("{{url('admin/feature/page_article')}}",{"data":data});
+            $(".main").empty().load("{{url('admin/feature/page_article')}}",{"data":data});
         });
     });
     $(".product").on('click',function(){

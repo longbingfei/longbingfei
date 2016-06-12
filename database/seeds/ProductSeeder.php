@@ -21,11 +21,21 @@ class ProductSeeder extends Seeder
 
         ProductSort::create([
             'fid'=>0,
-            'name'=>'热销',
+            'name'=>'hot',
+            'user_id'=>1
+        ]);
+        ProductSort::create([
+            'fid'=>0,
+            'name'=>'good',
+            'user_id'=>1
+        ]);
+        ProductSort::create([
+            'fid'=>0,
+            'name'=>'full',
             'user_id'=>1
         ]);
         Product::create([
-            'name'=>'A',
+            'name'=>'野生粽子',
             'price'=>100,
             'storage'=>100,
             'describe'=>'nice',

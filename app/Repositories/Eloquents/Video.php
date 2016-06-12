@@ -51,7 +51,11 @@ class Video implements VideoInterface{
     }
     public function delete($id){
         $media = VideoModel::findOrFail($id);
+        $path = $media->path;
+        $framePath = $media->frame_path;
         if(VideoModel::destroy($id)){
+            @unlink(public_path($path));
+            ImageModel::where('path',$framePath)->delete();
             event('log',[[$this->module,'d',$media]]);
 
             return 1;
