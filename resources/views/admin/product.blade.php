@@ -63,8 +63,6 @@
                     <div class="form-group">
                         <label for="product-sort" class="control-label">分类</label>
                         <select class="form-control" id="product-sort">
-                            <option value="1">123</option>
-                            <option value="2">234</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -80,9 +78,13 @@
                         <input type="text" class="form-control" id="product-price">
                     </div>
                     <div class="form-group">
+                        <label for="product-storage" class="control-label">库存:</label>
+                        <input type="text" class="form-control" id="product-storage">
+                    </div>
+                    <div class="form-group">
                         <label for="product-preview" class="control-label">图片:</label>
                         <div class="show-product">
-                            <div class="upload-button-div">
+                            <div class="upload-button-div button-div">
                                 <div class="mark_">
                                     <div class="plus-x"></div>
                                     <div class="plus-y"></div>
@@ -102,16 +104,23 @@
     </div>
 </div>
 <script>
-    var upload_files = {i:0,files:[]};
+//    this:调用者
+//    类数组:obj.length undefined
+//    用Object.keys(obj).length
+//    splice(index,length,var)
+//    delete obj.value
     var ProductPic = {
+            i:0,
+            uploadFiles:{},
             Preview:function(obj){
                 var file = obj.context.files[0];
-                upload_files.files[upload_files.i] = file;
+                this.uploadFiles[this.i] = file;
                 var Reader = new FileReader();
                 Reader.readAsDataURL(file);
                 Reader.onload = function(e){
+                    var that = ProductPic;
                     var url = e.target.result;
-                    var newDom = $("<div data-id="+upload_files.i+"></div>").addClass("upload-button-div").css
+                    var newDom = $("<div data-id="+that.i+"></div>").addClass("upload-button-div").css
                     ({backgroundImage:"url" +
                     "("+url+")",backgroundSize:"100% 100%"}).append($("<div>x</div>").css({
                         position:"absolute",
@@ -124,29 +133,41 @@
                         cursor:"pointer"
                     }).addClass("cancel_upload"));
                     $(".show-product").prepend(newDom);
-                    upload_files.i++;
-                    console.log(upload_files.files,upload_files.i);
+                    that.i++;
+                }
+            },
+            Hover:function(type,obj){
+                switch(type){
+                    case "show":
+                            var showPicDiv = $("<div></div>").css({width:"200px",height:"200px",backgroundColor:'red',zIndex:9999});
+//                            $(".modal-body").append(showPicDiv);
+                            console.log(showPicDiv);
+
+                        break;
+                    case "hidden":
+                        break;
                 }
             },
             Delete:function(obj){
-                var file_id = obj.parent().data("id");
-                upload_files.files.splice(file_id,1);
+                var id = obj.parent().data("id");
+                delete this.uploadFiles[id];
+                $("#product-preview").val(''); //删除一个,重置file
+                console.log(Object.keys(this.uploadFiles).length);
                 obj.parent().remove();
             },
             Send:function(){
-                if(upload_files.files.length <1){
-                    return false;
-                }
                 var productSort = $.trim($("#product-sort").val());
                 var productTitle = $.trim($("#product-title").val());
                 var productDescribe = $.trim($("#product-describe").val());
                 var productPrice = $("#product-price").val();
+                var productStorage = $("#product-storage").val();
                 var form = new FormData;
-                form.append('sort_id',1);
+                form.append('sort_id',productSort);
                 form.append('title',productTitle);
                 form.append('describe',productDescribe);
                 form.append('price',productPrice);
-                $.each(upload_files.files,function(x,v){form.append('file[]',v)});
+                form.append('storage',productStorage);
+                $.each(this.uploadFiles,function(x,v){form.append('file[]',v)}); //[]
                 $.ajax({
                     method:'POST',
                     url:"{{'feature/product'}}",
@@ -155,19 +176,43 @@
                     contentType:false,
                     success:function(data){
                         console.log(data);
-//                        window.location.reload();
                     }
                 });
             }
     }
     $("body").on("click",".new-product-a",function(){
+        //获取分类
+        $.getJSON("{{'feature/product_sort'}}",function(sort){
+            var select = $("#product-sort");
+                select.empty();
+            $.each(sort,function(k,v){
+                var option = $("<option>"+ v.name +"</option>").val(v.id);
+                select.append(option);
+            });
+        });
+        //modal
         $(".modal-product").modal();
+
+        //preview
         $("body").on("change","#product-preview",function(){
             ProductPic.Preview($(this));
         });
+
+        //delete preview
         $("body").on("click",".cancel_upload",function(){
             ProductPic.Delete($(this));
         });
+
+        //hover
+        $("body").on("mouseover mouseout",".upload-button-div:not('.button-div')",function(e){
+           if(e.type == "mouseover"){
+                ProductPic.Hover('show',$(this));
+           }else if(e.type == "mouseout"){
+                ProductPic.Hover('hidden',$(this));
+           }
+        });
+
+        //create
         $(".submit").on('click',function(){
             ProductPic.Send();
         });
