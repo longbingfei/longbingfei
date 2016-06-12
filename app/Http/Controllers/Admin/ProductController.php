@@ -23,19 +23,19 @@ class ProductController extends Controller
         return $this->product->show($id);
     }
     public function store(Request $request){
-        dd($request->file());
-//        $keys = [
-//            'name',
-//            'describe',
-//            'price',
-//            'storage',
-//            'sort_id',
-//            'status',
-//        ];
-//        $data = $request->all();
-//        $data = array_intersect_key($data,array_flip($keys));
-//
-//        return $this->product->create($data);
+        $keys = [
+            'name',
+            'describe',
+            'price',
+            'storage',
+            'sort_id',
+            'status',
+            'file',
+        ];
+        $data = $request->all();
+        $data = array_intersect_key($data,array_flip($keys));
+
+        return $this->product->create($data);
     }
     public function update($id,Requests\ProductRequest $request){
         $keys = [

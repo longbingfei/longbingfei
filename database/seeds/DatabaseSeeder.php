@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuleSeeder::class);
         $this->call(AuthSeeder::class);
         $this->call(MediaSeeder::class);
+        $this->call(ImageSeeder::class);
+        $this->call(VideoSeeder::class);
         $this->call(ArticleSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(PermissionSeeder::class);

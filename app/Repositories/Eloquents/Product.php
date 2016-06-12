@@ -7,9 +7,9 @@
  */
 namespace App\Repositories\Eloquents;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
+use App\Repositories\Eloquents\Media;
 use App\Models\Product as ProductModel;
 use Auth;
-use Illuminate\Support\Facades\Log;
 
 class Product implements ProductInterface{
     protected $modules = 'product';
