@@ -11,6 +11,7 @@ class Style extends Model
     protected $fillable = [
         'type',
         'describe',
+        'image_path',
         'link',
         'status',
         'user_id'

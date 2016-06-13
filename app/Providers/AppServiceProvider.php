@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('App\Repositories\InterfacesBag\Article','App\Repositories\Eloquents\Article');
         app()->bind('App\Repositories\InterfacesBag\Image','App\Repositories\Eloquents\Image');
         app()->bind('App\Repositories\InterfacesBag\Video','App\Repositories\Eloquents\Video');
+        app()->bind('App\Repositories\InterfacesBag\Style','App\Repositories\Eloquents\Style');
         //front
         app()->bind('App\Repositories\InterfacesBag\User','App\Repositories\Eloquents\User');
     }

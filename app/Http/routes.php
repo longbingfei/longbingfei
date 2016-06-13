@@ -56,6 +56,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::resource('article','ArticleController');
         Route::resource('product_sort','ProductSortController');
         Route::resource('product','ProductController');
+        Route::resource('style','StyleController');
     });
 });
 

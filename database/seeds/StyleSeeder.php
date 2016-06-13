@@ -38,24 +38,24 @@ class StyleSeeder extends Seeder
             'user_id'=>1
         ]);
         Style::create([
-            'type'=>'article1',
-            'describe'=>'hello word',
+            'type'=>'article',
+            'describe'=>'hello China',
             'image_path'=>null,
             'link'=>'#',
             'status'=>1,
             'user_id'=>1
         ]);
         Style::create([
-            'type'=>'article2',
-            'describe'=>'hello word',
+            'type'=>'article',
+            'describe'=>'hello World',
             'image_path'=>null,
             'link'=>'#',
             'status'=>1,
             'user_id'=>1
         ]);
         Style::create([
-            'type'=>'article3',
-            'describe'=>'hello word',
+            'type'=>'article',
+            'describe'=>'hello Universe',
             'image_path'=>null,
             'link'=>'#',
             'status'=>1,

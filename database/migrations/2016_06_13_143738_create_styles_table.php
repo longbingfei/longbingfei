@@ -13,6 +13,7 @@ class CreateStylesTable extends Migration
     public function up()
     {
         Schema::create('styles',function(Blueprint $table){
+            $table->increments('id')->unsigned();
             $table->string('type',20);
             $table->string('describe',200)->nullable();
             $table->string('image_path',200)->nullable();
