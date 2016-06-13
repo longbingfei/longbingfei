@@ -30,10 +30,11 @@ class ProductController extends Controller
             'storage',
             'sort_id',
             'status',
-            'file',
+            'images',
         ];
         $data = $request->all();
         $data = array_intersect_key($data,array_flip($keys));
+
 
         return $this->product->create($data);
     }
@@ -45,6 +46,7 @@ class ProductController extends Controller
             'storage',
             'sort_id',
             'status',
+            'images',
         ];
         $data = $request->all();
         $data = array_intersect_key($data,array_flip($keys));

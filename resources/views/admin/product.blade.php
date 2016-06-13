@@ -55,50 +55,52 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close product-cancel" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">添加</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="product-sort" class="control-label">分类</label>
-                        <select class="form-control" id="product-sort">
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="product-title" class="control-label">名称:</label>
-                        <input type="text" class="form-control" id="product-title">
-                    </div>
-                    <div class="form-group">
-                        <label for="product-describe" class="control-label">描述:</label>
-                        <input type="text" class="form-control" id="product-describe">
-                    </div>
-                    <div class="form-group">
-                        <label for="product-price" class="control-label">几何:</label>
-                        <input type="text" class="form-control" id="product-price">
-                    </div>
-                    <div class="form-group">
-                        <label for="product-storage" class="control-label">库存:</label>
-                        <input type="text" class="form-control" id="product-storage">
-                    </div>
-                    <div class="form-group">
-                        <label for="product-preview" class="control-label">图片:</label>
-                        <div class="show-product">
-                            <div class="upload-button-div button-div">
-                                <div class="mark_">
-                                    <div class="plus-x"></div>
-                                    <div class="plus-y"></div>
+                <form id="product-form" action="#">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="product-sort" class="control-label">分类</label>
+                            <select class="form-control" id="product-sort">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-name" class="control-label">名称:</label>
+                            <input type="text" class="form-control" id="product-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-describe" class="control-label">描述:</label>
+                            <input type="text" class="form-control" id="product-describe">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price" class="control-label">几何:</label>
+                            <input type="text" class="form-control" id="product-price">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-storage" class="control-label">库存:</label>
+                            <input type="text" class="form-control" id="product-storage">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-preview" class="control-label">图片:</label>
+                            <div class="show-product">
+                                <div class="upload-button-div">
+                                    <div class="mark_">
+                                        <div class="plus-x"></div>
+                                        <div class="plus-y"></div>
+                                    </div>
+                                    <input id="product-preview" type="file" name="file[]">
                                 </div>
-                                <input id="product-preview" type="file" name="file[]">
+                                <div style="clear:both;"></div>
                             </div>
-                            <div style="clear:both;"></div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary submit">添加</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default product-cancel" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary submit">添加</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -120,7 +122,7 @@
                 Reader.onload = function(e){
                     var that = ProductPic;
                     var url = e.target.result;
-                    var newDom = $("<div data-id="+that.i+"></div>").addClass("upload-button-div").css
+                    var newDom = $("<div data-id="+that.i+"></div>").addClass("upload-button-div show-product-pic").css
                     ({backgroundImage:"url" +
                     "("+url+")",backgroundSize:"100% 100%"}).append($("<div>x</div>").css({
                         position:"absolute",
@@ -130,7 +132,7 @@
                         height:"10px",
                         lineHeight:"10px",
                         color:"white",
-                        cursor:"pointer"
+                        cursor:"pointer",
                     }).addClass("cancel_upload"));
                     $(".show-product").prepend(newDom);
                     that.i++;
@@ -139,12 +141,22 @@
             Hover:function(type,obj){
                 switch(type){
                     case "show":
-                            var showPicDiv = $("<div></div>").css({width:"200px",height:"200px",backgroundColor:'red',zIndex:9999});
-//                            $(".modal-body").append(showPicDiv);
-                            console.log(showPicDiv);
-
+                            var showPicDiv = $("<div></div>").css({
+                                width:"300px",
+                                height:"300px",
+//                                borderRadius:"10px",
+                                position:"absolute",
+                                right:"30%",
+                                bottom:"112px",
+                                backgroundImage:obj.css("backgroundImage"),
+                                backgroundSize:"100% 100%",
+                                zIndex:9999
+                            });
+                            showPicDiv.addClass('previewPic');
+                            $(".modal-body").append(showPicDiv);
                         break;
                     case "hidden":
+                            $(".modal-body").find(".previewPic").remove();
                         break;
                 }
             },
@@ -152,22 +164,41 @@
                 var id = obj.parent().data("id");
                 delete this.uploadFiles[id];
                 $("#product-preview").val(''); //删除一个,重置file
-                console.log(Object.keys(this.uploadFiles).length);
                 obj.parent().remove();
             },
             Send:function(){
                 var productSort = $.trim($("#product-sort").val());
-                var productTitle = $.trim($("#product-title").val());
+                var productName = $.trim($("#product-name").val());
                 var productDescribe = $.trim($("#product-describe").val());
                 var productPrice = $("#product-price").val();
                 var productStorage = $("#product-storage").val();
+                var images = [];
+                $.each(this.uploadFiles,function(x,v){
+                    var form = new FormData;
+                    form.append('name','商品图片');
+                    form.append('image',v);
+                    $.ajax({
+                        method:'POST',
+                        async:false, //同步
+                        url:"{{'feature/image'}}",
+                        data:form,
+                        processData:false,
+                        contentType:false,
+                        success:function(data){
+                            if(data.id > 0){
+                                images.push(data);
+                            }
+                        }
+                    });
+                });
+                console.log(images);
                 var form = new FormData;
                 form.append('sort_id',productSort);
-                form.append('title',productTitle);
+                form.append('name',productName);
                 form.append('describe',productDescribe);
                 form.append('price',productPrice);
                 form.append('storage',productStorage);
-                $.each(this.uploadFiles,function(x,v){form.append('file[]',v)}); //[]
+                form.append('images',JSON.stringify(images));
                 $.ajax({
                     method:'POST',
                     url:"{{'feature/product'}}",
@@ -175,9 +206,16 @@
                     processData:false,
                     contentType:false,
                     success:function(data){
-                        console.log(data);
+                        if(data == 1){
+                            location.reload();
+                        }
                     }
                 });
+            },
+            Reset:function(){
+                $(".show-product").find(".show-product-pic").remove();
+                this.i = 0;
+                this.uploadFiles = {};
             }
     }
     $("body").on("click",".new-product-a",function(){
@@ -204,7 +242,7 @@
         });
 
         //hover
-        $("body").on("mouseover mouseout",".upload-button-div:not('.button-div')",function(e){
+        $("body").on("mouseover mouseout",".show-product-pic",function(e){
            if(e.type == "mouseover"){
                 ProductPic.Hover('show',$(this));
            }else if(e.type == "mouseout"){
@@ -216,6 +254,12 @@
         $(".submit").on('click',function(){
             ProductPic.Send();
         });
+
+        //cancel
+        $(".product-cancel").on('click',function(){
+            ProductPic.Reset();
+            $("#product-form")[0].reset();
+        })
     })
 </script>
 </body>

@@ -7,7 +7,6 @@
  */
 namespace App\Repositories\Eloquents;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
-use App\Repositories\Eloquents\Media;
 use App\Models\Product as ProductModel;
 use Auth;
 
@@ -21,6 +20,7 @@ class Product implements ProductInterface{
     }
     public function create(array $data){
         $data['sort_id'] = isset($data['sort_id']) ? intval($data['sort_id']) : 1;
+        $data['images'] = serialize(json_decode($data['images'],1));
         $data['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $data['user_id'] = Auth::id();
 
@@ -45,6 +45,7 @@ class Product implements ProductInterface{
     }
     public function delete($id){
         $product = ProductModel::findOrFail($id)->toArray();
+        $images = $product['images'];
         if(ProductModel::destroy($id)){
             event('log',[[$this->modules,'d',$product]]);
 
