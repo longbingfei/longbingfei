@@ -28,7 +28,7 @@ class ImageSeeder extends Seeder
             'user_id'=>1
         ]);
         ImageSort::create([
-            'name'=>'商品',
+            'name'=>'商品图片',
             'fid'=>0,
             'user_id'=>1
         ]);

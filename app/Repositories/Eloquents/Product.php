@@ -8,6 +8,7 @@
 namespace App\Repositories\Eloquents;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
 use App\Models\Product as ProductModel;
+use App\Models\Image as ImageModel;
 use Auth;
 
 class Product implements ProductInterface{
@@ -45,7 +46,13 @@ class Product implements ProductInterface{
     }
     public function delete($id){
         $product = ProductModel::findOrFail($id)->toArray();
-        $images = $product['images'];
+        $images = unserialize($product['images']);
+        if(!empty($images)){
+            foreach($images as $vo){
+                ImageModel::where('id',$vo['id'])->delete();
+                @unlink(public_path($vo['path']));
+            }
+        }
         if(ProductModel::destroy($id)){
             event('log',[[$this->modules,'d',$product]]);
 

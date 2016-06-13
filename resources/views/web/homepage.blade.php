@@ -119,18 +119,18 @@
             <p>{{$articles[0]['content']}}</p>
             <p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>
         </div>
-        <div class="col-lg-4">
-            <img class="img-circle" src="" width="140" height="140">
-            <h2>{{$articles[1]['title']}}</h2>
-            <p>{{$articles[1]['content']}}</p>
-            <p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <img class="img-circle" src="" width="140" height="140">
-            <h2>{{$articles[2]['title']}}</h2>
-            <p>{{$articles[2]['content']}}</p>
-            <p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>
-        </div>
+        {{--<div class="col-lg-4">--}}
+            {{--<img class="img-circle" src="" width="140" height="140">--}}
+            {{--<h2>{{$articles[1]['title']}}</h2>--}}
+            {{--<p>{{$articles[1]['content']}}</p>--}}
+            {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
+        {{--</div>--}}
+        {{--<div class="col-lg-4">--}}
+            {{--<img class="img-circle" src="" width="140" height="140">--}}
+            {{--<h2>{{$articles[2]['title']}}</h2>--}}
+            {{--<p>{{$articles[2]['content']}}</p>--}}
+            {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
+        {{--</div>--}}
     </div>
 
     <hr class="featurette-divider" id="hot">

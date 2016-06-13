@@ -176,6 +176,7 @@
                 $.each(this.uploadFiles,function(x,v){
                     var form = new FormData;
                     form.append('name','商品图片');
+                    form.append('sort_id',3);
                     form.append('image',v);
                     $.ajax({
                         method:'POST',
