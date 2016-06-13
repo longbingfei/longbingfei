@@ -52,60 +52,29 @@
         </nav>
     </div>
 </div>
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<div id="carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
+        @foreach($style['carousel'] as $k => $v)
+        <li data-target="#carousel" data-slide-to="{{$k}}"></li>
+        @endforeach
     </ol>
     <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img class="first-slide" src="homepage/image/h1.jpg">
+        @foreach($style['carousel'] as $k => $v)
+            <div class="item">
+                <img src="{{$v['image_path']}}">
                 <div class="container">
                     <div class="carousel-caption">
-                        <h1></h1>
-                        <p></p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                        <a class="btn btn-lg btn-primary" href="{{$v['link']}}" role="button">{{$v['describe']}}</a>
                     </div>
                 </div>
             </div>
-        <div class="item">
-            <img class="second-slide" src="homepage/image/h2.jpg">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h1></h1>
-                    <p></p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <img class="third-slide" src="homepage/image/h3.jpg">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h1></h1>
-                    <p></p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <img class="forth-slide" src="homepage/image/h4.jpg">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h1></h1>
-                    <p></p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">xxx</a></p>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">上一页</span>
     </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">下一页</span>
     </a>
@@ -113,12 +82,12 @@
 {{--4,4,4row--}}
 <div class="container marketing">
     <div class="row" id="promote">
-        <div class="col-lg-4">
-            <img class="img-circle" src="" width="140" height="140">
-            <h2>{{$articles[0]['title']}}</h2>
-            <p>{{$articles[0]['content']}}</p>
-            <p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>
-        </div>
+        {{--<div class="col-lg-4">--}}
+            {{--<img class="img-circle" src="" width="140" height="140">--}}
+            {{--<h2>{{$articles[0]['title']}}</h2>--}}
+            {{--<p>{{$articles[0]['content']}}</p>--}}
+            {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
+        {{--</div>--}}
         {{--<div class="col-lg-4">--}}
             {{--<img class="img-circle" src="" width="140" height="140">--}}
             {{--<h2>{{$articles[1]['title']}}</h2>--}}
@@ -207,7 +176,8 @@
 <script src="{{ url('default/js/jquery.js') }}"></script>
 <script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script>
-
+    $(".carousel-indicators li:first").addClass("active");
+    $(".carousel-inner div:first").addClass("active");
 </script>
 </body>
 </html>

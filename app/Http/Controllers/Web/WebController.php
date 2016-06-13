@@ -6,26 +6,29 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Repositories\InterfacesBag\Media;
+use App\Repositories\InterfacesBag\Style;
 use App\Repositories\InterfacesBag\Article;
 use App\Repositories\InterfacesBag\Product;
 
 class WebController extends Controller
 {
-    protected $media;
+    protected $style;
     protected $article;
     protected $product;
 
-    public function __construct(Media $media,Article $article,Product $product){
-        $this->media = $media;
+    public function __construct(Style $style,Article $article,Product $product){
         $this->article = $article;
         $this->product = $product;
+        $this->style = $style;
     }
 
     public function index(){
-        $articles = $this->articleIndex();
+        $style = $this->styleIndex();
+        return view('web.homepage',['style'=>$style]);
+    }
 
-        return view('web.homepage',['articles'=>$articles['articles']]);
+    public function styleIndex(){
+        return $this->style->index();
     }
 
     public function articleIndex(){

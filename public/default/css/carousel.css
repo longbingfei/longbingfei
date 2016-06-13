@@ -22,9 +22,9 @@ body {
 
 /* Flip around the padding for proper display in narrow viewports */
 .navbar-wrapper > .container {
-    padding-right: 0;
-    padding-left: 0;
-}
+     padding-right: 0;
+     padding-left: 0;
+ }
 .navbar-wrapper .navbar {
     padding-right: 15px;
     padding-left: 15px;
@@ -45,7 +45,20 @@ body {
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
+    position:absolute;
+    width:50%;
+    left:50px;
+    bottom:0px;
+    text-align: left;
+    padding: 20px 20px 10px 0px;
     z-index: 10;
+}
+.carousel-caption a{
+    background-color:orangered;
+    border:0px solid white;
+}
+.carousel-control{
+    width:50px;
 }
 
 /* Declare heights because of positioning of img element */

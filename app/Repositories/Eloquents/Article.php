@@ -29,7 +29,7 @@ class Article implements ArticleInterface{
         return ['count'=>$count,'articles'=>$articles];
     }
     public function show($id){
-        $article = ArticleModel::findOrFail($id)->toArray();
+        $article = ArticleModel::findOrFail($id);
         $article['content'] = htmlspecialchars_decode($article['content']);
 
         return $article;
@@ -45,20 +45,20 @@ class Article implements ArticleInterface{
         }
     }
     public function update($id,array $data){
-        $before = ArticleModel::findOrFail($id)->toArray();
+        $before = ArticleModel::findOrFail($id);
         $data['content'] = htmlspecialchars($data['content']);
         if(isset($data['status'])){
             $data['status'] = intval($data['status']);
         }
         $data['editor_id'] = Auth::id();
         if(ArticleModel::where('id',$id)->update($data)){
-            event('log',[[$this->module,'u',['before'=>$before,'after'=>ArticleModel::findOrFail($id)->toArray()]]]);
+            event('log',[[$this->module,'u',['before'=>$before,'after'=>ArticleModel::findOrFail($id)]]]);
 
             return 1;
         }
     }
     public function delete($id){
-        $info = ArticleModel::findOrFail($id)->toArray();
+        $info = ArticleModel::findOrFail($id);
         if(ArticleModel::destroy($id)){
             event('log',[[$this->module,'d',$info]]);
 
