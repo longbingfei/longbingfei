@@ -10,6 +10,7 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
 </head>
 <body>
 <div class="container">
+    <div class="test"></div>
 </div>
 {{--modal--}}
 <div class="container">
@@ -42,6 +43,7 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
     </div>
 </div>
 <script>
+    UploadPic.Init($(".image-upload-div"));
 </script>
 </body>
 </html>

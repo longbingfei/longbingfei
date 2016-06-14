@@ -86,3 +86,62 @@ body {
         padding-left: 40px;
     }
 }
+
+/*plug*/
+.plug-show-div{
+    border:1px solid darkgrey;
+    width:100%;
+    /*border-radius: 1em;*/
+}
+.plug-upload-div{
+    position: relative;
+    float:left;
+    width:80px;
+    height:80px;
+    z-index: 998;
+    cursor:pointer;
+}
+.plug-mark{
+    position:relative;
+}
+#plug-upload-input{
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:80px;
+    height:80px;
+    opacity: 0;
+}
+.plug-plus-x{
+    position:absolute;
+    width:20px;
+    height:2px;
+    top:39px;
+    left:30px;
+    border:1px solid darkgrey;
+}
+.plug-plus-y{
+    position:absolute;
+    width:2px;
+    height:20px;
+    top:30px;
+    left:39px;
+    border:1px solid darkgrey;
+}
+.plug-preview-div{
+    width:300px;
+    height:300px;
+    position:absolute;
+    background-size:100% 100%;
+    z-index:999;
+}
+.plug-cancel-style{
+    position:absolute;
+    top:0px;
+    right:0px;
+    width:10px;
+    height:10px;
+    line-height:10px;
+    color:white;
+    cursor:pointer;
+}
