@@ -33,6 +33,7 @@
                 <li class="article active"><a href="javascript:void(0)">Article</a></li>
                 <li class="media"><a href="javascript:void(0)">Media</a></li>
                 <li class="product"><a href="javascript:void(0)">Product</a></li>
+                <li class="style"><a href="javascript:void(0)">Style</a></li>
                 <li class="zone"><a href="javascript:void(0)">Zone</a></li>
             </ul>
         </div>
@@ -43,36 +44,35 @@
 <script src="{{ url('default/js/jquery.js') }}"></script>
 <script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script>
-    $(".article").on('click',function(){
-        $(".menu li").removeClass("active");
-        $(this).addClass("active");
-        $.getJSON("{{url('admin/feature/article')}}",function(data){
-            var data = JSON.stringify(data);
-            //$dom.load(url,data,function(){}) -->data为对象则调用的post ,string则调用get
-            $(".main").empty().load("{{url('admin/feature/page_article')}}",{"data":data});
-        });
-    });
-    $(".product").on('click',function(){
-        $(".menu li").removeClass("active");
-        $(this).addClass("active");
-        $.getJSON("{{url('admin/feature/product')}}",function(data){
-            $(".main").empty().load("{{url('admin/feature/page_product')}}",{"data":data});
-        })
-    });
-    $(".zone").on('click',function(){
-        $(".menu li").removeClass("active");
-        $(this).addClass("active");
-        $.getJSON("{{url('admin/auth/zone')}}",function(data){
-            $(".main").empty().load("{{url('admin/feature/page_zone')}}",{"data":data});
-        })
-    });
-    $(".media").on('click',function(){
-        $(".menu li").removeClass("active");
-        $(this).addClass("active");
-        $.getJSON("{{url('admin/feature/media')}}",function(data){
-            $(".main").empty().load("{{url('admin/feature/page_media')}}",{"data":data});
-        })
-    });
+    var Tool = {
+        Alert:function(obj,message){
+           var alertDom =
+           '<div class="alert alert-warning" role="alert">'+
+                '<div>'+message+'</div>'+
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                    '<span aria-hidden="true">x</span>'+
+                '</button>'+
+            '</div>';
+            $(alertDom).css({width:"100%",height:"100%"});
+            obj.append($(alertDom));
+        }
+    };
+    var Frame = {
+        Load : function (e){
+            var dataUrl = e.data.dataUrl;
+            var loadUrl = e.data.loadUrl;
+            $(".menu li").removeClass("active");
+            $(this).addClass("active");
+            $.getJSON(dataUrl,function(data){
+                $(".main").empty().load(loadUrl,{"data":data});
+            });
+        }
+    };
+    $(".article").on('click',{dataUrl:"{{url('admin/feature/article')}}",loadUrl:"{{url('admin/feature/page_article')}}"},Frame.Load);
+    $(".media").on('click',{dataUrl:"{{url('admin/feature/media')}}",loadUrl:"{{url('admin/feature/page_media')}}"},Frame.Load);
+    $(".product").on('click',{dataUrl:"{{url('admin/feature/product')}}",loadUrl:"{{url('admin/feature/page_product')}}"},Frame.Load);
+    $(".style").on('click',{dataUrl:"{{url('admin/feature/style')}}",loadUrl:"{{url('admin/feature/page_style')}}"},Frame.Load);
+    $(".zone").on('click',{dataUrl:"{{url('admin/auth/zone')}}",loadUrl:"{{url('admin/feature/page_zone')}}"},Frame.Load);
     window.onload = $(".article").click();
 </script>
 </body>

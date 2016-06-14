@@ -48,6 +48,9 @@ Route::group(['prefix'=>'admin'],function(){
         Route::any('page_media',function(){
             return view('admin.media');
         });
+        Route::any('page_style',function(){
+            return view('admin.style');
+        });
         //具体操作
         Route::resource('media','MediaController');
         Route::resource('image','ImageController');

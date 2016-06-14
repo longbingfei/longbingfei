@@ -40,7 +40,6 @@
             left:39px;
             border:1px solid darkgrey;
         }
-
     </style>
 </head>
 <body>
@@ -192,7 +191,6 @@
                         }
                     });
                 });
-                console.log(images);
                 var form = new FormData;
                 form.append('sort_id',productSort);
                 form.append('name',productName);

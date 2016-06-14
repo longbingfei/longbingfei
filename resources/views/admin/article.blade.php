@@ -1,5 +1,5 @@
 <?php
-$data = isset($_POST['data']) ? json_decode($_POST['data'],1) : [] ;
+$data = isset($_POST['data']) ? $_POST['data'] : [] ;
 $count = $data['count'];
 $data = $data['articles'];
 ?>
