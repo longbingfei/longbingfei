@@ -119,3 +119,100 @@ var Frame = {
         });
     }
 };
+var Video = {
+    Init : function(data) {
+        var obj = data.obj||$("body");
+        var id = data.id || "video_div";
+        var width = data.width || "300px";
+        var height = data.height || "200px";
+        var src = data.src||'none';
+        var video = $("<video id="+id+">浏览器不支持h5video标签</video>").css({width: width, height: height,backgroundColor:"black"}).attr({src:src});
+        if(data.controls){
+            video.attr({controls:"controls"});
+        }
+        video.appendTo(obj);
+    },
+    Controls_init:function(obj) {
+        var controlBox = $("<div></div>").css({
+            width: obj.width(),
+            padding: "10px",
+            position: "relative"
+        });
+        obj.wrap(controlBox);
+        var toolBar = $("<div class='toolbar'><div><div></div><div></div><div></div></div></div>").css({
+            width: obj.width(),
+            height: "0px",
+            position: "absolute",
+            bottom: "10px",
+            textAlign:"center",
+            backgroundColor:"black"
+        });
+        var innerDiv = toolBar.children('div:eq(0)');
+            innerDiv.css({width:obj.width()-40,height:"60px",margin:"0 auto"});
+            innerDiv.children('div:eq(0)').css({
+                width:"60px",
+                height:"60px",
+                float:"left",
+                fontSize:"20px",
+                lineHeight:"60px",
+                backgroundColor:"cyan"
+            }).addClass("glyphicon glyphicon-play");
+            innerDiv.children('div:eq(2)').css({
+                width:"60px",
+                height:"60px",
+                float:"left",
+                fontSize:"14px",
+                backgroundColor:"grey"
+        });
+        innerDiv.children('div:eq(1)').css({
+            width:(100-12000/innerDiv.width())+"%",
+            height:"60px",
+            float:"left",
+            backgroundColor:"yellow"
+        }).addClass('progress');
+        var infoBar = $("<div class='infoBar'></div>").css({
+            width: obj.width(),
+            height: obj.height() - 60,
+            position: "absolute",
+            top: "10px"
+        });
+        var pushMark = $("<div class='pushMark'></div>").css({
+            width: "100px",
+            height: "100px",
+            position: "absolute",
+            top: obj.height() / 2 - 50,
+            left: obj.width() / 2 - 60,
+            backgroundImage: "url('http://img.dev.hogesoft.com:233/material/livmedia/img/2016/06/20160621130125hcLM.jpg')",
+            backgroundSize: "100% 100%",
+            cursor: "pointer"
+        });
+        infoBar.append(pushMark);
+        obj.before(infoBar).after(toolBar);
+        this.Controls(obj.parent());
+    },
+    Controls:function(obj){
+        obj.children(".infoBar").on('click',function(){
+            $(this).css({display:'none'});
+            obj.children('video')[0].play();
+        });
+        obj.children("video").on('click',function(){
+            obj.children('video')[0].pause();
+            $(this).siblings(".infoBar").css({display:'block'});
+        });
+        obj.children('video').on('loadedmetadata',function(){
+            console.log(obj.children('video')[0].duration);
+            $(this).on('mouseover mouseout',function(e){
+                if(e.type=="mouseover"){
+                    $(".toolbar").animate({height:"60px"},500);
+                }else if(e.type=="mouseout"){
+                    $(".toolbar").animate({height:"0px"},500);
+                }
+            });
+            //var dom = $("<div><div><div><div></div></div>").css({height:"20px",width:"100%",border:"1px solid blue"});
+            //dom.children("div:eq(0)").css({height:"20px",width:"20px",backgroundColor:"red"});
+            //dom.children("div:eq(1)").css({height:"20px",width:dom.width()-20,backgroundColor:"green"});
+            //$(".toolbar").children("div:eq(1)").append(dom);
+        });
+    }
+
+};

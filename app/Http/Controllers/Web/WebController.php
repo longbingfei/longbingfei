@@ -39,10 +39,6 @@ class WebController extends Controller
         return $this->article->show($id);
     }
 
-    public function mediaShow($id){
-        return $this->media->show($id);
-    }
-
     public function productIndex(){
         return $this->product->index();
     }

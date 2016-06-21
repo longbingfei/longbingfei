@@ -127,7 +127,7 @@ $data = $data['articles'];
             });
             $(".tbd").html(html);
         });
-    })
+    });
     //文稿新建修改
     var Article = {
         Message:{},

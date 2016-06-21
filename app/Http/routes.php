@@ -11,7 +11,9 @@
 |
 */
 
-//后端管理员
+Route::get('/',function(){
+    return view('index');
+});
 Route::get('admin',function(){
     return redirect('admin/auth/login');
 });
@@ -63,8 +65,7 @@ Route::group(['prefix'=>'admin'],function(){
     });
 });
 
-//前端
-Route::group(['namespace'=>'Web'],function(){
+Route::group(['prefix'=>'web','namespace'=>'Web'],function(){
     Route::get('/','WebController@index');
     Route::get('article','WebController@articleIndex');
     Route::get('article/{id}','WebController@articleShow');
