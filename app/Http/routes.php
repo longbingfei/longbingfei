@@ -25,7 +25,7 @@ Route::group(['prefix'=>'admin'],function(){
             return view('admin.login');
         });
         Route::post('login','AdminAuthController@login');
-        Route::post('register','AdminAuthController@registere');
+        Route::post('register','AdminAuthController@register');
         Route::get('list','AdminAuthController@index');
         Route::get('zone','AdminAuthController@show');
         Route::post('update/{id}','AdminAuthController@update');

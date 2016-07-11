@@ -1,6 +1,20 @@
 /**
  * Created by zhangxian on 16/6/14.
  */
+//页面数据加载与跳转
+var Frame = {
+    Load : function (e){
+        var dataUrl = e.data.dataUrl;
+        var loadUrl = e.data.loadUrl;
+        $(".menu li").removeClass("active");
+        $(this).addClass("active");
+        $.getJSON(dataUrl,function(data){
+            $(".main").empty().load(loadUrl,{"data":data});
+        });
+    }
+};
+
+//警告框
 var Tool = {
     Alert:function(obj,message){
         var alertDom =
@@ -14,6 +28,8 @@ var Tool = {
         obj.append($(alertDom));
     }
 };
+
+//图片上传与显示
 var UploadPic = {
     i:0,
     uploadFiles:{},
@@ -108,17 +124,8 @@ var UploadPic = {
         });
     }
 };
-var Frame = {
-    Load : function (e){
-        var dataUrl = e.data.dataUrl;
-        var loadUrl = e.data.loadUrl;
-        $(".menu li").removeClass("active");
-        $(this).addClass("active");
-        $.getJSON(dataUrl,function(data){
-            $(".main").empty().load(loadUrl,{"data":data});
-        });
-    }
-};
+
+//视频播放器
 var Video = {
     Init : function(data) {
         var obj = data.obj||$("body");
@@ -139,12 +146,13 @@ var Video = {
             position: "relative"
         });
         obj.wrap(controlBox);
-        var toolBar = $("<div class='toolbar'><div><div></div><div></div><div></div></div></div>").css({
+        var toolBar = $("<div class='toolBar'><div><div></div><div></div><div></div></div></div>").css({
             width: obj.width(),
             height: "0px",
             position: "absolute",
             bottom: "10px",
             textAlign:"center",
+            overflow:"hidden",
             backgroundColor:"black"
         });
         var innerDiv = toolBar.children('div:eq(0)');
@@ -169,12 +177,13 @@ var Video = {
             height:"60px",
             float:"left",
             backgroundColor:"yellow"
-        }).addClass('progress');
-        var infoBar = $("<div class='infoBar'></div>").css({
+        }).addClass('progress_');
+        var infoBar = $("<div></div>").css({
             width: obj.width(),
             height: obj.height() - 60,
             position: "absolute",
-            top: "10px"
+            top: "10px",
+            zIndex:10
         });
         var pushMark = $("<div class='pushMark'></div>").css({
             width: "100px",
@@ -191,28 +200,42 @@ var Video = {
         this.Controls(obj.parent());
     },
     Controls:function(obj){
-        obj.children(".infoBar").on('click',function(){
-            $(this).css({display:'none'});
-            obj.children('video')[0].play();
-        });
-        obj.children("video").on('click',function(){
-            obj.children('video')[0].pause();
-            $(this).siblings(".infoBar").css({display:'block'});
-        });
+        var video = obj.children('video');
+        var infobar = obj.children('div:eq(0)');
+        console.log(video);
+        if(video[0].paused){
+            $("body").on('click',video,function(){
+                    infobar.css({display:'none'});
+                    video[0].play();
+                $("body").on('click',video,function(){
+                    video[0].pause();
+                    infobar.css({display:'block'});
+                })
+            })
+        }else{
+            $("body").on('click',video,function(){
+                video[0].pause();
+                infobar.css({display:'block'});
+                $("body").on('click',video,function(){
+                    infobar.css({display:'none'});
+                    video[0].play();
+                })
+            })
+        }
         obj.children('video').on('loadedmetadata',function(){
-            console.log(obj.children('video')[0].duration);
-            $(this).on('mouseover mouseout',function(e){
-                if(e.type=="mouseover"){
-                    $(".toolbar").animate({height:"60px"},500);
-                }else if(e.type=="mouseout"){
-                    $(".toolbar").animate({height:"0px"},500);
-                }
+            $(this).on('mouseover',function(){
+                $(".toolBar").stop(1).animate({height:"60px"},500);
             });
-            //var dom = $("<div><div><div><div></div></div>").css({height:"20px",width:"100%",border:"1px solid blue"});
-            //dom.children("div:eq(0)").css({height:"20px",width:"20px",backgroundColor:"red"});
-            //dom.children("div:eq(1)").css({height:"20px",width:dom.width()-20,backgroundColor:"green"});
-            //$(".toolbar").children("div:eq(1)").append(dom);
+            var dom = $("<div><div><div><div></div></div>").css({height:"20px",width:"100%",border:"1px solid blue"});
+            dom.children("div:eq(0)").css({height:"20px",width:"20px",backgroundColor:"red"});
+            dom.children("div:eq(1)").css({height:"20px",width:dom.width()-20,backgroundColor:"green"});
+            $(".toolBar").children("div:eq(1)").append(dom);
         });
     }
+
+};
+
+//富文本编辑器
+var TextEidt = {
 
 };

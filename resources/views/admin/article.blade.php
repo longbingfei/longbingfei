@@ -7,10 +7,6 @@ $data = $data['articles'];
 <html lang="zh-CN">
 <head>
     <style>
-        .container{
-            position:absolute;
-            left:10px;
-        }
         .checkbox,tr{
             cursor:pointer
         }
@@ -22,11 +18,9 @@ $data = $data['articles'];
 <body>
 <div class="container">
     <div class="table-responsive">
+        <button class="btn btn-default newArticle">新建文稿</button>
         <table class="table">
             <thead>
-                <tr class="text-right">
-                    <th colspan="7"><button class="btn btn-default newArticle">新建文稿</button></th>
-                </tr>
                 <tr>
                     <th>选择</th>
                     <th>标题</th>

@@ -1,11 +1,26 @@
+<?php
+$data = isset($_POST['data']) ? $_POST['data'] : [] ;
+?>
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .panel{
+        }
+        .product-main{
+            border:1px solid grey;
+            height:800px;
+            width:100%;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="panel panel-default">
         <a class="btn btn-primary new-product-a">新建</a>
+    </div>
+    <div class="product-main">
+
     </div>
 </div>
 {{--modal--}}
