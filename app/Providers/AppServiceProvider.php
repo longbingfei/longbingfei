@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Response::macro('push',function($data = null){
+            return Response::make(['error_code'=>0,'data'=>$data]);
+        });
+        Response::macro('error',function($code){
+            return Response::make(['error_code'=>config('error.'.$code,false) ? $code : '000' , 'error_message'=>config('error.'.$code, '错误代码不存在')]);
+        });
     }
 
     /**

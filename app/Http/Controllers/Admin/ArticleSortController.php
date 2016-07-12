@@ -17,6 +17,10 @@ class ArticleSortController extends Controller
         $this->as = $as;
     }
 
+    /**
+     * @params page int
+     * @params per_page_num int
+     */
     public function index()
     {
         return $this->as->index();
