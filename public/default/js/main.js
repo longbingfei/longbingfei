@@ -125,6 +125,21 @@ var UploadPic = {
     }
 };
 
+//Product
+var Product = {
+    Show:function(obj,mouseStatus){
+        switch(mouseStatus){
+            case 'mouseover':
+                console.log(obj.children('img').css('left'));
+                break;
+            case 'mouseout':
+                obj.css({border:"1px solid black"});
+                break;
+        }
+
+    }
+};
+
 //视频播放器
 var Video = {
     Init : function(data) {

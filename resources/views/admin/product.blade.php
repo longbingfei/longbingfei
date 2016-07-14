@@ -12,6 +12,17 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
             height:800px;
             width:100%;
         }
+        .product-main div{
+            border:1px solid grey;
+            width:150px;
+            float:left;
+            height:200px;
+            margin-left:10px;
+            margin-top:10px;
+            overflow: hidden;
+            position:relative;
+        }
+
     </style>
 </head>
 <body>
@@ -20,7 +31,9 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
         <a class="btn btn-primary new-product-a">新建</a>
     </div>
     <div class="product-main">
-
+        <div class="product-item">
+            <img src="{{url('default/images/default_avatar.jpeg')}}">
+        </div>
     </div>
 </div>
 {{--modal--}}
@@ -118,6 +131,9 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
             UploadPic.Reset();
             $("#product-form")[0].reset();
         })
+    })
+    $("body").on("mouseover mouseout",".product-item",function(e){
+        Product.Show($(".product-item"), e.type);
     })
 </script>
 </body>

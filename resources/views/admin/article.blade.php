@@ -51,12 +51,12 @@ $data = $data['articles'];
             <ul class="pagination">
                 <li class="pre">
                     <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                        <span aria-hidden="true">上一页</span>
                     </a>
                 </li>
                 <li class="next">
                     <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                        <span aria-hidden="true">下一页</span>
                     </a>
                 </li>
             </ul>
