@@ -14,7 +14,10 @@ use Auth;
 class Product implements ProductInterface{
     protected $modules = 'product';
     public function index(){
-        return ProductModel::all();
+        return array_map(function($y){
+            $y['images'] = $y['images']  ? unserialize($y['images']) : [];
+            return $y;
+        },ProductModel::all()->toArray());
     }
     public function show($id){
         return ProductModel::findOrFail($id);

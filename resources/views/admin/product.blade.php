@@ -6,23 +6,23 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
 <head>
     <style>
         .panel{
+            /*box-shadow: 0 0 6px #0D3349;*/
         }
         .product-main{
-            border:1px solid grey;
-            height:800px;
-            width:100%;
-        }
-        .product-main div{
-            border:1px solid grey;
-            width:150px;
-            float:left;
-            height:200px;
-            margin-left:10px;
-            margin-top:10px;
             overflow: hidden;
-            position:relative;
+            width:100%;
+            box-shadow: 0 0 6px #0D3349;
         }
-
+        .product-table tr td{
+            vertical-align: middle !important;
+        }
+        .product-table tr:first-child td{
+            font-size: 16px;
+            font-weight: 400;
+        }
+        td img{
+            width:80px;
+        }
     </style>
 </head>
 <body>
@@ -31,9 +31,34 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
         <a class="btn btn-primary new-product-a">新建</a>
     </div>
     <div class="product-main">
-        <div class="product-item">
-            <img src="{{url('default/images/default_avatar.jpeg')}}">
-        </div>
+        <table class="table table-hover product-table">
+            <tr class="active">
+                <td>选择</td>
+                <td>展示</td>
+                <td>名称</td>
+                <td>描述</td>
+                <td>创建时间</td>
+                <td>更新时间</td>
+                <td>操作人</td>
+                <td>操作</td>
+            </tr>
+            @foreach($data as $item => $value)
+            <tr>
+                <td><input type="checkbox"></td>
+                {{print_r(isset($data['images']))}}
+                <td><img src="{{url('images/2016/06/14/14658833420537.jpeg')}}"></td>
+                <td>{{$value['name']}}</td>
+                <td>{{$value['describe']}}</td>
+                <td>{{$value['created_at']}}</td>
+                <td>{{$value['updated_at']}}</td>
+                <td>{{$value['user_id']}}</td>
+                <td>xx</td>
+            </tr>
+            @endforeach
+        </table>
+        {{--<div class="product-item">--}}
+            {{--<img src="{{url('default/images/default_avatar.jpeg')}}">--}}
+        {{--</div>--}}
     </div>
 </div>
 {{--modal--}}
@@ -131,9 +156,6 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
             UploadPic.Reset();
             $("#product-form")[0].reset();
         })
-    })
-    $("body").on("mouseover mouseout",".product-item",function(e){
-        Product.Show($(".product-item"), e.type);
     })
 </script>
 </body>

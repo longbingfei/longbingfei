@@ -130,13 +130,12 @@ var Product = {
     Show:function(obj,mouseStatus){
         switch(mouseStatus){
             case 'mouseover':
-                console.log(obj.children('img').css('left'));
+               console.log('mouseover');
                 break;
             case 'mouseout':
-                obj.css({border:"1px solid black"});
+                console.log('mouseout');
                 break;
         }
-
     }
 };
 
