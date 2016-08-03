@@ -6,22 +6,50 @@
  * Time: 上午9:19
  */
 namespace App\Repositories\Eloquents;
-use App\Repositories\InterfacesBag\Product as ProductInterface;
-use App\Models\Product as ProductModel;
-use App\Models\Image as ImageModel;
-use Auth;
 
+use Auth;
+use App\Models\Image as ImageModel;
+use App\Models\Product as ProductModel;
+use Illuminate\Support\Facades\Response;
+use App\Repositories\InterfacesBag\Product as ProductInterface;
 class Product implements ProductInterface{
     protected $modules = 'product';
     public function index(array $condition){
-        return array_map(function($y){
-            $y['images'] = $y['images']  ? unserialize($y['images']) : [];
-            return $y;
-        },ProductModel::all()->toArray());
+        $orderBy = $condition['orderby'] && in_array($condition['orderby'],['id','sort_id','user_id','price',
+                'storage']) ? 'products.'.$condition['orderby'] : 'products.id';
+        $order = $condition['order'] ? $condition['order'] : 'desc';
+        $product = ProductModel::orderBy($orderBy,$order)
+            ->leftJoin('product_sorts','product_sorts.id','=','products.sort_id')
+            ->leftJoin('administrators','products.user_id','=','administrators.id')
+            ->select('products.*', 'product_sorts.name as sort_name','administrators.username');
+        if($sort_id = intval($condition['sort_id'])){
+            $product = $product->where('sort_id',$sort_id);
+        }
+        $total = $product->count();
+        $page = intval($condition['page']) ? intval($condition['page']) : 1;
+        $perpage = intval($condition['perpage']) ? intval($condition['perpage']) : 10;
+        $product = $product->paginate($perpage, ['*'], 'page', $page);
+
+        $return = array_map(function($value){
+            $value['images'] = $value['images'] ? unserialize($value['images']) : [];
+            return $value;
+        },$product->all());
+
+        return Response::push(['total'=>$total,'data'=>$return]);
     }
+
     public function show($id){
-        return ProductModel::findOrFail($id);
+        $return = ProductModel::where('products.id',$id)
+            ->leftJoin('product_sorts','product_sorts.id','=','products.sort_id')
+            ->leftJoin('administrators','products.user_id','=','administrators.id')
+            ->select('products.*', 'product_sorts.name as sort_name','administrators.username')->first();
+        if(!is_null($return)){
+            $return['images'] = $return['images'] ? unserialize($return['images']) : [];
+        }
+
+        return Response::push($return ? $return : []);
     }
+
     public function create(array $data){
         $data['sort_id'] = isset($data['sort_id']) ? intval($data['sort_id']) : 1;
         $data['images'] = serialize(json_decode($data['images'],1));
@@ -34,6 +62,7 @@ class Product implements ProductInterface{
             return 1;
         }
     }
+
     public function update($id,array $data){
         $before = ProductModel::findOrFail($id)->toArray();
         $data['sort_id'] = isset($data['sort_id']) ? intval($data['sort_id']) : 1;
@@ -47,6 +76,7 @@ class Product implements ProductInterface{
             return 1;
         }
     }
+
     public function delete($id){
         $product = ProductModel::findOrFail($id)->toArray();
         $images = unserialize($product['images']);

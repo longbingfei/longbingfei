@@ -36,7 +36,7 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
                 <td>选择</td>
                 <td>展示</td>
                 <td>名称</td>
-                <td>描述</td>
+                <td>分类</td>
                 <td>创建时间</td>
                 <td>更新时间</td>
                 <td>操作人</td>
@@ -45,20 +45,24 @@ $data = isset($_POST['data']) ? $_POST['data'] : [] ;
             @foreach($data as $item => $value)
             <tr>
                 <td><input type="checkbox"></td>
-                {{print_r(isset($data['images']))}}
                 <td><img src="{{url('images/2016/06/14/14658833420537.jpeg')}}"></td>
                 <td>{{$value['name']}}</td>
-                <td>{{$value['describe']}}</td>
+                <td>{{$value['sort_id']}}</td>
                 <td>{{$value['created_at']}}</td>
                 <td>{{$value['updated_at']}}</td>
                 <td>{{$value['user_id']}}</td>
-                <td>xx</td>
+                <td>xxx</td>
             </tr>
             @endforeach
         </table>
         {{--<div class="product-item">--}}
             {{--<img src="{{url('default/images/default_avatar.jpeg')}}">--}}
         {{--</div>--}}
+        <div class="panel panel-default">
+            <a class="btn btn-default ">上一页</a>
+            1/2
+            <a class="btn btn-default ">下一页</a>
+        </div>
     </div>
 </div>
 {{--modal--}}

@@ -16,8 +16,18 @@ class ProductController extends Controller
         $this->product = $product;
     }
 
-    public function index(){
-        return $this->product->index();
+    public function index(Request $request){
+        $fillable=[
+            'page',
+            'perpage',
+            'sort_id',
+            'orderby',
+            'storage',
+            'price',
+            'title',
+            'order'
+        ];
+        return $this->product->index($request->only($fillable));
     }
     public function show($id){
         return $this->product->show($id);

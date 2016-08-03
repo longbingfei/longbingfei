@@ -11,7 +11,7 @@
 |
 */
 Route::get('image',function(){
-        return Image::canvas(100,40,array(mt_rand(210,255),mt_rand(210,255),mt_rand(210,255)))
+        return Image::canvas(90,40,array(mt_rand(210,255),mt_rand(210,255),mt_rand(210,255)))
             ->text(mt_rand(10000,99999),0,15,function($font) {
             $font->size(25);
             $font->file('/Library/Fonts/AppleGothic.ttf');
