@@ -13,7 +13,7 @@ use Auth;
 
 class Product implements ProductInterface{
     protected $modules = 'product';
-    public function index(){
+    public function index(array $condition){
         return array_map(function($y){
             $y['images'] = $y['images']  ? unserialize($y['images']) : [];
             return $y;

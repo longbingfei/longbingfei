@@ -145,6 +145,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
+
     ],
 
     /*
@@ -193,6 +195,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Resp'      => App\Http\Response\Resp::class,
+        'Image'     => Intervention\Image\Facades\Image::class
 
     ],
 

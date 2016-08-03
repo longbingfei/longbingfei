@@ -10,6 +10,29 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('image',function(){
+        return Image::canvas(100,40,array(mt_rand(210,255),mt_rand(210,255),mt_rand(210,255)))
+            ->text(mt_rand(10000,99999),0,15,function($font) {
+            $font->size(25);
+            $font->file('/Library/Fonts/AppleGothic.ttf');
+            $font->color('#ccc');
+            $font->valign('center');
+            $font->angle(mt_rand(-8,8));
+            })
+            ->line(mt_rand(0,100), mt_rand(0,40),mt_rand(0,100), mt_rand(0,40), function ($draw) {
+                $draw->color('#ccc');
+            })
+            ->line(mt_rand(0,100), mt_rand(0,40),mt_rand(0,100), mt_rand(0,40), function ($draw) {
+                $draw->color('#ccc');
+            })
+            ->line(mt_rand(0,100), mt_rand(0,40),mt_rand(0,100), mt_rand(0,40), function ($draw) {
+                $draw->color('#ccc');
+            })
+            ->line(mt_rand(0,100), mt_rand(0,40),mt_rand(0,100), mt_rand(0,40), function ($draw) {
+                $draw->color('#ccc');
+            })
+            ->response('jpg');
+});
 Route::get('admin',function(){
     return redirect('admin/auth/login');
 });

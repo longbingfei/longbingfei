@@ -8,7 +8,7 @@
 namespace App\Repositories\InterfacesBag;
 
 interface Product extends BaseInterface{
-    public function index();
+    public function index(array $condition);
     public function show($id);
     public function create(array $data);
     public function update($id,array $data);
