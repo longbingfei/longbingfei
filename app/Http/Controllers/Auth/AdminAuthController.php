@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Administrator;
-use Auth;
-use Illuminate\Http\Request;
-
 class AdminAuthController extends Controller
 {
     public $admin;
@@ -26,6 +25,9 @@ class AdminAuthController extends Controller
     }
     public function login(Requests\AdminLoginRequest $request)
     {
+        if($request->get('verifycode') != session('verifycode')){
+            return Response::error(1001);
+        }
         $info = $request->only(['username','password']);
         $info['ip'] = $request->getClientIp();
 

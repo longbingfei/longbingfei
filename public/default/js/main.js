@@ -248,8 +248,3 @@ var Video = {
     }
 
 };
-
-//富文本编辑器
-var TextEidt = {
-
-};

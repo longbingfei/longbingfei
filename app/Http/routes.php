@@ -11,8 +11,10 @@
 |
 */
 Route::get('image',function(){
+        $number = mt_rand(10000,99999);
+        session('verifycode',$number);
         return Image::canvas(90,40,array(mt_rand(210,255),mt_rand(210,255),mt_rand(210,255)))
-            ->text(mt_rand(10000,99999),0,15,function($font) {
+            ->text($number,0,15,function($font) {
             $font->size(25);
             $font->file('/Library/Fonts/AppleGothic.ttf');
             $font->color('#ccc');
