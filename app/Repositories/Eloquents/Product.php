@@ -25,17 +25,15 @@ class Product implements ProductInterface{
         if($sort_id = intval($condition['sort_id'])){
             $product = $product->where('sort_id',$sort_id);
         }
-        $total = $product->count();
         $page = intval($condition['page']) ? intval($condition['page']) : 1;
         $perpage = intval($condition['perpage']) ? intval($condition['perpage']) : 10;
-        $product = $product->paginate($perpage, ['*'], 'page', $page);
-
+        $product = $product->paginate($perpage, ['*'], 'page', $page)->toArray();//每页条数,字段数组,页码标记,第几页
         $return = array_map(function($value){
             $value['images'] = $value['images'] ? unserialize($value['images']) : [];
             return $value;
-        },$product->all());
+        },$product['data']);
 
-        return Response::push(['total'=>$total,'data'=>$return]);
+        return ['total'=>$product['total'],'data'=>$return];
     }
 
     public function show($id){

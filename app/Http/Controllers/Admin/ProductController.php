@@ -27,11 +27,16 @@ class ProductController extends Controller
             'title',
             'order'
         ];
-        return $this->product->index($request->only($fillable));
+
+        $return = $this->product->index($request->only($fillable));
+
+        return view('admin.product',['data'=>$return]);
     }
+
     public function show($id){
         return $this->product->show($id);
     }
+
     public function store(Request $request){
         $keys = [
             'name',

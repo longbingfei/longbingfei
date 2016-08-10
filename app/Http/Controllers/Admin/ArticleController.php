@@ -21,7 +21,9 @@ class ArticleController extends Controller
     public function index(Request $request){
         $condition = $request->only('page');
 
-        return $this->article->index($condition);
+        $return = $this->article->index($condition);
+
+        return view('admin.article',['data'=>$return]);
     }
 
     public function show($id){

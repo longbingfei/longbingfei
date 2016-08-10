@@ -10,9 +10,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('image',function(){
+Route::get('verifycode',function(){
         $number = mt_rand(10000,99999);
-        session('verifycode',$number);
+        session()->flash('verifycode',$number);
         return Image::canvas(90,40,array(mt_rand(210,255),mt_rand(210,255),mt_rand(210,255)))
             ->text($number,0,15,function($font) {
             $font->size(25);

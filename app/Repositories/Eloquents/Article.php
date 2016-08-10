@@ -23,10 +23,10 @@ class Article implements ArticleInterface{
             'article_sorts.name as sort_name',
             'administrators.username as author_name'
         )
-            ->paginate(10,'*','page',intval($condition['page']))->all(); //paginate($per_page_num,array $colums,
+            ->paginate(10,'*','page',intval($condition['page']))->toArray(); //paginate($per_page_num,array $colums,
         //$pageName,$page);
 
-        return ['count'=>$count,'articles'=>$articles];
+        return $articles;
     }
     public function show($id){
         $article = ArticleModel::findOrFail($id);

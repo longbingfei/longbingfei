@@ -25,9 +25,9 @@ class AdminAuthController extends Controller
     }
     public function login(Requests\AdminLoginRequest $request)
     {
-        if($request->get('verifycode') != session('verifycode')){
-            return Response::error(1001);
-        }
+//        if($request->get('verifycode') != session('verifycode')){
+//            return Response::error(1001);
+//        }
         $info = $request->only(['username','password']);
         $info['ip'] = $request->getClientIp();
 
