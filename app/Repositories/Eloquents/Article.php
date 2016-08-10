@@ -13,7 +13,6 @@ class Article implements ArticleInterface{
     protected $module = 'article';
     public function index($condition = ['page'=>0]){
         $article_model = ArticleModel::orderBy('articles.id','DESC');
-        $count = $article_model->count();
         $articles = $article_model
             ->leftJoin('article_sorts','articles.sort_id','=','article_sorts.id')
             ->leftJoin('administrators','articles.author_id','=','administrators.id')
@@ -41,7 +40,7 @@ class Article implements ArticleInterface{
         if($article = ArticleModel::create($data)){
             event('log',[[$this->module,'c',$data]]);
 
-            return 1;
+            return $article;
         }
     }
     public function update($id,array $data){
@@ -52,9 +51,10 @@ class Article implements ArticleInterface{
         }
         $data['editor_id'] = Auth::id();
         if(ArticleModel::where('id',$id)->update($data)){
-            event('log',[[$this->module,'u',['before'=>$before,'after'=>ArticleModel::findOrFail($id)]]]);
+            $after = ArticleModel::findOrFail($id);
+            event('log',[[$this->module,'u',['before'=>$before,'after'=>$after]]]);
 
-            return 1;
+            return $after;
         }
     }
     public function delete($id){
@@ -62,7 +62,7 @@ class Article implements ArticleInterface{
         if(ArticleModel::destroy($id)){
             event('log',[[$this->module,'d',$info]]);
 
-            return 1;
+            return $info;
         }
     }
 }

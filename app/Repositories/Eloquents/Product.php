@@ -28,12 +28,12 @@ class Product implements ProductInterface{
         $page = intval($condition['page']) ? intval($condition['page']) : 1;
         $perpage = intval($condition['perpage']) ? intval($condition['perpage']) : 10;
         $product = $product->paginate($perpage, ['*'], 'page', $page)->toArray();//每页条数,字段数组,页码标记,第几页
-        $return = array_map(function($value){
+        $product['data'] = array_map(function($value){
             $value['images'] = $value['images'] ? unserialize($value['images']) : [];
             return $value;
         },$product['data']);
 
-        return ['total'=>$product['total'],'data'=>$return];
+        return $product;
     }
 
     public function show($id){
@@ -45,7 +45,7 @@ class Product implements ProductInterface{
             $return['images'] = $return['images'] ? unserialize($return['images']) : [];
         }
 
-        return Response::push($return ? $return : []);
+        return $return;
     }
 
     public function create(array $data){
@@ -57,7 +57,7 @@ class Product implements ProductInterface{
         if($product = ProductModel::create($data)){
             event('log',[[$this->modules,'c',$product]]);
 
-            return 1;
+            return $product;
         }
     }
 
@@ -69,9 +69,10 @@ class Product implements ProductInterface{
             $data['status'] = intval($data['status']);
         }
         if(ProductModel::where('id',$id)->update($data)){
-            event('log',[[$this->modules,'u',['before'=>$before,'after'=>ProductModel::findOrFail($id)->toArray()]]]);
+            $after = ProductModel::findOrFail($id);
+            event('log',[[$this->modules,'u',['before'=>$before,'after'=>$after]]]);
 
-            return 1;
+            return $after;
         }
     }
 
@@ -87,7 +88,7 @@ class Product implements ProductInterface{
         if(ProductModel::destroy($id)){
             event('log',[[$this->modules,'d',$product]]);
 
-            return 1;
+            return $product;
         }
     }
 }

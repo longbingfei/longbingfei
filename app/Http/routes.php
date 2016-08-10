@@ -55,25 +55,25 @@ Route::group(['prefix'=>'admin'],function(){
         });
     });
     Route::group(['namespace'=>'Admin','middleware'=>'auth','prefix'=>'feature'],function(){
-        Route::get('/',['as'=>'home',function(){
-            return view('admin.home');
-        }]);
-        //ajax获取模板url
-        Route::any('page_article',function(){
-            return view('admin.article');
-        });
-        Route::any('page_product',function(){
-            return view('admin.product');
-        });
-        Route::any('page_zone',function(){
-            return view('admin.zone');
-        });
-        Route::any('page_media',function(){
-            return view('admin.media');
-        });
-        Route::any('page_style',function(){
-            return view('admin.style');
-        });
+//        Route::get('/',['as'=>'home',function(){
+//            return view('admin.home');
+//        }]);
+//        //ajax获取模板url
+//        Route::any('page_article',function(){
+//            return view('admin.article');
+//        });
+//        Route::any('page_product',function(){
+//            return view('admin.product');
+//        });
+//        Route::any('page_zone',function(){
+//            return view('admin.zone');
+//        });
+//        Route::any('page_media',function(){
+//            return view('admin.media');
+//        });
+//        Route::any('page_style',function(){
+//            return view('admin.style');
+//        });
         //具体操作
         Route::resource('media','MediaController');
         Route::resource('image','ImageController');
@@ -87,12 +87,12 @@ Route::group(['prefix'=>'admin'],function(){
 });
 
 Route::group(['prefix'=>'web','namespace'=>'Web'],function(){
-    Route::get('/','WebController@index');
-    Route::get('article','WebController@articleIndex');
-    Route::get('article/{id}','WebController@articleShow');
-    Route::get('product','WebController@productIndex');
-    Route::get('product/{id}','WebController@productShow');
-    Route::get('media/{id}','WebController@mediaShow');
+//    Route::get('/','WebController@index');
+//    Route::get('article','WebController@articleIndex');
+//    Route::get('article/{id}','WebController@articleShow');
+//    Route::get('product','WebController@productIndex');
+//    Route::get('product/{id}','WebController@productShow');
+//    Route::get('media/{id}','WebController@mediaShow');
 });
 
 //涉及到用户登录的操作
