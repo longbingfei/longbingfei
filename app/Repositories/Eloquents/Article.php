@@ -10,7 +10,6 @@ namespace App\Repositories\Eloquents;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Article as ArticleModel;
-use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
 use App\Repositories\InterfacesBag\Article as ArticleInterface;

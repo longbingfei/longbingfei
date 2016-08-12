@@ -10,7 +10,6 @@ namespace App\Repositories\Eloquents;
 use Auth;
 use App\Models\Image as ImageModel;
 use App\Models\Product as ProductModel;
-use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
 class Product implements ProductInterface{
     protected $modules = 'product';
@@ -41,14 +40,13 @@ class Product implements ProductInterface{
             ->leftJoin('product_sorts','product_sorts.id','=','products.sort_id')
             ->leftJoin('administrators','products.user_id','=','administrators.id')
             ->select('products.*', 'product_sorts.name as sort_name','administrators.username')->first();
-        if(!is_null($return)){
-            $return['images'] = $return['images'] ? unserialize($return['images']) : [];
-        }
 
-        return $return;
+        return $return ? $return : ['errorCode'=>1300];
     }
 
     public function create(array $data){
+        $data = array_filter($data);
+        dd($data);
         $data['sort_id'] = isset($data['sort_id']) ? intval($data['sort_id']) : 1;
         $data['images'] = serialize(json_decode($data['images'],1));
         $data['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;

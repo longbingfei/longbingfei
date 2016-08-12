@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Product;
+
 class ProductController extends Controller
 {
     protected $product;
@@ -34,10 +36,13 @@ class ProductController extends Controller
     }
 
     public function show($id){
-        return $this->product->show($id);
+        $resp = $this->product->show($id);
+
+        return Response::display($resp);
     }
 
     public function store(Request $request){
+        dd($request->file('file'));
         $keys = [
             'name',
             'describe',
