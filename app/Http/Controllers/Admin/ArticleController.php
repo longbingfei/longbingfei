@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Article;
 
 class ArticleController extends Controller
@@ -19,46 +20,78 @@ class ArticleController extends Controller
     }
 
     public function index(Request $request){
-        $condition = $request->only('page');
+        $fileable = [
+            'title',
+            'sort_id',
+            'user_id',
+            'created_at',
+            'updated_at',
+            'per_page_num',
+            'page',
+            'order_by',
+            'order'
+        ];
+        $resp = $this->article->index($request->only($fileable));
 
-        $return = $this->article->index($condition);
-
-        return view('admin.article',['data'=>$return]);
+        return view('admin.article',['data'=>$resp]);
     }
 
     public function show($id){
-        return $this->article->show($id);
+        $resp = $this->article->show($id);
+
+        return Response::display($resp);
     }
 
     public function store(Request $request){
-        $keys = [
+        $rules = [
+            'title.required'=>1200,
+            'title.max:50'=>1201,
+            'content.required'=>1202,
+        ];
+        if($request->hasFile('file')){
+            $rules['file.image'] = 1104;
+        }
+        $fillable = [
             'title',
             'content',
-            'status',
             'sort_id',
             'status',
+            'file'
         ];
-        $data = $request->all();
-        $data = array_intersect_key($data,array_flip($keys));
+        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
+            return Response::display(["errorCode"=>$errorCode]);
+        }
+        $resp = $this->article->create($request->only($fillable));
 
-        return $this->article->create($data);
+        return Response::display($resp);
     }
 
-    public function update($id,Requests\ArticleRequest $request){
-        $keys = [
+    public function update(Request $request,$id){
+        $rules = [
+            'title.required'=>1200,
+            'title.max:50'=>1201,
+            'content.required'=>1202,
+        ];
+        if($request->hasFile('file')){
+            $rules['file.image'] = 1104;
+        }
+        $fillable = [
             'title',
             'content',
-            'status',
             'sort_id',
-            'status',
+            'file'
         ];
-        $data = $request->all();
-        $data = array_intersect_key($data,array_flip($keys));
+        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
+            return Response::display(["errorCode"=>$errorCode]);
+        }
+        $resp = $this->article->update($id,$request->only($fillable));
 
-        return $this->article->update($id,$data);
+        return  Response::display($resp);
     }
 
     public function destroy($id){
-        return $this->article->delete(intval($id));
+        $resp = $this->article->delete(intval($id));
+
+        return Response::display($resp);
     }
 }

@@ -28,6 +28,7 @@ class ArticleSeeder extends Seeder
         Article::create([
             'title' => '还没有文章?赶快新增一篇吧!',
             'content'=> Inspiring::quote(),
+            'status'=> 1,
             'author_id'=>1,
             'sort_id'=>1,
         ]);

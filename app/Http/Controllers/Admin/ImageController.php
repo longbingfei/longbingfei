@@ -20,11 +20,15 @@ class ImageController extends Controller
     }
 
     public function index(){
-        return $this->image->index();
+        //
     }
+
     public function show($id){
-        return $this->image->show($id);
+        $resp = $this->image->show($id);
+
+        return Response::display($resp);
     }
+
     public function store(Request $request){
         $rules = [
             'image.image'=>1104
@@ -37,13 +41,16 @@ class ImageController extends Controller
             'thumb_path'
         ];
         if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
-            return Response::error($errorCode);
+            return Response::display(['errorCode'=>$errorCode]);
         }
+        $resp = $this->image->create($request->file('image'),$request->only($fillable));
 
-        return $this->image->create($request->file('image'),$request->only($fillable));
+        return Response::display($resp);
     }
 
     public function destroy($id){
-        return $this->image->delete($id);
+        $resp = $this->image->delete($id);
+
+        return Response::display($resp);
     }
 }

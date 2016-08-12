@@ -16,11 +16,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('push',function($data = null){
-            return Response::make(['error_code'=>0,'data'=>$data]);
-        });
-        Response::macro('error',function($code){
-            return Response::make(['error_code'=>config('error.'.$code,false) ? $code : '000' , 'error_message'=>config('error.'.$code, '错误代码不存在')]);
+        Response::macro('display',function($data = null){
+            if(isset($data['errorCode']) && ($errorCode = $data['errorCode'])){
+                $message = ['error_code'=>config('error.'.$errorCode,false) ? $errorCode : '000' , 'error_message'=>config('error.'.$errorCode, '错误代码不存在')];
+            }else{
+                $message = $data;
+            }
+            //若ajax请求则返回固定格式
+            return request()->ajax() ? Response::make($message) : $message;
         });
     }
 

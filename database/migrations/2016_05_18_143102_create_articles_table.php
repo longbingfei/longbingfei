@@ -28,6 +28,7 @@ class CreateArticlesTable extends Migration
             $tables->integer('sort_id')->unsigned();
             $tables->foreign('sort_id')->references('id')->on('article_sorts')->onDelete('cascade');
             $tables->tinyInteger('status')->default(0);
+            $tables->text('index_pic')->nullable();
             $tables->integer('editor_id')->unsigned()->nullable();
             $tables->timestamps();
         });

@@ -6,63 +6,126 @@
  * Time: 上午9:20
  */
 namespace App\Repositories\Eloquents;
-use App\Repositories\InterfacesBag\Article as ArticleInterface;
-use App\Models\Article as ArticleModel;
+
 use Auth;
+use Illuminate\Http\Request;
+use App\Models\Article as ArticleModel;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repositories\InterfacesBag\Image as ImageInterface;
+use App\Repositories\InterfacesBag\Article as ArticleInterface;
+
 class Article implements ArticleInterface{
     protected $module = 'article';
-    public function index($condition = ['page'=>0]){
-        $article_model = ArticleModel::orderBy('articles.id','DESC');
-        $articles = $article_model
-            ->leftJoin('article_sorts','articles.sort_id','=','article_sorts.id')
+    protected $image;
+
+    public  function __construct(ImageInterface $image)
+    {
+        $this->image = $image;
+    }
+
+    //文稿列表
+    public function index(array $condition){
+        $articles = ArticleModel::where('articles.id','>',0);
+        if($user_id = intval($condition['user_id'])){
+            $articles = $articles->where('articles.user_id',$user_id);
+        }
+        if($sort_id = intval($condition['sort_id'])){
+            $articles = $articles->where('articles.sort_id',$sort_id);
+        }
+        if($title = trim($condition['title'])){
+            $articles = $articles->where('articles.title','like','%'.$title.'%');
+        }
+        if($created_at = trim($condition['created_at'])){
+            $articles = $articles->where('articles.created_at','>=',$created_at);
+        }
+        if($updated_at = trim($condition['updated_at'])){
+            $articles = $articles->where('articles.updated_at','>=',$updated_at);
+        }
+        $articles = $articles->leftJoin('article_sorts','articles.sort_id','=','article_sorts.id')
             ->leftJoin('administrators','articles.author_id','=','administrators.id')
-            ->select
-        (
-            'articles.*',
-            'article_sorts.name as sort_name',
-            'administrators.username as author_name'
-        )
-            ->paginate(10,'*','page',intval($condition['page']))->toArray(); //paginate($per_page_num,array $colums,
-        //$pageName,$page);
+            ->select(
+                'articles.*',
+                'article_sorts.name as sort_name',
+                'administrators.username as author_name'
+            );
+        $orderBy = trim($condition['order_by']) ? trim($condition['order_by']) : 'id';
+        $order = strtoupper(trim($condition['order'])) === 'ASC' ? 'ASC' : 'DESC';
+        $articles = $articles->orderBy('articles.'.$orderBy,$order);
+        $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 15;
+        $page = intval($condition['page']) ? intval($condition['page']) : 0;
+        $articles = $articles->paginate($per_page_num,['*'],'page',$page)->toArray();
 
         return $articles;
     }
+
+    //文稿详情
     public function show($id){
-        $article = ArticleModel::findOrFail($id);
+        if(!$article = ArticleModel::where('id',$id)->first()){
+            return ["errorCode"=>1203];
+        }
         $article['content'] = htmlspecialchars_decode($article['content']);
 
         return $article;
     }
+
+    //文稿新建
     public function create(array $data){
         $data['author_id'] = Auth::id();
         $data['content'] = htmlspecialchars($data['content']);
-        $data['sort_id'] = isset($data['sort_id']) ?  intval($data['sort_id']) : 1;
+        $data['sort_id'] = $data['sort_id'] ? $data['sort_id'] : 1;
+        $data['status'] = $data['status'] ? 1 : 0;
+        if($data['file'] instanceof UploadedFile) {
+            $image =  $this->image->create($data['file'],[]);
+            $data['index_pic'] = serialize($image->toArray());
+        }
+
         if($article = ArticleModel::create($data)){
             event('log',[[$this->module,'c',$data]]);
 
             return $article;
         }
+
+        return ["errorCode"=>1205];
     }
+
+    //文稿更新
     public function update($id,array $data){
-        $before = ArticleModel::findOrFail($id);
-        $data['content'] = htmlspecialchars($data['content']);
-        if(isset($data['status'])){
-            $data['status'] = intval($data['status']);
+        $data = array_filter($data);
+        if(!$before = ArticleModel::where('id',$id)->first()){
+            return ["errorCode"=>1203];
         }
+        $data['content'] = htmlspecialchars($data['content']);
         $data['editor_id'] = Auth::id();
+        if(isset($data['file']) && $data['file'] instanceof UploadedFile) {
+            $image =  $this->image->create($data['file'],[]);
+            $data['index_pic'] = serialize($image->toArray());
+        }
         if(ArticleModel::where('id',$id)->update($data)){
             $after = ArticleModel::findOrFail($id);
+            if($before->index_pic && ($image = unserialize($before->index_pic))){
+                $this->image->delete($image['id']);
+            }
             event('log',[[$this->module,'u',['before'=>$before,'after'=>$after]]]);
 
             return $after;
         }
     }
+
+    //文稿删除
     public function delete($id){
-        $info = ArticleModel::findOrFail($id);
+        if(!$info = ArticleModel::where('id',$id)->first()){
+            return ["errorCode"=>1203];
+        }
         if(ArticleModel::destroy($id)){
+            if($info->index_pic && ($image = unserialize($info->index_pic))){
+                $this->image->delete($image['id']);
+            }
             event('log',[[$this->module,'d',$info]]);
 
-            return $info;
+            return ['id'=>$id];
         }
+
+        return ["errorCode"=>1204];
     }
 }
