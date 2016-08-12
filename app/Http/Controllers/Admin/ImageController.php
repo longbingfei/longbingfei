@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\InterfacesBag\Image;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class ImageController extends Controller
 {
     protected $image;
-
-    protected $types = ['jpg','png','gif','jpeg'];
 
     public function __construct(Image $image){
         $this->middleware('auth');
@@ -26,28 +26,21 @@ class ImageController extends Controller
         return $this->image->show($id);
     }
     public function store(Request $request){
-        if(!$image = $request->file("image")){
-            return '{"Error":"no image file"}';
-        }
-        if($image->getSize() == 0){
-            return '{"Error":"invalid size"}';
-        }
-        if(!$type = $image->guessExtension()){
-            return '{"Error":"invalid extension"}';
-        }
-        if(!in_array($type,$this->types)){
-            return '{"Error":"invalid type"}';
-        }
-        $name = trim($request->get('name'));
-        if($name){
-            $image->name = $name;
-        }
-        $sort_id = intval($request->input('sort_id'));
-        if($sort_id){
-            $image->sort_id = $sort_id;
+        $rules = [
+            'image.image'=>1104
+        ];
+        $fillable = [
+            'name',
+            'sort_id',
+            'thumb_width',
+            'path',
+            'thumb_path'
+        ];
+        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
+            return Response::error($errorCode);
         }
 
-        return $this->image->create($image);
+        return $this->image->create($request->file('image'),$request->only($fillable));
     }
 
     public function destroy($id){

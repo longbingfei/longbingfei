@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -39,7 +41,31 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('App\Repositories\InterfacesBag\Image','App\Repositories\Eloquents\Image');
         app()->bind('App\Repositories\InterfacesBag\Video','App\Repositories\Eloquents\Video');
         app()->bind('App\Repositories\InterfacesBag\Style','App\Repositories\Eloquents\Style');
-        //front
+        //前端用户
         app()->bind('App\Repositories\InterfacesBag\User','App\Repositories\Eloquents\User');
+        //表单验证
+        app()->bind('ValidatorForm',function(){
+            return function($request,$fields){
+                $keys = array_keys($fields);
+                $rule = [];
+                array_map(function ($y) use (&$rule) {
+                    $a = explode('.', $y);
+                    $key = current($a);
+                    $rule[$key] = isset($rule[$key]) ? $rule[$key] . '|' . last($a) : last($a);
+                }, $keys);
+                $finalKeys = array_map(function ($y) {
+                    if (($position = strpos($y, ':')) !== false) {
+                        return substr($y, 0, $position);
+                    }
+                    return $y;
+                }, $keys);
+                $validator = Validator::make($request->all(), $rule, array_combine($finalKeys, array_values($fields)));
+                if ($validator->fails()) {
+                    return current($validator->errors()->all());
+                }
+
+                return false;
+            };
+        });
     }
 }

@@ -25,6 +25,7 @@ class CreateImagesTable extends Migration
             $tables->integer('sort_id')->unsigned()->default(0);
             $tables->foreign('sort_id')->references('id')->on('image_sorts')->onDelete('cascade');
             $tables->string('path',250);
+            $tables->string('thumb',250);
             $tables->tinyInteger('status')->default(1)->unsigned();
             $tables->integer('user_id');
             $tables->timestamps();

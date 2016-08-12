@@ -6,10 +6,13 @@
  * Time: 下午3:22
  */
 namespace App\Repositories\Eloquents;
-use App\Repositories\InterfacesBag\Image as ImageInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Models\Image as ImageModel;
+
 use Auth;
+use App\Models\Image as ImageModel;
+use Illuminate\Support\Facades\Response;
+use Intervention\Image\Facades\Image as ImageContarct;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repositories\InterfacesBag\Image as ImageInterface;
 class Image implements ImageInterface{
     protected $module = 'image';
 
@@ -21,30 +24,42 @@ class Image implements ImageInterface{
     public function show($id){
         return ImageModel::findOrFail($id);
     }
-    public function create(UploadedFile $file){
-        $path = isset($file->path) ? $file->path : 'images/'.Date('Y/m/d');
+
+    //图片上传
+    public function create(UploadedFile $file,array $params = []){
+        $path = $params['path'] ? $params['path'] : 'images/origin/'.Date('Y/m/d');
         if(!$this->checkDir(public_path($path))){
             event('log',[[$this->module,'c','mkdir@'.public_path($path).'failed!',0]]);
 
-            return 0;
+            return Response::error(1100);
         }
         $basename = microtime(true) * 10000;
         $name  = $basename.'.'.$file->guessExtension();
         $file->move($path,$name);
+        $thumbPath = $params['thumb_path'] ? $params['thumb_path'] : 'images/thumb/'.Date('Y/m/d');
+        if(!$this->checkDir(public_path($thumbPath))){
+            event('log',[[$this->module,'c','mkdir@'.public_path($thumbPath).'failed!',0]]);
 
+            return Response::error(1101);
+        }
+        ImageContarct::make($path.'/'.$name)->resize($params['thumb_width'] ? $params['thumb_width'] : 320,null, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($thumbPath.'/'.$name);
         $imageInfo = [
-            'name'=> @$file->name ? $file->name : "新建图像文件",
-            'sort_id'=> @$file->sort_id ? $file->sort_id : 3, //1系统,2截图,3普通
+            'name'=> $params['name'] ? $params['name'] : "新建图像文件",
+            'sort_id'=>$params['sort_id'] ? $params['sort_id'] : 3, //1系统,2截图,3普通
             'path' => $path.'/'.$name,
+            'thumb'=>$thumbPath.'/'.$name,
             'user_id'=>Auth::id(),
         ];
         if($info = ImageModel::create($imageInfo)){
             event('log',[[$this->module,'c',$info]]);
 
-            return ['id'=>$info->id,'name'=>$info->name,'path'=>$path.'/'.$name];
+            return Response::push($info);
         }
     }
 
+    //创建目录
     protected function checkDir($path){
         if(!is_dir($path)){
             @mkdir($path,0775,1);
@@ -53,14 +68,19 @@ class Image implements ImageInterface{
         return is_dir($path) && is_writeable($path);
     }
 
+    //图片删除
     public function delete($id){
-        $media = ImageModel::findOrFail($id);
-        $path = $media->path;
+        if(!$media = ImageModel::where('id',$id)->first()){
+            return Response::error(1102);
+        }
         if(ImageModel::destroy($id)){
-            @unlink(public_path($path));
+            @unlink(public_path($media->path));
+            @unlink(public_path($media->thumb));
             event('log',[[$this->module,'d',$media]]);
 
-            return 1;
+            return Response::push(['id'=>$id]);
         }
+
+        return Response::error(1103);
     }
 }

@@ -12,6 +12,7 @@ class Image extends Model
         'name',
         'sort_id',
         'path',
+        'thumb',
         'user_id'
     ];
 }

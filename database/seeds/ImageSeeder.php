@@ -41,6 +41,7 @@ class ImageSeeder extends Seeder
             'name'=>'默认头像',
             'sort_id'=>1,
             'path'=>'default/images/default_avatar.jpeg',
+            'thumb'=>'default/images/default_avatar.jpeg',
             'user_id'=>1
         ]);
     }

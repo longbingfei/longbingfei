@@ -22,6 +22,7 @@
         }
         td img{
             width:80px;
+            height:60px;
         }
     @stop
 @section('body')
@@ -50,26 +51,28 @@
                 @foreach($data['data'] as $item => $value)
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td><img src="{{url('images/2016/06/14/14658833420537.jpeg')}}"></td>
+                    <td><img src="{{empty($value['images']) ? '' : url($value['images'][0]['path'])}}"></td>
                     <td>{{$value['name']}}</td>
-                    <td>{{$value['sort_id']}}</td>
+                    <td>{{$value['sort_name']}}</td>
                     <td>{{$value['created_at']}}</td>
                     <td>{{$value['updated_at']}}</td>
-                    <td>{{$value['user_id']}}</td>
+                    <td>{{$value['username']}}</td>
                     <td>xxx</td>
                 </tr>
                 @endforeach
             @endif
         </table>
-        {{--<div class="product-item">--}}
-            {{--<img src="{{url('default/images/default_avatar.jpeg')}}">--}}
-        {{--</div>--}}
-        <div class="panel panel-default">
-            <a class="btn btn-default ">上一页</a>
-            1/2
-            <a class="btn btn-default ">下一页</a>
-        </div>
     </div>
+    @if(!empty($data))
+    <div class="painate" style="float:right;margin-top: 2px">
+        <ul id="pagination-digg">
+            @for($i = 1;$i<=$data['last_page'];$i++)
+                <li><a href="?page={{$i}}">{{$i}}</a></li>
+            @endfor
+            <li class="next"><a href="javascript:void(0)">共{{$data['last_page']}}页/计{{$data['total']}}条</a></li>
+        </ul>
+    </div>
+    @endif
 </div>
 @stop
 {{--modal--}}
