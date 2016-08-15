@@ -31,7 +31,8 @@ class ImageController extends Controller
 
     public function store(Request $request){
         $rules = [
-            'image.image'=>1104
+            'file.required'=>1102,
+            'file.image'=>1104
         ];
         $fillable = [
             'name',
@@ -43,7 +44,7 @@ class ImageController extends Controller
         if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
             return Response::display(['errorCode'=>$errorCode]);
         }
-        $resp = $this->image->create($request->file('image'),$request->only($fillable));
+        $resp = $this->image->create($request->file('file'),$request->only($fillable));
 
         return Response::display($resp);
     }

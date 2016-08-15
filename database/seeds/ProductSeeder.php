@@ -35,6 +35,7 @@ class ProductSeeder extends Seeder
             'user_id'=>1
         ]);
         Product::create([
+            'pid'=>000001,
             'name'=>'野生粽子',
             'price'=>100,
             'storage'=>100,

@@ -56,7 +56,7 @@ class Image implements ImageInterface{
         })->save($thumbPath.'/'.$name);
         $imageInfo = [
             'name'=> isset($params['name']) && $params['name'] ? $params['name'] : "新建图像文件",
-            'sort_id'=>isset($params['sort_id']) && $params['sort_id'] ? $params['sort_id'] : 3, //1系统,2截图,3普通
+            'sort_id'=>isset($params['sort_id']) && $params['sort_id'] ? $params['sort_id'] : 4, //1系统,2截图,3商品,4普通
             'path' => $path.'/'.$name,
             'thumb'=>$thumbPath.'/'.$name,
             'user_id'=>Auth::id(),

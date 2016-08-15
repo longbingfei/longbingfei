@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
 
         Schema::create('products',function(Blueprint $tables){
             $tables->increments('id')->unsigned();
+            $tables->string('pid',20)->unique();
             $tables->string('name',40);
             $tables->integer('price')->unsigned();
             $tables->text('images');

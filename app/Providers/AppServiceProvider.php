@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\ServiceProvider;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,6 +24,21 @@ class AppServiceProvider extends ServiceProvider
             }
             //若ajax请求则返回固定格式
             return request()->ajax() ? Response::make($message) : $message;
+        });
+
+        //自定义多文件验证规则
+        Validator::extend('images',function($attribute, $value, $parameters){
+            if(!is_array($value)){
+                return false;
+            }
+            return array_filter($value,function($y){
+                return $y instanceof UploadedFile && strpos('|png|jpg|jpeg|gif|bmp|',$y->guessExtension());
+            }) == $value;
+        });
+
+        //自定义验证浮点值
+        Validator::extend('float',function($attribute, $value, $parameters){
+           return is_numeric($value) && (float)$value > 0;
         });
     }
 

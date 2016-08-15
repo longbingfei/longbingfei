@@ -10,9 +10,19 @@ namespace App\Repositories\Eloquents;
 use Auth;
 use App\Models\Image as ImageModel;
 use App\Models\Product as ProductModel;
+use App\Repositories\InterfacesBag\Image as ImageInterface;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
+
 class Product implements ProductInterface{
     protected $modules = 'product';
+
+    protected $image;
+
+    public function __construct(ImageInterface $image)
+    {
+        $this->image = $image;
+    }
+
     public function index(array $condition){
         $orderBy = $condition['orderby'] && in_array($condition['orderby'],['id','sort_id','user_id','price',
                 'storage']) ? 'products.'.$condition['orderby'] : 'products.id';
@@ -46,17 +56,34 @@ class Product implements ProductInterface{
 
     public function create(array $data){
         $data = array_filter($data);
-        dd($data);
+        $data['pid'] = 'NO.'.microtime(true)*10000;
         $data['sort_id'] = isset($data['sort_id']) ? intval($data['sort_id']) : 1;
-        $data['images'] = serialize(json_decode($data['images'],1));
         $data['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
+        $data['storage'] = isset($data['storage']) ? intval($data['storage']) : 1;
         $data['user_id'] = Auth::id();
-
+        $data['images'] = serialize(call_user_func([$this,'createProductImages'],$data['file'],$data['pid']));
+        unset($data['file']);
         if($product = ProductModel::create($data)){
             event('log',[[$this->modules,'c',$product]]);
 
             return $product;
         }
+    }
+
+    protected function createProductImages($files,$pid){
+        $path = 'product/images/'.$pid;
+        $thumb_path = $path.'/thumb';
+        $params = [
+            'path'=>$path,
+            'thumb_path'=>$thumb_path,
+            'sort_id'=>4,
+        ];
+        $files = is_array($files) ? $files : [$files];
+        $images = array_map(function($y)use($params){
+            return $this->image->create($y,$params)->toArray();
+        },$files);
+
+        return $images;
     }
 
     public function update($id,array $data){

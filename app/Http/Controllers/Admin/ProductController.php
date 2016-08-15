@@ -42,21 +42,33 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        dd($request->file('file'));
-        $keys = [
+        $rules = [
+            'name.required'=>1301,
+            'name.max:50'=>1302,
+            'price.required'=>1303,
+            'price.float'=>1304,
+            'file.required'=>1102,
+        ];
+        if(is_array($request->file('file'))){
+            $rules['file.images'] = 1106;
+        }else{
+            $rules['file.image'] = 1106;
+        }
+        $fillable = [
             'name',
             'describe',
             'price',
             'storage',
             'sort_id',
             'status',
-            'images',
+            'file',
+            'evaluate'
         ];
-        $data = $request->all();
-        $data = array_intersect_key($data,array_flip($keys));
+        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
+           return Response::display(['errorCode'=>$errorCode]);
+        }
 
-
-        return $this->product->create($data);
+        return $this->product->create($request->only($fillable));
     }
     public function update($id,Requests\ProductRequest $request){
         $keys = [
