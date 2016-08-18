@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Article;
@@ -19,7 +18,8 @@ class ArticleController extends Controller
         $this->article = $article;
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $fileable = [
             'title',
             'sort_id',
@@ -33,22 +33,24 @@ class ArticleController extends Controller
         ];
         $resp = $this->article->index($request->only($fileable));
 
-        return view('admin.article',['data'=>$resp]);
+        return view('admin.article', ['data' => $resp]);
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $resp = $this->article->show($id);
 
         return Response::display($resp);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
-            'title.required'=>1200,
-            'title.max:50'=>1201,
-            'content.required'=>1202,
+            'title.required'   => 1200,
+            'title.max:50'     => 1201,
+            'content.required' => 1202,
         ];
-        if($request->hasFile('file')){
+        if ($request->hasFile('file')) {
             $rules['file.image'] = 1104;
         }
         $fillable = [
@@ -58,21 +60,22 @@ class ArticleController extends Controller
             'status',
             'file'
         ];
-        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
-            return Response::display(["errorCode"=>$errorCode]);
+        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(["errorCode" => $errorCode]);
         }
         $resp = $this->article->create($request->only($fillable));
 
         return Response::display($resp);
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
         $rules = [
-            'title.required'=>1200,
-            'title.max:50'=>1201,
-            'content.required'=>1202,
+            'title.required'   => 1200,
+            'title.max:50'     => 1201,
+            'content.required' => 1202,
         ];
-        if($request->hasFile('file')){
+        if ($request->hasFile('file')) {
             $rules['file.image'] = 1104;
         }
         $fillable = [
@@ -81,15 +84,16 @@ class ArticleController extends Controller
             'sort_id',
             'file'
         ];
-        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
-            return Response::display(["errorCode"=>$errorCode]);
+        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(["errorCode" => $errorCode]);
         }
-        $resp = $this->article->update($id,$request->only($fillable));
+        $resp = $this->article->update($id, $request->only($fillable));
 
-        return  Response::display($resp);
+        return Response::display($resp);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $resp = $this->article->delete(intval($id));
 
         return Response::display($resp);

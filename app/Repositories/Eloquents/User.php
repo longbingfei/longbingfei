@@ -7,18 +7,21 @@
  */
 namespace App\Repositories\Eloquents;
 
-use App\Models\User as UserModel;
 use App\Models\AccessToken;
+use App\Models\User as UserModel;
 use App\Repositories\InterfacesBag\User as UserInterface;
-class User implements UserInterface{
+
+class User implements UserInterface
+{
     //登录时返回token
     //登出时销毁token
-    public function validate(array $info){
+    public function validate(array $info)
+    {
         $verify = false;
-        $userInfo = UserModel::where('username',$info['username'])->first();
-        if($userInfo && password_verify($info['password'],$userInfo->password)){
+        $userInfo = UserModel::where('username', $info['username'])->first();
+        if ($userInfo && password_verify($info['password'], $userInfo->password)) {
             $AccessToken = $this->makeToken();
-            AccessToken::create(['token'=>$AccessToken,'user_id'=>$userInfo->id]);
+            AccessToken::create(['token' => $AccessToken, 'user_id' => $userInfo->id]);
             $userInfo = $userInfo->toArray();
             $userInfo['AccessToken'] = $AccessToken;
             $verify = true;
@@ -27,49 +30,53 @@ class User implements UserInterface{
         return $verify ? $userInfo : false;
     }
 
-    public function logout($user_id){ //删除表中所有token
-        return AccessToken::where('user_id',$user_id)->delete();
+    public function logout($user_id)
+    { //删除表中所有token
+        return AccessToken::where('user_id', $user_id)->delete();
     }
 
-    private function makeToken(){
+    private function makeToken()
+    {
         $header = [
-            "typ"=>"JWT",
-            "alg"=>"H256",
+            "typ" => "JWT",
+            "alg" => "H256",
         ];
         $payload = [
-            "iat"=>time(),
-            "exp"=>time()+3600,
+            "iat" => time(),
+            "exp" => time() + 3600,
         ];
 
         $header = base64_encode(json_encode($header));
         $payload = base64_encode(json_encode($payload));
-        $signature = HASH_HMAC('sha256',$header.'.'.$payload,env('JWT_SECRET'));
+        $signature = HASH_HMAC('sha256', $header . '.' . $payload, env('JWT_SECRET'));
 
-        return $header.'.'.$payload.'.'.$signature;
+        return $header . '.' . $payload . '.' . $signature;
     }
 
-    public function verifyToken($access_token){
+    public function verifyToken($access_token)
+    {
         $auth = false;
-        $token = explode('.',trim($access_token));
-        if(HASH_HMAC('sha256',$token[0].'.'.$token[1],env('JWT_SECRET')) !== $token[2]){ //验证secret
+        $token = explode('.', trim($access_token));
+        if (HASH_HMAC('sha256', $token[0] . '.' . $token[1], env('JWT_SECRET')) !== $token[2]) { //验证secret
             return false;
         }
 
-        if(!is_null($at = AccessToken::where('token',$access_token)->first())){ //token若不存在,则验证失败
-            $payload = json_decode(base64_decode($token[1]),1);
+        if (!is_null($at = AccessToken::where('token', $access_token)->first())) { //token若不存在,则验证失败
+            $payload = json_decode(base64_decode($token[1]), 1);
 
             date_default_timezone_set('PRC');
-            if(time() > $payload['exp']){ //验证token是否过期,是则删除.
+            if (time() > $payload['exp']) { //验证token是否过期,是则删除.
                 $this->destroyToken($access_token);
-            }else{
-                $auth = ['user_id'=>$at->user_id];
+            } else {
+                $auth = ['user_id' => $at->user_id];
             }
         }
 
         return $auth;
     }
 
-    private function destroyToken($token){
-        return AccessToken::where('token',$token)->delete();
+    private function destroyToken($token)
+    {
+        return AccessToken::where('token', $token)->delete();
     }
 }

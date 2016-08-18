@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\InterfacesBag\Video;
 
@@ -20,38 +19,44 @@ class VideoController extends Controller
         $this->video = $video;
     }
 
-    public function index(){
+    public function index()
+    {
         return $this->video->index();
     }
-    public function show($id){
+
+    public function show($id)
+    {
         return $this->video->show($id);
     }
-    public function store(Request $request){
-        if(!$video = $request->file("video")){
+
+    public function store(Request $request)
+    {
+        if (!$video = $request->file("video")) {
             return '{"Error":"no video file"}';
         }
-        if($video->getSize() == 0){
+        if ($video->getSize() == 0) {
             return '{"Error":"invalid size"}';
         }
-        if(!$type = $video->guessExtension()){
+        if (!$type = $video->guessExtension()) {
             return '{"Error":"invalid extension"}';
         }
-        if(!in_array($type,$this->types)){
+        if (!in_array($type, $this->types)) {
             return '{"Error":"invalid type"}';
         }
         $name = trim($request->get('name'));
-        if($name){
+        if ($name) {
             $video->name = $name;
         }
         $sort_id = intval($request->input('sort_id'));
-        if($sort_id){
+        if ($sort_id) {
             $video->sort_id = $sort_id;
         }
 
         return $this->video->create($video);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         return $this->video->delete($id);
     }
 

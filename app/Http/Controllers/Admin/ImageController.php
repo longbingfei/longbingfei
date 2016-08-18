@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\InterfacesBag\Image;
 use Illuminate\Support\Facades\Response;
@@ -14,25 +13,29 @@ class ImageController extends Controller
 {
     protected $image;
 
-    public function __construct(Image $image){
+    public function __construct(Image $image)
+    {
         $this->middleware('auth');
         $this->image = $image;
     }
 
-    public function index(){
+    public function index()
+    {
         //
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $resp = $this->image->show($id);
 
         return Response::display($resp);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
-            'file.required'=>1102,
-            'file.image'=>1104
+            'file.required' => 1102,
+            'file.image'    => 1104
         ];
         $fillable = [
             'name',
@@ -41,15 +44,16 @@ class ImageController extends Controller
             'path',
             'thumb_path'
         ];
-        if($errorCode = call_user_func(app('ValidatorForm'),$request,$rules)){
-            return Response::display(['errorCode'=>$errorCode]);
+        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['errorCode' => $errorCode]);
         }
-        $resp = $this->image->create($request->file('file'),$request->only($fillable));
+        $resp = $this->image->create($request->file('file'), $request->only($fillable));
 
         return Response::display($resp);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $resp = $this->image->delete($id);
 
         return Response::display($resp);

@@ -7,9 +7,13 @@
  */
 namespace App\Repositories\InterfacesBag;
 
-interface ArticleSort extends BaseInterface{
+interface ArticleSort extends BaseInterface
+{
     public function index();
+
     public function create(array $data);
-    public function update($id,array $data);
+
+    public function update($id, array $data);
+
     public function delete($id);
 }

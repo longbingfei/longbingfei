@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\InterfacesBag\ArticleSort;
+
 class ArticleSortController extends Controller
 {
     protected $as;
@@ -28,12 +28,12 @@ class ArticleSortController extends Controller
 
     public function store(Request $request)
     {
-        return $this->as->create($request->only(['fid','name']));
+        return $this->as->create($request->only(['fid', 'name']));
     }
 
     public function update(Request $request, $id)
     {
-        return $this->as->update($id,$request->only('name'));
+        return $this->as->update($id, $request->only('name'));
     }
 
     public function destroy($id)
