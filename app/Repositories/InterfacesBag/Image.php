@@ -9,9 +9,13 @@ namespace App\Repositories\InterfacesBag;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface Image extends BaseInterface{
-    public function index($condition = []);
-    public function show($id);
-    public function create(UploadedFile $file,array $params = []);
-    public function delete($id);
+interface Image extends BaseInterface
+{
+	public function index($condition = []);
+
+	public function show($id);
+
+	public function create(UploadedFile $file, array $params = []);
+
+	public function delete($ids);
 }
