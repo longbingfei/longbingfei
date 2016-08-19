@@ -15,9 +15,9 @@ class ArticleSort implements ArticleSortInterface
 {
     protected $module = 'article-sort';
 
-    public function index()
+    public function index($fid = 0)
     {
-        return ArticleSortModel::all();
+        return ArticleSortModel::where('fid', intval($fid))->get()->toArray();
     }
 
     public function create(array $data)
@@ -27,39 +27,48 @@ class ArticleSort implements ArticleSortInterface
         if (ArticleSortModel::where('name', $data['name'])->count()) {
             event('log', [[$this->module, 'c', 'sort_already_exist', 0]]);
 
-            return 0;
+            return ['errorCode' => 1206];
         }
-        ArticleSortModel::create($data);
-        event('log', [[$this->module, 'c', $data]]);
 
-        return 1;
+        if ($sort = ArticleSortModel::create($data)->toArray()) {
+            event('log', [[$this->module, 'c', $sort]]);
+
+            return $sort;
+        }
     }
 
-    public function update($id, array $data)
+    public function update($id, $name)
     {
         $data['user_id'] = Auth::id();
-        $before = ArticleSortModel::findOrfail($id)->toArray();
-        if (ArticleSortModel::where('name', $data['name'])->count()) {
+        if (!$name = trim($name)) {
+            return ['errorCode' => 1208];
+        }
+        if (!$before = ArticleSortModel::where('id', $id)->first()) {
+            return ['errorCode' => 1207];
+        }
+        if (ArticleSortModel::where('name', $name)->count()) {
             event('log', [[$this->module, 'u', 'sort_already_exist', 0]]);
 
-            return 0;
+            return ['errorCode' => 1206];
         }
 
-        if (ArticleSortModel::where('id', $id)->update($data)) {
-            event('log', [[$this->module, 'u', ['before' => $before, 'after' => ArticleSortModel::findOrfail($id)->toArray()
-            ]]]);
+        if (ArticleSortModel::where('id', $id)->update(['name' => $name])) {
+            $after = ArticleSortModel::where('id', $id)->first();
+            event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 
-            return 1;
+            return $after;
         }
     }
 
     public function delete($id)
     {
-        $info = ArticleSortModel::findOrFail($id)->toArray();
+        if (!$info = ArticleSortModel::where('id', $id)->first()) {
+            return ['errorCode' => 1207];
+        }
         if (ArticleSortModel::destroy($id)) {
             event('log', [[$this->module, 'd', $info]]);
 
-            return 1;
+            return $info;
         }
     }
 }

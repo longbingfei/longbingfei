@@ -9,11 +9,11 @@ namespace App\Repositories\InterfacesBag;
 
 interface ArticleSort extends BaseInterface
 {
-    public function index();
+    public function index($fid = 0);
 
     public function create(array $data);
 
-    public function update($id, array $data);
+    public function update($id, $name);
 
     public function delete($id);
 }
