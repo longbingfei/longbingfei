@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Administrator;
@@ -28,19 +28,19 @@ class AdminAuthController extends Controller
         return $this->admin->show();
     }
 
-    public function login(Requests\AdminLoginRequest $request)
+    public function login(Request $request)
     {
-        if($request->get('verifycode') != session('verifycode')){
+        if ($request->get('verifycode') != session('verifycode')) {
             return Response::error(1001);
         }
         $info = $request->only(['username', 'password']);
         $info['ip'] = $request->getClientIp();
         $return = $this->admin->login($info);
 
-        return $return === true ? view('admin.home') : redirect()->back()->withInput($return);
+        return $return === true ? view('admin.home') : view('admin.login', $return);
     }
 
-    public function register(Requests\RegisterRequest $request)
+    public function register(Request $request)
     {
         $info = $request->only('username', 'password');
         $info['ip'] = $request->getClientIp();
@@ -48,7 +48,7 @@ class AdminAuthController extends Controller
         return $this->admin->register($info);
     }
 
-    public function update($id, Requests\UpdateAuthRequest $request)
+    public function update(Request $request, $id)
     {
         $rules = [
             'name.min:2'     => 1002,
@@ -65,6 +65,9 @@ class AdminAuthController extends Controller
             'status',
             'file'
         ];
+        if (empty(array_filter($request->only($fillable)))) {
+            return Response::display(['errorCode' => 1009]);
+        }
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
