@@ -17,7 +17,9 @@ class ProductSort implements ProductSortInterface
 
     public function index()
     {
-        return ProductSortModel::all();
+        $product = ProductSortModel::all();
+
+        return $product->count() ? $product->toArray() : [];
     }
 
     public function create(array $data)

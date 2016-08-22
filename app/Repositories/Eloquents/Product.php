@@ -54,7 +54,7 @@ class Product implements ProductInterface
         $return = ProductModel::where('products.id', $id)
             ->leftJoin('product_sorts', 'product_sorts.id', '=', 'products.sort_id')
             ->leftJoin('administrators', 'products.user_id', '=', 'administrators.id')
-            ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first();
+            ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first()->toArray();
 
         return $return ? $return : ['errorCode' => 1300];
     }

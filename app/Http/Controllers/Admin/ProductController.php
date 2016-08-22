@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Product;
+use App\Repositories\InterfacesBag\ProductSort;
 
 class ProductController extends Controller
 {
     protected $product;
 
-    public function __construct(Product $product)
+    protected $product_sort;
+
+    public function __construct(Product $product, ProductSort $product_sort)
     {
         $this->middleware('auth');
         $this->product = $product;
+        $this->product_sort = $product_sort;
     }
 
     public function index(Request $request)
@@ -41,6 +45,17 @@ class ProductController extends Controller
         $resp = $this->product->show($id);
 
         return Response::display($resp);
+    }
+
+    public function form($id = 0)
+    {
+        $sort = $this->product_sort->index();
+        $params = ['product_sort' => $sort];
+        if ($id) {
+            $params['single_data'] = $this->product->show($id);
+        }
+
+        return view('admin.product_form', $params);
     }
 
     public function store(Request $request)

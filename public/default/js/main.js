@@ -29,6 +29,67 @@ var Tool = {
     }
 };
 
+//联系助手
+var Helper = {
+    init:function(obj){
+        var connectDiv = $("<div></div>").css({
+            width:"120px",
+            height:"200px",
+            position:"fixed",
+            marginTop:"80px",
+            marginLeft:"1px",
+            boxShadow:"0px 0px 2px 3px orange",
+            zIndex:999
+        });
+        var rowDiv = $("<div></div>").css({
+            width:"100px",
+            height:"25px",
+            margin:"10px auto",
+            boxShadow:"0px 0px 2px 2px orange",
+            textAlign:"center",
+            lineHeight:"25px",
+            cursor:"pointer",
+            color:"orange"
+        }).addClass("clickDiv");
+        connectDiv.on('click',".clickDiv",function(){
+            Helper.slide($(this));
+        });
+        connectDiv.append(
+            rowDiv.clone().addClass("tel").html('联系方式'),
+            rowDiv.clone().addClass("qq").html('QQ'),
+            rowDiv.clone().addClass("wechat").html('微信')
+        );
+        var dom = obj ? obj : $("body");
+        dom.append(connectDiv);
+        $(".tel").click();
+    },
+    slide:function(obj){
+        console.log(obj);
+        var showDiv = $("<div></div>").css({
+            width:"100px",
+            height:"80px",
+            margin:"10px auto",
+            display:"block",
+            fontSize:"13px",
+            boxShadow:"0px 0px 2px 2px orange"
+        }).addClass("showDiv");
+        var html;
+        if(obj.hasClass("tel")){
+            html = "哈哈哈";
+        }else if(obj.hasClass("qq")){
+            html = "hehe";
+        }else{
+            html = "额";
+        }
+        showDiv.html(html);
+        if(!obj){
+            return false;
+        }
+        obj.parent().find(".showDiv").remove();
+        obj.after(showDiv);
+    }
+};
+
 //图片上传与显示
 var UploadPic = {
     i:0,

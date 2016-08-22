@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('article', 'ArticleController');
         Route::resource('product_sort', 'ProductSortController');
         Route::resource('product', 'ProductController');
+        Route::get('product_form/{id?}','ProductController@form');
         Route::resource('style', 'StyleController');
     });
 });
