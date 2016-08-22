@@ -10,13 +10,22 @@ namespace App\Repositories\Eloquents;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Administrator as AdminModel;
-use App\Repositories\Eloquents\Media as MediaEloquent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repositories\InterfacesBag\Image as ImageInterface;
 use App\Repositories\InterfacesBag\Administrator as AdminInterface;
+
+define('ADMIN_AVATAR_PATH', 'avatar/admin');
 
 class Administrator implements AdminInterface
 {
     protected $module = 'auth';
+
+    protected $image;
+
+    public function __construct(ImageInterface $image)
+    {
+        $this->image = $image;
+    }
 
     public function index()
     {
@@ -31,23 +40,23 @@ class Administrator implements AdminInterface
 
     public function login(array $info)
     {
-        $verify = false;
         $userInfo = AdminModel::where('username', trim($info['username']));
-        if ($userInfo->count()) {
-            $password = $userInfo->first()->password;
-            if (password_verify(trim($info['password']), $password)) {
-                Auth::login($userInfo->first());
-                $currentUser = AdminModel::where('administrators.id', Auth::User()->id);
-                $currentUser->update(['last_login_time' => Carbon::now(),
-                                      'last_login_ip'   => $info['ip']]);
-                $path = $currentUser->leftJoin('medias', 'administrators.avatar', '=', 'medias.id')->select('administrators.*', 'medias.path')->first()->path;
-                session(['avatar' => $path]);
-                $verify = true;
-                event('log', [[$this->module, 'l', Auth::User()->toArray()]]);
-            }
+        if (!$userInfo->count()) {
+            return ['errorCode' => 1007];
         }
+        $password = $userInfo->first()->password;
+        if (!password_verify(trim($info['password']), $password)) {
+            return ['errorCode' => 1003];
+        }
+        Auth::login($userInfo->first());
+        if (!Auth::check()) {
+            return ['errorCode' => 1008];
+        }
+        $currentUser = AdminModel::where('id', Auth::id());
+        $currentUser->update(['last_login_time' => Carbon::now(), 'last_login_ip' => $info['ip']]);
+        event('log', [[$this->module, 'l', Auth::User()->toArray()]]);
 
-        return $verify;
+        return true;
     }
 
     public function register(array $info)
@@ -55,43 +64,47 @@ class Administrator implements AdminInterface
         if (AdminModel::where('username', $info['username'])->count()) {
             event('log', [[$this->module, 'r', 'username has already exists', 0]]);
 
-            return 0;
+            return ['errorCode' => 1005];
         }
         $info['password'] = password_hash($info['password'], PASSWORD_BCRYPT);
         $info['creator_id'] = Auth::id();
         $info['last_login_time'] = Carbon::now();
         $info['last_login_ip'] = $info['ip'];
 
-        if ($user = AdminModel::create($info)) {
-            event('log', [[$this->module, 'r', $user->toArray()]]);
+        if ($user = AdminModel::create($info)->toArray()) {
+            event('log', [[$this->module, 'r', $user]]);
 
-            return 1;
+            return $user;
         }
     }
 
     public function update($id, array $info)
     {
-        $before = AdminModel::findOrFail($id);
-        if (isset($info['avatar']) && $info['avatar'] instanceof UploadedFile) {
-            $media = new MediaEloquent ();
-            $info['avatar']->sort = 'image';
-            $info['avatar']->path = 'avatar/admin';
-            if ($return = $media->create($info['avatar'])) {
-                $info['avatar'] = $return[0];
-            }
+        $info = array_filter($info);
+        if (!$before = AdminModel::where('id', $id)->first()) {
+            return ['errorCode' => 1004];
+        }
+        if (isset($info['file']) && $info['file'] instanceof UploadedFile) {
+            $avatar_params = [
+                'path'        => ADMIN_AVATAR_PATH . '/' . $id,
+                'thumb_path'  => ADMIN_AVATAR_PATH . '/' . $id . '/thumb',
+                'thumb_width' => 180
+            ];
+            $avatar = $this->image->create($info['file'], $avatar_params);
+            $info['avatar'] = serialize($avatar);
+            unset($info['file']);
         }
         if (isset($info['password'])) {
             $info['password'] = password_hash($info['password'], PASSWORD_BCRYPT);
         }
         if (AdminModel::where('id', $id)->update($info)) {
-            if ($info['avatar']) { //delete before avatar
-                $old_avatar = $media->show((integer)$before->avatar)->path;
-                $media->delete((integer)$before->avatar);
-                @unlink(public_path($old_avatar));
+            $after = AdminModel::where('id', $id)->first()->toArray();
+            if (isset($info['avatar']) && ($image = unserialize($before->avatar))) { //delete before avatar
+                $this->image->delete($image['id']);
             }
-            event('log', [[$this->module, 'u', ['before' => $before, 'after' => AdminModel::findOrFail($id)->toArray()]]]);
+            event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 
-            return 1;
+            return $after;
         }
     }
 }

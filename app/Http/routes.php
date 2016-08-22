@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('register', 'AdminAuthController@register');
         Route::get('list', 'AdminAuthController@index');
         Route::get('zone', 'AdminAuthController@show');
-        Route::post('update/{id}', 'AdminAuthController@update');
+        Route::put('update/{id}', 'AdminAuthController@update');
         Route::get('logout', 'AdminAuthController@logout');
         Route::get('/', function() {
         });

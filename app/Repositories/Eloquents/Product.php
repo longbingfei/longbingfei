@@ -85,7 +85,7 @@ class Product implements ProductInterface
         ];
         $files = is_array($files) ? $files : [$files];
         $images = array_map(function($y) use ($params) {
-            return $this->image->create($y, $params)->toArray();
+            return $this->image->create($y, $params);
         }, $files);
 
         return $images;

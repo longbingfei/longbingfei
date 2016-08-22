@@ -79,8 +79,8 @@ class Article implements ArticleInterface
         $data['sort_id'] = $data['sort_id'] ? $data['sort_id'] : 1;
         $data['status'] = $data['status'] ? 1 : 0;
         if ($data['file'] instanceof UploadedFile) {
-            $image = $this->image->create($data['file'], []);
-            $data['index_pic'] = serialize($image->toArray());
+            $image = $this->image->create($data['file']);
+            $data['index_pic'] = serialize($image);
         }
 
         if ($article = ArticleModel::create($data)) {
@@ -103,7 +103,7 @@ class Article implements ArticleInterface
         $data['editor_id'] = Auth::id();
         if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
-            $data['index_pic'] = serialize($image->toArray());
+            $data['index_pic'] = serialize($image);
         }
         if (ArticleModel::where('id', $id)->update($data)) {
             $after = ArticleModel::findOrFail($id);

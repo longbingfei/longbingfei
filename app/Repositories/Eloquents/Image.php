@@ -69,7 +69,7 @@ class Image implements ImageInterface
         if ($info = ImageModel::create($imageInfo)) {
             event('log', [[$this->module, 'c', $info]]);
 
-            return $info;
+            return $info->toArray();
         }
     }
 
