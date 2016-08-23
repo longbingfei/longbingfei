@@ -34,7 +34,6 @@ class ProductController extends Controller
             'title',
             'order'
         ];
-
         $return = $this->product->index($request->only($fillable));
 
         return view('admin.product', ['data' => $return]);

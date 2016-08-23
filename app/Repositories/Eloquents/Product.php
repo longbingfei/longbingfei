@@ -54,9 +54,9 @@ class Product implements ProductInterface
         $return = ProductModel::where('products.id', $id)
             ->leftJoin('product_sorts', 'product_sorts.id', '=', 'products.sort_id')
             ->leftJoin('administrators', 'products.user_id', '=', 'administrators.id')
-            ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first()->toArray();
+            ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first();
 
-        return $return ? $return : ['errorCode' => 1300];
+        return $return ? $return->toArray() : ['errorCode' => 1300];
     }
 
     public function create(array $data)
@@ -118,7 +118,7 @@ class Product implements ProductInterface
         }
         $params['images'] = serialize($images);
         if (ProductModel::where('id', $id)->update($params)) {
-            $after = ProductModel::where('id',$id)->first();
+            $after = ProductModel::where('id', $id)->first();
             event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
 
             return $after;
