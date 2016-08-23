@@ -102,7 +102,7 @@ class Product implements ProductInterface
         $params['describe'] = trim($data['describe']);
         $params['storage'] = intval($data['storage']);
         $params['sort_id'] = intval($data['sort_id']);
-        $params['evaluate'] = trim($data['evaluate']);
+        $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $params['user_id'] = Auth::id();
         $images = unserialize($before->images);
         if (isset($data['drop_images']) && ($drop_images = explode(',', $data['drop_images']))) {

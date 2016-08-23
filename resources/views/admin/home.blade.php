@@ -16,14 +16,8 @@
         <script src="{{ url('default/js/main.js') }}"></script>
     @show
     <style>
-        .common-footer{
-            width:100%;
-            height:80px;
-            box-shadow: 1px 1px 2px 1px grey;
-            position:fixed;
-            bottom:0px;
-            z-index:99;
-        }
+        @section('stylesheet')
+        @show
     </style>
 </head>
 <body>
@@ -45,10 +39,10 @@
 <script>
 </script>
 </body>
-{{--<footer>--}}
-    {{--@section('footer')--}}
-        {{--<div class="common-footer">--}}
-        {{--</div>--}}
-    {{--@show--}}
-{{--</footer>--}}
+<footer>
+    @section('footer')
+        <div class="common-footer">
+        </div>
+    @show
+</footer>
 </html>
