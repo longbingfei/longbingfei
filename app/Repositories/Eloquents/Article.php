@@ -128,7 +128,7 @@ class Article implements ArticleInterface
             }
             event('log', [[$this->module, 'd', $info]]);
 
-            return ['id' => $id];
+            return $info->toArray();
         }
 
         return ["errorCode" => 1204];

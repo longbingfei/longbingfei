@@ -1,30 +1,14 @@
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
+    /*background-image: url("../images/bg.png");*/
 }
-
-
-/*
- * Global add-ons
- */
-
 .sub-header {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
 }
-
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
 .navbar-fixed-top {
     border: 0;
 }
-
 .avatar img{
     position:absolute;
     top:10px;
@@ -35,11 +19,9 @@ body {
     padding-top: 50px;
 }
 
-/*plug*/
 .plug-show-div{
     border:1px solid darkgrey;
     width:100%;
-    /*border-radius: 1em;*/
 }
 .plug-upload-div{
     position: relative;
@@ -93,8 +75,58 @@ body {
     color:white;
     cursor:pointer;
 }
-/*td{*/
-    /*white-space: nowrap;*/
-    /*overflow: hidden;*/
-    /*text-overflow: ellipsis;*/
-/*}*/
+.table-no-data{
+    text-align:center;
+    color:grey;
+}
+.product-main{
+    overflow: hidden;
+    width:100%;
+    box-shadow: 0 0 6px #0D3349;
+}
+.product-table tr td{
+    vertical-align: middle !important;
+}
+.product-table tr:first-child td{
+    font-size: 16px;
+    font-weight: 400;
+}
+.product-table tr td img{
+    width:60px;
+    height:40px;
+}
+#pagination-digg li {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    list-style: none;
+    float: left;
+    box-shadow: 1px 1px 2px grey
+}
+#pagination-digg a {
+    border: solid 1px #f7f7f9;
+    margin-right: 2px;
+}
+#pagination-digg .next a, #pagination-digg .previous a {
+    font-weight: bold;
+}
+#pagination-digg .active {
+    background: #2e6ab1;
+    color: #FFFFFF;
+    font-weight: bold;
+    display: block;
+    float: left;
+    padding: 4px 6px;
+    margin-right: 2px;
+}
+#pagination-digg a:link, #pagination-digg a:visited {
+    color: #0e509e;
+    display: block;
+    float: left;
+    padding: 3px 6px;
+    text-decoration: none;
+}
+#pagination-digg a:hover {
+    border: solid 1px #0e509e;
+}

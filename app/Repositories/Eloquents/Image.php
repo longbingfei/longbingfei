@@ -35,7 +35,7 @@ class Image implements ImageInterface
             return ['errorCode' => 1102];
         }
 
-        return $return;
+        return $return->toArray();
     }
 
     //图片上传
