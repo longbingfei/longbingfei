@@ -60,7 +60,7 @@ class Image implements ImageInterface
             $constraint->aspectRatio();
         })->save($thumbPath . '/' . $name);
         $imageInfo = [
-            'name'    => isset($params['name']) && $params['name'] ? $params['name'] : basename($file->getClientOriginalName(),'.'.$file->getClientOriginalExtension()),
+            'name'    => isset($params['name']) && $params['name'] ? $params['name'] : basename($file->getClientOriginalName(), '.' . $file->getClientOriginalExtension()),
             'sort_id' => isset($params['sort_id']) && $params['sort_id'] ? $params['sort_id'] : 4, //1系统,2截图,3商品,4普通
             'path'    => $path . '/' . $name,
             'thumb'   => $thumbPath . '/' . $name,

@@ -27,9 +27,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('zone', 'AdminAuthController@show');
         Route::put('update/{id}', 'AdminAuthController@update');
         Route::get('logout', 'AdminAuthController@logout');
-        Route::get('/', function() {
-
-        });
     });
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'prefix' => 'feature'], function() {
         //具体操作
