@@ -39,8 +39,20 @@ class WebController extends Controller
         return $this->article->show($id);
     }
 
-    public function productIndex(){
-        return $this->product->index();
+    public function productIndex(Request $request){
+        $fillable = [
+            'page',
+            'perpage',
+            'sort_id',
+            'orderby',
+            'storage',
+            'price',
+            'title',
+            'order'
+        ];
+
+        $return = $this->product->index($request->only($fillable));
+        return $return;
     }
 
     public function productShow($id){

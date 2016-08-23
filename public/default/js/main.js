@@ -112,7 +112,7 @@ var UploadPic = {
             });
             $(".plug-cancel-style").on('click',function(){
                 that.Delete($(this));
-            })
+            });
             that.i++;
         }
     },

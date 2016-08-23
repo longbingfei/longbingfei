@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::put('update/{id}', 'AdminAuthController@update');
         Route::get('logout', 'AdminAuthController@logout');
         Route::get('/', function() {
+
         });
     });
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'prefix' => 'feature'], function() {
@@ -45,12 +46,12 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::group(['prefix' => 'web', 'namespace' => 'Web'], function() {
-//    Route::get('/','WebController@index');
-//    Route::get('article','WebController@articleIndex');
-//    Route::get('article/{id}','WebController@articleShow');
-//    Route::get('product','WebController@productIndex');
-//    Route::get('product/{id}','WebController@productShow');
-//    Route::get('media/{id}','WebController@mediaShow');
+    Route::get('/','WebController@index');
+    Route::get('article','WebController@articleIndex');
+    Route::get('article/{id}','WebController@articleShow');
+    Route::get('product','WebController@productIndex');
+    Route::get('product/{id}','WebController@productShow');
+    Route::get('media/{id}','WebController@mediaShow');
 });
 
 //涉及到用户登录的操作

@@ -25,7 +25,7 @@ class Product implements ProductInterface
         $this->image = $image;
     }
 
-    public function index(array $condition)
+    public function index(array $condition = [])
     {
         $orderBy = $condition['orderby'] && in_array($condition['orderby'], ['id', 'sort_id', 'user_id', 'price',
             'storage']) ? 'products.' . $condition['orderby'] : 'products.id';
