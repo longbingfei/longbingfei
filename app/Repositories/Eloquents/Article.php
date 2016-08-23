@@ -68,7 +68,7 @@ class Article implements ArticleInterface
         }
         $article['content'] = htmlspecialchars_decode($article['content']);
 
-        return $article;
+        return $article->toArray();
     }
 
     //文稿新建

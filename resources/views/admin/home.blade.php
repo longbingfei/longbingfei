@@ -45,10 +45,10 @@
 <script>
 </script>
 </body>
-<footer>
-    @section('footer')
-        <div class="common-footer">
-        </div>
-    @show
-</footer>
+{{--<footer>--}}
+    {{--@section('footer')--}}
+        {{--<div class="common-footer">--}}
+        {{--</div>--}}
+    {{--@show--}}
+{{--</footer>--}}
 </html>
