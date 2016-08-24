@@ -150,7 +150,7 @@
                 map.centerAndZoom(point, Number(me.getPars(url, "zoom")));
                 imgcss = img.attr('style');
             } else {
-                point = new BMap.Point(116.404, 39.915);    // 创建点坐标
+                point = new BMap.Point(118.78333,32.05000);    // 创建点坐标
                 marker = new BMap.Marker(point);
                 map.addControl(new BMap.NavigationControl());
                 map.centerAndZoom(point, 10);                     // 初始化地图,设置中心点坐标和地图级别。
@@ -231,7 +231,7 @@
                         center = widget.map.getCenter(),
                         zoom = widget.map.getZoom(),
                         size = widget.map.getSize(),
-                        point = widget.marker.P;
+                        point = widget.marker.point;
 
                     if (widget.root().find(".edui-map-dynamic")[0].checked) {
                         var URL = editor.getOpt('UMEDITOR_HOME_URL'),

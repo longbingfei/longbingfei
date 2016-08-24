@@ -34,10 +34,6 @@
         </div>
     </nav>
 @show
-<div class="container-fluid main">
-</div>
-<script>
-</script>
 </body>
 <footer>
     @section('footer')

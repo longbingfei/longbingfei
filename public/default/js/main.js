@@ -28,6 +28,49 @@ var Tool = {
         obj.append($(alertDom));
     }
 };
+//弹出框 msg:{title,message,callback}
+var Confirm = function (msg) {
+    if (!msg || !msg.message) {
+        return false;
+    }
+    var coverDiv = $("<div></div>").css({
+        width: $(document).width(),
+        height: $(document).height(),
+        position: "absolute",
+        top: 0,
+        backgroundColor: "black",
+        opacity: "0.6",
+        zIndex: 98
+    }).addClass("msg_modal");
+    var confirmDiv = $("<div></div>").css({
+        width: "400px",
+        height: "200px",
+        backgroundColor: "white",
+        boxShadow: "1px 1px 3px 3px #337ab7",
+        position: "absolute",
+        left: $(window).width() / 2 - 200,
+        top: $(window).height() / 2 - 100,
+        textAlign: "center",
+        fontColor: 'grey',
+        zIndex: 99
+    }).addClass("msg_modal");
+    var confirmBody = "<h4><span class='glyphicon glyphicon-exclamation-sign' style='color:indianred'></span>&nbsp&nbsp" +
+        (msg && msg.title ? msg.title : '提示') + "</h4><hr style='margin:4px 4px" +
+        " !important;'/>" +
+        "<div style='width:300px;height:100px;margin:0 auto;line-height:100px'>" + msg.message +
+        "</div><hr style='margin:4px 4px !important;' />" +
+        "<div><botton class='btn btn-default btn-cancel' style='margin-right: 60px'>取消</botton>" +
+        "<botton class='btn btn-default btn-submit'>确定</botton></div>";
+    $("body").append(coverDiv).append(confirmDiv.append(confirmBody));
+    $(".msg_modal").on('click', '.btn', function () {
+        if ($(this).hasClass('btn-cancel')) {
+            $("body").find(".msg_modal").remove();
+        } else if ($(this).hasClass('btn-submit')) {
+            $("body").find(".msg_modal").remove();
+            (typeof msg.callback == 'function') ? msg.callback() : '';
+        }
+    });
+};
 
 //联系助手
 var Helper = {
@@ -39,7 +82,7 @@ var Helper = {
             marginTop: "80px",
             marginLeft: "1px",
             boxShadow: "0px 0px 2px 3px orange",
-            zIndex: 999
+            zIndex: 99
         });
         var rowDiv = $("<div></div>").css({
             width: "100px",

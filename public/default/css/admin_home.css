@@ -30,7 +30,7 @@ img{
     float:left;
     width:80px;
     height:80px;
-    z-index: 998;
+    z-index: 10;
     cursor:pointer;
 }
 .plug-mark{
@@ -65,7 +65,7 @@ img{
     height:300px;
     position:absolute;
     background-size:100% 100%;
-    z-index:999;
+    z-index:12;
 }
 .plug-cancel-style{
     position:absolute;
@@ -140,29 +140,43 @@ h3{
     text-align:center
 }
 .main_product_form{
+    padding-top:10px;
     margin:0 auto;
     width:1000px;
     box-shadow: 1px 1px 3px 1px darkgrey;
+}
+.product-left{
+    width:400px;
+    height:320px;
+    padding-bottom: 10px;
+    float:left;
+}
+.product-right{
+    width:600px;
+    height:320px;
+    padding-bottom: 10px;
+    float:right;
 }
 .form-span{
     margin:10px 10px;
     font-size:16px;
 }
-.main_product_form input{
+.product-left input{
     display:block !important;
-    width:300px;
+    width:380px;
     height:40px;
     font-size:16px;
     margin:10px 10px;
 }
-.main_product_form select{
+.product-left select{
     display:block !important;
-    width:300px;
+    width:380px;
     font-size:16px;
     margin:10px 10px;
 }
 .edui-container{
     margin:10px 10px;
+    z-index:0 !important;
 }
 .show-product-images{
     margin:10px 10px;

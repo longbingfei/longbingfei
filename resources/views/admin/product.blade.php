@@ -47,7 +47,7 @@
                 @else
                     @foreach($data['data'] as $item => $value)
                         <tr>
-                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" title="{{$value['id']}}"></td>
                             <td><img src="{{empty($value['images']) ? '' : url($value['images'][0]['path'])}}"></td>
                             <td>{{mb_strlen($value['name']) > 6 ? mb_substr($value['name'],0,6).'...' : $value['name']}}</td>
                             <td>{{mb_strlen($value['sort_name']) > 6 ? mb_substr($value['sort_name'],0,6).'...' : $value['sort_name']}}</td>
@@ -76,7 +76,8 @@
                                 @for($i = 1;$i<=$data['last_page'];$i++)
                                     <li><a href="?page={{$i}}">{{$i}}</a></li>
                                 @endfor
-                                <li class="next"><a href="javascript:void(0)">共{{$data['last_page']}}页/计{{$data['total']}}条</a></li>
+                                <li class="next"><a href="javascript:void(0)">共{{$data['last_page']}}
+                                        页/计{{$data['total']}}条</a></li>
                             </ul>
                         </div>
                     </td>
@@ -88,18 +89,24 @@
         $(function () {
             $('[data-toggle="popover"]').popover({html: true});
         });
-        function product_delete(target){
-            var id  = $(target).data('id');
-            if(!id){
+        function product_delete(target) {
+            var id = $(target).data('id');
+            if (!id) {
                 return false;
             }
-            $.ajax({
-                url:'product/'+id,
-                method:'delete',
-                success:function(data){
-                    if(data.id){
-                        location.reload();
-                    }
+            Confirm({
+                title: "删除确认",
+                message: "你确定删除这个商品吗?",
+                callback: function () {
+                    $.ajax({
+                        url: 'product/' + id,
+                        method: 'delete',
+                        success: function (data) {
+                            if (data.id) {
+                                location.reload();
+                            }
+                        }
+                    });
                 }
             });
         }
