@@ -69,7 +69,7 @@
                 contentType: false,
                 success: function (data) {
                     if (!data.id) {
-                        console.log(data);
+                        Confirm({title:'错误提示',message:data.error_message});
                         return false;
                     }
                     location.href = "{{url('admin/feature/product')}}";
