@@ -119,7 +119,9 @@ class ProductController extends Controller
             return Response::display(['errorCode' => $errorCode]);
         }
 
-        return $this->product->update($id, $request->only($fillable));
+        $return = $this->product->update($id, $request->only($fillable));
+
+        return $return;
     }
 
     public function destroy($id)

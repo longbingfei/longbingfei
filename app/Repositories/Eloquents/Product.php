@@ -68,6 +68,7 @@ class Product implements ProductInterface
         $data['storage'] = isset($data['storage']) ? intval($data['storage']) : 1;
         $data['user_id'] = Auth::id();
         $data['images'] = serialize(call_user_func([$this, 'createProductImages'], $data['file'], $data['pid']));
+        $data['describe'] = isset($data['describe']) ? htmlspecialchars($data['describe']): '';
         unset($data['file']);
         if ($product = ProductModel::create($data)) {
             event('log', [[$this->modules, 'c', $product]]);
@@ -99,12 +100,14 @@ class Product implements ProductInterface
         $data = array_filter($data);
         $params['name'] = trim($data['name']);
         $params['price'] = trim($data['price']);
-        $params['describe'] = trim($data['describe']);
+        $params['describe'] = isset($data['describe']) ? trim($data['describe']): '';
         $params['storage'] = intval($data['storage']);
         $params['sort_id'] = intval($data['sort_id']);
         $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $params['user_id'] = Auth::id();
-        $images = unserialize($before->images);
+        if(!$images = unserialize($before->images)){
+            $images = [];
+        }
         if (isset($data['drop_images']) && ($drop_images = explode(',', $data['drop_images']))) {
             $images = array_filter($images, function($y) use ($drop_images) {
                 return !in_array($y['id'], $drop_images);

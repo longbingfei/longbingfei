@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $tables->string('name',40);
             $tables->integer('price')->unsigned();
             $tables->text('images');
-            $tables->string('describe',100)->nullable();
+            $tables->text('describe')->nullable();
             $tables->integer('storage')->default(100);
             $tables->integer('sort_id')->unsigned();
             $tables->foreign('sort_id')->references('id')->on('product_sorts')->onDelete('cascade');
