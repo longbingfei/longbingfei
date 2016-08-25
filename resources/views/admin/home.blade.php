@@ -21,18 +21,22 @@
     </style>
 </head>
 <body>
-@section('body')
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <span class="navbar-brand">system</span>
-                <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
-                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
-                <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
-                <sapn class="zone navbar-brand"><a href="javascript:void(0)">Zone</a></sapn>
-            </div>
+@section('nav')
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand">system</span>
+            <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
+            <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
+            <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
+            <sapn class="zone navbar-brand"><a href="javascript:void(0)">Zone</a></sapn>
         </div>
-    </nav>
+    </div>
+</nav>
+@show
+<h3>@yield('subject','主题未定义')</h3>
+<hr/>
+@section('body')
 @show
 </body>
 <footer>

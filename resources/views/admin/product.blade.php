@@ -5,25 +5,12 @@
 @stop
 @section('stylesheet')
     @parent
-    .product-bar{
-    width:100%;
-    height:200px;
-    box-shadow: 0 0 6px #0D3349;
-    position:relative;
-    }
-    .bar-bottom{
-    display:block;
-    width:50px;
-    height:30px;
-    border:1px solid grey;
-    font-size:16px;
-    }
-    .product-action{
-    cursor:pointer
-    }
 @stop
-@section('body')
+@section('nav')
     @parent
+@stop
+@section('subject','商品列表')
+@section('body')
     <div class="container">
         <div class="panel">
             <a class="btn btn-default" href="product_form">添加商品</a>

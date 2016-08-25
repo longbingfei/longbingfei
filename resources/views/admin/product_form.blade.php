@@ -10,14 +10,17 @@
 @section('stylesheet')
     @parent
 @stop
+@section('nav')
+    @parent
+@stop
+@section('subject',isset($single_data) ? '商品信息更新' : '新增商品')
 @section('body')
     @parent
-    <h3>xxx</h3>
     <div class="main_product_form">
         <div class="product-left">
             <span class="form-span">名称:</span>
             <input type="text" class="pro_name" placeholder="请输入商品名,50字符以内" value="{{isset($single_data) ?
-            $single_data['name'] : ''}}">
+        $single_data['name'] : ''}}">
             <span class="form-span">分类:</span>
             <select class="pro_sort_id">
                 @foreach($product_sort as $vo)
@@ -30,24 +33,24 @@
             <input type="text" class="pro_price" value="{{isset($single_data) ? $single_data['price'] : ''}}">
         </div>
         @if(isset($single_data) && isset($single_data['images']) && ($images = unserialize($single_data['images'])))
-        <div class="product-right">
-            <div class="product-show-image-detail">
-                <img src="{{url($images[0]['path'])}}" title="点击查看原图">
+            <div class="product-right">
+                <div class="product-show-image-detail">
+                    <img src="{{url($images[0]['path'])}}" title="点击查看原图">
+                </div>
+                <div class="product-show-image-list">
+                    @foreach($images as $key => $vo)
+                        @if($key < 8)
+                            <div class="product-show-image-item" data-id="{{$vo['id']}}">
+                                <img src="{{url($vo['path'])}}">
+                            </div>
+                        @endif
+                    @endforeach
+                    <div class="product-add-image-item" title="点击添加">+</div>
+                </div>
+                <canvas id="product-zoom-image">
+                    此浏览器不支持画布
+                </canvas>
             </div>
-            <div class="product-show-image-list">
-                @foreach($images as $key => $vo)
-                    @if($key < 8)
-                    <div class="product-show-image-item" data-id="{{$vo['id']}}">
-                        <img src="{{url($vo['path'])}}">
-                    </div>
-                    @endif
-                @endforeach
-                <div class="product-add-image-item" title="点击添加">+</div>
-            </div>
-            <canvas id="product-zoom-image">
-                此浏览器不支持画布
-            </canvas>
-        </div>
         @endif
         <div style="clear:both"></div>
         <span class="form-span">描述:</span>
@@ -78,7 +81,7 @@
                 describe: um.getContent(),
                 _method: '{{isset($single_data) ? "PUT" : "POST"}}'
             };
-            if(productDropImageIDs.length){
+            if (productDropImageIDs.length) {
                 data.drop_images = productDropImageIDs.join(",");
             }
             var formData = new FormData;
@@ -105,24 +108,24 @@
             });
         });
         //删除图片
-        $(".product-show-image-item").hover(function(){
+        $(".product-show-image-item").hover(function () {
             var id = $(this).data('id');
-            if(id){
-                var delete_mark_div = $("<i data-id="+id+" class='glyphicon glyphicon-remove-circle' title='点击删除'></i>").addClass("delete_pic_mark");
+            if (id) {
+                var delete_mark_div = $("<i data-id=" + id + " class='glyphicon glyphicon-remove-circle' title='点击删除'></i>").addClass("delete_pic_mark");
                 $(this).append(delete_mark_div);
             }
-        },function(){
+        }, function () {
             $(this).find(".delete_pic_mark").remove();
         });
-        $("body").on('click','.delete_pic_mark',function(){
+        $("body").on('click', '.delete_pic_mark', function () {
             var dropimageid = $(this).data('id');
-            if(dropimageid) {
+            if (dropimageid) {
                 $(".product-show-image-list").find("div[data-id=" + dropimageid + "]").remove();
                 productDropImageIDs.push(dropimageid);
             }
         });
         //点击跳转原图
-        $(".product-show-image-item img").click(function(){
+        $(".product-show-image-item img").click(function () {
             window.open($(this).attr('src'));
         });
         //图片预览框
@@ -130,16 +133,16 @@
             $(".product-show-image-detail img").attr('src', $(this).attr('src'));
         });
         //点击跳转原图
-        $(".product-show-image-detail img").click(function(){
+        $(".product-show-image-detail img").click(function () {
             window.open($(this).attr('src'));
         });
         //移动局部放大
         $(".product-show-image-detail img").mousemove(function (e) {
-            var context=document.getElementById("product-zoom-image");
-            var ctx=context.getContext("2d");
+            var context = document.getElementById("product-zoom-image");
+            var ctx = context.getContext("2d");
             var img = new Image();
             img.src = $(this).attr('src');
-            img.onload= function() {
+            img.onload = function () {
                 var positionX = $(".product-show-image-detail").offset().left;
                 var positionY = $(".product-show-image-detail").offset().top;
                 ctx.drawImage(img, e.pageX - positionX, e.pageY - positionY, 400, 300, 0, 0, 400, 300);
@@ -149,8 +152,8 @@
             $("#product-zoom-image").hide();
         });
         //图片添加
-        $(".product-add-image-item").click(function(){
-            location.href="#plug-upload-input";
+        $(".product-add-image-item").click(function () {
+            location.href = "#plug-upload-input";
             $("#plug-upload-input").click();
         });
     </script>
