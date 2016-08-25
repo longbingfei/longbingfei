@@ -74,7 +74,8 @@ img{
     width:10px;
     height:10px;
     line-height:10px;
-    color:white;
+    font-size:20px;
+    color:black;
     cursor:pointer;
 }
 /*商品列表*/
@@ -156,6 +157,55 @@ h3{
     height:320px;
     padding-bottom: 10px;
     float:right;
+    position:relative;
+}
+#product-zoom-image{
+    width:250px;
+    height:240px;
+    z-index:99;
+    position:absolute;
+    right:10px;
+    top:0px;
+    cursor:pointer;
+    display:none;
+}
+.product-show-image-detail{
+    width:580px;
+    height:240px;
+    cursor:pointer;
+    margin:0 auto;
+}
+.product-show-image-detail img{
+    width:320px;
+    height:240px;
+    position:absolute;
+}
+.product-show-image-list{
+    max-width:580px;
+    height:60px;
+    margin:1px auto;
+    cursor:pointer;
+    box-shadow: 0px 0px 4px 1px lightblue;
+}
+.product-show-image-item,.product-add-image-item{
+    width:60px;
+    height:60px;
+    margin-right:2px;
+    float:left;
+}
+.product-add-image-item{
+    font-size:40px;
+    text-align: center;
+    line-height: 60px;
+    color:#00AA88;
+    box-shadow: 0px 0px 4px 4px orange inset;
+}
+.product-show-image-list:last-child{
+    margin-right:0px;
+}
+.product-show-image-item img{
+    width:60px;
+    height:60px;
 }
 .form-span{
     margin:10px 10px;
