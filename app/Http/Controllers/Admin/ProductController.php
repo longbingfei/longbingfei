@@ -92,10 +92,13 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'name.required'  => 1301,
-            'name.max:50'    => 1302,
-            'price.required' => 1303,
-            'price.float'    => 1304,
+            'name.required'    => 1301,
+            'name.max:50'      => 1302,
+            'price.required'   => 1303,
+            'price.float'      => 1304,
+            'storage.required' => 1305,
+            'storage.min:0'    => 1306,
+            'storage.integer'  => 1307
         ];
         if ($request->hasFile('file')) {
             if (is_array($request->file('file'))) {

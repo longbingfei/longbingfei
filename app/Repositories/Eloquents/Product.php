@@ -101,7 +101,7 @@ class Product implements ProductInterface
         $params['name'] = trim($data['name']);
         $params['price'] = trim($data['price']);
         $params['describe'] = isset($data['describe']) ? trim($data['describe']): '';
-        $params['storage'] = intval($data['storage']);
+        $params['storage'] = isset($data['describe']) ? intval($data['storage']) : 0;
         $params['sort_id'] = intval($data['sort_id']);
         $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $params['user_id'] = Auth::id();

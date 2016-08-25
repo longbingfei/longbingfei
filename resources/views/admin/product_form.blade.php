@@ -13,7 +13,7 @@
 @section('nav')
     @parent
 @stop
-@section('subject',isset($single_data) ? '商品信息更新' : '新增商品')
+@section('subject',isset($single_data) ? '商品信息修改' : '新增商品')
 @section('body')
     @parent
     <div class="main_product_form">
