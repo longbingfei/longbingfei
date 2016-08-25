@@ -29,7 +29,7 @@
             <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
             <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
             <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
-            <sapn class="zone navbar-brand"><a href="javascript:void(0)">Zone</a></sapn>
+            <span class="zone navbar-brand"><a href="javascript:void(0)">Zone</a></span>
         </div>
     </div>
 </nav>
