@@ -37,7 +37,7 @@
             <div class="product-show-image-list">
                 @foreach($images as $key => $vo)
                     @if($key < 8)
-                    <div class="product-show-image-item">
+                    <div class="product-show-image-item" data-id="{{$vo['id']}}">
                         <img src="{{url($vo['path'])}}">
                     </div>
                     @endif
@@ -56,9 +56,11 @@
         <span class="form-span">图片:</span>
         <div class="show-product-images" id="show-product-images"></div>
         <input class="pro_describe" type="hidden" name="describe" value="">
-        <button class="btn btn-default btn-lg product-submit">保存更改</button>
+        <button class="btn btn-default btn-lg product-submit">保存</button>
     </div>
     <script>
+        //需要删除的图片id
+        var productDropImageIDs = [];
         //初始化编辑器
         var um = UM.getEditor('describe');
         //设置编辑器文本
@@ -76,6 +78,9 @@
                 describe: um.getContent(),
                 _method: '{{isset($single_data) ? "PUT" : "POST"}}'
             };
+            if(productDropImageIDs.length){
+                data.drop_images = productDropImageIDs.join(",");
+            }
             var formData = new FormData;
             $.each(data, function (x, y) {
                 formData.append(x, y);
@@ -98,6 +103,23 @@
                     location.href = "{{url('admin/feature/product')}}";
                 }
             });
+        });
+        //删除图片
+        $(".product-show-image-item").hover(function(){
+            var id = $(this).data('id');
+            if(id){
+                var delete_mark_div = $("<i data-id="+id+" class='glyphicon glyphicon-remove-circle' title='点击删除'></i>").addClass("delete_pic_mark");
+                $(this).append(delete_mark_div);
+            }
+        },function(){
+            $(this).find(".delete_pic_mark").remove();
+        });
+        $("body").on('click','.delete_pic_mark',function(){
+            var dropimageid = $(this).data('id');
+            if(dropimageid) {
+                $(".product-show-image-list").find("div[data-id=" + dropimageid + "]").remove();
+                productDropImageIDs.push(dropimageid);
+            }
         });
         //点击跳转原图
         $(".product-show-image-item img").click(function(){

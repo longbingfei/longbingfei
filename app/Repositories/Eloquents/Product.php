@@ -68,7 +68,7 @@ class Product implements ProductInterface
         $data['storage'] = isset($data['storage']) ? intval($data['storage']) : 1;
         $data['user_id'] = Auth::id();
         $data['images'] = serialize(call_user_func([$this, 'createProductImages'], $data['file'], $data['pid']));
-        $data['describe'] = isset($data['describe']) ? htmlspecialchars($data['describe']): '';
+        $data['describe'] = isset($data['describe']) ? $data['describe']: '';
         unset($data['file']);
         if ($product = ProductModel::create($data)) {
             event('log', [[$this->modules, 'c', $product]]);
