@@ -22,6 +22,7 @@
                     <td>缩略图</td>
                     <td>名称</td>
                     <td>分类</td>
+                    <td>库存</td>
                     <td>创建时间</td>
                     <td>更新时间</td>
                     <td>操作人</td>
@@ -38,8 +39,9 @@
                             <td><img src="{{empty($value['images']) ? '' : url($value['images'][0]['path'])}}"></td>
                             <td>{{mb_strlen($value['name']) > 6 ? mb_substr($value['name'],0,6).'...' : $value['name']}}</td>
                             <td>{{mb_strlen($value['sort_name']) > 6 ? mb_substr($value['sort_name'],0,6).'...' : $value['sort_name']}}</td>
-                            <td>{{$value['created_at']}}</td>
-                            <td>{{$value['updated_at']}}</td>
+                            <td>{{$value['storage']}}</td>
+                            <td>{{Date('Y/m/d H:i:s',strtotime($value['created_at']))}}</td>
+                            <td>{{Date('Y/m/d H:i:s',strtotime($value['updated_at']))}}</td>
                             <td>{{mb_strlen($value['username']) > 6 ? mb_substr($value['username'],0,6).'...' : $value['username']}}</td>
                             <td>
                                 <a class="product-action glyphicon glyphicon-info-sign"
