@@ -28,6 +28,7 @@ var Tool = {
         obj.append($(alertDom));
     }
 };
+
 //弹出框 msg:{title,message,callback}
 var Confirm = function (msg) {
     if (!msg || !msg.message) {
@@ -70,6 +71,52 @@ var Confirm = function (msg) {
             (typeof msg.callback == 'function') ? msg.callback() : '';
         }
     });
+};
+
+//图片轮播obj:{images:json,payload:dom}
+var Carousel = {
+    init: function (obj) {
+        var max = 8;
+        var images = obj.images;
+        var payload = obj.payload;
+        if (!images || !images.length || !payload) {
+            return false;
+        }
+        var carouselDiv = $("<div></div>").css({
+            width: payload.width() > 320 ? payload.width() : 320,
+            height: payload.height() > 240 ? payload.height() : 240
+        }).addClass("carousel");
+        var carouselListDiv = $("<div></div>").addClass("carousel-list");
+        $.each(images, function (x, y) {
+            if (x < max) {
+                var item = carouselListDiv.clone().css({
+                    left: 45 * x,
+                    backgroundImage: 'url(http://localhost:8000/' + y.thumb + ')'
+                }).data({src: y.path, id: x});
+                carouselDiv.append(item);
+            }
+        });
+        var img = $("<img>").css({
+            width: carouselDiv.width(),
+            height: carouselDiv.height()
+        });
+        img.attr('src', 'http://localhost:8000/' + images[0].path).data('id', 0);
+        img.appendTo(carouselDiv);
+        payload.append(carouselDiv);
+        $(".carousel-list").mouseover(function () {
+            img.attr('src', 'http://localhost:8000/' + $(this).data('src')).data('id', $(this).data('id'));
+        });
+        setInterval(function () {
+            Carousel.action(images);
+        }, 3000);
+    },
+    action: function (images) {
+        var img_ = $(".carousel").children("img")[0];
+        var id = $(img_).data('id');
+        console.log(id);
+        id = id < images.length-1 ? id + 1 : 0;
+        $(img_).attr('src', 'http://localhost:8000/' + images[id].path).data('id', id);
+    }
 };
 
 //联系助手

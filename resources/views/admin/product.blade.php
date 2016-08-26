@@ -37,7 +37,9 @@
                         <tr>
                             <td><input type="checkbox" title="{{$value['id']}}"></td>
                             <td><img src="{{empty($value['images']) ? '' : url($value['images'][0]['path'])}}"></td>
-                            <td>{{mb_strlen($value['name']) > 6 ? mb_substr($value['name'],0,6).'...' : $value['name']}}</td>
+                            <td>
+                                <a href="{{url('admin/feature/product/show/'.$value['id'])}}">{{mb_strlen($value['name']) > 6 ? mb_substr($value['name'],0,6).'...' :$value['name']}}</a>
+                            </td>
                             <td>{{mb_strlen($value['sort_name']) > 6 ? mb_substr($value['sort_name'],0,6).'...' : $value['sort_name']}}</td>
                             <td>{{$value['storage']}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['created_at']))}}</td>

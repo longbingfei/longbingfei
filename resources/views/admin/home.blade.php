@@ -5,7 +5,7 @@ if ($avatar = unserialize($user->avatar)) {
     $avatar_path = $avatar['thumb'];
 }
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -29,17 +29,17 @@ if ($avatar = unserialize($user->avatar)) {
 </head>
 <body>
 @section('nav')
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid sys-nav">
-            <div class="navbar-header">
-                <span class="navbar-brand">system</span>
-                <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
-                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
-                <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
-                <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
-            </div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid sys-nav">
+        <div class="navbar-header">
+            <span class="navbar-brand">system</span>
+            <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
+            <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
+            <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
+            <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
         </div>
-    </nav>
+    </div>
+</nav>
 @show
 <h3>@yield('subject','主题未定义')</h3>
 <hr/>
@@ -69,12 +69,10 @@ if ($avatar = unserialize($user->avatar)) {
 </script>
 </body>
 <footer>
-    @section('footer')
     <div class="common-footer">
         <span>®2016 Kotana</span>&nbsp&nbsp&nbsp&nbsp
         <span>Designed By Sign</span>&nbsp&nbsp&nbsp&nbsp
         <span class="glyphicon glyphicon-envelope">sign_mail@163.com</span>
     </div>
-    @show
 </footer>
 </html>

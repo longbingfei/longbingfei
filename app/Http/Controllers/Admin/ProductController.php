@@ -47,6 +47,13 @@ class ProductController extends Controller
         return Response::display($resp);
     }
 
+    public function detail($id)
+    {
+        $detail = $this->show($id);
+
+        return view('admin.product_detail', ['detail' => $detail]);
+    }
+
     public function form($id = 0)
     {
         $sort = $this->product_sort->index();
