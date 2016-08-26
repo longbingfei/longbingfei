@@ -60,11 +60,14 @@
                     <td colspan="8">
                         <div class="painate" style="float:right;margin-top:2px">
                             <ul id="pagination-digg">
+                                <li><a href="javascript:void(0)">第{{$data['current_page']}}页</a></li>
                                 @for($i = 1;$i<=$data['last_page'];$i++)
                                     <li><a href="?page={{$i}}">{{$i}}</a></li>
                                 @endfor
-                                <li class="next"><a href="javascript:void(0)">共{{$data['last_page']}}
-                                        页/计{{$data['total']}}条</a></li>
+                                <li class="next">
+                                    <a href="javascript:void(0)">共{{$data['last_page']}}页/计{{$data['total']}}条
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </td>

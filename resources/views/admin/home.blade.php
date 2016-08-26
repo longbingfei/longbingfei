@@ -70,8 +70,11 @@ if ($avatar = unserialize($user->avatar)) {
 </body>
 <footer>
     @section('footer')
-        <div class="common-footer">
-        </div>
+    <div class="common-footer">
+        <span>®2016 Kotana</span>&nbsp&nbsp&nbsp&nbsp
+        <span>Designed By Sign</span>&nbsp&nbsp&nbsp&nbsp
+        <span class="glyphicon glyphicon-envelope">sign_mail@163.com</span>
+    </div>
     @show
 </footer>
 </html>

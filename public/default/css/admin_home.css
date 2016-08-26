@@ -1,5 +1,6 @@
 body {
     padding-top: 50px;
+    padding-bottom:60px;
 }
 
 img {
@@ -131,7 +132,6 @@ img {
 }
 
 .product-main {
-    overflow: hidden;
     width: 100%;
     box-shadow: 0 0 6px #0D3349;
 }
@@ -318,4 +318,14 @@ h3 {
 
 .product-submit {
     margin: 10px 10px;
+}
+.common-footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:50px;
+    background-color: #2a2730;
+    color:dimgrey;
+    text-align: center;
+    line-height: 50px;:999;
 }

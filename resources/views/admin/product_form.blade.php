@@ -18,18 +18,18 @@
     @parent
     <div class="main_product_form">
         <div class="product-left">
-            <span class="form-span">名称:</span>
+            <span class="form-span">商品名称:</span>
             <input type="text" class="pro_name" placeholder="请输入商品名,50字符以内" value="{{isset($single_data) ?
         $single_data['name'] : ''}}">
-            <span class="form-span">分类:</span>
+            <span class="form-span">商品分类:</span>
             <select class="pro_sort_id">
                 @foreach($product_sort as $vo)
                     <option value="{{$vo['id']}}">{{$vo['name']}}</option>
                 @endforeach
             </select>
-            <span class="form-span">库存:</span>
+            <span class="form-span">商品库存:</span>
             <input type="text" class="pro_storage" value="{{isset($single_data) ? $single_data['storage'] : ''}}">
-            <span class="form-span">价格:</span>
+            <span class="form-span">商品单价:</span>
             <input type="text" class="pro_price" value="{{isset($single_data) ? $single_data['price'] : ''}}">
         </div>
         @if(isset($single_data) && isset($single_data['images']) && ($images = unserialize($single_data['images'])))
@@ -53,10 +53,10 @@
             </div>
         @endif
         <div style="clear:both"></div>
-        <span class="form-span">描述:</span>
+        <span class="form-span">商品描述:</span>
         <script type="text/plain" id="describe">
         </script>
-        <span class="form-span">图片:</span>
+        <span class="form-span">商品展示图:</span>
         <div class="show-product-images" id="show-product-images"></div>
         <input class="pro_describe" type="hidden" name="describe" value="">
         <button class="btn btn-default btn-lg product-submit">保存</button>
