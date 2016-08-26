@@ -1,107 +1,159 @@
 body {
     padding-top: 50px;
-    /*background-image: url("../images/bg.png");*/
 }
-img{
-    border:0;
+
+img {
+    border: 0;
 }
-.sub-header {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
+
 .navbar-fixed-top {
     border: 0;
 }
-.avatar img{
-    position:absolute;
-    top:10px;
-    right:10px;
-    width:40px;
-}
-.main{
-    padding-top: 50px;
-}
-/*图片上传控件*/
-.plug-show-div{
-    width:100%;
-}
-.plug-upload-div{
-    position: relative;
-    float:left;
-    width:80px;
-    height:80px;
-    z-index: 10;
-    cursor:pointer;
-}
-.plug-mark{
-    position:relative;
-}
-#plug-upload-input{
+
+.profile {
     position: absolute;
-    top:0px;
-    left:0px;
-    width:80px;
-    height:80px;
+    right: 0;
+}
+
+.profile a {
+    color: lightseagreen;
+    cursor: pointer;
+}
+
+.profile a:hover {
+    color: yellow;
+}
+
+.profile_info {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 200px;
+    z-index: 99;
+    background-color: #cccccc;
+    box-shadow: 1px 1px 2px 1px grey;
+    display: none;
+}
+
+.profile_info ul {
+    position: absolute;
+    list-style-type: none;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+}
+
+.profile_info ul li {
+    font-size: 11px;
+    color: #000000;
+}
+
+.profile_info ul li img {
+    width: 160px;
+    height: 160px;
+}
+
+.login_info {
+    font-size: 11px;
+    color: mediumvioletred;
+}
+
+/*图片上传控件*/
+.plug-show-div {
+    width: 100%;
+}
+
+.plug-upload-div {
+    position: relative;
+    float: left;
+    width: 80px;
+    height: 80px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.plug-mark {
+    position: relative;
+}
+
+#plug-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
     opacity: 0;
 }
-.plug-plus-x{
-    position:absolute;
-    width:20px;
-    height:2px;
-    top:39px;
-    left:30px;
-    border:1px solid darkgrey;
+
+.plug-plus-x {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    top: 39px;
+    left: 30px;
+    border: 1px solid darkgrey;
 }
-.plug-plus-y{
-    position:absolute;
-    width:2px;
-    height:20px;
-    top:30px;
-    left:39px;
-    border:1px solid darkgrey;
+
+.plug-plus-y {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    top: 30px;
+    left: 39px;
+    border: 1px solid darkgrey;
 }
-.plug-preview-div{
-    width:300px;
-    height:300px;
-    position:absolute;
-    background-size:100% 100%;
-    z-index:12;
+
+.plug-preview-div {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    background-size: 100% 100%;
+    z-index: 12;
 }
-.plug-cancel-style{
-    position:absolute;
-    top:0px;
-    right:0px;
-    width:10px;
-    height:10px;
-    line-height:10px;
-    font-size:20px;
-    color:black;
-    cursor:pointer;
+
+.plug-cancel-style {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
 }
+
 /*商品列表*/
-.table-no-data{
-    text-align:center;
-    color:grey;
+.table-no-data {
+    text-align: center;
+    color: grey;
 }
-.product-main{
+
+.product-main {
     overflow: hidden;
-    width:100%;
+    width: 100%;
     box-shadow: 0 0 6px #0D3349;
 }
-.product-table tr td{
+
+.product-table tr td {
     vertical-align: middle !important;
 }
-.product-table tr:first-child td{
+
+.product-table tr:first-child td {
     font-size: 16px;
     font-weight: 400;
 }
-.product-table tr td img{
-    width:60px;
-    height:40px;
+
+.product-table tr td img {
+    width: 60px;
+    height: 40px;
 }
-.product-action{
-    cursor:pointer
+
+.product-action {
+    cursor: pointer
 }
+
 /*分页样式*/
 #pagination-digg li {
     border: 0;
@@ -112,13 +164,16 @@ img{
     float: left;
     box-shadow: 1px 1px 2px grey
 }
+
 #pagination-digg a {
     border: solid 1px #f7f7f9;
     margin-right: 2px;
 }
+
 #pagination-digg .next a, #pagination-digg .previous a {
     font-weight: bold;
 }
+
 #pagination-digg .active {
     background: #2e6ab1;
     color: #FFFFFF;
@@ -128,6 +183,7 @@ img{
     padding: 4px 6px;
     margin-right: 2px;
 }
+
 #pagination-digg a:link, #pagination-digg a:visited {
     color: #0e509e;
     display: block;
@@ -135,113 +191,131 @@ img{
     padding: 3px 6px;
     text-decoration: none;
 }
+
 #pagination-digg a:hover {
     border: solid 1px #0e509e;
 }
 
 /*商品表单*/
-h3{
-    text-align:center
+h3 {
+    text-align: center
 }
-.main_product_form{
-    padding-top:10px;
-    margin:0 auto;
-    width:1000px;
+
+.main_product_form {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 1000px;
     box-shadow: 1px 1px 3px 1px darkgrey;
 }
-.product-left{
-    width:400px;
-    height:320px;
+
+.product-left {
+    width: 400px;
+    height: 320px;
     padding-bottom: 10px;
-    float:left;
+    float: left;
 }
-.product-right{
-    width:600px;
-    height:320px;
+
+.product-right {
+    width: 600px;
+    height: 320px;
     padding-bottom: 10px;
-    float:right;
-    position:relative;
+    float: right;
+    position: relative;
 }
-#product-zoom-image{
-    width:250px;
-    height:240px;
-    z-index:99;
-    position:absolute;
-    right:10px;
-    top:0px;
-    cursor:pointer;
-    display:none;
+
+#product-zoom-image {
+    width: 250px;
+    height: 240px;
+    z-index: 99;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    cursor: pointer;
+    display: none;
 }
-.product-show-image-detail{
-    width:580px;
-    height:240px;
-    cursor:pointer;
-    margin:0 auto;
+
+.product-show-image-detail {
+    width: 580px;
+    height: 240px;
+    cursor: pointer;
+    margin: 0 auto;
 }
-.product-show-image-detail img{
-    width:320px;
-    height:240px;
-    position:absolute;
+
+.product-show-image-detail img {
+    width: 320px;
+    height: 240px;
+    position: absolute;
 }
-.product-show-image-list{
-    max-width:580px;
-    height:60px;
-    margin:1px auto;
+
+.product-show-image-list {
+    max-width: 580px;
+    height: 60px;
+    margin: 1px auto;
     box-shadow: 0px 0px 4px 1px lightblue;
 }
-.product-show-image-item,.product-add-image-item{
-    width:60px;
-    height:60px;
-    margin-right:2px;
-    float:left;
+
+.product-show-image-item, .product-add-image-item {
+    width: 60px;
+    height: 60px;
+    margin-right: 2px;
+    float: left;
 }
-.product-add-image-item{
-    font-size:40px;
+
+.product-add-image-item {
+    font-size: 40px;
     text-align: center;
     line-height: 60px;
-    color:#00AA88;
+    color: #00AA88;
     box-shadow: 0px 0px 4px 4px #00AA88 inset;
-    position:relative;
+    position: relative;
 }
-.product-show-image-item img{
-    width:60px;
-    height:60px;
+
+.product-show-image-item img {
+    width: 60px;
+    height: 60px;
 }
-.delete_pic_mark{
-    position:relative;
-    width:20px;
-    height:20px;
-    top:-20px;
-    right:-40px;
+
+.delete_pic_mark {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: -20px;
+    right: -40px;
     font-size: 20px;
-    color:orangered;
-    cursor:pointer;
+    color: orangered;
+    cursor: pointer;
 }
-.form-span{
-    margin:10px 10px;
-    font-size:16px;
+
+.form-span {
+    margin: 10px 10px;
+    font-size: 16px;
 }
-.product-left input{
-    display:block !important;
-    width:380px;
-    height:40px;
-    font-size:16px;
-    margin:10px 10px;
+
+.product-left input {
+    display: block !important;
+    width: 380px;
+    height: 40px;
+    font-size: 16px;
+    margin: 10px 10px;
 }
-.product-left select{
-    display:block !important;
-    width:380px;
-    font-size:16px;
-    margin:10px 10px;
+
+.product-left select {
+    display: block !important;
+    width: 380px;
+    font-size: 16px;
+    margin: 10px 10px;
 }
-.edui-container{
-    margin:10px 10px;
-    z-index:0 !important;
+
+.edui-container {
+    margin: 10px 10px;
+    z-index: 0 !important;
 }
-.show-product-images{
-    margin:10px 10px;
+
+.show-product-images {
+    margin: 10px 10px;
     box-shadow: 1px 1px 2px 1px grey
 }
-.product-submit{
-    margin:10px 10px;
+
+.product-submit {
+    margin: 10px 10px;
 }

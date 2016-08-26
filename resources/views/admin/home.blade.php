@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php
+$user = \Illuminate\Support\Facades\Auth::user();
+$avatar_path = "default/images/default_avatar.jpeg";
+if ($avatar = unserialize($user->avatar)) {
+    $avatar_path = $avatar['thumb'];
+}
+?>
+        <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -22,22 +29,44 @@
 </head>
 <body>
 @section('nav')
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <span class="navbar-brand">system</span>
-            <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
-            <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
-            <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
-            <span class="zone navbar-brand"><a href="javascript:void(0)">Zone</a></span>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid sys-nav">
+            <div class="navbar-header">
+                <span class="navbar-brand">system</span>
+                <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
+                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
+                <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
+                <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 @show
 <h3>@yield('subject','主题未定义')</h3>
 <hr/>
 @section('body')
 @show
+<script>
+    var profileDiv = "<div class='profile_info'>" +
+            "<ul class='list-group'>" +
+            "<li class='list-group-item'><img src='{{url($avatar_path)}}'></li>" +
+            "<li class='list-group-item'>" +
+            "<span>上次登录:&nbsp</span>" +
+            "<span class='login_info'>{{Date('m-d H:i:s',strtotime($user->last_login_time))}}</span>" +
+            "</li>" +
+            "<li class='list-group-item'>" +
+            "<span>上次登录IP:&nbsp</span>" +
+            "<span class='login_info'>{{$user->last_login_ip}}</span>" +
+            "</li>" +
+            "<li class='list-group-item' style='text-align:center'>" +
+            "<a class='btn btn-default' href='{{url('admin/auth/logout')}}'>退出登录</a>" +
+            "</li>" +
+            "</ul>" +
+            "</div>";
+    $("body").append($(profileDiv));
+    $(".profile").click(function () {
+        $(".profile_info").fadeToggle();
+    });
+</script>
 </body>
 <footer>
     @section('footer')

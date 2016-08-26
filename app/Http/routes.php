@@ -22,10 +22,9 @@ Route::group(['prefix' => 'admin'], function() {
             return view('admin.login');
         });
         Route::post('login', 'AdminAuthController@login');
-        Route::post('register', 'AdminAuthController@register');
-        Route::get('list', 'AdminAuthController@index');
-        Route::get('zone', 'AdminAuthController@show');
-        Route::put('update/{id}', 'AdminAuthController@update');
+        Route::post('register', ['middleware' => 'auth', 'uses' => 'AdminAuthController@register']);
+        Route::get('list', ['middleware' => 'auth', 'uses' => 'AdminAuthController@index']);
+        Route::put('update/{id}', ['middleware' => 'auth', 'uses' => 'AdminAuthController@update']);
         Route::get('logout', 'AdminAuthController@logout');
     });
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'prefix' => 'feature'], function() {
@@ -37,18 +36,18 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('article', 'ArticleController');
         Route::resource('product_sort', 'ProductSortController');
         Route::resource('product', 'ProductController');
-        Route::get('product_form/{id?}','ProductController@form');
+        Route::get('product_form/{id?}', 'ProductController@form');
         Route::resource('style', 'StyleController');
     });
 });
 
 Route::group(['prefix' => 'web', 'namespace' => 'Web'], function() {
-    Route::get('/','WebController@index');
-    Route::get('article','WebController@articleIndex');
-    Route::get('article/{id}','WebController@articleShow');
-    Route::get('product','WebController@productIndex');
-    Route::get('product/{id}','WebController@productShow');
-    Route::get('media/{id}','WebController@mediaShow');
+    Route::get('/', 'WebController@index');
+    Route::get('article', 'WebController@articleIndex');
+    Route::get('article/{id}', 'WebController@articleShow');
+    Route::get('product', 'WebController@productIndex');
+    Route::get('product/{id}', 'WebController@productShow');
+    Route::get('media/{id}', 'WebController@mediaShow');
 });
 
 //涉及到用户登录的操作
