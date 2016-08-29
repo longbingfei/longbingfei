@@ -91,7 +91,7 @@ var Carousel = {
             if (x < max) {
                 var item = carouselListDiv.clone().css({
                     left: 45 * x,
-                    backgroundImage: 'url(http://localhost:8000/' + y.thumb + ')'
+                    backgroundImage: 'url(' + y.thumb + ')'
                 }).data({src: y.path, id: x});
                 carouselDiv.append(item);
             }
@@ -100,11 +100,11 @@ var Carousel = {
             width: carouselDiv.width(),
             height: carouselDiv.height()
         });
-        img.attr('src', 'http://localhost:8000/' + images[0].path).data('id', 0);
+        img.attr('src', images[0].path).data('id', 0);
         img.appendTo(carouselDiv);
         payload.append(carouselDiv);
         $(".carousel-list").mouseover(function () {
-            img.attr('src', 'http://localhost:8000/' + $(this).data('src')).data('id', $(this).data('id'));
+            img.attr('src', $(this).data('src')).data('id', $(this).data('id'));
         });
         setInterval(function () {
             Carousel.action(images);
@@ -113,9 +113,8 @@ var Carousel = {
     action: function (images) {
         var img_ = $(".carousel").children("img")[0];
         var id = $(img_).data('id');
-        console.log(id);
-        id = id < images.length-1 ? id + 1 : 0;
-        $(img_).attr('src', 'http://localhost:8000/' + images[id].path).data('id', id);
+        id = id < images.length - 1 ? id + 1 : 0;
+        $(img_).attr('src', images[id].path).data('id', id);
     }
 };
 
@@ -273,20 +272,6 @@ var UploadPic = {
         $("#plug-upload-input").on('change', function () {
             UploadPic.Show($(this));
         });
-    }
-};
-
-//Product
-var Product = {
-    Show: function (obj, mouseStatus) {
-        switch (mouseStatus) {
-            case 'mouseover':
-                console.log('mouseover');
-                break;
-            case 'mouseout':
-                console.log('mouseout');
-                break;
-        }
     }
 };
 
