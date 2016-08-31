@@ -33,9 +33,7 @@
 @section('body')
     @parent
     <div class="container">
-        <div class="panel">
-            <a class="btn btn-default" href="article_form">新建文稿</a>
-        </div>
+        <a class="btn btn-default top-btn" href="article_form">新建文稿</a>
         <div class="article-main">
             <table class="table table-hover article-table">
                 <tr class="active">

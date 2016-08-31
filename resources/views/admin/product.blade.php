@@ -12,9 +12,7 @@
 @section('subject','商品列表')
 @section('body')
     <div class="container">
-        <div class="panel">
-            <a class="btn btn-default" href="product_form">添加商品</a>
-        </div>
+        <a class="btn btn-default top-btn" href="product_form">添加商品</a>
         <div class="product-main">
             <table class="table product-table">
                 <tr class="active">

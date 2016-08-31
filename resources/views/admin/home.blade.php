@@ -42,7 +42,6 @@ if ($avatar = unserialize($user->avatar)) {
 </nav>
 @show
 <h3>@yield('subject','主题未定义')</h3>
-<hr/>
 @section('body')
 @show
 <script>

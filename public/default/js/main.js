@@ -73,12 +73,37 @@ var Confirm = function (msg) {
     });
 };
 
+//图片功能模块 obj:{dom,src}
+var ImageFunction = {
+    init: function (obj) {
+        var scale = obj.scale ? obj.scale : 4 / 3;
+        var dom = obj.dom ? obj.dom : $("body");
+        var src = obj.src;
+        if (!src) {
+            return false;
+        }
+        var wrapDiv = $("<div></div>").css({
+            left: $(window).width() / 2 - 200,
+            top: $(window).height() / 2 - 200
+        }).addClass("cut_wrap_div");
+        var img = $("<img src='" + src + "'>").addClass("cut_origin_image");
+        var dragDiv = $("<div></div>").css({
+            width: "200px",
+            height: 400 / (2 * scale),
+            left: "100px",
+            top: 200 - 400 / (4 * scale)
+        }).addClass("cut_drag_div");
+        dom.append(wrapDiv.append(img).append(dragDiv));
+    }
+};
+
 //图片轮播obj:{images:json,payload:dom}
 var Carousel = {
     init: function (obj) {
         var max = 8;
         var images = obj.images;
         var payload = obj.payload;
+        var time = obj.time ? obj.time : 3000;
         if (!images || !images.length || !payload) {
             return false;
         }
@@ -108,7 +133,7 @@ var Carousel = {
         });
         setInterval(function () {
             Carousel.action(images);
-        }, 3000);
+        }, time);
     },
     action: function (images) {
         var img_ = $(".carousel").children("img")[0];
@@ -345,7 +370,7 @@ var Video = {
             position: "absolute",
             top: obj.height() / 2 - 50,
             left: obj.width() / 2 - 60,
-            backgroundImage: "url('http://img.dev.hogesoft.com:233/material/livmedia/img/2016/06/20160621130125hcLM.jpg')",
+            backgroundImage: "url(xxx)",
             backgroundSize: "100% 100%",
             cursor: "pointer"
         });

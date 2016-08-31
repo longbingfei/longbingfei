@@ -10,10 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('test',function(){
-    $json = "a:4:{i:0;a:8:{s:4:\"name\";s:37:\"屏幕快照 2016-05-31 下午4.16.11\";s:7:\"sort_id\";i:4;s:4:\"path\";s:51:\"product/images/NO.14720010746146/14720010746148.png\";s:5:\"thumb\";s:57:\"product/images/NO.14720010746146/thumb/14720010746148.png\";s:7:\"user_id\";i:1;s:10:\"updated_at\";s:19:\"2016-08-24 09:11:14\";s:10:\"created_at\";s:19:\"2016-08-24 09:11:14\";s:2:\"id\";i:4;}i:1;a:8:{s:4:\"name\";s:38:\"屏幕快照 2016-06-07 上午10.03.49\";s:7:\"sort_id\";i:4;s:4:\"path\";s:51:\"product/images/NO.14720010746146/14720010746702.png\";s:5:\"thumb\";s:57:\"product/images/NO.14720010746146/thumb/14720010746702.png\";s:7:\"user_id\";i:1;s:10:\"updated_at\";s:19:\"2016-08-24 09:11:14\";s:10:\"created_at\";s:19:\"2016-08-24 09:11:14\";s:2:\"id\";i:5;}i:2;a:8:{s:4:\"name\";s:12:\"粘贴图片\";s:7:\"sort_id\";i:4;s:4:\"path\";s:51:\"product/images/NO.14720010746146/14720110261276.png\";s:5:\"thumb\";s:57:\"product/images/NO.14720010746146/thumb/14720110261276.png\";s:7:\"user_id\";i:1;s:10:\"updated_at\";s:19:\"2016-08-24 11:57:06\";s:10:\"created_at\";s:19:\"2016-08-24 11:57:06\";s:2:\"id\";i:29;}i:3;a:8:{s:4:\"name\";s:2:\"bg\";s:7:\"sort_id\";i:4;s:4:\"path\";s:51:\"product/images/NO.14720010746146/14720110262267.png\";s:5:\"thumb\";s:57:\"product/images/NO.14720010746146/thumb/14720110262267.png\";s:7:\"user_id\";i:1;s:10:\"updated_at\";s:19:\"2016-08-24 11:57:06\";s:10:\"created_at\";s:19:\"2016-08-24 11:57:06\";s:2:\"id\";i:30;}}";
-    return json_encode(unserialize($json));
-});
 Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('admin', function() {
     return redirect('admin/auth/login');
