@@ -18,9 +18,17 @@ if ($avatar = unserialize($user->avatar)) {
     @section('link')
         <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ url('default/css/admin_home.css')}}" rel="stylesheet">
-        <script src="{{ url('default/js/jquery.js') }}"></script>
+        <script src="{{ url('default/js/jquery.1.10.js') }}"></script>
+        <script src="{{ url('default/js/jquery.2.1.1.js') }}"></script>
         <script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
         <script src="{{ url('default/js/main.js') }}"></script>
+        <script src="{{ url('default/js/ready.load.js') }}"></script>
     @show
     <style>
         @section('stylesheet')
@@ -32,7 +40,7 @@ if ($avatar = unserialize($user->avatar)) {
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid sys-nav">
         <div class="navbar-header">
-            <span class="navbar-brand">system</span>
+            <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
             <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
             <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
             <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
@@ -41,7 +49,7 @@ if ($avatar = unserialize($user->avatar)) {
     </div>
 </nav>
 @show
-<h3>@yield('subject','主题未定义')</h3>
+<h3 class="subject-h3">@yield('subject','主题未定义')</h3>
 @section('body')
 @show
 <script>
