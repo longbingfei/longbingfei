@@ -24,7 +24,7 @@ input, textarea, #describe {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space:nowrap;
-    max-width:140px;
+    width:140px;
 }
 .web-icon {
     color: green;
@@ -35,7 +35,12 @@ input, textarea, #describe {
 }
 
 .top-btn {
-    margin-bottom: 15px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    float:right;
+}
+.top-btn i{
+    color:#337ab7;
 }
 
 .navbar-fixed-top {
@@ -407,4 +412,28 @@ h3 {
 /*商品详情*/
 .product-detail-carousel {
     width: 400px;
+}
+
+/*分类*/
+.sort_main_div{
+    margin:0 auto;
+    border:1px solid grey;
+    /*width:1000px;*/
+    height:400px;
+}
+.sort_child_div{
+    float: left;
+    border:1px solid grey;
+    width:200px;
+    /*width:1000px;*/
+    height:100%;
+    overflow: auto;
+}
+.sort_item{
+    width:200px;
+    height:40px;
+    padding-left:20px;
+    line-height: 40px;
+    border:1px solid grey;
+
 }

@@ -29,7 +29,7 @@ var Tool = {
     }
 };
 
-//弹出框 msg:{title,message,callback}
+//确认框 msg:{title,message,callback}
 var Confirm = function (msg) {
     if (!msg || !msg.message) {
         return false;
@@ -46,13 +46,14 @@ var Confirm = function (msg) {
     var confirmDiv = $("<div></div>").css({
         width: "400px",
         height: "200px",
-        backgroundColor: "#485274",
+        backgroundColor: "white",
         boxShadow: "1px 1px 3px 3px #337ab7",
         position: "absolute",
         left: $(window).width() / 2 - 200,
         top: $(window).height() / 2 - 100,
         textAlign: "center",
-        zIndex: 99
+        zIndex: 99,
+        color: "black"
     }).addClass("msg_modal");
     var confirmBody = "<h4><span class='glyphicon glyphicon-exclamation-sign' style='color:indianred'></span>&nbsp&nbsp" +
         (msg && msg.title ? msg.title : '提示') + "</h4><hr style='margin:4px 4px" +
@@ -414,4 +415,26 @@ var Video = {
         });
     }
 
+};
+
+//分类窗口{dom:dom,sort:{xx:xx}}
+var Sort = {
+    init: function (obj) {
+        var main_div = obj.dom ? obj.dom : $("body");
+        main_div.addClass('sort_main_div');
+        var child_div = $("<div></div>").addClass('sort_child_div');
+        var item = $("<div></div>").addClass('sort_item');
+        console.log(obj.sort);
+        if (obj.sort) {
+            $.each(JSON.parse(obj.sort), function (x, y) {
+                var item_ = item.clone();
+                item_.data('id', y.id);
+                item_.html(y.name);
+                child_div.append(item_);
+            });
+            main_div.append(child_div);
+        }
+        main_div.append($("<div style='clear:both'></div>"));
+
+    }
 };

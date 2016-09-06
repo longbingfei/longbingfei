@@ -138,4 +138,11 @@ class ProductController extends Controller
     {
         return $this->product->delete($id);
     }
+
+    public function settings()
+    {
+        $sort = $this->product_sort->index();
+        $params = ['product_sort' => $sort];
+        return view('admin.product_settings',$params);
+    }
 }

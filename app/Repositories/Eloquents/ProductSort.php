@@ -25,16 +25,23 @@ class ProductSort implements ProductSortInterface
     public function create(array $data)
     {
         $data['user_id'] = Auth::id();
-
-        if (ProductSortModel::where('name', $data['name'])->count()) {
+        $data['fid'] = isset($data['fid']) ? intval($data['fid']) : 0;
+        $father = ProductSortModel::where('id', $data['fid'])->first();
+        if ($data['fid'] && !$father) {
+            return ['errorCode' => 1312];
+        }
+        if (ProductSortModel::where('fid', $data['fid'])->where('name', $data['name'])->count()) {
             event('log', [[$this->module, 'c', 'sort_already_exist', 0]]);
 
-            return 0;
+            return ['errorCode' => 1311];
         }
-        ProductSortModel::create($data);
-        event('log', [[$this->module, 'c', $data]]);
+        $newSort = ProductSortModel::create($data)->toArray();
+        event('log', [[$this->module, 'c', $newSort]]);
+        if ($father && $father->is_last) {
+            $father->update(['is_last' => 0]);
+        }
 
-        return 1;
+        return $newSort;
     }
 
     public function update($id, array $data)

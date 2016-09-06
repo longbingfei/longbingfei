@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('product', 'ProductController');
         Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
+        Route::get('product_settings', 'ProductController@settings');
         Route::resource('style', 'StyleController');
     });
 });
