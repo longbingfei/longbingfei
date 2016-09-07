@@ -10,22 +10,27 @@ table {
     color: #000000;
     background-color: white;
 }
-a:hover{
+
+a:hover {
     text-decoration: none;
 }
+
 img {
     border: 0;
 }
+
 input, textarea, #describe {
     color: black;
 }
-.ellipsis_{
-    display:inline-block;
+
+.ellipsis_ {
+    display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space:nowrap;
-    width:140px;
+    white-space: nowrap;
+    width: 140px;
 }
+
 .web-icon {
     color: green;
 }
@@ -37,10 +42,11 @@ input, textarea, #describe {
 .top-btn {
     margin-left: 5px;
     margin-bottom: 5px;
-    float:right;
+    float: right;
 }
-.top-btn i{
-    color:#337ab7;
+
+.top-btn i {
+    color: #337ab7;
 }
 
 .navbar-fixed-top {
@@ -165,6 +171,7 @@ input, textarea, #describe {
     text-align: center;
     color: grey;
 }
+
 .product-main {
     width: 100%;
     filter: progid:DXImageTransform.Microsoft.Shadow(color='#0D3349', Direction=135, Strength=6);
@@ -415,25 +422,61 @@ h3 {
 }
 
 /*分类*/
-.sort_main_div{
-    margin:0 auto;
-    border:1px solid grey;
+.sort_main_div {
+    margin: 0 auto;
+    border: 1px solid grey;
     /*width:1000px;*/
-    height:400px;
+    /*height: 400px;*/
+    overflow: hidden;
 }
-.sort_child_div{
-    float: left;
-    border:1px solid grey;
-    width:200px;
-    /*width:1000px;*/
-    height:100%;
-    overflow: auto;
-}
-.sort_item{
-    width:200px;
-    height:40px;
-    padding-left:20px;
-    line-height: 40px;
-    border:1px solid grey;
 
+.sort_child_div {
+    float: left;
+    border: 1px solid grey;
+    width: 200px;
+    /*width:1000px;*/
+    height: 100%;
+    overflow:hidden;
+    position:relative;
+
+}
+.sort_child_title{
+    width:198px;
+    height:40px;
+    padding-left: 20px;
+    background-color:#000000;
+    color:whitesmoke;
+    line-height: 40px;
+}
+
+.sort_child_title:first-child{
+    font-size: 14px;
+    cursor:pointer;
+}
+
+.sort_item {
+    margin: 0 auto;
+    width: 198px;
+    height: 40px;
+    padding-left: 20px;
+    line-height: 40px;
+    cursor:pointer;
+    border: 1px solid grey;
+    position: relative;
+}
+
+.sort_item span {
+    display: inline-block;
+    overflow: hidden;
+    width: 160px;
+    height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sort_item i {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    cursor:pointer;
 }

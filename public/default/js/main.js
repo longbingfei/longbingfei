@@ -419,22 +419,101 @@ var Video = {
 
 //分类窗口{dom:dom,sort:{xx:xx}}
 var Sort = {
+    data: [],
+    main_div: $("body"),
+    child_div: $("<div></div>").addClass('sort_child_div'),
+    item: $("<div></div>").addClass('sort_item'),
+    item_span: $("<span></span>"),
+    delete_mark: $("<i></i>").css('display', 'none').addClass('item_delete glyphicon glyphicon-remove-circle'),
+    next_mark: $("<i></i>").addClass('next_mark glyphicon glyphicon-chevron-right'),
+    sort_child_title: $("<div class='sort_child_title'>" +
+        "<span class='new_btn glyphicon glyphicon-plus-sign'></span>" +
+        "<span>&nbsp新增分类</span>" +
+        "</div>"),
+    setUrl: {
+        update: 'product_sort',
+        delete: 'product_sort',
+        get: 'product_sort'
+    },
     init: function (obj) {
-        var main_div = obj.dom ? obj.dom : $("body");
-        main_div.addClass('sort_main_div');
-        var child_div = $("<div></div>").addClass('sort_child_div');
-        var item = $("<div></div>").addClass('sort_item');
-        console.log(obj.sort);
-        if (obj.sort) {
-            $.each(JSON.parse(obj.sort), function (x, y) {
-                var item_ = item.clone();
-                item_.data('id', y.id);
-                item_.html(y.name);
-                child_div.append(item_);
-            });
-            main_div.append(child_div);
+        if (obj.dom) {
+            this.main_div = obj.dom;
         }
-        main_div.append($("<div style='clear:both'></div>"));
+        if (obj.data) {
+            this.data = typeof obj.data == 'string' ? JSON.parse(obj.data) : obj.data;
+        }
+        this.main_div.addClass('sort_main_div');
+        this.append_({fid: obj.fid ? obj.fid : 0, _fid: obj._fid ? obj._fid : -1});
+    },
+    append_: function (obj) {
+        this.each_(this.child_div.clone().append(this.sort_child_title.clone()).attr({fid: obj.fid, _fid: obj._fid}));
+        this.main_div.off('mouseover mouseout', '.sort_item').on("mouseover mouseout", ".sort_item", function () {
+            $(this).find('.item_delete').stop(0).fadeToggle();
+        });
+        this.main_div.off('click', '.sort_item').on("click", ".sort_item", function () {
+            var fid = $(this).attr('_id');
+            var _fid = $(this).attr('_fid');
+            //var exists_ = $('.sort_child_div').filter(function () {
+            //    return $(this).attr('fid') == fid || ($(this).attr('_fid') == _fid);
+            //});//存在则删除
+            var exists = $('.sort_child_div').filter('[fid='+fid+']');
+            if (exists.length) {
+                exists.nextAll().remove();//删除右侧同胞
+                exists.remove();//删除自身
+                return;
+            }
+            var exists_ = $('.sort_child_div').filter('[_fid='+_fid+']');
+            if (exists_.length) {
+                exists_.nextAll().remove();//删除右侧同胞
+                exists_.remove();//删除自身
+            }
 
-    }
+            if (!($(this).attr('_is_last'))) {
+                Sort.init({dom: Sort.main_div, data: [], fid: fid, _fid: _fid});
+                return;
+            }
+            $.ajax({
+                method: 'get',
+                url: Sort.setUrl.get + '?fid=' + fid,
+                success: function (data) {
+                    Sort.init({dom: Sort.main_div, data: data, fid: fid, _fid: _fid});
+                }
+            });
+        });
+        this.main_div.off('click', '.item_delete').on("click", ".item_delete", function (e) {
+            var e_ = e;
+            Confirm({
+                title: '删除确认', message: '确认删除此分类吗?', callback: function () {
+                    var sort_id = $(e_.target).parent().attr('_id');
+                    $.ajax({
+                        method: 'delete',
+                        url: Sort.setUrl.delete + '/' + sort_id,
+                        success: function (data) {
+                            if (data.id) {
+                                $(e_.target).parent().remove();
+                            }
+                        }
+                    });
+                }
+            })
+        });
+        this.main_div.off('click', '.new_btn').on('click', '.new_btn', function () {
+        });
+    },
+    each_: function (obj) {
+        var that = this;
+        $.each(this.data, function (x, y) {
+            var item_ = that.item.clone();
+            var item_span_ = that.item_span.clone();
+            item_.attr({_id: y.id, _fid: y.fid, _is_last: y.is_last});
+            item_span_.html(y.name);
+            if (y.is_last) {
+                item_.append(that.delete_mark.clone());
+            } else {
+                item_.append(that.next_mark.clone());
+            }
+            obj.append(item_.append(item_span_));
+        });
+        this.main_div.append(obj);
+    },
 };
