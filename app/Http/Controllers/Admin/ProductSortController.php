@@ -18,9 +18,13 @@ class ProductSortController extends Controller
         $this->ps = $ps;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->ps->index();
+        $fillable = [
+            'fid'
+        ];
+
+        return $this->ps->index($request->only($fillable));
     }
 
     public function store(Request $request)
@@ -44,7 +48,17 @@ class ProductSortController extends Controller
 
     public function update($id, Request $request)
     {
-        return $this->ps->update($id, $request->only('name'));
+        $rules = [
+            'name.required' => 1308,
+        ];
+        $fillable = [
+            'name',
+        ];
+        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['errorCode' => $errorCode]);
+        }
+
+        return $this->ps->update($id, $request->only($fillable));
     }
 
     public function destroy($id)

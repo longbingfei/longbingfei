@@ -15,11 +15,14 @@ class ProductSort implements ProductSortInterface
 {
     protected $module = 'product-sort';
 
-    public function index()
+    public function index(array $condition = [])
     {
-        $product = ProductSortModel::all();
+        $condition = array_filter($condition);
+        $sort = ProductSortModel::where('id', '>', 0);
+        $fid = isset($condition['fid']) ? intval($condition['fid']) : 0;
+        $sort = $sort->where('fid', $fid);
 
-        return $product->count() ? $product->toArray() : [];
+        return $sort->count() ? $sort->get()->toArray() : [];
     }
 
     public function create(array $data)
@@ -38,7 +41,7 @@ class ProductSort implements ProductSortInterface
         $newSort = ProductSortModel::create($data)->toArray();
         event('log', [[$this->module, 'c', $newSort]]);
         if ($father && $father->is_last) {
-            $father->update(['is_last' => 0]);
+            $this->update($father->id, ['is_last' => 0]);
         }
 
         return $newSort;
@@ -47,28 +50,36 @@ class ProductSort implements ProductSortInterface
     public function update($id, array $data)
     {
         $data['user_id'] = Auth::id();
-        $before = ProductSortModel::findOrfail($id)->toArray();
-        if (ProductSortModel::where('name', $data['name'])->count()) {
+        if (!$before = ProductSortModel::where('id', $id)->first()) {
+            return ['errorCode' => 1313];
+        }
+        if (isset($data['name']) && ProductSortModel::where('fid', $before->fid)->where('name', $data['name'])->count()) {
             event('log', [[$this->module, 'u', 'sort_already_exist', 0]]);
 
-            return 0;
+            return ['errorCode' => 1311];
         }
-
         if (ProductSortModel::where('id', $id)->update($data)) {
-            event('log', [[$this->module, 'u', ['before' => $before, 'after' => ProductSortModel::findOrfail($id)->toArray()
-            ]]]);
+            $after = ProductSortModel::where('id', $id)->first()->toArray();
+            event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 
-            return 1;
+            return $after;
         }
     }
 
     public function delete($id)
     {
-        $info = ProductSortModel::findOrFail($id)->toArray();
+        if (!$info = ProductSortModel::where('id', $id)->first()) {
+            return ['errorCode' => 1313];
+        }
         if (ProductSortModel::destroy($id)) {
             event('log', [[$this->module, 'd', $info]]);
-
-            return 1;
         }
+        if ($info->fid) {
+            if (!ProductSortModel::where('fid', $info->fid)->count()) {
+                $this->update($info->fid, ['is_last' => 1]);
+            }
+        }
+
+        return $info->toArray();
     }
 }
