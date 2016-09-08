@@ -8,7 +8,7 @@
 $product_sort = isset($product_sort) ? $product_sort : [];
 ?>
 @extends('admin.home')
-@section('title','商品设置')
+@section('title','商品分类设置')
 @section('link')
     @parent
 @stop
@@ -17,10 +17,10 @@ $product_sort = isset($product_sort) ? $product_sort : [];
 @section('nav')
     @parent
 @stop
-@section('subject','xxxx')
+@section('subject','商品分类设置')
 @section('body')
-    <div class="product-sort">
-    </div>
+    @parent
+    <div class="product-sort"></div>
     <script>
         var sort_data = '{!! json_encode($product_sort) !!}';
         Sort.init({dom:$(".product-sort"),data:sort_data});
