@@ -423,9 +423,10 @@ var Sort = {
     main_div: $("body"),
     child_div: $("<div></div>").addClass('sort_child_div'),
     item: $("<div></div>").addClass('sort_item'),
-    item_span: $("<span></span>"),
-    delete_mark: $("<i></i>").css('display', 'none').addClass('item_delete glyphicon glyphicon-remove-circle'),
-    next_mark: $("<i></i>").addClass('next_mark glyphicon glyphicon-chevron-right'),
+    item_span: $("<span></span>").addClass('content_span'),
+    edit_mark: $("<span title='点击编辑'></span>").addClass('edit_mark glyphicon glyphicon-edit'),
+    delete_mark: $("<i title='点击删除'></i>").css('display', 'none').addClass('item_delete glyphicon glyphicon-remove-circle'),
+    next_mark: $("<i title='展开子类'></i>").addClass('next_mark glyphicon glyphicon-chevron-right'),
     sort_child_title: $("<div class='sort_child_title'>" +
         "<span class='new_btn glyphicon glyphicon-plus-sign'></span>" +
         "<span>&nbsp新增分类</span>" +
@@ -456,7 +457,7 @@ var Sort = {
         });
         this.main_div.off('click', '.sort_item').on("click", ".sort_item", function (e) {
             //如果点击的是删除按钮,则不显示右侧展开框
-            if ($(e.target).hasClass('item_delete')) {
+            if ($(e.target).hasClass('item_delete') || $(e.target).hasClass('edit_mark') || $(e.target).attr('contenteditable')) {
                 return false;
             }
             var fid = $(this).attr('_id');
@@ -485,6 +486,43 @@ var Sort = {
                     Sort.init({dom: Sort.main_div, data: data, fid: fid, _fid: _fid});
                 }
             });
+            //横向超出滚动
+            Sort.main_div.stop(0).animate({scrollLeft: $(this).offset().left}, 500)
+        });
+        //绑定编辑事件
+        this.main_div.off('click', '.edit_mark').on("click", ".edit_mark", function () {
+            var parent = $(this).parent();
+            var html = parent.html();
+            parent.html('').attr('contenteditable', true).focus();
+            parent.addClass('sort_edit_div');
+            var coverDiv = $("<div></div>").css({
+                width: Sort.main_div.width(),
+                height: Sort.main_div.height()
+            }).addClass('sort_cover_div');
+            Sort.main_div.prepend(coverDiv);
+            parent.blur(function () {
+                var newName = $(this).html();
+                if (!newName) {
+                    $(this).attr('contenteditable', false).html(html).removeClass('sort_edit_div');
+                    Sort.main_div.find('.sort_cover_div').remove();
+                    return false;
+                }
+                $.ajax({
+                    method: 'post',
+                    url: Sort.setUrl.update + '/' + parent.attr('_id'),
+                    data: {_method: 'put', name: newName},
+                    success: function (data) {
+                        if (data.error_code) {
+                            Confirm({message: data.error_message});
+                        } else if (data.id) {
+                            parent.attr('contenteditable', false).html(html).removeClass('sort_edit_div');
+                            parent.children('.content_span').html(newName);
+                            parent.children('.item_delete').css('display', 'none');
+                            Sort.main_div.find('.sort_cover_div').remove();
+                        }
+                    }
+                });
+            });
         });
         //绑定删除操作
         this.main_div.off('click', '.item_delete').on("click", ".item_delete", function (e) {
@@ -499,7 +537,7 @@ var Sort = {
                             if (data.id) {
                                 $(e_.target).parent().remove();
                                 //同时删除展开框
-                                Sort.main_div.find('[fid=' + data.id + ']').remove();
+                                Sort.main_div.find('[class=sort_child_div][fid=' + data.id + ']').remove();
                             }
                         }
                     });
@@ -543,7 +581,7 @@ var Sort = {
                                 var sort_div = Sort.main_div.find('[fid=' + fid + ']');
                                 sort_div.find('#edit_').remove();
                                 Sort.main_div.find('.sort_cover_div').remove();
-                                Sort.data = {1: data};
+                                Sort.data = {0: data};
                                 Sort.each_(sort_div);
                             }
                         }
@@ -557,6 +595,8 @@ var Sort = {
         $.each(this.data, function (x, y) {
             var item_ = that.item.clone();
             var item_span_ = that.item_span.clone();
+            var edit_mark_ = that.edit_mark.clone();
+            item_.append(edit_mark_);
             item_.attr({_id: y.id, _fid: y.fid, _is_last: y.is_last});
             item_span_.html(y.name);
             if (y.is_last) {

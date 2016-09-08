@@ -425,47 +425,54 @@ h3 {
 /*分类*/
 .sort_main_div {
     margin: 0 auto;
-    border: 1px solid grey;
-    /*width:1000px;*/
-    /*height: 400px;*/
-    overflow: hidden;
-    position:relative;
+    width:800px;
+    overflow-x:auto;
+    white-space:nowrap;
+    position: relative;
 }
 
 .sort_child_div {
-    float: left;
-    border: 1px solid grey;
+    display:inline-block;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
     width: 200px;
-    /*width:1000px;*/
     height: 100%;
-    overflow:hidden;
-    position:relative;
-
+    overflow: hidden;
+    position: relative;
+    vertical-align:top;
 }
-.sort_child_title{
-    width:198px;
-    height:40px;
+
+.sort_child_title {
+    width: 199px;
+    height: 40px;
     padding-left: 20px;
-    background-color:#000000;
-    color:whitesmoke;
+    background-color: #000000;
+    color: whitesmoke;
     line-height: 40px;
 }
 
-.sort_child_title:first-child{
+.sort_child_title:first-child {
     font-size: 14px;
-    cursor:pointer;
+    cursor: pointer;
+}
+.sort_child_title:hover{
+    color:#0e509e;
 }
 
-.sort_item,.sort_edit_div{
+.sort_item, .sort_edit_div {
     margin: 0 auto;
     width: 198px;
     height: 40px;
     padding-left: 20px;
     line-height: 40px;
-    cursor:pointer;
-    border: 1px solid grey;
+    cursor: pointer;
+    border-bottom: 1px solid grey;
     position: relative;
 }
+.sort_item:hover{
+    background-color: #dbdbdb;
+}
+
 .sort_item span {
     display: inline-block;
     overflow: hidden;
@@ -474,24 +481,38 @@ h3 {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.edit_mark{
+    width:20px !important;
+    height:28px !important;
+}
 
 .sort_item i {
     position: absolute;
     right: 0;
     top: 12px;
-    cursor:pointer;
+    cursor: pointer;
 }
-.sort_edit_div{
-    color:#000000;
+
+.sort_edit_div {
+    color: #000000;
     background-color: #FFFFFF;
-    z-index:100
+    z-index: 100
 }
-.sort_cover_div{
-    position:absolute;
-    top:0;
-    left:0;
-    z-index:99;
-    opacity:0.5;
-    filter:alpha(opacity=50);
+.sort_edit_div:hover{
+    background-color: #FFFFFF;
+}
+
+.sort_cover_div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
     background-color: #cccccc;
+}
+
+.product-sort {
+    color: #000000;
+    background-color: #FFFFFF;
 }

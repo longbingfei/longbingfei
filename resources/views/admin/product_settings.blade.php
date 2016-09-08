@@ -20,7 +20,6 @@ $product_sort = isset($product_sort) ? $product_sort : [];
 @section('subject','xxxx')
 @section('body')
     <div class="product-sort">
-
     </div>
     <script>
         var sort_data = '{!! json_encode($product_sort) !!}';

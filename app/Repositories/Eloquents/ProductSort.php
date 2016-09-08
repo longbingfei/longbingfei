@@ -38,6 +38,7 @@ class ProductSort implements ProductSortInterface
 
             return ['errorCode' => 1311];
         }
+        $data['is_last'] = 1;
         $newSort = ProductSortModel::create($data)->toArray();
         event('log', [[$this->module, 'c', $newSort]]);
         if ($father && $father->is_last) {
