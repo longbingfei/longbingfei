@@ -23,6 +23,7 @@ $product_sort = isset($product_sort) ? $product_sort : [];
 
     </div>
     <script>
-        Sort.init({dom:$(".product-sort"),data:'{!! json_encode($product_sort) !!}'});
+        var sort_data = '{!! json_encode($product_sort) !!}';
+        Sort.init({dom:$(".product-sort"),data:sort_data});
     </script>
 @stop

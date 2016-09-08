@@ -455,7 +455,7 @@ var Sort = {
             $(this).find('.item_delete').stop(0).fadeToggle();
         });
         this.main_div.off('click', '.sort_item').on("click", ".sort_item", function (e) {
-            //如果点击的是删除按钮,则不显示右侧添加框
+            //如果点击的是删除按钮,则不显示右侧展开框
             if ($(e.target).hasClass('item_delete')) {
                 return false;
             }
@@ -472,11 +472,12 @@ var Sort = {
                 exists.remove();//删除自身
                 return;
             }
-
+            //是最底层则直接添加
             if (!($(this).attr('_is_last'))) {
                 Sort.init({dom: Sort.main_div, data: [], fid: fid, _fid: _fid});
                 return;
             }
+            //非最底层则请求子类数据
             $.ajax({
                 method: 'get',
                 url: Sort.setUrl.get + '?fid=' + fid,
@@ -485,6 +486,7 @@ var Sort = {
                 }
             });
         });
+        //绑定删除操作
         this.main_div.off('click', '.item_delete').on("click", ".item_delete", function (e) {
             var e_ = e;
             Confirm({
@@ -504,22 +506,29 @@ var Sort = {
                 }
             })
         });
+        //绑定新建操作
         this.main_div.off('click', '.new_btn').on('click', '.new_btn', function () {
+            //添加编辑框
             $(this).parent().parent().append(Sort.item.clone().attr({
                 id: 'edit_',
                 contenteditable: true
             }).removeClass('sort_item').addClass('sort_edit_div'));
+            //添加遮罩层
             var coverDiv = $("<div></div>").css({
                 width: Sort.main_div.width(),
                 height: Sort.main_div.height()
             }).addClass('sort_cover_div');
             Sort.main_div.prepend(coverDiv);
+            //滚动条定位到编辑框
             $('body').stop(0).animate({scrollTop: $('#edit_').offset().top}, 500, function () {
                 $('#edit_').focus();
                 $('#edit_').blur(function () {
                     var sort_name = $(this).html();
+                    //无内容则退出编辑
                     if (!sort_name) {
-                        Confirm({message: '分类名称为空'});
+                        $('#edit_').remove();
+                        Sort.main_div.find('.sort_cover_div').remove();
+                        return false;
                     }
                     var fid = $(this).parent().attr('fid');
                     $.ajax({
@@ -530,6 +539,7 @@ var Sort = {
                             if (data.error_code) {
                                 Confirm({message: data.error_message});
                             } else if (data.id) {
+                                //成功则添加一个item
                                 var sort_div = Sort.main_div.find('[fid=' + fid + ']');
                                 sort_div.find('#edit_').remove();
                                 Sort.main_div.find('.sort_cover_div').remove();
