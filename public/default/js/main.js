@@ -431,6 +431,7 @@ var Sort = {
         "<span>&nbsp新增分类</span>" +
         "</div>"),
     setUrl: {
+        create: 'product_sort',
         update: 'product_sort',
         delete: 'product_sort',
         get: 'product_sort'
@@ -446,26 +447,30 @@ var Sort = {
         this.append_({fid: obj.fid ? obj.fid : 0, _fid: obj._fid ? obj._fid : -1});
     },
     append_: function (obj) {
-        this.each_(this.child_div.clone().append(this.sort_child_title.clone()).attr({fid: obj.fid, _fid: obj._fid}));
+        this.main_div.append(this.each_(this.child_div.clone().append(this.sort_child_title.clone()).attr({
+            fid: obj.fid,
+            _fid: obj._fid
+        })));
         this.main_div.off('mouseover mouseout', '.sort_item').on("mouseover mouseout", ".sort_item", function () {
             $(this).find('.item_delete').stop(0).fadeToggle();
         });
-        this.main_div.off('click', '.sort_item').on("click", ".sort_item", function () {
+        this.main_div.off('click', '.sort_item').on("click", ".sort_item", function (e) {
+            //如果点击的是删除按钮,则不显示右侧添加框
+            if ($(e.target).hasClass('item_delete')) {
+                return false;
+            }
             var fid = $(this).attr('_id');
             var _fid = $(this).attr('_fid');
-            //var exists_ = $('.sort_child_div').filter(function () {
-            //    return $(this).attr('fid') == fid || ($(this).attr('_fid') == _fid);
-            //});//存在则删除
-            var exists = $('.sort_child_div').filter('[fid='+fid+']');
+            var exists_ = $('.sort_child_div').filter('[_fid=' + _fid + ']');
+            if (exists_.length) {
+                exists_.nextAll().remove();//删除右侧同胞
+                exists_.remove();//删除自身
+            }
+            var exists = $('.sort_child_div').filter('[fid=' + fid + ']');
             if (exists.length) {
                 exists.nextAll().remove();//删除右侧同胞
                 exists.remove();//删除自身
                 return;
-            }
-            var exists_ = $('.sort_child_div').filter('[_fid='+_fid+']');
-            if (exists_.length) {
-                exists_.nextAll().remove();//删除右侧同胞
-                exists_.remove();//删除自身
             }
 
             if (!($(this).attr('_is_last'))) {
@@ -491,6 +496,8 @@ var Sort = {
                         success: function (data) {
                             if (data.id) {
                                 $(e_.target).parent().remove();
+                                //同时删除展开框
+                                Sort.main_div.find('[fid=' + data.id + ']').remove();
                             }
                         }
                     });
@@ -498,6 +505,41 @@ var Sort = {
             })
         });
         this.main_div.off('click', '.new_btn').on('click', '.new_btn', function () {
+            $(this).parent().parent().append(Sort.item.clone().attr({
+                id: 'edit_',
+                contenteditable: true
+            }).removeClass('sort_item').addClass('sort_edit_div'));
+            var coverDiv = $("<div></div>").css({
+                width: Sort.main_div.width(),
+                height: Sort.main_div.height()
+            }).addClass('sort_cover_div');
+            Sort.main_div.prepend(coverDiv);
+            $('body').stop(0).animate({scrollTop: $('#edit_').offset().top}, 500, function () {
+                $('#edit_').focus();
+                $('#edit_').blur(function () {
+                    var sort_name = $(this).html();
+                    if (!sort_name) {
+                        Confirm({message: '分类名称为空'});
+                    }
+                    var fid = $(this).parent().attr('fid');
+                    $.ajax({
+                        method: 'post',
+                        url: Sort.setUrl.create,
+                        data: {fid: fid, name: sort_name},
+                        success: function (data) {
+                            if (data.error_code) {
+                                Confirm({message: data.error_message});
+                            } else if (data.id) {
+                                var sort_div = Sort.main_div.find('[fid=' + fid + ']');
+                                sort_div.find('#edit_').remove();
+                                Sort.main_div.find('.sort_cover_div').remove();
+                                Sort.data = {1: data};
+                                Sort.each_(sort_div);
+                            }
+                        }
+                    });
+                });
+            });
         });
     },
     each_: function (obj) {
@@ -514,6 +556,7 @@ var Sort = {
             }
             obj.append(item_.append(item_span_));
         });
-        this.main_div.append(obj);
-    },
+
+        return obj;
+    }
 };

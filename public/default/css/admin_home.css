@@ -377,7 +377,8 @@ h3 {
     background-color: #2a2730;
     color: dimgrey;
     text-align: center;
-    line-height: 50px;: 999;
+    line-height: 50px;
+    z-index: 999;
 }
 
 /*轮播*/
@@ -428,6 +429,7 @@ h3 {
     /*width:1000px;*/
     /*height: 400px;*/
     overflow: hidden;
+    position:relative;
 }
 
 .sort_child_div {
@@ -454,7 +456,7 @@ h3 {
     cursor:pointer;
 }
 
-.sort_item {
+.sort_item,.sort_edit_div{
     margin: 0 auto;
     width: 198px;
     height: 40px;
@@ -464,7 +466,6 @@ h3 {
     border: 1px solid grey;
     position: relative;
 }
-
 .sort_item span {
     display: inline-block;
     overflow: hidden;
@@ -479,4 +480,18 @@ h3 {
     right: 0;
     top: 12px;
     cursor:pointer;
+}
+.sort_edit_div{
+    color:#000000;
+    background-color: #FFFFFF;
+    z-index:100
+}
+.sort_cover_div{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:99;
+    opacity:0.5;
+    filter:alpha(opacity=50);
+    background-color: #cccccc;
 }
