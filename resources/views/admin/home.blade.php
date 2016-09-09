@@ -19,7 +19,7 @@ if ($avatar = unserialize($user->avatar)) {
         <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ url('default/css/admin_home.css')}}" rel="stylesheet">
         <script src="{{ url('default/js/jquery.1.10.js') }}"></script>
-        <script src="{{ url('default/js/jquery.2.1.1.js') }}"></script>
+        {{--<script src="{{ url('default/js/jquery.2.1.1.js') }}"></script>--}}
         <script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

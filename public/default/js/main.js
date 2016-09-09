@@ -434,8 +434,9 @@ var Sort = {
     setUrl: {
         create: 'product_sort',
         update: 'product_sort',
-        delete: 'product_sort',
-        get: 'product_sort'
+        //IE delete和get为保留字,且json后面不能有多余字符
+        delete_: 'product_sort',
+        get_: 'product_sort'
     },
     init: function (obj) {
         if (obj.dom) {
@@ -481,13 +482,13 @@ var Sort = {
             //非最底层则请求子类数据
             $.ajax({
                 method: 'get',
-                url: Sort.setUrl.get + '?fid=' + fid,
+                url: Sort.setUrl.get_ + '?fid=' + fid,
                 success: function (data) {
                     Sort.init({dom: Sort.main_div, data: data, fid: fid, _fid: _fid});
                 }
             });
             //横向超出滚动
-            Sort.main_div.stop(0).animate({scrollLeft: $(this).offset().left}, 500)
+            Sort.main_div.stop(0).animate({scrollLeft: $(this).offset().left}, 500);
         });
         //绑定编辑事件
         this.main_div.off('click', '.edit_mark').on("click", ".edit_mark", function () {
@@ -536,7 +537,7 @@ var Sort = {
                     var sort_id = $(e_.target).parent().attr('_id');
                     $.ajax({
                         method: 'delete',
-                        url: Sort.setUrl.delete + '/' + sort_id,
+                        url: Sort.setUrl.delete_ + '/' + sort_id,
                         success: function (data) {
                             if (data.id) {
                                 $(e_.target).parent().remove();
