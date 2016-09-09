@@ -425,21 +425,21 @@ h3 {
 /*分类*/
 .sort_main_div {
     margin: 0 auto;
-    width:800px;
-    overflow-x:auto;
-    white-space:nowrap;
+    width: 800px;
+    overflow-x: auto;
+    white-space: nowrap;
     position: relative;
 }
 
 .sort_child_div {
-    display:inline-block;
+    display: inline-block;
     border-left: 1px solid grey;
     border-right: 1px solid grey;
     width: 200px;
     height: 100%;
     overflow: hidden;
     position: relative;
-    vertical-align:top;
+    vertical-align: top;
 }
 
 .sort_child_title {
@@ -455,8 +455,9 @@ h3 {
     font-size: 14px;
     cursor: pointer;
 }
-.sort_child_title:hover{
-    color:#0e509e;
+
+.sort_child_title:hover {
+    color: #0e509e;
 }
 
 .sort_item, .sort_edit_div {
@@ -469,7 +470,8 @@ h3 {
     border-bottom: 1px solid grey;
     position: relative;
 }
-.sort_item:hover{
+
+.sort_item:hover {
     background-color: #dbdbdb;
 }
 
@@ -481,9 +483,10 @@ h3 {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.edit_mark{
-    width:20px !important;
-    height:28px !important;
+
+.edit_mark {
+    width: 20px !important;
+    height: 28px !important;
 }
 
 .sort_item i {
@@ -498,7 +501,8 @@ h3 {
     background-color: #FFFFFF;
     z-index: 100
 }
-.sort_edit_div:hover{
+
+.sort_edit_div:hover {
     background-color: #FFFFFF;
 }
 
@@ -513,7 +517,61 @@ h3 {
 }
 
 .product-sort {
-    width:1000px;
+    width: 1000px;
     color: #000000;
     background-color: #FFFFFF;
+}
+
+/*无限分类下拉列表显示*/
+.sort_list {
+
+}
+
+.list_box {
+    width: 200px;
+    height: 200px;
+    z-index: 200;
+    overflow: auto;
+    white-space: nowrap;
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.list_group {
+    width: 180px;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.list_item {
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid grey;
+}
+
+.list_item:hover {
+    background-color: #cccccc;
+}
+
+.list_item_radio, .list_item_span, .list_item_next {
+    float: left;
+    height: 20px !important;
+    width: 20px !important;
+    cursor: pointer;
+}
+
+.list_item_span {
+    width: 100px !important;
+    height: 40px !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.list_item_next {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #2a2730;
 }

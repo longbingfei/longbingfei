@@ -417,7 +417,7 @@ var Video = {
 
 };
 
-//分类窗口{dom:dom,sort:{xx:xx}}
+//restFul分类窗口{dom:dom,sort:{xx:xx}}
 var Sort = {
     data: [],
     main_div: $("body"),
@@ -431,24 +431,35 @@ var Sort = {
         "<span class='new_btn glyphicon glyphicon-plus-sign'></span>" +
         "<span>&nbsp新增分类</span>" +
         "</div>"),
-    setUrl: {
-        create: 'product_sort',
-        update: 'product_sort',
-        //IE delete和get为保留字,且json后面不能有多余字符
-        delete_: 'product_sort',
-        get_: 'product_sort'
-    },
+    url: null,
     init: function (obj) {
         if (obj.dom) {
             this.main_div = obj.dom;
         }
-        if (obj.data) {
-            this.data = typeof obj.data == 'string' ? JSON.parse(obj.data) : obj.data;
+        if (obj.url) {
+            this.url = obj.url;
+        }
+        if (!this.url) {
+            return false;
+        }
+        var that = this;
+        if (!obj.data) {
+            $.ajax({
+                method: 'get',
+                url: that.url,
+                async: false,
+                success: function (data) {
+                    that.data = data;
+                }
+            });
+        } else {
+            this.data = obj.data;
         }
         this.main_div.addClass('sort_main_div');
         this.append_({fid: obj.fid ? obj.fid : 0, _fid: obj._fid ? obj._fid : -1});
     },
     append_: function (obj) {
+        var that = this;
         this.main_div.append(this.each_(this.child_div.clone().append(this.sort_child_title.clone()).attr({
             fid: obj.fid,
             _fid: obj._fid
@@ -476,19 +487,19 @@ var Sort = {
             }
             //是最底层则直接添加
             if (!($(this).attr('_is_last'))) {
-                Sort.init({dom: Sort.main_div, data: [], fid: fid, _fid: _fid});
+                that.init({dom: that.main_div, data: [], fid: fid, _fid: _fid});
                 return;
             }
             //非最底层则请求子类数据
             $.ajax({
                 method: 'get',
-                url: Sort.setUrl.get_ + '?fid=' + fid,
+                url: that.url + '?fid=' + fid,
                 success: function (data) {
-                    Sort.init({dom: Sort.main_div, data: data, fid: fid, _fid: _fid});
+                    that.init({dom: that.main_div, data: data, fid: fid, _fid: _fid});
                 }
             });
             //横向超出滚动
-            Sort.main_div.stop(0).animate({scrollLeft: $(this).offset().left}, 500);
+            that.main_div.stop(0).animate({scrollLeft: $(this).offset().left}, 500);
         });
         //绑定编辑事件
         this.main_div.off('click', '.edit_mark').on("click", ".edit_mark", function () {
@@ -498,27 +509,27 @@ var Sort = {
             parent.html(value).attr('contenteditable', true).focus();
             parent.addClass('sort_edit_div');
             var coverDiv = $("<div></div>").css({
-                width: Sort.main_div.width(),
-                height: Sort.main_div.height()
+                width: that.main_div.width(),
+                height: that.main_div.height()
             }).addClass('sort_cover_div');
-            Sort.main_div.prepend(coverDiv);
+            that.main_div.prepend(coverDiv);
             //动态生成的元素先解绑,避免反复绑定
             parent.unbind('blur').blur(function () {
                 var newName = $(this).html();
                 if (!newName || newName == value) {
                     $(this).attr('contenteditable', false).html(html).removeClass('sort_edit_div');
-                    Sort.main_div.find('.sort_cover_div').remove();
+                    that.main_div.find('.sort_cover_div').remove();
                     return false;
                 }
                 $.ajax({
                     method: 'post',
-                    url: Sort.setUrl.update + '/' + parent.attr('_id'),
+                    url: that.url + '/' + parent.attr('_id'),
                     data: {_method: 'put', name: newName},
                     success: function (data) {
                         console.log(data, newName);
                         parent.attr('contenteditable', false).html(html).removeClass('sort_edit_div');
                         parent.children('.item_delete').css('display', 'none');
-                        Sort.main_div.find('.sort_cover_div').remove();
+                        that.main_div.find('.sort_cover_div').remove();
                         if (data.error_code) {
                             Confirm({message: data.error_message});
                         } else if (data.id) {
@@ -537,12 +548,12 @@ var Sort = {
                     var sort_id = $(e_.target).parent().attr('_id');
                     $.ajax({
                         method: 'delete',
-                        url: Sort.setUrl.delete_ + '/' + sort_id,
+                        url: that.url + '/' + sort_id,
                         success: function (data) {
                             if (data.id) {
                                 $(e_.target).parent().remove();
                                 //同时删除展开框
-                                Sort.main_div.find('[class=sort_child_div][fid=' + data.id + ']').remove();
+                                that.main_div.find('[class=sort_child_div][fid=' + data.id + ']').remove();
                             }
                         }
                     });
@@ -552,16 +563,16 @@ var Sort = {
         //绑定新建操作
         this.main_div.off('click', '.new_btn').on('click', '.new_btn', function () {
             //添加编辑框
-            $(this).parent().parent().append(Sort.item.clone().attr({
+            $(this).parent().parent().append(that.item.clone().attr({
                 id: 'edit_',
                 contenteditable: true
             }).removeClass('sort_item').addClass('sort_edit_div'));
             //添加遮罩层
             var coverDiv = $("<div></div>").css({
-                width: Sort.main_div.width(),
-                height: Sort.main_div.height()
+                width: that.main_div.width(),
+                height: that.main_div.height()
             }).addClass('sort_cover_div');
-            Sort.main_div.prepend(coverDiv);
+            that.main_div.prepend(coverDiv);
             //滚动条定位到编辑框
             $('body').stop(0).animate({scrollTop: $('#edit_').offset().top}, 500, function () {
                 $('#edit_').focus();
@@ -570,24 +581,24 @@ var Sort = {
                     //无内容则退出编辑
                     if (!sort_name) {
                         $('#edit_').remove();
-                        Sort.main_div.find('.sort_cover_div').remove();
+                        that.main_div.find('.sort_cover_div').remove();
                         return false;
                     }
                     var fid = $(this).parent().attr('fid');
                     $.ajax({
                         method: 'post',
-                        url: Sort.setUrl.create,
+                        url: that.url,
                         data: {fid: fid, name: sort_name},
                         success: function (data) {
-                            var sort_div = Sort.main_div.find('[fid=' + fid + ']');
+                            var sort_div = that.main_div.find('[fid=' + fid + ']');
                             sort_div.find('#edit_').remove();
-                            Sort.main_div.find('.sort_cover_div').remove();
+                            that.main_div.find('.sort_cover_div').remove();
                             if (data.error_code) {
                                 Confirm({message: data.error_message});
                             } else if (data.id) {
                                 //成功则添加一个item
-                                Sort.data = {0: data};
-                                Sort.each_(sort_div);
+                                that.data = {0: data};
+                                that.each_(sort_div);
                             }
                         }
                     });
@@ -617,3 +628,82 @@ var Sort = {
 };
 
 //无限分类的select下拉框
+
+var SortList = {
+    dom: null,
+    url: null,
+    list_box: $("<div></div>").addClass('list_box'),
+    list_group: $("<div></div>").addClass('list_group'),
+    list_item: $("<div></div>").addClass('list_item'),
+    item_span: $("<span></span>").addClass('list_item_span'),
+    item_next: $("<i></i>").addClass('list_item_next glyphicon glyphicon-chevron-right'),
+    item_radio: $("<input type='radio' name='pool_'>").addClass('list_item_radio'),
+    init: function (obj) {
+        if (!obj.dom || !obj.url) {
+            return false;
+        }
+        this.url = obj.url;
+        this.dom = obj.dom.addClass('sort_list');
+        this.list_box.css({
+            width: this.dom.outerWidth(),
+            position: 'absolute',
+            top: this.dom.offset().top + this.dom.outerHeight(),
+            left: this.dom.offset().left
+        });
+        var that = this;
+        var list_box = that.list_box.clone();
+        this.dom.parent().off('click', '.sort_list').on('click', '.sort_list', function () {
+            if (that.dom.parent().find('.list_box').length) {
+                return false;
+            }
+            $(this).after(list_box.append(that.append_(that.list_group.clone(), that.get_(0)).attr({
+                _id: 0,
+                _fid: -1
+            })));
+        });
+        this.dom.parent().off('click', '.list_item_next').on('click', '.list_item_next', function () {
+            var fid = $(this).parent().attr('_fid');
+            var id = $(this).parent().attr('_id');
+            var exist_ = $('.list_group').filter('[_fid=' + fid + ']');
+            exist_.nextAll().remove();
+            exist_.remove();
+            that.dom.parent().find('.list_box').append(that.append_(that.list_group.clone(), that.get_(id)).attr({
+                _id: id,
+                _fid: fid ? fid : -1
+            })).stop(0).animate({scrollLeft: $(this).offset().left}, 500);
+        });
+        this.dom.parent().off('click', '.list_item_radio').on('click', '.list_item_radio', function () {
+            var id = $(this).parent().attr('_id');
+            var text = $(this).siblings('span').html();
+            that.dom.val(text);
+            that.dom.attr('_sort_id', id);
+            that.dom.parent().find('.list_box').empty().remove();
+        })
+    },
+    get_: function (fid) {
+        var res;
+        $.ajax({
+            method: 'get',
+            url: this.url + '?fid=' + fid,
+            async: false,//同步赋值,不然res最终为NAN
+            success: function (data) {
+                res = data;
+            }
+        });
+        return res;
+    },
+    //dom:.list_group
+    append_: function (dom, data) {
+        var that = this;
+        $.each(data, function (x, y) {
+            var inner = that.list_item.clone().attr({_id: y.id, _fid: y.fid})
+                .append(that.item_radio.clone())
+                .append(that.item_span.clone().html(y.name));
+            if (!y.is_last) {
+                inner.append(that.item_next.clone());
+            }
+            dom.append(inner);
+        });
+        return dom;
+    }
+};

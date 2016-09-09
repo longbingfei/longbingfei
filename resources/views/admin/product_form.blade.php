@@ -22,11 +22,9 @@
             <input type="text" class="pro_name" placeholder="请输入商品名,50字符以内" value="{{isset($single_data) ?
         $single_data['name'] : ''}}">
             <span class="form-span">商品分类:</span>
-            <select class="pro_sort_id">
-                @foreach($product_sort as $vo)
-                    <option value="{{$vo['id']}}">{{$vo['name']}}</option>
-                @endforeach
-            </select>
+            <input type="text" class="pro_sort" placeholder="请选择商品分类"
+                   value="{{isset($single_data) ?$single_data['sort_name'] : ''}}"
+                   _sort_id="{{isset($single_data) ?$single_data['sort_id'] : ''}}">
             <span class="form-span">商品库存:</span>
             <input type="text" class="pro_storage" value="{{isset($single_data) ? $single_data['storage'] : ''}}">
             <span class="form-span">商品单价:</span>
@@ -62,6 +60,8 @@
         <button class="btn btn-default btn-lg product-submit">保存</button>
     </div>
     <script>
+        //初始化分类选择框
+        SortList.init({dom: $(".pro_sort"), url: "{{url('admin/feature/product_sort')}}"});
         //需要删除的图片id
         var productDropImageIDs = [];
         //初始化编辑器
@@ -75,7 +75,7 @@
         $(".main_product_form").on("click", ".product-submit", function () {
             var data = {
                 name: $(".pro_name").val(),
-                sort_id: $(".pro_sort_id").val(),
+                sort_id: $(".pro_sort").attr('_sort_id'),
                 storage: $(".pro_storage").val(),
                 price: $(".pro_price").val(),
                 describe: um.getContent(),
