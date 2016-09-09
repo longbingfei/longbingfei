@@ -56,8 +56,7 @@ class ProductController extends Controller
 
     public function form($id = 0)
     {
-        $sort = $this->product_sort->index();
-        $params = ['product_sort' => $sort];
+        $params = [];
         if ($id) {
             $params['single_data'] = $this->product->show($id);
         }
@@ -143,6 +142,7 @@ class ProductController extends Controller
     {
         $sort = $this->product_sort->index();
         $params = ['product_sort' => $sort];
-        return view('admin.product_settings',$params);
+
+        return view('admin.product_settings', $params);
     }
 }
