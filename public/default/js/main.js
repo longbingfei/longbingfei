@@ -493,16 +493,18 @@ var Sort = {
         this.main_div.off('click', '.edit_mark').on("click", ".edit_mark", function () {
             var parent = $(this).parent();
             var html = parent.html();
-            parent.html('').attr('contenteditable', true).focus();
+            var value = parent.children('.content_span').html();
+            parent.html(value).attr('contenteditable', true).focus();
             parent.addClass('sort_edit_div');
             var coverDiv = $("<div></div>").css({
                 width: Sort.main_div.width(),
                 height: Sort.main_div.height()
             }).addClass('sort_cover_div');
             Sort.main_div.prepend(coverDiv);
-            parent.blur(function () {
+            //动态生成的元素先解绑,避免反复绑定
+            parent.unbind('blur').blur(function () {
                 var newName = $(this).html();
-                if (!newName) {
+                if (!newName || newName == value) {
                     $(this).attr('contenteditable', false).html(html).removeClass('sort_edit_div');
                     Sort.main_div.find('.sort_cover_div').remove();
                     return false;
@@ -512,13 +514,15 @@ var Sort = {
                     url: Sort.setUrl.update + '/' + parent.attr('_id'),
                     data: {_method: 'put', name: newName},
                     success: function (data) {
+                        console.log(data, newName);
+                        parent.attr('contenteditable', false).html(html).removeClass('sort_edit_div');
+                        parent.children('.item_delete').css('display', 'none');
+                        Sort.main_div.find('.sort_cover_div').remove();
                         if (data.error_code) {
                             Confirm({message: data.error_message});
                         } else if (data.id) {
-                            parent.attr('contenteditable', false).html(html).removeClass('sort_edit_div');
                             parent.children('.content_span').html(newName);
-                            parent.children('.item_delete').css('display', 'none');
-                            Sort.main_div.find('.sort_cover_div').remove();
+
                         }
                     }
                 });
@@ -574,13 +578,13 @@ var Sort = {
                         url: Sort.setUrl.create,
                         data: {fid: fid, name: sort_name},
                         success: function (data) {
+                            var sort_div = Sort.main_div.find('[fid=' + fid + ']');
+                            sort_div.find('#edit_').remove();
+                            Sort.main_div.find('.sort_cover_div').remove();
                             if (data.error_code) {
                                 Confirm({message: data.error_message});
                             } else if (data.id) {
                                 //成功则添加一个item
-                                var sort_div = Sort.main_div.find('[fid=' + fid + ']');
-                                sort_div.find('#edit_').remove();
-                                Sort.main_div.find('.sort_cover_div').remove();
                                 Sort.data = {0: data};
                                 Sort.each_(sort_div);
                             }
@@ -610,3 +614,5 @@ var Sort = {
         return obj;
     }
 };
+
+//无限分类的select下拉框

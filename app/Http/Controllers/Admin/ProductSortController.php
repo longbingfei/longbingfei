@@ -43,7 +43,7 @@ class ProductSortController extends Controller
         }
         $return = $this->ps->create($request->only($fillable));
 
-        return $return;
+        return Response::display($return);
     }
 
     public function update($id, Request $request)
@@ -57,8 +57,9 @@ class ProductSortController extends Controller
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
+        $return = $this->ps->update($id, $request->only($fillable));
 
-        return $this->ps->update($id, $request->only($fillable));
+        return Response::display($return);
     }
 
     public function destroy($id)
