@@ -91,8 +91,9 @@ class ProductController extends Controller
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
+        $resp = $this->product->create($request->only($fillable));
 
-        return $this->product->create($request->only($fillable));
+        return Response::display($resp);
     }
 
     public function update(Request $request, $id)
@@ -128,9 +129,9 @@ class ProductController extends Controller
             return Response::display(['errorCode' => $errorCode]);
         }
 
-        $return = $this->product->update($id, $request->only($fillable));
+        $resp = $this->product->update($id, $request->only($fillable));
 
-        return $return;
+        return Response::display($resp);
     }
 
     public function destroy($id)

@@ -23,8 +23,9 @@ class ProductSortController extends Controller
         $fillable = [
             'fid'
         ];
+        $resp = $this->ps->index($request->only($fillable));
 
-        return $this->ps->index($request->only($fillable));
+        return Response::display($resp);
     }
 
     public function store(Request $request)
@@ -41,9 +42,9 @@ class ProductSortController extends Controller
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
-        $return = $this->ps->create($request->only($fillable));
+        $resp = $this->ps->create($request->only($fillable));
 
-        return Response::display($return);
+        return Response::display($resp);
     }
 
     public function update($id, Request $request)
@@ -57,13 +58,15 @@ class ProductSortController extends Controller
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
-        $return = $this->ps->update($id, $request->only($fillable));
+        $resp = $this->ps->update($id, $request->only($fillable));
 
-        return Response::display($return);
+        return Response::display($resp);
     }
 
     public function destroy($id)
     {
-        return $this->ps->delete($id);
+        $resp = $this->ps->delete($id);
+
+        return Response::display($resp);
     }
 }
