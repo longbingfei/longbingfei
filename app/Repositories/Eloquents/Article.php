@@ -71,16 +71,22 @@ class Article implements ArticleInterface
         if (!$article = ArticleModel::where('id', $id)->first()) {
             return ["errorCode" => 1203];
         }
-        $article['content'] = htmlspecialchars_decode($article['content']);
+        $article = ArticleModel::where('articles.id', $id)
+            ->leftJoin('article_sorts', 'articles.sort_id', '=', 'article_sorts.id')
+            ->leftJoin('administrators', 'articles.author_id', '=', 'administrators.id')
+            ->select(
+                'articles.*',
+                'article_sorts.name as sort_name',
+                'administrators.username as author_name'
+            );
 
-        return $article->toArray();
+        return $article->first()->toArray();
     }
 
     //文稿新建
     public function create(array $data)
     {
         $data['author_id'] = Auth::id();
-        $data['content'] = htmlspecialchars($data['content']);
         $data['sort_id'] = $data['sort_id'] ? $data['sort_id'] : 1;
         $data['status'] = $data['status'] ? 1 : 0;
         if ($data['file'] instanceof UploadedFile) {
@@ -104,7 +110,7 @@ class Article implements ArticleInterface
         if (!$before = ArticleModel::where('id', $id)->first()) {
             return ["errorCode" => 1203];
         }
-        $data['content'] = htmlspecialchars($data['content']);
+        $data['content'] = isset($data['content']) ? $data['content'] : '';
         $data['editor_id'] = Auth::id();
         if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
