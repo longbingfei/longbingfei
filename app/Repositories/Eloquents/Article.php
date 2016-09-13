@@ -56,6 +56,11 @@ class Article implements ArticleInterface
         $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 15;
         $page = intval($condition['page']) ? intval($condition['page']) : 0;
         $articles = $articles->paginate($per_page_num, ['*'], 'page', $page)->toArray();
+        $articles['data'] = array_map(function($value) {
+            $value['index_pic'] = $value['index_pic'] ? unserialize($value['index_pic']) : [];
+
+            return $value;
+        }, $articles['data']);
 
         return $articles;
     }

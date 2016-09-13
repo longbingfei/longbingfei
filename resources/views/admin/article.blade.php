@@ -20,6 +20,7 @@
             <table class="table table-hover article-table">
                 <tr class="active">
                     <td>选择</td>
+                    <td>缩略图</td>
                     <td>标题</td>
                     <td>分类</td>
                     <td>作者</td>
@@ -34,13 +35,15 @@
                 @else
                     @foreach($data['data'] as $key => $vo)
                         <tr>
-                            <td title="{{$vo['id']}}"><input class="checkbox" type="checkbox" value="{{$vo['id']}}">
+                            <td><input type="checkbox" title="{{$vo['id']}}"></td>
+                            <td><img src="{{empty($vo['index_pic']) ? '' : url($vo['index_pic'][0]['path'])}}"></td>
+                            <td>
+                                <a class="ellipsis_ padding_move" href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
                             </td>
-                            <td class="detail" data-id="{{$vo['id']}}">{{$vo['title']}}</td>
-                            <td>{{$vo['sort_name']}}</td>
-                            <td>{{$vo['author_name']}}</td>
-                            <td>{{$vo['created_at']}}</td>
-                            <td>{{$vo['updated_at']}}</td>
+                            <td><span class="ellipsis_">{{$vo['sort_name']}}</span></td>
+                            <td><span class="ellipsis_">{{$vo['author_name']}}</span></td>
+                            <td>{{Date('Y/m/d H:i:s',strtotime($vo['created_at']))}}</td>
+                            <td>{{Date('Y/m/d H:i:s',strtotime($vo['updated_at']))}}</td>
                             <td>
                                 <a class="article-action glyphicon glyphicon-info-sign"
                                    tabindex="0"

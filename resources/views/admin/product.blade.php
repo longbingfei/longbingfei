@@ -30,7 +30,7 @@
                 </tr>
                 @if(!$data['total'])
                     <tr>
-                        <td class="table-no-data" colspan="8">无相关数据!</td>
+                        <td class="table-no-data" colspan="9">无相关数据!</td>
                     </tr>
                 @else
                     @foreach($data['data'] as $item => $value)
