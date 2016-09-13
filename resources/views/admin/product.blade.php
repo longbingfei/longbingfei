@@ -61,7 +61,7 @@
                     @endforeach
                 @endif
                 <tr>
-                    <td colspan="8">
+                    <td colspan="9">
                         <div class="painate" style="float:right;margin-top:2px">
                             <ul id="pagination-digg">
                                 <li><a href="javascript:void(0)">第{{$data['current_page']}}页</a></li>
@@ -80,9 +80,6 @@
         </div>
     </div>
     <script  type="text/javascript">
-        $(function () {
-            $('[data-toggle="popover"]').popover({html: true});
-        });
         function product_delete(target) {
             var id = $(target).data('id');
             if (!id) {
@@ -98,6 +95,8 @@
                         success: function (data) {
                             if (data.id) {
                                 location.reload();
+                            }else{
+                                Confirm({message: data.error_message});
                             }
                         }
                     });

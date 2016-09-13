@@ -6,25 +6,6 @@
 @stop
 @section('stylesheet')
     @parent
-    .checkbox,tr{
-    cursor:pointer
-    }
-    .article-main{
-    overflow: hidden;
-    width:100%;
-    box-shadow: 0 0 6px #0D3349;
-    }
-    .article-table tr td{
-    vertical-align: middle !important;
-    }
-    .article-table tr:first-child td{
-    font-size: 16px;
-    font-weight: 400;
-    }
-    td img{
-    width:80px;
-    height:60px;
-    }
 @stop
 @section('nav')
     @parent
@@ -33,7 +14,7 @@
 @section('body')
     @parent
     <div class="container">
-        <a class="btn btn-default top-btn" href="article_form">新建文稿</a>
+        <a class="btn btn-default top-btn" href="article_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div class="article-main">
             <table class="table table-hover article-table">
                 <tr class="active">
@@ -43,7 +24,6 @@
                     <td>作者</td>
                     <td>创建时间</td>
                     <td>更新时间</td>
-                    <td>操作人</td>
                     <td>操作</td>
                 </tr>
                 @if(!$data['total'])
@@ -57,25 +37,65 @@
                             </td>
                             <td class="detail" data-id="{{$vo['id']}}">{{$vo['title']}}</td>
                             <td>{{$vo['sort_name']}}</td>
-                            <td>{{$vo['status']}}</td>
                             <td>{{$vo['author_name']}}</td>
                             <td>{{$vo['created_at']}}</td>
                             <td>{{$vo['updated_at']}}</td>
-                            <td class="delete" data-id="{{$vo['id']}}"><i class="glyphicon glyphicon-remove"></i></td>
+                            <td>
+                                <a class="article-action glyphicon glyphicon-info-sign"
+                                   tabindex="0"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   role="button"
+                                   data-placement="bottom"
+                                   data-content="<a href='article_form/{{$vo['id']}}'>修改</a>
+                                   <br/><a href='javascript:void(0)' data-id='{{$vo['id']}}'
+                                   onclick='article_delete(this)'>删除</a>">
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 @endif
+                <tr>
+                    <td colspan="8">
+                        <div class="painate" style="float:right;margin-top:2px">
+                            <ul id="pagination-digg">
+                                <li><a href="javascript:void(0)">第{{$data['current_page']}}页</a></li>
+                                @for($i = 1;$i<=$data['last_page'];$i++)
+                                    <li><a href="?page={{$i}}">{{$i}}</a></li>
+                                @endfor
+                                <li class="next">
+                                    <a href="javascript:void(0)">共{{$data['last_page']}}页/计{{$data['total']}}条</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
-        @if($data['total'])
-            <div class="painate" style="float:right;margin-top: 2px">
-                <ul id="pagination-digg">
-                    @for($i = 1;$i<=$data['last_page'];$i++)
-                        <li><a href="?page={{$i}}">{{$i}}</a></li>
-                    @endfor
-                    <li class="next"><a href="javascript:void(0)">共{{$data['last_page']}}页/计{{$data['total']}}条</a></li>
-                </ul>
-            </div>
-        @endif
     </div>
+    <script>
+        function article_delete(target) {
+            var id = $(target).data('id');
+            if (!id) {
+                return false;
+            }
+            Confirm({
+                title: "删除确认",
+                message: "你确定删除这篇文稿吗?",
+                callback: function () {
+                    $.ajax({
+                        url: 'article/' + id,
+                        method: 'delete',
+                        success: function (data) {
+                            if (data.id) {
+                                location.reload();
+                            } else {
+                                Confirm({message: data.error_message});
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 @stop

@@ -73,6 +73,8 @@ if ($avatar = unserialize($user->avatar)) {
     $(".profile").click(function () {
         $(".profile_info").fadeToggle();
     });
+    //加载提示框
+    $('[data-toggle="popover"]').popover({html: true});
 </script>
 </body>
 <footer>
