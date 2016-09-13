@@ -57,7 +57,7 @@
         <span class="form-span">商品图片:</span>
         <div class="show-product-images" id="show-product-images"></div>
         <input class="pro_describe" type="hidden" name="describe" value="">
-        <button class="btn btn-default btn-lg product-submit">保存</button>
+        <button class="btn btn-submit">保存</button>
     </div>
     <script>
         //初始化分类选择框
@@ -70,9 +70,9 @@
         var content = '{!! isset($single_data) ? $single_data['describe'] : '' !!}';
         um.setContent(content);
         //加载图片上传模块
-        UploadPic.Init($(".show-product-images"));
+        UploadPic.Init({dom: $(".show-product-images")});
         //表单提交模块
-        $(".main_product_form").on("click", ".product-submit", function () {
+        $(".main_product_form").on("click", ".btn-submit", function () {
             var data = {
                 name: $(".pro_name").val(),
                 sort_id: $(".pro_sort").attr('_sort_id'),

@@ -36,7 +36,7 @@
                     @foreach($data['data'] as $key => $vo)
                         <tr>
                             <td><input type="checkbox" title="{{$vo['id']}}"></td>
-                            <td><img src="{{empty($vo['index_pic']) ? '' : url($vo['index_pic'][0]['path'])}}"></td>
+                            <td><img src="{{empty($vo['index_pic']) ? '' : url($vo['index_pic']['path'])}}"></td>
                             <td>
                                 <a class="ellipsis_ padding_move" href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
                             </td>

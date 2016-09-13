@@ -27,6 +27,17 @@ td img {
     width: 80px;
     height: 60px;
 }
+.btn-submit{
+    width:100px;
+    height:40px;
+    margin: 0 450px 10px 450px;
+    border:0px solid grey;
+    text-align: center;
+    background-color: #FFFFFF;
+    color:#000000;
+    font-size: 16px;
+    font-weight: 500;
+}
 
 .ellipsis_ {
     display: inline-block;
@@ -188,10 +199,37 @@ td img {
     font-size: 16px;
     font-weight: 400;
 }
-.article-sort{
+
+.article-sort {
     width: 1000px;
     color: #000000;
     background-color: #FFFFFF;
+}
+
+.main_article_form {
+    padding-top: 10px;
+    margin: 0 auto;
+    width: 1000px;
+    -moz-box-shadow: 0px 0px 1px 1px darkgrey;
+    -webkit-box-shadow: 0px 0px 1px 1px darkgrey;
+    box-shadow: 0px 0px 1px 1px darkgrey;
+}
+
+.art_top_div {
+    width: 400px;
+    height: 320px;
+    padding-bottom: 10px;
+    float: left;
+}
+.art_top_div input{
+    display: block !important;
+    width: 380px;
+    height: 40px;
+    font-size: 16px;
+    margin: 10px 10px;
+}
+.index_pic_div{
+    margin: 10px 10px;
 }
 
 /*商品列表*/
@@ -376,13 +414,6 @@ h3 {
     margin: 10px 10px;
 }
 
-.product-left select {
-    display: block !important;
-    width: 380px;
-    font-size: 16px;
-    margin: 10px 10px;
-}
-
 .edui-container {
     margin: 10px 10px;
     z-index: 0 !important;
@@ -557,7 +588,7 @@ h3 {
 
 .list_box {
     width: 200px;
-    height: 200px;
+    max-height: 200px;
     z-index: 200;
     overflow: auto;
     white-space: nowrap;

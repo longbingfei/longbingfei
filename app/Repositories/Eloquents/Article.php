@@ -115,6 +115,7 @@ class Article implements ArticleInterface
         if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
             $data['index_pic'] = serialize($image);
+            unset($data['file']);
         }
         if (ArticleModel::where('id', $id)->update($data)) {
             $after = ArticleModel::findOrFail($id);

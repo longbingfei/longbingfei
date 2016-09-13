@@ -61,12 +61,12 @@ var Confirm = function (msg) {
         "<div style='width:300px;height:100px;margin:0 auto;line-height:100px'>" + msg.message +
         "</div><hr style='margin:4px 4px !important;' />" +
         "<div><botton class='btn btn-default btn-cancel' style='margin-right: 60px'>取消</botton>" +
-        "<botton class='btn btn-default btn-submit'>确定</botton></div>";
+        "<botton class='btn btn-default btn-ok'>确定</botton></div>";
     $("body").append(coverDiv).append(confirmDiv.append(confirmBody));
     $(".msg_modal").on('click', '.btn', function () {
         if ($(this).hasClass('btn-cancel')) {
             $("body").find(".msg_modal").remove();
-        } else if ($(this).hasClass('btn-submit')) {
+        } else if ($(this).hasClass('btn-ok')) {
             $("body").find(".msg_modal").remove();
             (typeof msg.callback == 'function') ? msg.callback() : '';
         }
@@ -203,30 +203,36 @@ var Helper = {
     }
 };
 
-//图片上传与显示
+//图片上传与显示{dom:xxx;max:xxx}
 var UploadPic = {
     i: 0,
     uploadFiles: {},
+    maxLength: 0,
     Show: function (obj) {
         var file = obj.context.files[0];
         this.uploadFiles[this.i] = file;
+        var that = this;
         var Reader = new FileReader();
         Reader.readAsDataURL(file);
         Reader.onload = function (e) {
-            var that = UploadPic;
             var url = e.target.result;
             var newDom = $("<div data-id=" + that.i + "></div>")
                 .addClass("plug-upload-div")
                 .css({backgroundImage: "url" + "(" + url + ")", backgroundSize: "100% 100%"})
                 .append($("<div>x</div>").addClass("plug-cancel-style"));
             $(".plug-show-div").prepend(newDom);
-            $(".plug-upload-div").on('mouseover mouseout', function (e) {
+            $(".plug-upload-div").off('mouseover mouseout').on('mouseover mouseout', function (e) {
                 that.Preview(e, $(this));
             });
-            $(".plug-cancel-style").on('click', function () {
+            $(".plug-cancel-style").off('click').on('click', function () {
                 that.Delete($(this));
             });
             that.i++;
+            //控制最大图片数
+            if (that.maxLength && Object.keys(that.uploadFiles).length >= that.maxLength) {
+                $(".default-plug-upload-div").css('display', 'none');
+                return false;
+            }
         };
     },
     Preview: function (e, obj) {
@@ -274,17 +280,27 @@ var UploadPic = {
         delete this.uploadFiles[id];
         $("#plug-upload-input").val('');
         obj.parent().remove();
+        if (this.maxLength && Object.keys(this.uploadFiles).length < this.maxLength) {
+            $(".default-plug-upload-div").css('display', 'block');
+        }
     },
     Reset: function () {
         $(".plug-show-div").find(".plug-upload-div").remove();
         this.i = 0;
         this.uploadFiles = {};
+        this.maxLength = 0;
     },
     Init: function (obj) {
         this.Reset();
+        if (!obj.dom) {
+            return false;
+        }
+        if (obj.max) {
+            this.maxLength = obj.max;
+        }
         var showDiv =
             '<div class="plug-show-div">' +
-            '<div class="plug-upload-div">' +
+            '<div class="plug-upload-div default-plug-upload-div">' +
             '<div class="plug-mark">' +
             '<div class="plug-plus-x"></div>' +
             '<div class="plug-plus-y"></div>' +
@@ -293,9 +309,10 @@ var UploadPic = {
             '</div>' +
             '<div style="clear:both;"></div>' +
             '</div>';
-        $(obj).empty().append(showDiv);
+        $(obj.dom).empty().append(showDiv);
+        var that = this;
         $("#plug-upload-input").on('change', function () {
-            UploadPic.Show($(this));
+            that.Show($(this));
         });
     }
 };
@@ -685,7 +702,7 @@ var SortList = {
         $.ajax({
             method: 'get',
             url: this.url + '?fid=' + fid,
-            async: false,//同步赋值,不然res最终为NAN
+            async: false,//同步赋值,不然res为NAN
             success: function (data) {
                 res = data;
             }
