@@ -188,6 +188,11 @@ td img {
     font-size: 16px;
     font-weight: 400;
 }
+.article-sort{
+    width: 1000px;
+    color: #000000;
+    background-color: #FFFFFF;
+}
 
 /*商品列表*/
 .table-no-data {

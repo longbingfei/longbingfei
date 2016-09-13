@@ -34,6 +34,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('video', 'VideoController');
         Route::resource('article_sort', 'ArticleSortController');
         Route::resource('article', 'ArticleController');
+        Route::get('article_form/{id?}', 'ArticleController@form');
+        Route::get('article_settings', 'ArticleController@settings');
         Route::resource('product_sort', 'ProductSortController');
         Route::resource('product', 'ProductController');
         Route::get('product/show/{id}', 'ProductController@detail');

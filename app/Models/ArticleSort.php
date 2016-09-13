@@ -11,6 +11,7 @@ class ArticleSort extends Model
     protected $fillable = [
         'fid',
         'name',
-        'user_id'
+        'user_id',
+        'is_last'
     ];
 }

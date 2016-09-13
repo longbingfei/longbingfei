@@ -20,21 +20,45 @@ class ArticleSortController extends Controller
 
     public function index(Request $request)
     {
-        $resp = $this->as->index($request->get('fid'));
+        $fillable = [
+            'fid'
+        ];
+        $resp = $this->as->index($request->only($fillable));
 
         return Response::display($resp);
     }
 
     public function store(Request $request)
     {
-        $resp = $this->as->create($request->only(['fid', 'name']));
+        $rules = [
+            'name.required' => 1308,
+            'fid.min:0'     => 1309,
+            'fid.integer'   => 1310,
+        ];
+        $fillable = [
+            'name',
+            'fid'
+        ];
+        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['errorCode' => $errorCode]);
+        }
+        $resp = $this->as->create($request->only($fillable));
 
         return Response::display($resp);
     }
 
     public function update(Request $request, $id)
     {
-        $resp = $this->as->update($id, $request->get('name'));
+        $rules = [
+            'name.required' => 1308,
+        ];
+        $fillable = [
+            'name',
+        ];
+        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['errorCode' => $errorCode]);
+        }
+        $resp = $this->as->update($id, $request->only($fillable));
 
         return Response::display($resp);
     }

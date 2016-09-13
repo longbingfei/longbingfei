@@ -98,4 +98,19 @@ class ArticleController extends Controller
 
         return Response::display($resp);
     }
+
+    public function form($id = 0)
+    {
+        $params = [];
+        if ($id) {
+            $params['single_data'] = $this->article->show($id);
+        }
+
+        return view('admin.article_form', $params);
+    }
+
+    public function settings()
+    {
+        return view('admin.article_settings');
+    }
 }

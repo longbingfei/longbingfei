@@ -14,6 +14,7 @@
 @section('body')
     @parent
     <div class="container">
+        <a class="btn btn-default top-btn" href="article_settings"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
         <a class="btn btn-default top-btn" href="article_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div class="article-main">
             <table class="table table-hover article-table">

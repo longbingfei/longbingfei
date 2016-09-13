@@ -15,45 +15,52 @@ class ArticleSort implements ArticleSortInterface
 {
     protected $module = 'article-sort';
 
-    public function index($fid = 0)
+    public function index(array $condition = [])
     {
-        return ArticleSortModel::where('fid', intval($fid))->get()->toArray();
+        $condition = array_filter($condition);
+        $sort = ArticleSortModel::where('id', '>', 0);
+        $fid = isset($condition['fid']) ? intval($condition['fid']) : 0;
+        $sort = $sort->where('fid', $fid);
+
+        return $sort->count() ? $sort->get()->toArray() : [];
     }
 
     public function create(array $data)
     {
         $data['user_id'] = Auth::id();
-
-        if (ArticleSortModel::where('name', $data['name'])->count()) {
+        $data['fid'] = isset($data['fid']) ? intval($data['fid']) : 0;
+        $father = ArticleSortModel::where('id', $data['fid'])->first();
+        if ($data['fid'] && !$father) {
+            return ['errorCode' => 1312];
+        }
+        if (ArticleSortModel::where('fid', $data['fid'])->where('name', $data['name'])->count()) {
             event('log', [[$this->module, 'c', 'sort_already_exist', 0]]);
 
-            return ['errorCode' => 1206];
+            return ['errorCode' => 1311];
+        }
+        $data['is_last'] = 1;
+        $newSort = ArticleSortModel::create($data)->toArray();
+        event('log', [[$this->module, 'c', $newSort]]);
+        if ($father && $father->is_last) {
+            $this->update($father->id, ['is_last' => 0]);
         }
 
-        if ($sort = ArticleSortModel::create($data)->toArray()) {
-            event('log', [[$this->module, 'c', $sort]]);
-
-            return $sort;
-        }
+        return $newSort;
     }
 
-    public function update($id, $name)
+    public function update($id, array $data)
     {
         $data['user_id'] = Auth::id();
-        if (!$name = trim($name)) {
-            return ['errorCode' => 1208];
-        }
         if (!$before = ArticleSortModel::where('id', $id)->first()) {
-            return ['errorCode' => 1207];
+            return ['errorCode' => 1313];
         }
-        if (ArticleSortModel::where('name', $name)->count()) {
+        if (isset($data['name']) && ArticleSortModel::where('fid', $before->fid)->where('name', $data['name'])->count()) {
             event('log', [[$this->module, 'u', 'sort_already_exist', 0]]);
 
-            return ['errorCode' => 1206];
+            return ['errorCode' => 1311];
         }
-
-        if (ArticleSortModel::where('id', $id)->update(['name' => $name])) {
-            $after = ArticleSortModel::where('id', $id)->first();
+        if (ArticleSortModel::where('id', $id)->update($data)) {
+            $after = ArticleSortModel::where('id', $id)->first()->toArray();
             event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 
             return $after;
@@ -63,12 +70,17 @@ class ArticleSort implements ArticleSortInterface
     public function delete($id)
     {
         if (!$info = ArticleSortModel::where('id', $id)->first()) {
-            return ['errorCode' => 1207];
+            return ['errorCode' => 1313];
         }
         if (ArticleSortModel::destroy($id)) {
             event('log', [[$this->module, 'd', $info]]);
-
-            return $info;
         }
+        if ($info->fid) {
+            if (!ArticleSortModel::where('fid', $info->fid)->count()) {
+                $this->update($info->fid, ['is_last' => 1]);
+            }
+        }
+
+        return $info->toArray();
     }
 }

@@ -54,16 +54,6 @@ class ProductController extends Controller
         return view('admin.product_detail', ['detail' => $detail]);
     }
 
-    public function form($id = 0)
-    {
-        $params = [];
-        if ($id) {
-            $params['single_data'] = $this->product->show($id);
-        }
-
-        return view('admin.product_form', $params);
-    }
-
     public function store(Request $request)
     {
         $rules = [
@@ -139,11 +129,18 @@ class ProductController extends Controller
         return $this->product->delete($id);
     }
 
+    public function form($id = 0)
+    {
+        $params = [];
+        if ($id) {
+            $params['single_data'] = $this->product->show($id);
+        }
+
+        return view('admin.product_form', $params);
+    }
+
     public function settings()
     {
-        $sort = $this->product_sort->index();
-        $params = ['product_sort' => $sort];
-
-        return view('admin.product_settings', $params);
+        return view('admin.product_settings');
     }
 }

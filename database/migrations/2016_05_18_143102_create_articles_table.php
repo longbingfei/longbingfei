@@ -15,6 +15,7 @@ class CreateArticlesTable extends Migration
         Schema::create('article_sorts',function(Blueprint $tables){
             $tables->increments('id')->unsigned();
             $tables->integer('fid')->unsigned();
+            $tables->tinyInteger('is_last')->default(1);
             $tables->string('name',40);
             $tables->integer('user_id');
             $tables->timestamps();
