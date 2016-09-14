@@ -36,9 +36,12 @@
                     @foreach($data['data'] as $item => $value)
                         <tr>
                             <td><input type="checkbox" title="{{$value['id']}}"></td>
-                            <td><img src="{{empty($value['images']) ? '' : url($value['images'][0]['path'])}}"></td>
                             <td>
-                                <a class="ellipsis_ padding_move" href="{{url('admin/feature/product/show/'.$value['id'])}}">{{$value['name']}}</a>
+                                <img src="{{empty($value['images']) ? url('default/images/product.png') : url($value['images'][0]['path'])}}">
+                            </td>
+                            <td>
+                                <a class="ellipsis_ padding_move" href="{{url('admin/feature/product/show/'
+                                .$value['id'])}}">{{$value['name']}}</a>
                             </td>
                             <td><span class="ellipsis_">{{$value['sort_name']}}</span></td>
                             <td>{{$value['storage']}}</td>
@@ -79,7 +82,7 @@
             </table>
         </div>
     </div>
-    <script  type="text/javascript">
+    <script type="text/javascript">
         function product_delete(target) {
             var id = $(target).data('id');
             if (!id) {
@@ -95,7 +98,7 @@
                         success: function (data) {
                             if (data.id) {
                                 location.reload();
-                            }else{
+                            } else {
                                 Confirm({message: data.error_message});
                             }
                         }

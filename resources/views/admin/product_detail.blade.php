@@ -11,9 +11,6 @@
 @section('subject','detail')
 @section('body')
     <div class="product-detail-container">
-        <div class="image-cut">123</div>
     </div>
-    <script>
-    </script>
 @stop
 
