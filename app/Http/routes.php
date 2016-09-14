@@ -22,6 +22,9 @@ Route::group(['prefix' => 'admin'], function() {
             return view('admin.login');
         });
         Route::post('login', 'AdminAuthController@login');
+        Route::get('home', function() {
+            return view('admin.home');
+        });
         Route::post('register', ['middleware' => 'auth', 'uses' => 'AdminAuthController@register']);
         Route::get('list', ['middleware' => 'auth', 'uses' => 'AdminAuthController@index']);
         Route::put('update/{id}', ['middleware' => 'auth', 'uses' => 'AdminAuthController@update']);

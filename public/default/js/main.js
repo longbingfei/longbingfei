@@ -249,7 +249,7 @@ var UploadPic = {
                 }
                 break;
             case "mouseout":
-                //obj.children('.plug-cancel-style').hide();
+                obj.children('.plug-cancel-style').hide();
                 $("body").find(".plug-preview-pic").remove();
                 break;
         }
