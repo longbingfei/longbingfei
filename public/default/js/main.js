@@ -249,7 +249,7 @@ var UploadPic = {
                 }
                 break;
             case "mouseout":
-                obj.children('.plug-cancel-style').hide();
+                //obj.children('.plug-cancel-style').hide();
                 $("body").find(".plug-preview-pic").remove();
                 break;
         }
@@ -314,6 +314,13 @@ var UploadPic = {
             '<div style="clear:both;"></div>' +
             '</div>';
         $(obj.dom).empty().append(showDiv);
+        //如果涉及到更改单个索引图,显示现有图片
+        if (obj.bgsrc) {
+            $('.default-plug-upload-div').css({
+                backgroundImage: 'url("' + obj.bgsrc + '")',
+                backgroundSize: '80px 80px'
+            });
+        }
         var that = this;
         $("#plug-upload-input").on('change', function () {
             that.Show($(this));

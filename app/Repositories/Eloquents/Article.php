@@ -79,8 +79,10 @@ class Article implements ArticleInterface
                 'article_sorts.name as sort_name',
                 'administrators.username as author_name'
             );
+        $article = $article->first()->toArray();
+        $article['index_pic'] = $article['index_pic'] ? unserialize($article['index_pic']) : [];
 
-        return $article->first()->toArray();
+        return $article;
     }
 
     //文稿新建

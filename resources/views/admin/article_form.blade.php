@@ -41,7 +41,11 @@
         //初始化分类选择框
         SortList.init({dom: $(".art_sort"), url: "{{url('admin/feature/article_sort')}}"});
         //初始化索引图上传控件
-        UploadPic.Init({dom: $('.index_pic_div'), max: 1});
+        UploadPic.Init({
+            dom: $('.index_pic_div'),
+            max: 1,
+            bgsrc: "{{isset($single_data) ? (empty($single_data['index_pic']) ? '' : url($single_data['index_pic']['path'])) :''}}"
+        });
         var um = UM.getEditor('describe');
         //设置编辑器文本
         var content = '{!!  isset($single_data) ? $single_data['content'] : '' !!}';
