@@ -219,12 +219,12 @@ var UploadPic = {
             var newDom = $("<div data-id=" + that.i + "></div>")
                 .addClass("plug-upload-div")
                 .css({backgroundImage: "url" + "(" + url + ")", backgroundSize: "100% 100%"})
-                .append($("<div>x</div>").addClass("plug-cancel-style"));
+                .append($("<div></div>").addClass("plug-cancel-style glyphicon glyphicon-remove-circle"));
             $(".plug-show-div").prepend(newDom);
-            $(".plug-upload-div").off('mouseover mouseout').on('mouseover mouseout', function (e) {
+            $("body").off('mouseover mouseout', '.plug-upload-div').on('mouseover mouseout', '.plug-upload-div', function (e) {
                 that.Preview(e, $(this));
             });
-            $(".plug-cancel-style").off('click').on('click', function () {
+            $("body").off('click', '.plug-cancel-style').on('click', '.plug-cancel-style', function () {
                 that.Delete($(this));
             });
             that.i++;
@@ -238,14 +238,18 @@ var UploadPic = {
     Preview: function (e, obj) {
         switch (e.type) {
             case "mouseover":
-                var showPicDiv = $("<div></div>").css({
-                    "backgroundImage": obj.css("backgroundImage"),
-                    left: e.pageX,
-                    top: e.pageY - 300
-                }).addClass("plug-preview-div plug-preview-pic");
-                $("body").append(showPicDiv);
+                obj.children('.plug-cancel-style').show();
+                if (!$(e.target).hasClass('plug-cancel-style')) {
+                    var showPicDiv = $("<div></div>").css({
+                        "backgroundImage": obj.css("backgroundImage"),
+                        left: e.pageX,
+                        top: e.pageY - 300
+                    }).addClass("plug-preview-div plug-preview-pic");
+                    $("body").append(showPicDiv);
+                }
                 break;
             case "mouseout":
+                obj.children('.plug-cancel-style').hide();
                 $("body").find(".plug-preview-pic").remove();
                 break;
         }
@@ -571,7 +575,7 @@ var Sort = {
                                 $(e_.target).parent().remove();
                                 //同时删除展开框
                                 that.main_div.find('[class=sort_child_div][fid=' + data.id + ']').remove();
-                            }else{
+                            } else {
                                 Confirm({message: data.error_message});
                             }
                         }

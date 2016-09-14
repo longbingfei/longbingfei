@@ -157,6 +157,7 @@ input, textarea, .edui-container {
     height: 80px;
     z-index: 10;
     cursor: pointer;
+    border: 1px solid grey;
 }
 
 .plug-mark {
@@ -202,12 +203,17 @@ input, textarea, .edui-container {
     position: absolute;
     top: 0px;
     right: 0px;
-    width: 10px;
-    height: 10px;
-    line-height: 10px;
+    width: 20px;
+    height: 20px;
+    /*line-height: 10px;*/
     font-size: 20px;
     color: black;
     cursor: pointer;
+    display: none;
+}
+
+.plug-cancel-style:hover {
+    color: red;
 }
 
 /*新闻列表*/
@@ -279,16 +285,18 @@ input, textarea, .edui-container {
     border-radius: 5px;
     color: #000000;
 }
-.a-edit-article{
-    display:inline-block;
-    width:40px;
-    height:40px;
-    color:lightskyblue;
+
+.a-edit-article {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    color: lightskyblue;
     font-size: 13px;
-    cursor:pointer;
+    cursor: pointer;
 }
-.a-edit-article:hover{
-    color:coral;
+
+.a-edit-article:hover {
+    color: coral;
 }
 
 /*商品列表*/
