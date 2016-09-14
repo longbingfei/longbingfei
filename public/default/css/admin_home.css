@@ -19,7 +19,7 @@ img {
     border: 0;
 }
 
-input, textarea, #describe {
+input, textarea,.edui-container{
     color: black;
 }
 
