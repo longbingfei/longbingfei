@@ -16,7 +16,7 @@
         <a class="btn btn-default top-btn" href="product_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div style="clear:both"></div>
         <div class="product-main">
-            <table class="table product-table">
+            <table class="table table-hover product-table">
                 <tr class="active">
                     <td>选择</td>
                     <td>缩略图</td>
