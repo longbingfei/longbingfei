@@ -41,7 +41,7 @@
                                 <a class="ellipsis_ padding_move" href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
                             </td>
                             <td><span class="ellipsis_">{{$vo['sort_name']}}</span></td>
-                            <td><span class="ellipsis_">{{$vo['author_name']}}</span></td>
+                            <td>{{$vo['author_name']}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($vo['created_at']))}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($vo['updated_at']))}}</td>
                             <td>
