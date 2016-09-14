@@ -23,9 +23,9 @@
                     <td>名称</td>
                     <td>分类</td>
                     <td>库存</td>
+                    <td>操作人</td>
                     <td>创建时间</td>
                     <td>更新时间</td>
-                    <td>操作人</td>
                     <td>操作</td>
                 </tr>
                 @if(!$data['total'])
@@ -42,9 +42,9 @@
                             </td>
                             <td><span class="ellipsis_">{{$value['sort_name']}}</span></td>
                             <td>{{$value['storage']}}</td>
+                            <td><span class="ellipsis_">{{$value['username']}}</span></td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['created_at']))}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['updated_at']))}}</td>
-                            <td><span class="ellipsis_">{{$value['username']}}</span></td>
                             <td>
                                 <a class="product-action glyphicon glyphicon-info-sign"
                                    tabindex="0"

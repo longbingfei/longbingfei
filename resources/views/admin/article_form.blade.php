@@ -13,7 +13,7 @@
 @section('nav')
     @parent
 @stop
-@section('subject',isset($single_data) ? '文稿信息修改' : '新增文稿')
+@section('subject',isset($single_data) ? '文稿修改' : '新增文稿')
 @section('body')
     @parent
     <div class="main_article_form">
@@ -28,7 +28,7 @@
                    value="{{isset($single_data) ? $single_data['sort_name'] :''}}"
                    placeholder="点击选择文稿分类"
             >
-            <span class="form-span">文稿索引图:</span>
+            <span class="form-span">索引图(选填):</span>
             <div class="index_pic_div"></div>
         </div>
         <div style="clear:both"></div>
