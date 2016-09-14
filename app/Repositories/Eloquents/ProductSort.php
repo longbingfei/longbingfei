@@ -8,6 +8,7 @@
 namespace App\Repositories\Eloquents;
 
 use Auth;
+use App\Models\Product as ProductModel;
 use App\Models\ProductSort as ProductSortModel;
 use App\Repositories\InterfacesBag\ProductSort as ProductSortInterface;
 
@@ -71,6 +72,9 @@ class ProductSort implements ProductSortInterface
     {
         if (!$info = ProductSortModel::where('id', $id)->first()) {
             return ['errorCode' => 1313];
+        }
+        if (ProductModel::where('sort_id', $id)->count()) {
+            return ['errorCode' => 1314];
         }
         if (ProductSortModel::destroy($id)) {
             event('log', [[$this->module, 'd', $info]]);

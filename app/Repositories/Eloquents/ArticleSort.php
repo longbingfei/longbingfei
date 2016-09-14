@@ -8,6 +8,7 @@
 namespace App\Repositories\Eloquents;
 
 use Auth;
+use App\Models\Article as ArticleModel;
 use App\Models\ArticleSort as ArticleSortModel;
 use App\Repositories\InterfacesBag\ArticleSort as ArticleSortInterface;
 
@@ -71,6 +72,9 @@ class ArticleSort implements ArticleSortInterface
     {
         if (!$info = ArticleSortModel::where('id', $id)->first()) {
             return ['errorCode' => 1313];
+        }
+        if(ArticleModel::where('sort_id',$id)->count()){
+            return ['errorCode' => 1314];
         }
         if (ArticleSortModel::destroy($id)) {
             event('log', [[$this->module, 'd', $info]]);

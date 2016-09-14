@@ -571,6 +571,8 @@ var Sort = {
                                 $(e_.target).parent().remove();
                                 //同时删除展开框
                                 that.main_div.find('[class=sort_child_div][fid=' + data.id + ']').remove();
+                            }else{
+                                Confirm({message: data.error_message});
                             }
                         }
                     });
