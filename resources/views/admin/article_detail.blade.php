@@ -1,5 +1,5 @@
 @extends('admin.home')
-@section('title','detail')
+@section('title','文稿详情')
 @section('link')
     @parent
 @stop
@@ -8,12 +8,11 @@
 @section('nav')
     @parent
 @stop
-@section('subject','detail')
+@section('subject','文稿详情')
 @section('body')
     <div class="product-detail-container">
-        <div class="image-cut">123</div>
+        <div class="image-cut">456</div>
     </div>
     <script>
     </script>
 @stop
-

@@ -119,7 +119,7 @@ class Article implements ArticleInterface
         }
         if (ArticleModel::where('id', $id)->update($data)) {
             $after = ArticleModel::findOrFail($id);
-            if ($before->index_pic && ($image = unserialize($before->index_pic))) {
+            if (isset($data['index_pic']) && $before->index_pic && ($image = unserialize($before->index_pic))) {
                 $this->image->delete($image['id']);
             }
             event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);

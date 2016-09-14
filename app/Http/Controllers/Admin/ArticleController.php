@@ -43,6 +43,13 @@ class ArticleController extends Controller
         return Response::display($resp);
     }
 
+    public function detail($id)
+    {
+        $detail = $this->article->show($id);
+
+        return view('admin.article_detail', ['detail' => $detail]);
+    }
+
     public function store(Request $request)
     {
         $rules = [

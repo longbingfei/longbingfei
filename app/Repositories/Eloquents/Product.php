@@ -68,7 +68,7 @@ class Product implements ProductInterface
         $data['storage'] = isset($data['storage']) ? intval($data['storage']) : 1;
         $data['user_id'] = Auth::id();
         $data['images'] = serialize(call_user_func([$this, 'createProductImages'], $data['file'], $data['pid']));
-        $data['describe'] = isset($data['describe']) ? $data['describe']: '';
+        $data['describe'] = isset($data['describe']) ? $data['describe'] : '';
         unset($data['file']);
         if ($product = ProductModel::create($data)) {
             event('log', [[$this->modules, 'c', $product]]);
@@ -100,12 +100,12 @@ class Product implements ProductInterface
         $data = array_filter($data);
         $params['name'] = trim($data['name']);
         $params['price'] = trim($data['price']);
-        $params['describe'] = isset($data['describe']) ? trim($data['describe']): '';
+        $params['describe'] = isset($data['describe']) ? trim($data['describe']) : '';
         $params['storage'] = isset($data['storage']) ? intval($data['storage']) : 0;
         $params['sort_id'] = intval($data['sort_id']);
         $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $params['user_id'] = Auth::id();
-        if(!$images = unserialize($before->images)){
+        if (!$images = unserialize($before->images)) {
             $images = [];
         }
         if (isset($data['drop_images']) && ($drop_images = explode(',', $data['drop_images']))) {
@@ -117,7 +117,6 @@ class Product implements ProductInterface
         if (isset($data['file'])) {
             $new_images = call_user_func([$this, 'createProductImages'], $data['file'], $before->pid);
             $images = array_merge($images, $new_images);
-
         }
         $params['images'] = serialize($images);
         if (ProductModel::where('id', $id)->update($params)) {
