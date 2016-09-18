@@ -21,6 +21,10 @@
                         <td>发发发</td>
                     </tr>
                     <tr>
+                        <td colspan="2"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td>动态设置</td>
                         <td>嘻嘻嘻</td>
                     </tr>
@@ -75,4 +79,18 @@
             </div>
         </div>
     </div>
+    <script>
+        $("tr").click(function () {
+            var form = $("<div>" +
+                            '当前轮播' +
+                            '<img src="https://www.baidu.com/img/bd_logo1.png">' +
+                            '更换轮播' +
+                            '<select>' +
+                            '<option>123</option>' +
+                            '</select>' +
+                            "</div>"
+            );
+            $(this).after(form);
+        });
+    </script>
 @stop

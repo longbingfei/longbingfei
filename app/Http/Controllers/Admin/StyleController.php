@@ -20,7 +20,9 @@ class StyleController extends Controller
 
     public function index()
     {
-        return view('admin.style');
+        $resp = $this->style->index();
+
+        return view('admin.style', ['detail' => $resp]);
     }
 
     public function store(Request $request)

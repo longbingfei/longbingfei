@@ -17,7 +17,9 @@ class Style implements StyleInterface
 
     public function index()
     {
-        return StyleModel::all()->groupBy('type');
+        $return = StyleModel::all()->groupBy('type')->toArray();
+//        dd($return);
+        return $return;
     }
 
     public function create(array $data)
