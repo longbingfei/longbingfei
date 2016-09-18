@@ -9,11 +9,10 @@ class Style extends Model
     protected $table = 'styles';
 
     protected $fillable = [
+        'cid',
         'type',
         'describe',
-        'image_path',
-        'link',
-        'status',
+        'order',
         'user_id'
     ];
 }

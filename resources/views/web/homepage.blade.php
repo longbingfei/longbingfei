@@ -9,6 +9,7 @@
     <!-- Bootstrap -->
     <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('default/css/carousel.css')}}" rel="stylesheet">
+    <link href="{{ url('default/css/front.css')}}" rel="stylesheet">
     <style>
 
     </style>
@@ -19,7 +20,8 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -55,7 +57,7 @@
 <div id="carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @foreach($style['carousel'] as $k => $v)
-        <li data-target="#carousel" data-slide-to="{{$k}}"></li>
+            <li data-target="#carousel" data-slide-to="{{$k}}"></li>
         @endforeach
     </ol>
     <div class="carousel-inner" role="listbox">
@@ -83,22 +85,22 @@
 <div class="container marketing">
     <div class="row" id="promote">
         {{--<div class="col-lg-4">--}}
-            {{--<img class="img-circle" src="" width="140" height="140">--}}
-            {{--<h2>{{$articles[0]['title']}}</h2>--}}
-            {{--<p>{{$articles[0]['content']}}</p>--}}
-            {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
+        {{--<img class="img-circle" src="" width="140" height="140">--}}
+        {{--<h2>{{$articles[0]['title']}}</h2>--}}
+        {{--<p>{{$articles[0]['content']}}</p>--}}
+        {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
         {{--</div>--}}
         {{--<div class="col-lg-4">--}}
-            {{--<img class="img-circle" src="" width="140" height="140">--}}
-            {{--<h2>{{$articles[1]['title']}}</h2>--}}
-            {{--<p>{{$articles[1]['content']}}</p>--}}
-            {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
+        {{--<img class="img-circle" src="" width="140" height="140">--}}
+        {{--<h2>{{$articles[1]['title']}}</h2>--}}
+        {{--<p>{{$articles[1]['content']}}</p>--}}
+        {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
         {{--</div>--}}
         {{--<div class="col-lg-4">--}}
-            {{--<img class="img-circle" src="" width="140" height="140">--}}
-            {{--<h2>{{$articles[2]['title']}}</h2>--}}
-            {{--<p>{{$articles[2]['content']}}</p>--}}
-            {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
+        {{--<img class="img-circle" src="" width="140" height="140">--}}
+        {{--<h2>{{$articles[2]['title']}}</h2>--}}
+        {{--<p>{{$articles[2]['content']}}</p>--}}
+        {{--<p><a class="btn btn-default" href="#" role="button">更多 &raquo;</a></p>--}}
         {{--</div>--}}
     </div>
 
@@ -106,12 +108,12 @@
 
     <div class="row featurette row-top">
         <div class="col-md-4">
-                <a href="#" class="thumbnail image">
-                    <img src="">
-                    <div class="cover"></div>
-                    <div class="info-div">
-                    </div>
-                </a>
+            <a href="#" class="thumbnail image">
+                <img src="">
+                <div class="cover"></div>
+                <div class="info-div">
+                </div>
+            </a>
         </div>
         <div class="col-md-4">
             <a href="#" class="thumbnail image">

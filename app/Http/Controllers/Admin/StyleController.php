@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Style;
 
 class StyleController extends Controller
@@ -19,38 +20,21 @@ class StyleController extends Controller
 
     public function index()
     {
-        return $this->style->index();
-    }
-
-    public function show($id)
-    {
-        return $this->style->show($id);
+        return view('admin.style');
     }
 
     public function store(Request $request)
     {
         $fillable = [
+            'cid',
             'type',
+            'order',
             'describe',
-            'link',
-            'image_path'
         ];
-        $data = array_intersect_key($request->all(), array_flip($fillable));
 
-        return $this->style->create($data);
-    }
+        $resp = $this->style->create($request->only($fillable));
 
-    public function update(Request $request, $id)
-    {
-        $fillable = [
-            'describe',
-            'link',
-            'image_path',
-            'status'
-        ];
-        $data = array_intersect_key($request->all(), array_flip($fillable));
-
-        return $this->style->update($id, $data);
+        return Response::display($resp);
     }
 
     public function destroy($id)

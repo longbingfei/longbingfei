@@ -1,49 +1,78 @@
-<?php
-$data = isset($_POST['data']) ? $_POST['data'] : [] ;
-//print_r($data['carousel']);
-?>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <style>
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="test"></div>
-</div>
-{{--modal--}}
-<div class="container">
-    <div class="modal fade content" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg"> {{--modal-sm modal-lg  style="width:???px"--}}
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close cancel" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">文稿</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="form" data-id="xxx">
-                        <div class="form-group">
-                            <label for="title" class="control-label">标题:</label>
-                            <input type="text" class="form-control" id="title">
-                        </div>
-                        <div class="form-group">
-                            <label for="content" class="control-label">内容:</label>
-                            <textarea class="form-control" id="content" rows="20"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary submit">保存</button>
-                </div>
+@extends('admin.home')
+@section('title','控制台')
+@section('link')
+    @parent
+@stop
+@section('stylesheet')
+    @parent
+@stop
+@section('nav')
+    @parent
+@stop
+@section('subject','控制台')
+@section('body')
+    <div class="control-container">
+        <div class="panel panel-info">
+            <div class="panel-heading">前台布局</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <tr>
+                        <td>轮播设置</td>
+                        <td>发发发</td>
+                    </tr>
+                    <tr>
+                        <td>动态设置</td>
+                        <td>嘻嘻嘻</td>
+                    </tr>
+                    <tr>
+                        <td>推荐设置</td>
+                        <td>反反复复</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">数据统计</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <tr>
+                        <td>今日点击量</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>日均点击量</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>累计点击量</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>文章总数</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>商品总数</td>
+                        <td>122</td>
+                    </tr>
+                    <tr>
+                        <td>管理账号数</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>最后操作人</td>
+                        <td>sign</td>
+                    </tr>
+                    <tr>
+                        <td>最后操作时间</td>
+                        <td>2010-10-10 10:10:10</td>
+                    </tr>
+                    <tr>
+                        <td>系统信息</td>
+                        <td>ubuntu15 3GB 10GB</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-</div>
-<script>
-    UploadPic.Init($(".image-upload-div"));
-</script>
-</body>
-</html>
+@stop

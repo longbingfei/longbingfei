@@ -37,13 +37,15 @@
                         <tr>
                             <td><input type="checkbox" title="{{$value['id']}}"></td>
                             <td>
-                                <img src="{{empty($value['images']) ? url('default/images/product.png') : url($value['images'][0]['path'])}}">
+                                <div class="product_index_pic">
+                                    <img src="{{empty($value['images']) ? url('default/images/product.png') : url($value['images'][0]['path'])}}">
+                                </div>
                             </td>
                             <td>
                                 <a class="ellipsis_ padding_move"
                                    href="{{url('admin/feature/product/show/'.$value['id'])}}">{{$value['name']}}</a>
                             </td>
-                            <td>{{$value['sort_name']}}</td>
+                            <td class="sort">{{$value['sort_name']}}</td>
                             <td>{{$value['storage']}}</td>
                             <td><span class="ellipsis_">{{$value['username']}}</span></td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['created_at']))}}</td>

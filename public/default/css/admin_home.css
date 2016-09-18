@@ -23,6 +23,10 @@ input, textarea, .edui-container {
     color: black;
 }
 
+h3 {
+    text-align: center
+}
+
 .btn-submit {
     width: 100px;
     height: 40px;
@@ -280,7 +284,6 @@ input, textarea, .edui-container {
 
 .article-table tr td img {
     width: 60px;
-    height: 40px;
 }
 
 .article-detail-container {
@@ -308,6 +311,10 @@ input, textarea, .edui-container {
 .a-edit-article, .a-edit-product:hover {
     color: coral;
 }
+.sort{
+    color:lightseagreen;
+    font-weight: 600;
+}
 
 /*商品列表*/
 .table-no-data {
@@ -334,7 +341,7 @@ input, textarea, .edui-container {
 
 .product-table tr td img {
     width: 60px;
-    height: 40px;
+    /*height: 40px;*/
 }
 
 .product-action {
@@ -385,10 +392,6 @@ input, textarea, .edui-container {
 }
 
 /*商品表单*/
-h3 {
-    text-align: center
-}
-
 .main_product_form {
     padding-top: 10px;
     margin: 0 auto;
@@ -523,6 +526,12 @@ h3 {
     height: 300px;
 }
 
+.article_index_pic,.product_index_pic {
+    width: 60px;
+    height: 40px;
+    overflow:hidden;
+}
+
 /*轮播*/
 .carousel {
     position: relative;
@@ -569,7 +578,7 @@ h3 {
 
 .product-describe {
     width: 100%;
-    margin-top:10px;
+    margin-top: 10px;
     background-color: #FFFFFF;
 }
 
@@ -725,4 +734,16 @@ h3 {
     margin-top: 10px;
     font-size: 16px;
     color: #2a2730;
+}
+.control-container{
+    width: 1000px;
+    min-height: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    -moz-box-shadow: 0px 0px 1px 1px darkgrey;
+    -webkit-box-shadow: 0px 0px 1px 1px darkgrey;
+    box-shadow: 0px 0px 1px 1px cadetblue inset;
+    /*background-color: #FFFFFF;*/
+    border-radius: 5px;
+    color: #000000;
 }

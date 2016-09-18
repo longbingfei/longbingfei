@@ -73,7 +73,7 @@ var Confirm = function (msg) {
     });
 };
 
-//图片功能模块 obj:{dom,src}
+//图片裁剪 obj:{dom,src}
 var ImageFunction = {
     init: function (obj) {
         var scale = obj.scale ? obj.scale : 4 / 3;

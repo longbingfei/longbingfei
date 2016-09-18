@@ -20,43 +20,34 @@ class Style implements StyleInterface
         return StyleModel::all()->groupBy('type');
     }
 
-    public function show($id)
-    {
-        return StyleModel::findOrFail($id);
-    }
-
     public function create(array $data)
     {
+        $data = array_filter($data);
+        if (!isset($data['cid']) || !intval($data['cid'])) {
+            return ['errorCode' => 1316];
+        }
+        if (!isset($data['cid']) || !in_array($data['type'], ['product', 'article', 'carousel-product', 'carousel-article'])) {
+            return ['errorCode' => 1317];
+        }
+        $data['order'] = isset($data['order']) ? intval($data['order']) : 0;
         $data['user_id'] = Auth::id();
         if ($style = StyleModel::create($data)) {
             event('log', [[$this->module, 'c', $style]]);
 
-            return 1;
-        }
-    }
-
-    public function update($id, array $data)
-    {
-        $data['user_id'] = Auth::id();
-        if (isset($data['status'])) {
-            $data['status'] = intval($data['status']);
-        }
-        $before = StyleModel::findOrFail($id);
-        if (StyleModel::where('id', $id)->update($data)) {
-            $after = StyleModel::findOrFail($id);
-            event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
-
-            return 1;
+            return $style;
         }
     }
 
     public function delete($id)
     {
-        $style = StyleModel::findOrFail($id);
+        $style = StyleModel::where('id', $id)->first();
+        if (!$style) {
+            return ['errorCode' => 1315];
+        }
         if (StyleModel::destroy($id)) {
             event('log', [[$this->module, 'd', $style]]);
 
-            return 1;
+            return $style->toArray();
         }
     }
 }

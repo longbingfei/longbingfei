@@ -36,11 +36,15 @@
                     @foreach($data['data'] as $key => $vo)
                         <tr>
                             <td><input type="checkbox" title="{{$vo['id']}}"></td>
-                            <td><img src="{{empty($vo['index_pic']) ? url('default/images/article.png') : url($vo['index_pic']['path'])}}"></td>
+                            <td>
+                                <div class="article_index_pic">
+                                    <img src="{{empty($vo['index_pic']) ? url('default/images/article.png') : url($vo['index_pic']['path'])}}">
+                                </div>
+                            </td>
                             <td>
                                 <a class="ellipsis_ padding_move" href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
                             </td>
-                            <td><span class="ellipsis_">{{$vo['sort_name']}}</span></td>
+                            <td><span class="ellipsis_ sort">{{$vo['sort_name']}}</span></td>
                             <td>{{$vo['author_name']}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($vo['created_at']))}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($vo['updated_at']))}}</td>

@@ -14,52 +14,28 @@ class StyleSeeder extends Seeder
     {
         DB::table('styles')->truncate();
         Style::create([
-            'type'=>'carousel',
-            'describe'=>'快雪时晴',
-            'image_path'=>'homepage/image/h1.jpg',
-            'link'=>'#',
-            'status'=>1,
-            'user_id'=>1
+            'cid'      => 1,
+            'type'     => 'carousel-product',
+            'describe' => '轮播商品',
+            'user_id'  => 1
         ]);
         Style::create([
-            'type'=>'carousel',
-            'describe'=>'古陵逝烟',
-            'image_path'=>'homepage/image/h2.jpg',
-            'link'=>'#',
-            'status'=>1,
-            'user_id'=>1
+            'cid'      => 1,
+            'type'     => 'carousel-article',
+            'describe' => '轮播文稿',
+            'user_id'  => 1
         ]);
         Style::create([
-            'type'=>'carousel',
-            'describe'=>'天赐饺子',
-            'image_path'=>'homepage/image/h3.jpg',
-            'link'=>'#',
-            'status'=>1,
-            'user_id'=>1
+            'cid'      => 1,
+            'type'     => 'article',
+            'describe' => '推荐文稿',
+            'user_id'  => 1
         ]);
         Style::create([
-            'type'=>'article',
-            'describe'=>'hello China',
-            'image_path'=>null,
-            'link'=>'#',
-            'status'=>1,
-            'user_id'=>1
-        ]);
-        Style::create([
-            'type'=>'article',
-            'describe'=>'hello World',
-            'image_path'=>null,
-            'link'=>'#',
-            'status'=>1,
-            'user_id'=>1
-        ]);
-        Style::create([
-            'type'=>'article',
-            'describe'=>'hello Universe',
-            'image_path'=>null,
-            'link'=>'#',
-            'status'=>1,
-            'user_id'=>1
+            'cid'      => 1,
+            'type'     => 'product',
+            'describe' => '推荐商品',
+            'user_id'  => 1
         ]);
     }
 

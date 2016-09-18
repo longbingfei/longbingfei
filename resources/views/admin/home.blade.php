@@ -5,7 +5,7 @@ if ($avatar = unserialize($user->avatar)) {
     $avatar_path = $avatar['thumb'];
 }
 ?>
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -37,17 +37,17 @@ if ($avatar = unserialize($user->avatar)) {
 </head>
 <body>
 @section('nav')
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid sys-nav">
-        <div class="navbar-header">
-            <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
-            <span class="article active navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
-            <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
-            <span class="style navbar-brand"><a href="javascript:void(0)">Style</a></span>
-            <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid sys-nav">
+            <div class="navbar-header">
+                <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
+                <span class="control navbar-brand"><a href="{{url('admin/feature/style')}}">Control</a></span>
+                <span class="article navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
+                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
+                <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 @show
 <h3 class="subject-h3">@yield('subject','主题未定义')</h3>
 @section('body')

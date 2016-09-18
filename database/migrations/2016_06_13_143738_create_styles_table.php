@@ -12,13 +12,12 @@ class CreateStylesTable extends Migration
      */
     public function up()
     {
-        Schema::create('styles',function(Blueprint $table){
+        Schema::create('styles', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('type',20);
-            $table->string('describe',200)->nullable();
-            $table->string('image_path',200)->nullable();
-            $table->string('link',200)->nullable();
-            $table->tinyInteger('status')->unsigned();
+            $table->integer('cid')->unsigned();
+            $table->integer('order')->unsigned(0);
+            $table->string('type', 20);
+            $table->string('describe', 200)->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
