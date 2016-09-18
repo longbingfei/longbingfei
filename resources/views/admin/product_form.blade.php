@@ -30,7 +30,7 @@
             <span class="form-span">商品单价:</span>
             <input type="text" class="pro_price" value="{{isset($single_data) ? $single_data['price'] : ''}}">
         </div>
-        @if(isset($single_data) && ($images = unserialize($single_data['images'])))
+        @if(isset($single_data) && ($images = $single_data['images']))
             <div class="product-right">
                 <div class="product-show-image-detail">
                     <img src="{{url($images[0]['path'])}}" title="点击查看原图">

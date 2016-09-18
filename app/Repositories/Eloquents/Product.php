@@ -55,6 +55,10 @@ class Product implements ProductInterface
             ->leftJoin('product_sorts', 'product_sorts.id', '=', 'products.sort_id')
             ->leftJoin('administrators', 'products.user_id', '=', 'administrators.id')
             ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first();
+        if ($return) {
+            $images = unserialize($return['images']);
+            $return['images'] = $images ? $images : [];
+        }
 
         return $return ? $return->toArray() : ['errorCode' => 1300];
     }

@@ -39,7 +39,7 @@ input, textarea, .edui-container {
     margin: 5px auto;
     height: 30px;
     width: 1000px;
-    border-bottom: 1px solid #FFFFFF;
+    border-bottom: 1px solid cadetblue;
     position: relative;
 }
 
@@ -143,6 +143,18 @@ input, textarea, .edui-container {
 .login_info {
     font-size: 11px;
     color: mediumvioletred;
+}
+
+.common-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #2a2730;
+    color: dimgrey;
+    text-align: center;
+    line-height: 50px;
+    z-index: 999;
 }
 
 /*图片上传控件*/
@@ -284,7 +296,7 @@ input, textarea, .edui-container {
     color: #000000;
 }
 
-.a-edit-article {
+.a-edit-article, .a-edit-product {
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -293,7 +305,7 @@ input, textarea, .edui-container {
     cursor: pointer;
 }
 
-.a-edit-article:hover {
+.a-edit-article, .a-edit-product:hover {
     color: coral;
 }
 
@@ -493,16 +505,22 @@ h3 {
     margin: 10px 10px;
 }
 
-.common-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #2a2730;
-    color: dimgrey;
-    text-align: center;
-    line-height: 50px;
-    z-index: 999;
+.product-detail-container {
+    width: 1000px;
+    min-height: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    -moz-box-shadow: 0px 0px 1px 1px darkgrey;
+    -webkit-box-shadow: 0px 0px 1px 1px darkgrey;
+    box-shadow: 0px 0px 1px 1px cadetblue inset;
+    /*background-color: #FFFFFF;*/
+    border-radius: 5px;
+    color: #000000;
+}
+
+.product-detail-carousel {
+    width: 400px;
+    height: 300px;
 }
 
 /*轮播*/
@@ -517,6 +535,8 @@ h3 {
     bottom: 5px;
     z-index: 9;
     cursor: pointer;
+    box-shadow: 0px 0px 1px 1px cadetblue inset;
+    border-radius: 5px;
 }
 
 /*图片功能*/
@@ -544,6 +564,13 @@ h3 {
 /*商品详情*/
 .product-detail-carousel {
     width: 400px;
+    border: 1px solid grey;
+}
+
+.product-describe {
+    width: 100%;
+    margin-top:10px;
+    background-color: #FFFFFF;
 }
 
 /*分类*/

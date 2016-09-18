@@ -99,6 +99,7 @@ var ImageFunction = {
 
 //图片轮播obj:{images:json,payload:dom}
 var Carousel = {
+    host: '',
     init: function (obj) {
         var max = 8;
         var images = obj.images;
@@ -107,17 +108,22 @@ var Carousel = {
         if (!images || !images.length || !payload) {
             return false;
         }
+        if (obj.host) {
+            this.host = obj.host;
+        }
+        images = JSON.parse(images);
         var carouselDiv = $("<div></div>").css({
             width: payload.width() > 320 ? payload.width() : 320,
             height: payload.height() > 240 ? payload.height() : 240
         }).addClass("carousel");
         var carouselListDiv = $("<div></div>").addClass("carousel-list");
+        var that = this;
         $.each(images, function (x, y) {
             if (x < max) {
                 var item = carouselListDiv.clone().css({
-                    left: 45 * x,
-                    backgroundImage: 'url(' + y.thumb + ')'
-                }).data({src: y.path, id: x});
+                    left: 45 * x + 5,
+                    backgroundImage: 'url(' + that.host + y.thumb + ')'
+                }).data({src: that.host + y.path, id: x});
                 carouselDiv.append(item);
             }
         });
@@ -125,7 +131,7 @@ var Carousel = {
             width: carouselDiv.width(),
             height: carouselDiv.height()
         });
-        img.attr('src', images[0].path).data('id', 0);
+        img.attr('src', this.host + images[0].path).data('id', 0);
         img.appendTo(carouselDiv);
         payload.append(carouselDiv);
         $(".carousel-list").mouseover(function () {
@@ -139,7 +145,7 @@ var Carousel = {
         var img_ = $(".carousel").children("img")[0];
         var id = $(img_).data('id');
         id = id < images.length - 1 ? id + 1 : 0;
-        $(img_).attr('src', images[id].path).data('id', id);
+        $(img_).attr('src', this.host + images[id].path).data('id', id);
     }
 };
 

@@ -1,5 +1,5 @@
 <?php
-    if (!isset($detail) || empty($detail) || isset($detail['errorCode'])) {
+    if (!isset($detail) || empty($detail) || isset($detail['error_code'])) {
         die('数据不存在!');
     }
 ?>

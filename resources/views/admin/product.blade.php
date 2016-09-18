@@ -1,5 +1,5 @@
 @extends('admin.home')
-@section('title','product')
+@section('title','商品列表')
 @section('link')
     @parent
 @stop
