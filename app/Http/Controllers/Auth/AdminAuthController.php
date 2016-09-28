@@ -38,7 +38,7 @@ class AdminAuthController extends Controller
         $info['ip'] = $request->getClientIp();
         $return = $this->admin->login($info);
 
-        return $return === true ? redirect('admin/auth/home') : view('admin.login', $return);
+        return $return === true ? redirect('admin/feature/style') : view('admin.login', $return);
     }
 
     public function register(Request $request)
