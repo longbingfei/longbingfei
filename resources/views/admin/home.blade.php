@@ -16,6 +16,7 @@ if ($avatar = unserialize($user->avatar)) {
     <meta name="author" content="Sign">
     <title>@yield('title','首页')</title>
     @section('link')
+        <link rel="icon" href="{{ url('default/images/site.ico') }}" type="image/x-ico"/>
         <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ url('default/css/admin_home.css')}}" rel="stylesheet">
         <script src="{{ url('default/js/jquery.1.10.js') }}"></script>
