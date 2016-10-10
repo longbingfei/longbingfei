@@ -15,6 +15,7 @@ class CerateLogsTable extends Migration
         Schema::create('logs',function(Blueprint $tables){
             $tables->dateTime('date');
             $tables->integer('user_id');
+            $tables->string('username',20);
             $tables->string('module',20);
             $tables->string('action',20);
             $tables->text('info');

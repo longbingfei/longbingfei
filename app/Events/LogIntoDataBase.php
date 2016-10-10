@@ -28,7 +28,8 @@ class LogIntoDatabase{
             'action' => $action,
             'info' => $content,
             'status' => isset($payload[3]) ? (integer)$payload[3] : 1,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'username' => Auth::User()->username
         ];
         DB::table('logs')->insert($data);
     }
