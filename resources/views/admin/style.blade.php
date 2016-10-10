@@ -15,24 +15,18 @@
         <div class="panel panel-info">
             <div class="panel-heading">前台布局</div>
             <div class="panel-body">
-                <table class="table table-hover">
-                    <tr>
-                        <td>轮播设置</td>
-                        <td>发发发</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>动态设置</td>
-                        <td>嘻嘻嘻</td>
-                    </tr>
-                    <tr>
-                        <td>推荐设置</td>
-                        <td>反反复复</td>
-                    </tr>
-                </table>
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">轮播</h4>
+                    <p class="list-group-item-text">1233</p>
+                </div>
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">推荐</h4>
+                    <p class="list-group-item-text">1233</p>
+                </div>
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">动态</h4>
+                    <p class="list-group-item-text">1233</p>
+                </div>
             </div>
         </div>
         <div class="panel panel-info">
@@ -82,15 +76,15 @@
     <script>
         $("tr").click(function () {
             var form = $("<div>" +
-                            '当前轮播' +
-                            '<img src="https://www.baidu.com/img/bd_logo1.png">' +
-                            '更换轮播' +
-                            '<select>' +
-                            '<option>123</option>' +
-                            '</select>' +
-                            "</div>"
-            );
-            $(this).after(form);
+                    '当前轮播' +
+                    '<img src="https://www.baidu.com/img/bd_logo1.png">' +
+                    '更换轮播' +
+                    '<select>' +
+                    '<option>123</option>' +
+                    '</select>' +
+                    "</div>"
+            ).css('display', 'none');
+            $(this).after(form).children('div').slideDown();
         });
     </script>
 @stop

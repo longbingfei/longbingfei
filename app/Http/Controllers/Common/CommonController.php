@@ -38,7 +38,7 @@ class CommonController extends Controller
             ->line(mt_rand(0, 100), mt_rand(0, 40), mt_rand(0, 100), mt_rand(0, 40), function($draw) {
                 $draw->color('#ccc');
             })
-            ->response('jpg');
+            ->response('jpg')->header('verifycode', $number);
 
         return $image;
     }
