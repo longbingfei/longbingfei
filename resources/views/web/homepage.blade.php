@@ -7,13 +7,9 @@ $style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>homepage</title>
+    <title>首页</title>
     <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url('default/css/carousel.css')}}" rel="stylesheet">
     <link href="{{ url('default/css/front.css')}}" rel="stylesheet">
-    <style>
-
-    </style>
 </head>
 <body>
 <div class="navbar-wrapper">
