@@ -7,6 +7,7 @@
  */
 namespace App\Repositories\Eloquents;
 
+use App\Models\Product;
 use Auth;
 use App\Models\Style as StyleModel;
 use App\Models\Product as ProductModel;
@@ -19,6 +20,6 @@ class Style implements StyleInterface
 
     public function index()
     {
-
+        $carousel = Product::where('is_carousel', 1)->get()->all();
     }
 }

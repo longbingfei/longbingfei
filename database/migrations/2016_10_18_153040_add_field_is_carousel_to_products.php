@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldToTompageToArticles extends Migration
+class AddFieldIsCarouselToProducts extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddFieldToTompageToArticles extends Migration
      */
     public function up()
     {
-        Schema::table('articles', function(Blueprint $table) {
-            $table->tinyInteger('to_homepage')->default(0);
+        Schema::table('products', function(Blueprint $table) {
+            $table->tinyInteger('is_carousel')->default(0);
         });
     }
 
@@ -24,8 +24,8 @@ class AddFieldToTompageToArticles extends Migration
      */
     public function down()
     {
-        Schema::table('articles', function(Blueprint $table) {
-            $table->dropColumn('to_homepage');
+        Schema::table('products', function(Blueprint $table) {
+            $table->dropColumn('is_carousel');
         });
     }
 }
