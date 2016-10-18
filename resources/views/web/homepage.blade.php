@@ -10,6 +10,8 @@ $style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
     <title>首页</title>
     <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('default/css/front.css')}}" rel="stylesheet">
+    <script src="{{ url('default/js/jquery.js') }}"></script>
+    <script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
 </head>
 <body>
 <div class="navbar-wrapper">
@@ -172,8 +174,6 @@ $style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
         <p>&copy; Sign</p>
     </footer>
 </div>
-<script src="{{ url('default/js/jquery.js') }}"></script>
-<script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script>
     $(".carousel-indicators li:first").addClass("active");
     $(".carousel-inner div:first").addClass("active");

@@ -29,49 +29,49 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-info">
-            <div class="panel-heading">数据统计</div>
-            <div class="panel-body">
-                <table class="table table-hover">
-                    <tr>
-                        <td>今日点击量</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>日均点击量</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>累计点击量</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>文章总数</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>商品总数</td>
-                        <td>122</td>
-                    </tr>
-                    <tr>
-                        <td>管理账号数</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>最后操作人</td>
-                        <td>sign</td>
-                    </tr>
-                    <tr>
-                        <td>最后操作时间</td>
-                        <td>2010-10-10 10:10:10</td>
-                    </tr>
-                    <tr>
-                        <td>系统信息</td>
-                        <td>ubuntu15 3GB 10GB</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        {{--<div class="panel panel-info">--}}
+            {{--<div class="panel-heading">数据统计</div>--}}
+            {{--<div class="panel-body">--}}
+                {{--<table class="table table-hover">--}}
+                    {{--<tr>--}}
+                        {{--<td>今日点击量</td>--}}
+                        {{--<td>100</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>日均点击量</td>--}}
+                        {{--<td>100</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>累计点击量</td>--}}
+                        {{--<td>100</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>文章总数</td>--}}
+                        {{--<td>100</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>商品总数</td>--}}
+                        {{--<td>122</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>管理账号数</td>--}}
+                        {{--<td>2</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>最后操作人</td>--}}
+                        {{--<td>sign</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>最后操作时间</td>--}}
+                        {{--<td>2010-10-10 10:10:10</td>--}}
+                    {{--</tr>--}}
+                    {{--<tr>--}}
+                        {{--<td>系统信息</td>--}}
+                        {{--<td>ubuntu15 3GB 10GB</td>--}}
+                    {{--</tr>--}}
+                {{--</table>--}}
+            {{--</div>--}}
+        {{--</div>--}}
     </div>
     <script>
         $("tr").click(function () {

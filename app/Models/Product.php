@@ -18,6 +18,8 @@ class Product extends Model
         'sort_id',
         'status',
         'user_id',
-        'evaluate'
+        'evaluate',
+        'is_promote',
+        'is_carousel'
     ];
 }

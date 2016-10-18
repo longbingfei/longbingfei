@@ -58,7 +58,7 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('media/{id}', 'WebController@mediaShow');
 });
 
-//涉及到用户登录的操作
+//前端涉及到用户登录的操作
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Auth'], function($api) {
