@@ -26,6 +26,7 @@
                     <td>操作人</td>
                     <td>创建时间</td>
                     <td>更新时间</td>
+                    <td>状态</td>
                     <td>操作</td>
                 </tr>
                 @if(!$data['total'])
@@ -51,6 +52,19 @@
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['created_at']))}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['updated_at']))}}</td>
                             <td>
+                                @if($value['is_promote'])
+                                    <i style="color:#485274" class="glyphicon glyphicon-thumbs-up" title="首页推荐"></i>
+                                @else
+                                    <i class="glyphicon glyphicon-thumbs-up" title="首页推荐"></i>
+                                @endif
+                                &nbsp
+                                @if($value['is_carousel'])
+                                    <i style="color:#485274" class="glyphicon glyphicon-time" title="首页轮播"></i>
+                                @else
+                                    <i class="glyphicon glyphicon-time" title="首页轮播"></i>
+                                @endif
+                            </td>
+                            <td>
                                 <a class="product-action glyphicon glyphicon-info-sign"
                                    tabindex="0"
                                    data-toggle="popover"
@@ -66,7 +80,7 @@
                     @endforeach
                 @endif
                 <tr>
-                    <td colspan="9">
+                    <td colspan="10">
                         <div class="painate" style="float:right;margin-top:2px">
                             <ul id="pagination-digg">
                                 <li><a href="javascript:void(0)">第{{$data['current_page']}}页</a></li>

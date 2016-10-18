@@ -20,28 +20,38 @@ class ProductSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
         ProductSort::create([
-            'fid'=>0,
-            'name'=>'hot',
-            'user_id'=>1
+            'fid'     => 0,
+            'name'    => 'hot',
+            'user_id' => 1
         ]);
         ProductSort::create([
-            'fid'=>0,
-            'name'=>'good',
-            'user_id'=>1
+            'fid'     => 0,
+            'name'    => 'good',
+            'user_id' => 1
         ]);
         ProductSort::create([
-            'fid'=>0,
-            'name'=>'full',
-            'user_id'=>1
+            'fid'     => 0,
+            'name'    => 'full',
+            'user_id' => 1
         ]);
         Product::create([
-            'pid'=>000001,
-            'name'=>'野生粽子',
-            'price'=>100,
-            'storage'=>100,
-            'describe'=>'nice',
-            'user_id'=>1,
-            'sort_id'=>1
+            'pid'      => 000001,
+            'name'     => '野生粽子',
+            'price'    => 100,
+            'storage'  => 100,
+            'describe' => '刚逮到的一只野生的粽子,味道不错,糖心的!',
+            'user_id'  => 1,
+            'sort_id'  => 1,
+            'images'   => serialize(
+                [
+                    [
+                        'id'    => 1,
+                        'name'  => '404',
+                        'path'  => 'default/images/404.png',
+                        'thumb' => 'default/images/404.png'
+                    ]
+                ]
+            )
         ]);
     }
 }
