@@ -24,14 +24,4 @@ class StyleController extends Controller
 
         return view('admin.style', ['detail' => $resp]);
     }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        return $this->style->delete($id);
-    }
 }

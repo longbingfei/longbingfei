@@ -9,6 +9,8 @@ namespace App\Repositories\Eloquents;
 
 use Auth;
 use App\Models\Style as StyleModel;
+use App\Models\Product as ProductModel;
+use App\Models\Article as ArticleModel;
 use App\Repositories\InterfacesBag\Style as StyleInterface;
 
 class Style implements StyleInterface
@@ -17,18 +19,6 @@ class Style implements StyleInterface
 
     public function index()
     {
-        $return = StyleModel::all()->groupBy('type')->toArray();
 
-        return $return;
-    }
-
-    public function create(array $data)
-    {
-        //
-    }
-
-    public function delete($id)
-    {
-        //
     }
 }
