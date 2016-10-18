@@ -7,9 +7,7 @@
  */
 namespace App\Repositories\Eloquents;
 
-use App\Models\Product;
 use Auth;
-use App\Models\Style as StyleModel;
 use App\Models\Product as ProductModel;
 use App\Models\Article as ArticleModel;
 use App\Repositories\InterfacesBag\Style as StyleInterface;
@@ -20,6 +18,21 @@ class Style implements StyleInterface
 
     public function index()
     {
-        $carousel = Product::where('is_carousel', 1)->get()->all();
+        $carousel = ProductModel::where('is_carousel', 1)->get()->all();
+        $promote = ProductModel::where('is_promote', 1)->get()->all();
+        $article = ArticleModel::all();
+
+        $resp = [
+            'carousel' => empty($carousel) ? [] : array_map(function($y) {
+                $images = unserialize($y['image']);
+                $y['image_path'] = $images ? $images[0]['path'] : 'default/images/404.png';
+
+                return $y;
+            }, $carousel),
+            'promote'  => $promote,
+            'article'  => $article
+        ];
+
+        return $resp;
     }
 }
