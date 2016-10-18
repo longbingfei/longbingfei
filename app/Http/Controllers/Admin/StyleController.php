@@ -27,16 +27,7 @@ class StyleController extends Controller
 
     public function store(Request $request)
     {
-        $fillable = [
-            'cid',
-            'type',
-            'order',
-            'describe',
-        ];
-
-        $resp = $this->style->create($request->only($fillable));
-
-        return Response::display($resp);
+        //
     }
 
     public function destroy($id)

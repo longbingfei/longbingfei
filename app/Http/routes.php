@@ -49,7 +49,7 @@ Route::group(['prefix' => 'admin'], function() {
     });
 });
 
-Route::group(['prefix' => 'web', 'namespace' => 'Web'], function() {
+Route::group(['namespace' => 'Web'], function() {
     Route::get('/', 'WebController@index');
     Route::get('article', 'WebController@articleIndex');
     Route::get('article/{id}', 'WebController@articleShow');
