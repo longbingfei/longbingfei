@@ -21,7 +21,7 @@ class CommonController extends Controller
         $image = Image::canvas(90, 40, array(mt_rand(210, 255), mt_rand(210, 255), mt_rand(210, 255)))
             ->text($number, 0, 15, function($font) {
                 $font->size(25);
-                $font->file('/Library/Fonts/AppleGothic.ttf');
+                $font->file(public_path('font/AppleGothic.ttf'));
                 $font->color('#ccc');
                 $font->valign('center');
                 $font->angle(mt_rand(- 8, 8));
