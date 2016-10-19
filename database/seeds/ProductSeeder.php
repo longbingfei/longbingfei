@@ -46,9 +46,9 @@ class ProductSeeder extends Seeder
                 [
                     [
                         'id'    => 1,
-                        'name'  => '404',
-                        'path'  => 'default/images/404.png',
-                        'thumb' => 'default/images/404.png'
+                        'name'  => 'zz',
+                        'path'  => 'default/images/zz.jpg',
+                        'thumb' => 'default/images/zz-thumb.jpg'
                     ]
                 ]
             ),
