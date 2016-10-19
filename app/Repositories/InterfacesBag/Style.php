@@ -10,4 +10,6 @@ namespace App\Repositories\InterfacesBag;
 interface Style extends BaseInterface
 {
     public function index();
+
+    public function update($id, array $data);
 }

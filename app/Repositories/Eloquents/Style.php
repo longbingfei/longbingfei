@@ -35,4 +35,23 @@ class Style implements StyleInterface
 
         return $resp;
     }
+
+    public function update($id, array $data)
+    {
+        $data = array_filter($data, function($y) {
+            return $y !== null;
+        });
+        if (!empty($data)) {
+            $before = ProductModel::where('id', $id)->first();
+            if (is_null($before)) {
+                return ['errorCode' => 1300];
+            }
+            if ($before->update($data)) {
+                $after = ProductModel::where('id', $id)->first();
+                event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
+
+                return $after;
+            }
+        }
+    }
 }

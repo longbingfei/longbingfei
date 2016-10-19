@@ -114,8 +114,6 @@ class ProductController extends Controller
             'drop_images',
             'file',
             'evaluate',
-            'is_promote',
-            'is_carousel'
         ];
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);

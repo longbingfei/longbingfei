@@ -97,7 +97,7 @@ class Administrator implements AdminInterface
         if (isset($info['password'])) {
             $info['password'] = password_hash($info['password'], PASSWORD_BCRYPT);
         }
-        if (AdminModel::where('id', $id)->update($info)) {
+        if ($before->update($info)) {
             $after = AdminModel::where('id', $id)->first()->toArray();
             if (isset($info['avatar']) && ($image = unserialize($before->avatar))) { //delete before avatar
                 $this->image->delete($image['id']);

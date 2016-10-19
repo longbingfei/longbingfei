@@ -24,4 +24,15 @@ class StyleController extends Controller
 
         return view('admin.style', ['detail' => $resp]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $fillable = [
+            'is_promote',
+            'is_carousel'
+        ];
+        $resp = $this->style->update($id, $request->only($fillable));
+
+        return Response::display($resp);
+    }
 }

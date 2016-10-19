@@ -108,8 +108,6 @@ class Product implements ProductInterface
         $params['storage'] = isset($data['storage']) ? intval($data['storage']) : 0;
         $params['sort_id'] = intval($data['sort_id']);
         $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
-        $params['is_promote'] = isset($data['is_promote']) ? intval($data['is_promote']) : 0;
-        $params['is_carousel'] = isset($data['is_carousel']) ? intval($data['is_carousel']) : 0;
         $params['user_id'] = Auth::id();
         if (!$images = unserialize($before->images)) {
             $images = [];
@@ -125,7 +123,7 @@ class Product implements ProductInterface
             $images = array_merge($images, $new_images);
         }
         $params['images'] = serialize($images);
-        if (ProductModel::where('id', $id)->update($params)) {
+        if ($before->update($params)) {
             $after = ProductModel::where('id', $id)->first();
             event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
 

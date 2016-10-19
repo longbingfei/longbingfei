@@ -60,7 +60,7 @@ class ArticleSort implements ArticleSortInterface
 
             return ['errorCode' => 1311];
         }
-        if (ArticleSortModel::where('id', $id)->update($data)) {
+        if ($before->update($data)) {
             $after = ArticleSortModel::where('id', $id)->first()->toArray();
             event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 
@@ -73,7 +73,7 @@ class ArticleSort implements ArticleSortInterface
         if (!$info = ArticleSortModel::where('id', $id)->first()) {
             return ['errorCode' => 1313];
         }
-        if(ArticleModel::where('sort_id',$id)->count()){
+        if (ArticleModel::where('sort_id', $id)->count()) {
             return ['errorCode' => 1314];
         }
         if (ArticleSortModel::destroy($id)) {
