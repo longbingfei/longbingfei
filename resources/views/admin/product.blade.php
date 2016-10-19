@@ -51,29 +51,23 @@
                             <td><span class="ellipsis_">{{$value['username']}}</span></td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['created_at']))}}</td>
                             <td>{{Date('Y/m/d H:i:s',strtotime($value['updated_at']))}}</td>
-                            <td>
-                                @if($value['is_promote'])
-                                    <i style="color:#485274" class="glyphicon glyphicon-thumbs-up" title="首页推荐"></i>
-                                @else
-                                    <i class="glyphicon glyphicon-thumbs-up" title="首页推荐"></i>
-                                @endif
+                            <td class="product-status" data-id="{{$value['id']}}">
+                                <i class="{{$value['is_promote'] ? 'color-a' : 'color-b'}} glyphicon glyphicon-thumbs-up"
+                                   title="首页推荐" data-promote="{{$value['is_promote']}}"></i>
                                 &nbsp
-                                @if($value['is_carousel'])
-                                    <i style="color:#485274" class="glyphicon glyphicon-time" title="首页轮播"></i>
-                                @else
-                                    <i class="glyphicon glyphicon-time" title="首页轮播"></i>
-                                @endif
+                                <i class="{{$value['is_carousel'] ? 'color-a' : 'color-b'}} glyphicon glyphicon-time"
+                                   title="首页轮播" data-carousel="{{$value['is_carousel']}}"></i>
                             </td>
                             <td>
-                                <a class="product-action glyphicon glyphicon-info-sign"
+                                <a class=" product-action glyphicon glyphicon-info-sign"
                                    tabindex="0"
                                    data-toggle="popover"
                                    data-trigger="focus"
                                    role="button"
                                    data-placement="bottom"
                                    data-content="<a href='product_form/{{$value['id']}}'>修改</a>
-                                   <br/><a href='javascript:void(0)' data-id='{{$value['id']}}'
-                                   onclick='product_delete(this)'>删除</a>">
+                                <br/><a href='javascript:void(0)' data-id='{{$value['id']}}'
+                                        onclick='product_delete(this)'>删除</a>">
                                 </a>
                             </td>
                         </tr>
@@ -122,5 +116,35 @@
                 }
             });
         }
+        $(".product-status i").click(function () {
+            var id = $(this).parent().data('id');
+            var action_name;
+            var send_data = {'_method': 'put'};
+            if (typeof $(this).data('promote') === 'number') {
+                send_data.is_promote = $(this).data('promote') ? 0 : 1;
+                action_name = send_data.is_promote ? '推荐' : '取消推荐';
+            } else if (typeof $(this).data('carousel') === 'number') {
+                send_data.is_carousel = $(this).data('carousel') ? 0 : 1;
+                action_name = send_data.is_promote ? '轮播' : '取消轮播';
+            }
+            Confirm({
+                title: '操作确认',
+                message: "你确定" + action_name + "此商品吗?",
+                callback: function () {
+                    $.ajax({
+                        url: 'style/' + id,
+                        data: send_data,
+                        method: 'post',
+                        success: function (data) {
+                            if (data.id) {
+
+                            } else {
+                                Confirm({message: data.error_message});
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @stop

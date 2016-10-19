@@ -66,7 +66,7 @@ $api->version('v1', function($api) {
         $api->get('logout', 'AuthController@logout');
     });
     $api->group(['namespace' => 'App\Http\Controllers\Web', 'middleware' => 'validate'], function($api) {
-
+        //
     });
 });
 

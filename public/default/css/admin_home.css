@@ -27,6 +27,14 @@ h3 {
     text-align: center
 }
 
+.color-a {
+    color: #366097;
+}
+
+.color-b {
+    color: #000000;
+}
+
 .btn-submit {
     width: 100px;
     height: 40px;
@@ -311,8 +319,9 @@ h3 {
 .a-edit-article, .a-edit-product:hover {
     color: coral;
 }
-.sort{
-    color:lightseagreen;
+
+.sort {
+    color: lightseagreen;
     font-weight: 600;
 }
 
@@ -526,10 +535,10 @@ h3 {
     height: 300px;
 }
 
-.article_index_pic,.product_index_pic {
+.article_index_pic, .product_index_pic {
     width: 60px;
     height: 40px;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 /*轮播*/
@@ -735,7 +744,8 @@ h3 {
     font-size: 16px;
     color: #2a2730;
 }
-.control-container{
+
+.control-container {
     width: 1000px;
     min-height: 600px;
     margin: 0 auto;
