@@ -54,6 +54,7 @@ if ($avatar = unserialize($user->avatar)) {
 @section('body')
 @show
 <script>
+    var setProfileTime;
     var profileDiv = "<div class='profile_info'>" +
             "<ul class='list-group'>" +
             "<li class='list-group-item'><img src='{{url($avatar_path)}}'></li>" +
@@ -72,7 +73,15 @@ if ($avatar = unserialize($user->avatar)) {
             "</div>";
     $("body").append($(profileDiv));
     $(".profile").click(function () {
-        $(".profile_info").fadeToggle();
+        $(".profile_info").fadeIn();
+        setProfileTime = setTimeout(function () {
+            $(".profile_info").fadeOut();
+        }, 2000);
+    });
+    $(".profile_info").hover(function () {
+        clearTimeout(setProfileTime);
+    }, function () {
+        $(this).fadeOut();
     });
 </script>
 </body>
