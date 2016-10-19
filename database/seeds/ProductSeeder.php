@@ -21,17 +21,17 @@ class ProductSeeder extends Seeder
 
         ProductSort::create([
             'fid'     => 0,
-            'name'    => 'hot',
+            'name'    => '热销',
             'user_id' => 1
         ]);
         ProductSort::create([
             'fid'     => 0,
-            'name'    => 'good',
+            'name'    => '新品',
             'user_id' => 1
         ]);
         ProductSort::create([
             'fid'     => 0,
-            'name'    => 'full',
+            'name'    => '实惠',
             'user_id' => 1
         ]);
         Product::create([
