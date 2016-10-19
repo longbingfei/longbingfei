@@ -35,14 +35,14 @@ class ProductSeeder extends Seeder
             'user_id' => 1
         ]);
         Product::create([
-            'pid'      => 000001,
-            'name'     => '野生粽子',
-            'price'    => 100,
-            'storage'  => 100,
-            'describe' => '刚逮到的一只野生的粽子,味道不错,糖心的!',
-            'user_id'  => 1,
-            'sort_id'  => 1,
-            'images'   => serialize(
+            'pid'         => 000001,
+            'name'        => '野生粽子',
+            'price'       => 100,
+            'storage'     => 100,
+            'describe'    => '刚逮到的一只野生的粽子,味道不错,糖心的!',
+            'user_id'     => 1,
+            'sort_id'     => 1,
+            'images'      => serialize(
                 [
                     [
                         'id'    => 1,
@@ -51,7 +51,9 @@ class ProductSeeder extends Seeder
                         'thumb' => 'default/images/404.png'
                     ]
                 ]
-            )
+            ),
+            'is_promote'  => 1,
+            'is_carousel' => 1
         ]);
     }
 }
