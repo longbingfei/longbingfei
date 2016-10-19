@@ -18,31 +18,38 @@ class ImageSeeder extends Seeder
         DB::table('image_sorts')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         ImageSort::create([
-            'name'=>'系统',
-            'fid'=>0,
-            'user_id'=>1
+            'name'    => '系统',
+            'fid'     => 0,
+            'user_id' => 1
         ]);
         ImageSort::create([
-            'name'=>'视频截图',
-            'fid'=>0,
-            'user_id'=>1
+            'name'    => '视频截图',
+            'fid'     => 0,
+            'user_id' => 1
         ]);
         ImageSort::create([
-            'name'=>'商品图片',
-            'fid'=>0,
-            'user_id'=>1
+            'name'    => '商品图片',
+            'fid'     => 0,
+            'user_id' => 1
         ]);
         ImageSort::create([
-            'name'=>'普通',
-            'fid'=>0,
-            'user_id'=>1
+            'name'    => '普通',
+            'fid'     => 0,
+            'user_id' => 1
         ]);
         Image::create([
-            'name'=>'默认头像',
-            'sort_id'=>1,
-            'path'=>'default/images/default_avatar.jpeg',
-            'thumb'=>'default/images/default_avatar.jpeg',
-            'user_id'=>1
+            'name'    => '默认头像',
+            'sort_id' => 1,
+            'path'    => 'default/images/default_avatar.jpeg',
+            'thumb'   => 'default/images/default_avatar.jpeg',
+            'user_id' => 1
+        ]);
+        Image::create([
+            'name'    => 'zz',
+            'sort_id' => 1,
+            'path'    => 'default/images/zz.jpg',
+            'thumb'   => 'default/images/zz-thumb.jpg',
+            'user_id' => 1
         ]);
     }
 }
