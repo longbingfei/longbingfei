@@ -10,6 +10,8 @@ namespace App\Repositories\Eloquents;
 use Auth;
 use App\Models\Product as ProductModel;
 use App\Models\Article as ArticleModel;
+use App\Repositories\InterfacesBag\Style as StyleInterface;
+
 class Style implements StyleInterface
 {
     protected $module = "style";
