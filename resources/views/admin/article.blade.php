@@ -38,7 +38,7 @@
                             <td><input type="checkbox" title="{{$vo['id']}}"></td>
                             <td>
                                 <div class="article_index_pic">
-                                    <img src="{{empty($vo['index_pic']) ? url('default/images/article.png') : url($vo['index_pic']['path'])}}">
+                                    <img src="{{empty($vo['index_pic']) ? url('default/images/article.png') : url($vo['index_pic']['thumb'])}}">
                                 </div>
                             </td>
                             <td>

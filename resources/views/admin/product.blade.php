@@ -39,7 +39,7 @@
                             <td><input type="checkbox" title="{{$value['id']}}"></td>
                             <td>
                                 <div class="product_index_pic">
-                                    <img src="{{empty($value['images']) ? url('default/images/product.png') : url(current($value['images'])['path'])}}">
+                                    <img src="{{empty($value['images']) ? url('default/images/product.png') : url(current($value['images'])['thumb'])}}">
                                 </div>
                             </td>
                             <td>
