@@ -18,13 +18,12 @@ class Style implements StyleInterface
 
     public function index()
     {
-        $carousel = ProductModel::where('is_carousel', 1)->get()->all();
-        $promote = ProductModel::where('is_promote', 1)->get()->all();
-        $article = ArticleModel::all();
-
+        $carousel = ProductModel::where('is_carousel', 1)->get()->toArray();
+        $promote = ProductModel::where('is_promote', 1)->get()->toArray();
+        $article = ArticleModel::all()->toArray();
         $resp = [
             'carousel' => empty($carousel) ? [] : array_map(function($y) {
-                $images = unserialize($y['image']);
+                $images = unserialize($y['images']);
                 $y['image_path'] = $images ? $images[0]['path'] : 'default/images/404.png';
 
                 return $y;

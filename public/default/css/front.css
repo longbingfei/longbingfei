@@ -1,6 +1,6 @@
 body {
     padding-bottom: 40px;
-    background-color: #d58512;
+    /*background-color: #d58512;*/
     color:rgb(199,0,54);
 }
 
@@ -45,7 +45,7 @@ body {
 }
 
 .carousel-caption a {
-    background-color: orangered;
+    /*background-color: orangered;*/
     border: 0px solid white;
 }
 

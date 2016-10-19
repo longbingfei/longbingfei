@@ -125,8 +125,9 @@
                 action_name = send_data.is_promote ? '推荐' : '取消推荐';
             } else if (typeof $(this).data('carousel') === 'number') {
                 send_data.is_carousel = $(this).data('carousel') ? 0 : 1;
-                action_name = send_data.is_promote ? '轮播' : '取消轮播';
+                action_name = send_data.is_carousel ? '轮播' : '取消轮播';
             }
+            var that = $(this);
             Confirm({
                 title: '操作确认',
                 message: "你确定" + action_name + "此商品吗?",
@@ -137,7 +138,11 @@
                         method: 'post',
                         success: function (data) {
                             if (data.id) {
-
+                                if (that.hasClass('color-a')) {
+                                    that.removeClass('color-a').addClass('color-b');
+                                } else {
+                                    that.removeClass('color-b').addClass('color-a');
+                                }
                             } else {
                                 Confirm({message: data.error_message});
                             }

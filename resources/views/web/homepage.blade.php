@@ -1,5 +1,6 @@
 <?php
-$style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
+//dd($style);
+//$style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
 ?>
         <!DOCTYPE html>
 <html lang="zh-CN">
@@ -10,7 +11,7 @@ $style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
     <title>首页</title>
     <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('default/css/front.css')}}" rel="stylesheet">
-    <script src="{{ url('default/js/jquery.js') }}"></script>
+    <script src="{{ url('default/js/jquery.1.10.js') }}"></script>
     <script src="{{ url('bootstrap/dist/js/bootstrap.min.js') }}"></script>
 </head>
 <body>
@@ -62,10 +63,10 @@ $style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
     <div class="carousel-inner" role="listbox">
         @foreach($style['carousel'] as $k => $v)
             <div class="item">
-                <img src="{{$v['image_path']}}">
+                <img src="{{url($v['image_path'])}}">
                 <div class="container">
                     <div class="carousel-caption">
-                        <a class="btn btn-lg btn-primary" href="{{$v['link']}}" role="button">{{$v['describe']}}</a>
+                        <a class="btn btn-lg btn-primary" href="#" role="button">xx</a>
                     </div>
                 </div>
             </div>
