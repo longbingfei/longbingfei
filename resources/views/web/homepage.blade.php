@@ -8,7 +8,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>首页</title>
+    <title>多米徕</title>
+    <meta name="keywords" content="多米徕,速必达,快餐,食堂承包,外卖"/>
+    <meta name="description" content="多米徕,速必达,快餐,食堂承包,外卖"/>
     <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('default/css/front.css')}}" rel="stylesheet">
     <script src="{{ url('default/js/jquery.1.10.js') }}"></script>
