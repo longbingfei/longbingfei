@@ -24,7 +24,7 @@ class Style implements StyleInterface
         $resp = [
             'carousel' => empty($carousel) ? [] : array_map(function($y) {
                 $images = unserialize($y['images']);
-                $y['image_path'] = $images ? $images[0]['path'] : 'default/images/404.png';
+                $y['image_path'] = $images ? current($images)['path'] : 'default/images/404.png';
 
                 return $y;
             }, $carousel),

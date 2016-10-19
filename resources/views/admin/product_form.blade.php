@@ -33,7 +33,7 @@
         @if(isset($single_data) && ($images = $single_data['images']))
             <div class="product-right">
                 <div class="product-show-image-detail">
-                    <img src="{{url($images[0]['path'])}}" title="点击查看原图">
+                    <img src="{{url(current($images)['path'])}}" title="点击查看原图">
                 </div>
                 <div class="product-show-image-list">
                     @foreach($images as $key => $vo)
