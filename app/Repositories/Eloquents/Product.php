@@ -123,7 +123,7 @@ class Product implements ProductInterface
             $images = array_merge($images, $new_images);
         }
         $params['images'] = serialize($images);
-        if ($before->update($params)) {
+        if (ProductModel::where('id', $id)->update($params)) {
             $after = ProductModel::where('id', $id)->first();
             event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
 

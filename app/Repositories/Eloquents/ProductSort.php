@@ -60,7 +60,7 @@ class ProductSort implements ProductSortInterface
 
             return ['errorCode' => 1311];
         }
-        if ($before->update($data)) {
+        if (ProductSortModel::where('id', $id)->update($data)) {
             $after = ProductSortModel::where('id', $id)->first()->toArray();
             event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 

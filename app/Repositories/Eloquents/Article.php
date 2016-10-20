@@ -119,7 +119,7 @@ class Article implements ArticleInterface
             $data['index_pic'] = serialize($image);
             unset($data['file']);
         }
-        if ($before->update($data)) {
+        if (ArticleModel::where('id', $id)->update($data)) {
             $after = ArticleModel::where('id', $id)->first();
             if (isset($data['index_pic']) && $before->index_pic && ($image = unserialize($before->index_pic))) {
                 $this->image->delete($image['id']);
