@@ -25,9 +25,9 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('home', function() {
             return view('admin.home');
         });
-        Route::post('register', ['middleware' => 'auth', 'uses' => 'AdminAuthController@register']);
-        Route::get('list', ['middleware' => 'auth', 'uses' => 'AdminAuthController@index']);
-        Route::put('update/{id}', ['middleware' => 'auth', 'uses' => 'AdminAuthController@update']);
+        Route::post('register', ['middleware' => ['auth', 'permission'], 'uses' => 'AdminAuthController@register']);
+        Route::get('list', ['middleware' => ['auth', 'permission'], 'uses' => 'AdminAuthController@index']);
+        Route::put('update/{id}', ['middleware' => ['auth'], 'uses' => 'AdminAuthController@update']);
         Route::get('logout', 'AdminAuthController@logout');
     });
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'prefix' => 'feature'], function() {

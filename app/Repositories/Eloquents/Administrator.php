@@ -107,4 +107,9 @@ class Administrator implements AdminInterface
             return $after;
         }
     }
+
+    public function hasPermission($user, array $permissions)
+    {
+
+    }
 }

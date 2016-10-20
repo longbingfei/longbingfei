@@ -2,7 +2,8 @@
 body {
     padding-top: 50px;
     padding-bottom: 60px;
-    background-color: #485274;
+    /*background-color: #485274;*/
+    background-color: rgb(45, 59, 67);
     color: white;
 }
 

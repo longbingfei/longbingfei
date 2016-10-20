@@ -45,6 +45,7 @@ if ($avatar = unserialize($user->avatar)) {
                 <span class="control navbar-brand"><a href="{{url('admin/feature/style')}}">Control</a></span>
                 <span class="article navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
                 <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
+                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
                 <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
             </div>
         </div>

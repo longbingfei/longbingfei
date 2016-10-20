@@ -32,13 +32,14 @@ class AdminAuthController extends Controller
     public function login(Request $request)
     {
         if ($request->get('verifycode') != session('verifycode')) {
-            return Response::display(['errorCode' => 1001]);
+            $return = ['errorCode' => 1001];
+        } else {
+            $info = $request->only(['username', 'password']);
+            $info['ip'] = $request->getClientIp();
+            $return = $this->admin->login($info);
         }
-        $info = $request->only(['username', 'password']);
-        $info['ip'] = $request->getClientIp();
-        $return = $this->admin->login($info);
 
-        return $return === true ? redirect('admin/feature/style') : view('admin.login', $return);
+        return $return === true ? redirect('admin/feature/style') : back()->withErrors([config('error.' . current($return))]);
     }
 
     public function register(Request $request)
