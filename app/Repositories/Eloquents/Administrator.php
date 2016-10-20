@@ -27,9 +27,18 @@ class Administrator implements AdminInterface
         $this->image = $image;
     }
 
-    public function index()
+    public function index(array $condition = [])
     {
-        return AdminModel::all();
+        $page = intval($condition['page']) ? intval($condition['page']) : 1;
+        $perpage = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 10;
+        $users = AdminModel::paginate($perpage, ['*'], 'page', $page)->toArray();
+        $users['data'] = array_map(function($value) {
+            $value['avatar'] = $value['avatar'] ? unserialize($value['images']) : [];
+
+            return $value;
+        }, $users['data']);
+
+        return $users;
     }
 
     public function show()

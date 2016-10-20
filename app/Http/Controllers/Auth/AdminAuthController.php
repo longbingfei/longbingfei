@@ -19,9 +19,15 @@ class AdminAuthController extends Controller
         $this->middleware('auth', ['except' => ['login']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->admin->index();
+        $fillable = [
+            'per_page_num',
+            'page',
+        ];
+        $resp = $this->admin->index($request->only($fillable));
+
+        return view('admin.auth', ['users' => $resp]);
     }
 
     public function show()
