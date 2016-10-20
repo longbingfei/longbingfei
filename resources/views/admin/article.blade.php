@@ -1,6 +1,5 @@
 @extends('admin.home')
-@section('title')article
-@stop
+@section('title','新闻')
 @section('link')
     @parent
 @stop

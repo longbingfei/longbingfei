@@ -1,5 +1,5 @@
 @extends('admin.home')
-@section('title','article_form')
+@section('title',isset($single_data) ? '更新文稿' : '新增文稿')
 @section('link')
     @parent
     <link href="{{url('editor/themes/default/css/umeditor.css')}}" type="text/css" rel="stylesheet">
@@ -13,7 +13,7 @@
 @section('nav')
     @parent
 @stop
-@section('subject',isset($single_data) ? '文稿修改' : '新增文稿')
+@section('subject',isset($single_data) ? '更新文稿' : '新增文稿')
 @section('body')
     @parent
     <div class="main_article_form">

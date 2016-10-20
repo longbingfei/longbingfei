@@ -1,5 +1,5 @@
 @extends('admin.home')
-@section('title','product_form')
+@section('title',isset($single_data) ? '更新商品' : '新增商品')
 @section('link')
     @parent
     <link href="{{url('editor/themes/default/css/umeditor.css')}}" type="text/css" rel="stylesheet">
@@ -13,7 +13,7 @@
 @section('nav')
     @parent
 @stop
-@section('subject',isset($single_data) ? '商品信息修改' : '新增商品')
+@section('subject',isset($single_data) ? '更新商品' : '新增商品')
 @section('body')
     @parent
     <div class="main_product_form">
