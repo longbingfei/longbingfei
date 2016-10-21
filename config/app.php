@@ -194,7 +194,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'Resp'      => App\Http\Response\Resp::class,
+        'CP'        => App\Http\CheckPermission\CheckPermission::class,
         'Image'     => Intervention\Image\Facades\Image::class
 
     ],

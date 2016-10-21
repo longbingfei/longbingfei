@@ -5,10 +5,10 @@
  * Date: 16/5/17
  * Time: 下午12:56
  */
-namespace App\Http\Response;
+namespace App\Http\CheckPermission;
 use \Illuminate\Support\Facades\Facade;
-class Resp extends Facade{
+class CheckPermission extends Facade{
     public static function getFacadeAccessor(){
-        return 'resp';
+        return 'check_permission';
     }
 }
