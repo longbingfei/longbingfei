@@ -118,12 +118,17 @@ class Administrator implements AdminInterface
         }
     }
 
-    public function checkPermission($user, array $payload, $strict = false)
+    public function attachPermissionToRole($role_id, array $permission_ids)
+    {
+
+    }
+
+    public function checkPermission($user_id, array $payload, $strict = false)
     {
         if (empty($payload)) {
             return true;
         }
-        $role_ids = DB::table('roles_users')->where('user_id', $user->id)->get(['role_id']);
+        $role_ids = DB::table('roles_users')->where('user_id', $user_id)->get(['role_id']);
         if (empty($role_ids)) {
             return false;
         }
