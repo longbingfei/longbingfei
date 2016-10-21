@@ -16,7 +16,7 @@ class CommonController extends Controller
 
     public function getVerifyCode()
     {
-        $number = mt_rand(10000, 99999);
+        $number = str_random(5);
         session()->flash('verifycode', $number);
         $image = Image::canvas(90, 40, array(mt_rand(210, 255), mt_rand(210, 255), mt_rand(210, 255)))
             ->text($number, 0, 15, function($font) {
