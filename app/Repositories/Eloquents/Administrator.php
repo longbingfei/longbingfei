@@ -9,6 +9,7 @@ namespace App\Repositories\Eloquents;
 
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Models\Administrator as AdminModel;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
@@ -117,8 +118,36 @@ class Administrator implements AdminInterface
         }
     }
 
-    public function hasPermission($user, array $permissions)
+    public function checkPermission($user, array $payload, $strict = false)
     {
+        if (empty($payload)) {
+            return true;
+        }
+        $role_ids = DB::table('roles_users')->where('user_id', $user->id)->get(['role_id']);
+        if (empty($role_ids)) {
+            return false;
+        }
+        $role_ids = array_map(function($y) {
+            return $y->role_id;
+        }, $role_ids);
+        $permission_ids = DB::table('roles_permissions')->whereIn('role_id', $role_ids)->get();
+        $permission_ids = array_unique(array_map(function($y) {
+            return $y->permission_id;
+        }, $permission_ids));
+        if (empty($permission_ids)) {
+            return false;
+        }
+        $permissions = DB::table('permissions')->whereIn('id', $permission_ids)->get();
+        $permissions = array_map(function($y) {
+            return $y->pname;
+        }, $permissions);
+        $needs = array_filter($payload, function($y) use ($permissions) {
+            return in_array($y, $permissions, 1);
+        });
+        if (empty($needs)) {
+            return false;
+        }
 
+        return $strict ? $needs === $payload : true;
     }
 }

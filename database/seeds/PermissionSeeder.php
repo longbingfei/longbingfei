@@ -21,18 +21,17 @@ class PermissionSeeder extends Seeder
 
         $permissions =
             [
-                ['name' => '用户列表'],
-                ['name' => '用户操作'],
-                ['name' => '控制台'],
-                ['name' => '文稿列表'],
-                ['name' => '文稿新增'],
-                ['name' => '文稿修改'],
-                ['name' => '文稿删除'],
-                ['name' => '商品列表'],
-                ['name' => '商品新增'],
-                ['name' => '商品修改'],
-                ['name' => '商品删除'],
-                ['name' => '首页样式'],
+                ['pname' => 'user-list', 'name' => '用户列表'],
+                ['pname' => 'user-op', 'name' => '用户操作'],
+                ['pname' => 'artcile-list', 'name' => '文稿列表'],
+                ['pname' => 'article-add', 'name' => '文稿新增'],
+                ['pname' => 'article-edit', 'name' => '文稿修改'],
+                ['pname' => 'article-del', 'name' => '文稿删除'],
+                ['pname' => 'product-list', 'name' => '商品列表'],
+                ['pname' => 'product-add', 'name' => '商品新增'],
+                ['pname' => 'product-edit', 'name' => '商品修改'],
+                ['pname' => 'product-del', 'name' => '商品删除'],
+                ['pname' => 'style', 'name' => '首页样式'],
             ];
         DB::table('permissions')->insert($permissions);
         DB::table('roles')->insert([
@@ -44,8 +43,8 @@ class PermissionSeeder extends Seeder
             $admin_permissions[] = ['role_id' => 1, 'permission_id' => $i];
         }
         $user_permissions = [
-            ['role_id' => 2, 'permission_id' => 4],
-            ['role_id' => 2, 'permission_id' => 8],
+            ['role_id' => 2, 'permission_id' => 3],
+            ['role_id' => 2, 'permission_id' => 7],
         ];
         DB::table('roles_permissions')->insert(array_merge($admin_permissions, $user_permissions));
         DB::table('roles_users')->insert(['user_id' => 1, 'role_id' => 1]);

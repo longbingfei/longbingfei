@@ -22,7 +22,7 @@ class AuthSeeder extends Seeder
             'sex'=>1,
             'email'=>'sign_mail@163.com',
             'tel'=>17601558524,
-            'status'=>1,
+            'status'=>3,
             'last_login_time'=>\Carbon\Carbon::now(),
             'last_login_ip'=>'192.168.1.1',
             'creator_id'=>'99999'
@@ -30,6 +30,18 @@ class AuthSeeder extends Seeder
         Administrator::create([
             'username'=>'kotana',
             'name'=>'kk',
+            'password'=>password_hash('123321',PASSWORD_BCRYPT),
+            'sex'=>2,
+            'email'=>'sign_mail@163.com',
+            'tel'=>17601558524,
+            'status'=>2,
+            'last_login_time'=>\Carbon\Carbon::now(),
+            'last_login_ip'=>'10.0.5.224',
+            'creator_id'=>'1'
+        ]);
+        Administrator::create([
+            'username'=>'yuri',
+            'name'=>'nn',
             'password'=>password_hash('123321',PASSWORD_BCRYPT),
             'sex'=>2,
             'email'=>'sign_mail@163.com',

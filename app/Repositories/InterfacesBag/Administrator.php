@@ -16,5 +16,5 @@ interface Administrator extends BaseInterface
 
     public function update($id, array $info);
 
-    public function hasPermission($user, array $permissions);
+    public function checkPermission($user, array $permissions, $strict = false);
 }
