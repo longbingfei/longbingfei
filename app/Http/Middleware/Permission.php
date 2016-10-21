@@ -27,7 +27,7 @@ class Permission
     public function handle($request, Closure $next, $permissions = null)
     {
         $permissions = $permissions ? explode('|', $permissions) : [];
-        $res = $this->admin->checkPermission(Auth::id(), $permissions);
+        $res = $this->admin->checkPermissions(Auth::id(), $permissions);
         if (!$res) {
             return Response::display(['errorCode' => 1318]);
         }

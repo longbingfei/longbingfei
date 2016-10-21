@@ -118,12 +118,12 @@ class Administrator implements AdminInterface
         }
     }
 
-    public function attachPermissionToRole($role_id, array $permission_ids)
+    public function attachPermissionsToRole($role_id, array $permission_ids)
     {
 
     }
 
-    public function checkPermission($user_id, array $payload, $strict = false)
+    public function checkPermissions($user_id, array $payload, $strict = false)
     {
         if (empty($payload)) {
             return true;
