@@ -42,10 +42,10 @@ if ($avatar = unserialize($user->avatar)) {
         <div class="container-fluid sys-nav">
             <div class="navbar-header">
                 <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
-                <span class="control navbar-brand"><a href="{{url('admin/feature/style')}}">Control</a></span>
-                <span class="article navbar-brand"><a href="{{url('admin/feature/article')}}">Article</a></span>
-                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">Product</a></span>
-                <span class="product navbar-brand"><a href="{{url('admin/auth/list')}}">Auth</a></span>
+                <span class="control navbar-brand"><a href="{{url('admin/feature/style')}}">总览</a></span>
+                <span class="article navbar-brand"><a href="{{url('admin/feature/article')}}">文稿</a></span>
+                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">产品</a></span>
+                <span class="product navbar-brand"><a href="{{url('admin/auth/list')}}">权限</a></span>
                 <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
             </div>
         </div>
@@ -90,7 +90,7 @@ if ($avatar = unserialize($user->avatar)) {
     <div class="common-footer">
         <span>®2016 Kotana</span>&nbsp&nbsp&nbsp&nbsp
         <span>Designed By Sign</span>&nbsp&nbsp&nbsp&nbsp
-        <span class="glyphicon glyphicon-envelope">sign_mail@163.com</span>
+        <span>E-mail:sign_mail@163.com</span>
     </div>
 </footer>
 </html>

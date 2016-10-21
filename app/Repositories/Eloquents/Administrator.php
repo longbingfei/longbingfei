@@ -36,6 +36,8 @@ class Administrator implements AdminInterface
         $users = AdminModel::paginate($perpage, ['*'], 'page', $page)->toArray();
         $users['data'] = array_map(function($value) {
             $value['avatar'] = $value['avatar'] ? unserialize($value['images']) : [];
+            $permissions = $this->getPermissions($value['id'], true);
+            $value['permissions'] = $permissions ? $permissions : [];
 
             return $value;
         }, $users['data']);
@@ -193,6 +195,20 @@ class Administrator implements AdminInterface
         if (empty($payload)) {
             return true;
         }
+        $permissions = $this->getPermissions($user_id);
+        $needs = array_filter($payload, function($y) use ($permissions) {
+            return in_array($y, $permissions, 1);
+        });
+        if (empty($needs)) {
+            return false;
+        }
+
+        return $strict ? $needs === $payload : true;
+    }
+
+    //获取用户所有权限
+    protected function getPermissions($user_id, $is_name = false)
+    {
         $role_ids = DB::table('roles_users')->where('user_id', $user_id)->get(['role_id']);
         if (empty($role_ids)) {
             return false;
@@ -208,16 +224,10 @@ class Administrator implements AdminInterface
             return false;
         }
         $permissions = DB::table('permissions')->whereIn('id', $permission_ids)->get();
-        $permissions = array_map(function($y) {
-            return $y->pname;
+        $permissions = array_map(function($y) use ($is_name) {
+            return $is_name ? $y->name : $y->pname;
         }, $permissions);
-        $needs = array_filter($payload, function($y) use ($permissions) {
-            return in_array($y, $permissions, 1);
-        });
-        if (empty($needs)) {
-            return false;
-        }
 
-        return $strict ? $needs === $payload : true;
+        return $permissions;
     }
 }

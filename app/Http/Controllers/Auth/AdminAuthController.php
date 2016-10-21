@@ -37,7 +37,7 @@ class AdminAuthController extends Controller
 
     public function login(Request $request)
     {
-        if ($request->get('verifycode') != session('verifycode')) {
+        if (strtoupper($request->get('verifycode')) != strtoupper(session('verifycode'))) {
             $return = ['errorCode' => 1001];
         } else {
             $info = $request->only(['username', 'password']);
