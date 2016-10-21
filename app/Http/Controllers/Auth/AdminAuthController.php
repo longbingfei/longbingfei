@@ -84,6 +84,20 @@ class AdminAuthController extends Controller
         return Response::display($return);
     }
 
+    public function AttachRoles(Request $request, $user_id)
+    {
+        $resp = $this->admin->attachRolesToUser($user_id, $request->get('role_ids'));
+
+        return Response::display($resp);
+    }
+
+    public function AttachPermissions(Request $request, $role_id)
+    {
+        $resp = $this->admin->attachPermissionsToRole($role_id, $request->get('permission_ids'));
+
+        return Response::display($resp);
+    }
+
     public function logout()
     {
         Auth::logout();

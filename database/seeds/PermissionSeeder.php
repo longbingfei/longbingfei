@@ -35,8 +35,12 @@ class PermissionSeeder extends Seeder
             ];
         DB::table('permissions')->insert($permissions);
         DB::table('roles')->insert([
-            ['name' => 'admin', 'user_id' => 1, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()],
-            ['name' => 'user', 'user_id' => 1, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()],
+            ['name' => '管理员', 'user_id' => 1, 'created_at' => \Carbon\Carbon::now(), 'updated_at' =>
+                \Carbon\Carbon::now()],
+            ['name' => '普通用户', 'user_id' => 1, 'created_at' => \Carbon\Carbon::now(), 'updated_at' =>
+                \Carbon\Carbon::now()],
+            ['name' => '测试', 'user_id' => 1, 'created_at' => \Carbon\Carbon::now(), 'updated_at' =>
+                \Carbon\Carbon::now()],
         ]);
         $admin_permissions = [];
         for ($i = 1; $i <= count($permissions); $i ++) {
@@ -45,6 +49,8 @@ class PermissionSeeder extends Seeder
         $user_permissions = [
             ['role_id' => 2, 'permission_id' => 3],
             ['role_id' => 2, 'permission_id' => 7],
+            ['role_id' => 3, 'permission_id' => 3],
+            ['role_id' => 3, 'permission_id' => 7],
         ];
         DB::table('roles_permissions')->insert(array_merge($admin_permissions, $user_permissions));
         DB::table('roles_users')->insert(['user_id' => 1, 'role_id' => 1]);

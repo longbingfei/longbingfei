@@ -27,6 +27,10 @@ Route::group(['prefix' => 'admin'], function() {
         });
         Route::post('register', ['middleware' => ['auth', 'permission'], 'uses' => 'AdminAuthController@register']);
         Route::get('list', ['middleware' => ['auth', 'permission'], 'uses' => 'AdminAuthController@index']);
+        Route::post('attach_roles/{user_id}', ['middleware' => ['auth', 'permission'], 'uses' =>
+            'AdminAuthController@AttachRoles']);
+        Route::post('attach_permissions/{role_id}', ['middleware' => ['auth', 'permission'], 'uses' =>
+            'AdminAuthController@AttachPermissions']);
         Route::put('update/{id}', ['middleware' => ['auth'], 'uses' => 'AdminAuthController@update']);
         Route::get('logout', 'AdminAuthController@logout');
     });
