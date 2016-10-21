@@ -1,17 +1,12 @@
-<?php
-//dd($style);
-//$style['carousel'] = isset($style['carousel']) ? $style['carousel'] : [];
-?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>多米俫</title>
-    <title>南京快餐_南京快餐公司_南京食堂承包_南京快餐配送_南京送快餐_南京快餐外卖_南京网上订餐_南京外卖_南京企业食堂承包</title>
-    <meta name="keywords" content="南京快餐,南京外卖,南京订快餐,南京食堂承包,南京快餐公司,南京送快餐,南京快餐配送,南京快餐外送,南京快餐外卖,南京企业食堂承包,南京食堂,南京快餐电话">
-    <meta name="description" content="南京多米俫快餐是一家卫生超A级标准的南京快餐服务供应尚，主要南京快餐,南京外卖,南京订快餐,南京食堂承包,南京快餐公司,南京送快餐,南京快餐配送,南京快餐外送,南京快餐外卖,南京企业食堂承包,南京快餐电话等服务。">
+    <title>首页</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <link href="{{ url('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('default/css/front.css')}}" rel="stylesheet">
     <script src="{{ url('default/js/jquery.1.10.js') }}"></script>
