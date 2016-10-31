@@ -9,6 +9,7 @@ namespace App\Repositories\Eloquents;
 
 use Auth;
 use Carbon\Carbon;
+use App\Models\Role as RoleModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\Administrator as AdminModel;
 use App\Models\Permission as PermissionModel;
@@ -47,8 +48,8 @@ class Administrator implements AdminInterface
 
     public function show()
     {
-        return AdminModel::where('administrators.id', Auth::id())->leftJoin('medias', 'administrators.avatar', '=', 'medias.id')->select
-        ('administrators.*', 'medias.path as avatar_path')->first();
+        return AdminModel::where('administrators.id', Auth::id())->leftJoin('images', 'administrators.avatar', '=',
+            'images.id')->select('administrators.*', 'images.thumb as avatar_path')->first();
     }
 
     public function login(array $info)
@@ -131,8 +132,8 @@ class Administrator implements AdminInterface
         $role_ids = trim($role_ids) ? : env('DEFAULT_ROLE_IDS');
         $role_ids = array_unique(explode(',', $role_ids));
         $roles = array_map(function($y) {
-            return $y->id;
-        }, DB::table('roles')->get());
+            return $y['id'];
+        }, RoleModel::get()->toArray());
         $params = [];
         $role_ids = array_filter($role_ids, function($y) use ($roles, &$params, $user_id) {
             if (in_array($y, $roles)) {
@@ -160,14 +161,14 @@ class Administrator implements AdminInterface
     //角色绑定权限
     public function attachPermissionsToRole($role_id, $payload = null)
     {
-        if (!DB::table('roles')->where('id', $role_id)->get()) {
+        if (!RoleModel::where('id', $role_id)->first()) {
             return ['errorCode' => 1319];
         }
         $payload = trim($payload) ? : env('DEFAULT_PERMISSION_IDS');
         $payload = array_unique(explode(',', $payload));
         $permission_ids = array_map(function($y) {
             return $y['id'];
-        }, PermissionModel::all()->toArray());
+        }, PermissionModel::get()->toArray());
         $params = [];
         $payload = array_filter($payload, function($y) use ($permission_ids, &$params, $role_id) {
             if (in_array($y, $permission_ids)) {
@@ -226,10 +227,9 @@ class Administrator implements AdminInterface
         if (empty($permission_ids)) {
             return false;
         }
-        $permissions = DB::table('permissions')->whereIn('id', $permission_ids)->get();
         $permissions = array_map(function($y) use ($is_name) {
-            return $is_name ? $y->name : $y->pname;
-        }, $permissions);
+            return $is_name ? $y['name'] : $y['pname'];
+        }, PermissionModel::whereIn('id', $permission_ids)->get()->toArray());
 
         return $permissions;
     }
