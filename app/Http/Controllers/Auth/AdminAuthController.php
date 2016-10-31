@@ -50,7 +50,7 @@ class AdminAuthController extends Controller
 
     public function register(Request $request)
     {
-        $info = $request->only('username', 'password');
+        $info = $request->only(['username', 'password', 'role_ids']);
         $info['ip'] = $request->getClientIp();
 
         return $this->admin->register($info);

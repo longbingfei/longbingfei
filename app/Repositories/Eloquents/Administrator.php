@@ -85,6 +85,7 @@ class Administrator implements AdminInterface
         $info['last_login_ip'] = $info['ip'];
 
         if ($user = AdminModel::create($info)->toArray()) {
+            $this->attachRolesToUser($user['id'], $info['role_ids']);
             event('log', [[$this->module, 'r', $user]]);
 
             return $user;
@@ -122,31 +123,28 @@ class Administrator implements AdminInterface
     }
 
     //用户绑定角色
-    public function attachRolesToUser($user_id, $role_ids)
+    public function attachRolesToUser($user_id, $role_ids = null)
     {
         if (!AdminModel::where('id', $user_id)->first()) {
             return ['errorCode' => 1004];
         }
-        if (!$role_ids = trim($role_ids)) {
-            $params = ['role_id' => 2, 'user_id' => $user_id];
-        } else {
-            $role_ids = array_unique(explode(',', $role_ids));
-            $roles = array_map(function($y) {
-                return $y->id;
-            }, DB::table('roles')->get());
-            $params = [];
-            $role_ids = array_filter($role_ids, function($y) use ($roles, &$params, $user_id) {
-                if (in_array($y, $roles)) {
-                    $params[] = ['role_id' => $y, 'user_id' => $user_id];
+        $role_ids = trim($role_ids) ? : env('DEFAULT_ROLE_IDS');
+        $role_ids = array_unique(explode(',', $role_ids));
+        $roles = array_map(function($y) {
+            return $y->id;
+        }, DB::table('roles')->get());
+        $params = [];
+        $role_ids = array_filter($role_ids, function($y) use ($roles, &$params, $user_id) {
+            if (in_array($y, $roles)) {
+                $params[] = ['role_id' => $y, 'user_id' => $user_id];
 
-                    return true;
-                }
-
-                return false;
-            });
-            if (empty($role_ids)) {
-                return ['errorCode' => 1319];
+                return true;
             }
+
+            return false;
+        });
+        if (empty($role_ids)) {
+            return ['errorCode' => 1319];
         }
         DB::table('roles_users')->where('user_id', $user_id)->delete();
 
@@ -155,34 +153,28 @@ class Administrator implements AdminInterface
     }
 
     //角色绑定权限
-    public function attachPermissionsToRole($role_id, $payload)
+    public function attachPermissionsToRole($role_id, $payload = null)
     {
         if (!DB::table('roles')->where('id', $role_id)->get()) {
             return ['errorCode' => 1319];
         }
-        if (!$payload = trim($payload)) {
-            $params = [
-                ['role_id' => $role_id, 'permission_id' => 3],
-                ['role_id' => $role_id, 'permission_id' => 7]
-            ];
-        } else {
-            $payload = array_unique(explode(',', $payload));
-            $permission_ids = array_map(function($y) {
-                return $y['id'];
-            }, PermissionModel::all()->toArray());
-            $params = [];
-            $payload = array_filter($payload, function($y) use ($permission_ids, &$params, $role_id) {
-                if (in_array($y, $permission_ids)) {
-                    $params[] = ['role_id' => $role_id, 'permission_id' => $y];
+        $payload = trim($payload) ? : env('DEFAULT_PERMISSION_IDS');
+        $payload = array_unique(explode(',', $payload));
+        $permission_ids = array_map(function($y) {
+            return $y['id'];
+        }, PermissionModel::all()->toArray());
+        $params = [];
+        $payload = array_filter($payload, function($y) use ($permission_ids, &$params, $role_id) {
+            if (in_array($y, $permission_ids)) {
+                $params[] = ['role_id' => $role_id, 'permission_id' => $y];
 
-                    return true;
-                }
-
-                return false;
-            });
-            if (empty($payload)) {
-                return ['errorCode' => 1321];
+                return true;
             }
+
+            return false;
+        });
+        if (empty($payload)) {
+            return ['errorCode' => 1321];
         }
         DB::table('roles_permissions')->where('role_id', $role_id)->delete();
 
