@@ -147,9 +147,14 @@ class Administrator implements AdminInterface
             return ['errorCode' => 1319];
         }
         DB::table('roles_users')->where('user_id', $user_id)->delete();
+        if (DB::table('roles_users')->insert($params)) {
+            env('log', [[$this->module, 'u', $params]]);
+            $return = ['result' => 'success'];
+        } else {
+            $return = ['errorCode' => 1324];
+        }
 
-        return DB::table('roles_users')->insert($params) ? ['result' => 'success'] : ['errorCode' => 1324];
-
+        return $return;
     }
 
     //角色绑定权限
@@ -177,8 +182,14 @@ class Administrator implements AdminInterface
             return ['errorCode' => 1321];
         }
         DB::table('roles_permissions')->where('role_id', $role_id)->delete();
+        if (DB::table('roles_permissions')->insert($params)) {
+            env('log', [[$this->module, 'u', $params]]);
+            $return = ['result' => 'success'];
+        } else {
+            $return = ['errorCode' => 1323];
+        }
 
-        return DB::table('roles_permissions')->insert($params) ? ['result' => 'success'] : ['errorCode' => 1323];
+        return $return;
     }
 
     //检测用户是否有权限
