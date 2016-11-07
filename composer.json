@@ -9,7 +9,8 @@
         "laravel/framework": "5.1.*",
         "miroc/laravel-adminer": "^4.2",
         "dingo/api": "^0.10.0",
-        "Intervention/image": "^2.3"
+        "Intervention/image": "^2.3",
+        "workerman/workerman": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
