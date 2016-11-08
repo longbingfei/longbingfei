@@ -4,7 +4,7 @@ body {
     padding-bottom: 60px;
     /*background-color: #485274;*/
     background-color: rgb(45, 59, 67);
-    color: beige;
+    color: #FFFFFF;
 }
 
 table {
@@ -94,7 +94,7 @@ h3, h4 {
 }
 
 .subject-h3 {
-    color: beige;
+    color: #FFFFFF;
 }
 
 .top-btn {
@@ -766,6 +766,8 @@ h3, h4 {
 }
 
 .app-container ul li {
+    position: relative;
+    overflow: hidden;
     float: left;
     display: block;
     border: 0px solid #FFFFFF;
@@ -774,7 +776,27 @@ h3, h4 {
     padding: 10px 10px;
     box-shadow: 0px 0px 1px 1px cadetblue inset;
     font-size: 60px;
-    color: beige;
     text-align: center;
     line-height: 200px;
+    cursor: pointer;
+}
+
+.app-container ul li a, .app-container ul li a:active {
+    color: #FFFFFF;
+}
+
+.app-cover-div {
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+    height: 100px;
+    background-color: #000000;
+    opacity: 0.4;
+    left: 0;
+    bottom: -100px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 100px;
 }

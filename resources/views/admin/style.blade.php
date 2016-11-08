@@ -13,16 +13,34 @@
 @section('body')
     <div class="app-container">
         <ul>
-            <li><i class="glyphicon glyphicon-file"></i></li>
-            <li><i class="glyphicon glyphicon-shopping-cart"></i></li>
-            <li><i class="glyphicon glyphicon-user"></i></li>
-            <li><i class="glyphicon glyphicon-picture"></i></li>
-            <li><i class="glyphicon glyphicon-facetime-video"></i></li>
-            <li><i class="glyphicon glyphicon-calendar"></i></li>
-            <li><i class="glyphicon glyphicon-tags"></i></li>
-            <li><i class="glyphicon glyphicon-trash"></i></li>
-            <li><i class="glyphicon glyphicon-cog"></i></li>
-            <li><i class="glyphicon glyphicon-send"></i></li>
+            <li data-appinfo="文稿"><a class="glyphicon glyphicon-file" href="{{url('admin/feature/article')}}"></a></li>
+            <li data-appinfo="商品"><a class="glyphicon glyphicon-shopping-cart"
+                                     href="{{url('admin/feature/product')}}"></a></li>
+            <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth/list')}}"></a></li>
+            <li data-appinfo="图片"><a class="glyphicon glyphicon-picture"></a></li>
+            <li data-appinfo="视频"><a class="glyphicon glyphicon-facetime-video"></a></li>
+            <li data-appinfo="日历"><a class="glyphicon glyphicon-calendar"></a></li>
+            <li data-appinfo="标签"><a class="glyphicon glyphicon-tags"></a></li>
+            <li data-appinfo="回收站"><a class="glyphicon glyphicon-trash"></a></li>
+            <li data-appinfo="设置"><a class="glyphicon glyphicon-cog"></a></li>
+            <li data-appinfo="分享"><a class="glyphicon glyphicon-send"></a></li>
         </ul>
     </div>
+    <script>
+        $('.app-container ul li').hover(function () {
+            $(this).children('a').css({color: 'beige'});
+            var appinfo = $(this).data('appinfo');
+            var coverDiv = $('<div>' + appinfo + '</div>').addClass('app-cover-div');
+            $(this).append(coverDiv);
+            $(this).find('.app-cover-div').stop(1, 1).animate({bottom: '0px'});
+        }, function () {
+            $(this).children('a').css({color: '#FFFFFF'});
+            $(this).find('.app-cover-div').stop(1, 1).animate({bottom: '-100px'}, function () {
+                $(this).remove();
+            });
+        });
+        $("li").click(function () {
+            $(this).children('a')[0].click();
+        });
+    </script>
 @stop
