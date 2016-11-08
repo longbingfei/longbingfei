@@ -43,9 +43,6 @@ if ($avatar = unserialize($user->avatar)) {
             <div class="navbar-header">
                 <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
                 <span class="control navbar-brand"><a href="{{url('admin/feature/style')}}">首页</a></span>
-                <span class="article navbar-brand"><a href="{{url('admin/feature/article')}}">文稿</a></span>
-                <span class="product navbar-brand"><a href="{{url('admin/feature/product')}}">测试</a></span>
-                <span class="product navbar-brand"><a href="{{url('admin/auth/list')}}">权限</a></span>
                 <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
             </div>
         </div>
