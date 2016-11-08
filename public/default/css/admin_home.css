@@ -4,7 +4,7 @@ body {
     padding-bottom: 60px;
     /*background-color: #485274;*/
     background-color: rgb(45, 59, 67);
-    color: white;
+    color: beige;
 }
 
 table {
@@ -25,7 +25,7 @@ input, textarea, .edui-container {
     color: black;
 }
 
-h3,h4 {
+h3, h4 {
     text-align: center
 }
 
@@ -94,7 +94,7 @@ h3,h4 {
 }
 
 .subject-h3 {
-    color: whitesmoke;
+    color: beige;
 }
 
 .top-btn {
@@ -747,15 +747,34 @@ h3,h4 {
     color: #2a2730;
 }
 
-.control-container {
+.app-container {
     width: 1000px;
-    min-height: 600px;
-    margin: 0 auto;
-    padding: 10px;
-    -moz-box-shadow: 0px 0px 1px 1px darkgrey;
-    -webkit-box-shadow: 0px 0px 1px 1px darkgrey;
+    margin: 40px auto;
+    -moz-box-shadow: 0px 0px 1px 1px darkgrey inset;
+    -webkit-box-shadow: 0px 0px 1px 1px darkgrey inset;
     box-shadow: 0px 0px 1px 1px cadetblue inset;
-    /*background-color: #FFFFFF;*/
     border-radius: 5px;
     color: #000000;
+    border: 0px solid grey;
+    overflow: auto;
+}
+
+.app-container ul {
+    padding: 0 0;
+    list-style: none;
+    border: 0px solid grey;
+}
+
+.app-container ul li {
+    float: left;
+    display: block;
+    border: 0px solid #FFFFFF;
+    width: 200px;
+    height: 200px;
+    padding: 10px 10px;
+    box-shadow: 0px 0px 1px 1px cadetblue inset;
+    font-size: 60px;
+    color: beige;
+    text-align: center;
+    line-height: 200px;
 }
