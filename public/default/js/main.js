@@ -743,3 +743,30 @@ var SortList = {
         return dom;
     }
 };
+
+//longPolling
+
+var LongPolling = {
+    url: null,
+    callback: null,
+    init: function (url, callback) {
+        if (!url || typeof callback !== 'function') {
+            return false;
+        }
+        this.url = url;
+        this.callback = callback;
+        this.send();
+    },
+    send: function () {
+        var that = this;
+        $.ajax({
+            method: 'get',
+            url: that.url,
+            async: true,
+            success: function (data) {
+                that.callback(data);
+                that.send();
+            }
+        });
+    }
+};
