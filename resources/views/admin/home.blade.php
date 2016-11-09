@@ -52,6 +52,7 @@ if ($avatar = unserialize($user->avatar)) {
 @section('body')
 @show
 <script>
+    //点击用户名弹出框
     var setProfileTime;
     var profileDiv = "<div class='profile_info'>" +
             "<ul class='list-group'>" +
@@ -81,6 +82,17 @@ if ($avatar = unserialize($user->avatar)) {
     }, function () {
         $(this).fadeOut();
     });
+
+    //判断登录时间给出弹出提示
+    var last_login_time = '{{\Illuminate\Support\Facades\Auth::User()->last_login_time}}';
+    var user_id = '{{\Illuminate\Support\Facades\Auth::Id()}}';
+    if (localStorage.getItem("last_login_time_" + user_id) !== last_login_time) {
+        Tip.init({
+            message: '上次登录时间:' + last_login_time,
+            width: '300px',
+            height: '50px'
+        }) ? localStorage.setItem("last_login_time_" + user_id, last_login_time) : true
+    }
 </script>
 </body>
 <footer>

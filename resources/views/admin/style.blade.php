@@ -27,16 +27,6 @@
         </ul>
     </div>
     <script>
-        //判断登录时间给出弹出提示
-        var last_login_time = '{{\Illuminate\Support\Facades\Auth::User()->last_login_time}}';
-        var user_id = '{{\Illuminate\Support\Facades\Auth::Id()}}';
-        if (localStorage.getItem("last_login_time_" + user_id) !== last_login_time) {
-            Tip.init({
-                message: '上次登录时间:' + last_login_time,
-                width: '300px',
-                height: '50px'
-            }) ? localStorage.setItem("last_login_time_" + user_id, last_login_time) : true
-        }
         //app图标显示样式
         $('.app-container ul li').hover(function () {
             $(this).children('a').css({color: '#00AA88'});
