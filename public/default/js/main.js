@@ -73,6 +73,34 @@ var Confirm = function (msg) {
     });
 };
 
+//冒泡提示框
+var Tip = {
+    init: function (obj) {
+        if (!obj.message) {
+            return false
+        }
+        var width = obj.width ? obj.width : '200px';
+        var height = obj.height ? obj.height : '40px';
+        var tipDiv = $("<div>" + obj.message + "</div>").css({
+            width: width,
+            height: height,
+            lineHeight: height,
+            bottom: 0,
+            right: 0
+        }).addClass('tipDiv');
+        $('body').append(tipDiv);
+        $(document).ready(function () {
+            $('.tipDiv').css({display: 'block'}).animate({bottom: '50px'});
+            setTimeout(function () {
+                $('.tipDiv').animate({bottom: '0px'}, function () {
+                    $(this).remove();
+                });
+            }, 3000);
+        });
+        return true;
+    }
+};
+
 //图片裁剪 obj:{dom,src}
 var ImageFunction = {
     init: function (obj) {

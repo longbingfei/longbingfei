@@ -171,6 +171,16 @@ h3, h4 {
     z-index: 999;
 }
 
+/*冒泡提示框*/
+.tipDiv {
+    position: fixed;
+    z-index: 997;
+    border: 1px solid grey;
+    text-align: center;
+    display: none;
+    background-color: #00AA88;
+}
+
 /*图片上传控件*/
 .plug-show-div {
     width: 100%;
