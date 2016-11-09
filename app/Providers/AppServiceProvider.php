@@ -62,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('App\Repositories\InterfacesBag\Image', 'App\Repositories\Eloquents\Image');
         app()->bind('App\Repositories\InterfacesBag\Video', 'App\Repositories\Eloquents\Video');
         app()->bind('App\Repositories\InterfacesBag\Style', 'App\Repositories\Eloquents\Style');
+        app()->bind('App\Repositories\InterfacesBag\Log', 'App\Repositories\Eloquents\Log');
         //前端用户
         app()->bind('App\Repositories\InterfacesBag\User', 'App\Repositories\Eloquents\User');
         //权限验证门面

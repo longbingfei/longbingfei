@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('product_form/{id?}', 'ProductController@form');
         Route::get('product_settings', 'ProductController@settings');
         Route::resource('style', 'StyleController');
+        Route::get('log', 'LogController@index');
     });
 });
 
