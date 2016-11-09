@@ -18,8 +18,8 @@ class CheckPermissionOperate
         $this->admin = $admin;
     }
 
-    public function operate($user_id, $payload, $strict = false)
+    public function operate($user, $payload, $strict = false)
     {
-        return $this->admin->checkPermissions($user_id, $payload, $strict);
+        return $this->admin->checkPermissions($user->id, $payload, $strict);
     }
 }

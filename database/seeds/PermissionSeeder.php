@@ -23,7 +23,7 @@ class PermissionSeeder extends Seeder
             [
                 ['pname' => 'user-list', 'name' => '用户列表'],
                 ['pname' => 'user-op', 'name' => '用户操作'],
-                ['pname' => 'artcile-list', 'name' => '文稿列表'],
+                ['pname' => 'article-list', 'name' => '文稿列表'],
                 ['pname' => 'article-add', 'name' => '文稿新增'],
                 ['pname' => 'article-edit', 'name' => '文稿修改'],
                 ['pname' => 'article-del', 'name' => '文稿删除'],
