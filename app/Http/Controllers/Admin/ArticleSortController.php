@@ -15,7 +15,7 @@ class ArticleSortController extends Controller
     public function __construct(ArticleSort $as)
     {
         $this->middleware('auth');
-        $this->middleware('permission:article-sort', ['expect' => ['index','settings']]);
+        $this->middleware('permission:article-sort', ['except' => ['index', 'settings']]);
         $this->as = $as;
     }
 

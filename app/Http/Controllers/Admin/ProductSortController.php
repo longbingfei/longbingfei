@@ -15,7 +15,7 @@ class ProductSortController extends Controller
     public function __construct(ProductSort $ps)
     {
         $this->middleware('auth');
-        $this->middleware('permission:product-sort', ['expect' => ['index', 'settings']]);
+        $this->middleware('permission:product-sort', ['except' => ['index', 'settings']]);
         $this->ps = $ps;
     }
 
