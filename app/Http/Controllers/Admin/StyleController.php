@@ -15,6 +15,7 @@ class StyleController extends Controller
     public function __construct(Style $style)
     {
         $this->middleware('auth');
+        $this->middleware('permission:sys');
         $this->style = $style;
     }
 

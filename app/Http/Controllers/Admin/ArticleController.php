@@ -15,6 +15,11 @@ class ArticleController extends Controller
     public function __construct(Article $article)
     {
         $this->middleware('auth');
+        $this->middleware('permission:article-list', ['only' => 'index']);
+        $this->middleware('permission:article-add', ['only' => 'store']);
+        $this->middleware('permission:article-edit', ['only' => 'update']);
+        $this->middleware('permission:article-del', ['only' => 'destroy']);
+        $this->middleware('permission:article-sort', ['only' => 'settings']);
         $this->article = $article;
     }
 

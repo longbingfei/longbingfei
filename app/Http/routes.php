@@ -14,8 +14,8 @@ Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('admin', function() {
     return redirect('admin/auth/login');
 });
-Route::any('admin/db', ['middleware' => 'auth', 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
 Route::group(['prefix' => 'admin'], function() {
+    Route::get('db', ['middleware' => ['auth', 'permission:db'], 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
     Route::get('system/{info?}', 'System\SystemInfoController@index');
     Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'admin'], function() {
         Route::get('login', function() {
@@ -25,20 +25,18 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('home', function() {
             return view('admin.home');
         });
-        Route::post('register', ['middleware' => ['auth', 'permission'], 'uses' => 'AdminAuthController@register']);
-        Route::get('list', ['middleware' => ['auth', 'permission'], 'uses' => 'AdminAuthController@index']);
-        Route::post('attach_roles/{user_id}', ['middleware' => ['auth', 'permission'], 'uses' =>
-            'AdminAuthController@AttachRoles']);
-        Route::post('attach_permissions/{role_id}', ['middleware' => ['auth', 'permission'], 'uses' =>
-            'AdminAuthController@AttachPermissions']);
-        Route::put('update/{id}', ['middleware' => ['auth'], 'uses' => 'AdminAuthController@update']);
+        Route::post('register', 'AdminAuthController@register');
+        Route::get('list', 'AdminAuthController@index');
+        Route::post('attach_roles/{user_id}','AdminAuthController@AttachRoles');
+        Route::post('attach_permissions/{role_id}','AdminAuthController@AttachPermissions');
+        Route::put('update/{id}', 'AdminAuthController@update');
         Route::get('logout', 'AdminAuthController@logout');
     });
-    Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'prefix' => 'feature'], function() {
+    Route::group(['namespace' => 'Admin','prefix' => 'feature'], function() {
         //具体操作
-        Route::resource('media', 'MediaController');
+//        Route::resource('media', 'MediaController');
         Route::resource('image', 'ImageController');
-        Route::resource('video', 'VideoController');
+//        Route::resource('video', 'VideoController');
         Route::resource('article_sort', 'ArticleSortController');
         Route::resource('article', 'ArticleController');
         Route::get('article/show/{id}', 'ArticleController@detail');

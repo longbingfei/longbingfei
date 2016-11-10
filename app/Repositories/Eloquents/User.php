@@ -30,8 +30,9 @@ class User implements UserInterface
         return $verify ? $userInfo : false;
     }
 
+    //删除表中所有token
     public function logout($user_id)
-    { //删除表中所有token
+    {
         return AccessToken::where('user_id', $user_id)->delete();
     }
 

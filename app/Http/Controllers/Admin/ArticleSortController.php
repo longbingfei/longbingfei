@@ -15,6 +15,7 @@ class ArticleSortController extends Controller
     public function __construct(ArticleSort $as)
     {
         $this->middleware('auth');
+        $this->middleware('permission:article-sort');
         $this->as = $as;
     }
 

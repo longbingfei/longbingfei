@@ -18,6 +18,11 @@ class ProductController extends Controller
     public function __construct(Product $product, ProductSort $product_sort)
     {
         $this->middleware('auth');
+        $this->middleware('permission:product-list', ['only' => 'index']);
+        $this->middleware('permission:product-add', ['only' => 'store']);
+        $this->middleware('permission:product-edit', ['only' => 'update']);
+        $this->middleware('permission:product-del', ['only' => 'destroy']);
+        $this->middleware('permission:product-sort', ['only' => 'settings']);
         $this->product = $product;
         $this->product_sort = $product_sort;
     }

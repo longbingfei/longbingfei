@@ -17,6 +17,8 @@ class AdminAuthController extends Controller
     {
         $this->admin = $admin;
         $this->middleware('auth', ['except' => ['login']]);
+        $this->middleware('permission:user-op', ['except' => ['login','logout']]);
+        $this->middleware('permission:user-list', ['only' => 'index']);
     }
 
     public function index(Request $request)
