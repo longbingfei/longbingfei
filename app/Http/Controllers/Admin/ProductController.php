@@ -22,7 +22,6 @@ class ProductController extends Controller
         $this->middleware('permission:product-add', ['only' => 'store']);
         $this->middleware('permission:product-edit', ['only' => 'update']);
         $this->middleware('permission:product-del', ['only' => 'destroy']);
-        $this->middleware('permission:product-sort', ['only' => 'settings']);
         $this->product = $product;
         $this->product_sort = $product_sort;
     }
@@ -142,10 +141,5 @@ class ProductController extends Controller
         }
 
         return view('admin.product_form', $params);
-    }
-
-    public function settings()
-    {
-        return view('admin.product_settings');
     }
 }

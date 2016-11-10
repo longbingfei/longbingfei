@@ -19,7 +19,6 @@ class ArticleController extends Controller
         $this->middleware('permission:article-add', ['only' => 'store']);
         $this->middleware('permission:article-edit', ['only' => 'update']);
         $this->middleware('permission:article-del', ['only' => 'destroy']);
-        $this->middleware('permission:article-sort', ['only' => 'settings']);
         $this->article = $article;
     }
 
@@ -119,10 +118,5 @@ class ArticleController extends Controller
         }
 
         return view('admin.article_form', $params);
-    }
-
-    public function settings()
-    {
-        return view('admin.article_settings');
     }
 }

@@ -27,12 +27,12 @@ Route::group(['prefix' => 'admin'], function() {
         });
         Route::post('register', 'AdminAuthController@register');
         Route::get('list', 'AdminAuthController@index');
-        Route::post('attach_roles/{user_id}','AdminAuthController@AttachRoles');
-        Route::post('attach_permissions/{role_id}','AdminAuthController@AttachPermissions');
+        Route::post('attach_roles/{user_id}', 'AdminAuthController@AttachRoles');
+        Route::post('attach_permissions/{role_id}', 'AdminAuthController@AttachPermissions');
         Route::put('update/{id}', 'AdminAuthController@update');
         Route::get('logout', 'AdminAuthController@logout');
     });
-    Route::group(['namespace' => 'Admin','prefix' => 'feature'], function() {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'feature'], function() {
         //具体操作
         Route::resource('image', 'ImageController');
         Route::resource('video', 'VideoController');
@@ -40,12 +40,12 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('article', 'ArticleController');
         Route::get('article/show/{id}', 'ArticleController@detail');
         Route::get('article_form/{id?}', 'ArticleController@form');
-        Route::get('article_settings', 'ArticleController@settings');
+        Route::get('article_settings', 'ArticleSortController@settings');
         Route::resource('product_sort', 'ProductSortController');
         Route::resource('product', 'ProductController');
         Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
-        Route::get('product_settings', 'ProductController@settings');
+        Route::get('product_settings', 'ProductSortController@settings');
         Route::resource('style', 'StyleController');
         Route::get('log', 'LogController@index');
     });

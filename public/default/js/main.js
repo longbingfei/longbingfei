@@ -800,15 +800,3 @@ var LongPolling = {
         });
     }
 };
-
-//checkpermission
-
-function check_permission(url) {
-    $.getJSON(url, function (data) {
-        if (data.error_code) {
-            Confirm({message: data.error_message});
-        }
-        return true;
-    });
-    return false;
-}

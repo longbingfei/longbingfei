@@ -15,7 +15,7 @@ class ProductSortController extends Controller
     public function __construct(ProductSort $ps)
     {
         $this->middleware('auth');
-        $this->middleware('permission:product-sort');
+        $this->middleware('permission:product-sort', ['expect' => ['index', 'settings']]);
         $this->ps = $ps;
     }
 
@@ -28,6 +28,12 @@ class ProductSortController extends Controller
 
         return Response::display($resp);
     }
+
+    public function settings()
+    {
+        return view('admin.product_settings');
+    }
+
 
     public function store(Request $request)
     {
