@@ -70,7 +70,9 @@ var Confirm = function (msg) {
             $("body").find(".msg_modal").remove();
             (typeof msg.callback == 'function') ? msg.callback() : '';
         }
+        return false;
     });
+    return false;
 };
 
 //冒泡提示框
@@ -798,3 +800,15 @@ var LongPolling = {
         });
     }
 };
+
+//checkpermission
+
+function check_permission(url) {
+    $.getJSON(url, function (data) {
+        if (data.error_code) {
+            Confirm({message: data.error_message});
+        }
+        return true;
+    });
+    return false;
+}

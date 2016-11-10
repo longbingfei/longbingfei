@@ -12,7 +12,8 @@
 @section('subject','商品列表')
 @section('body')
     <div class="container">
-        <a class="btn btn-default top-btn" href="product_settings"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
+        <a class="btn btn-default top-btn" href="product_settings" onclick="return check_permission(this.href)"><i
+                    class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
         <a class="btn btn-default top-btn" href="product_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div style="clear:both"></div>
         <div class="product-main">

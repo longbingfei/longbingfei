@@ -34,9 +34,8 @@ Route::group(['prefix' => 'admin'], function() {
     });
     Route::group(['namespace' => 'Admin','prefix' => 'feature'], function() {
         //具体操作
-//        Route::resource('media', 'MediaController');
         Route::resource('image', 'ImageController');
-//        Route::resource('video', 'VideoController');
+        Route::resource('video', 'VideoController');
         Route::resource('article_sort', 'ArticleSortController');
         Route::resource('article', 'ArticleController');
         Route::get('article/show/{id}', 'ArticleController@detail');

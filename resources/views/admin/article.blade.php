@@ -13,7 +13,9 @@
 @section('body')
     @parent
     <div class="container">
-        <a class="btn btn-default top-btn" href="article_settings"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
+        <a class="btn btn-default top-btn" href="article_settings" onclick="return check_permission(this.href)">
+            <i class="glyphicon glyphicon-cog"></i>&nbsp配置
+        </a>
         <a class="btn btn-default top-btn" href="article_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div class="article-main">
             <table class="table table-hover article-table">
@@ -41,7 +43,8 @@
                                 </div>
                             </td>
                             <td>
-                                <a class="ellipsis_ padding_move" href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
+                                <a class="ellipsis_ padding_move"
+                                   href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
                             </td>
                             <td><span class="ellipsis_ sort">{{$vo['sort_name']}}</span></td>
                             <td>{{$vo['author_name']}}</td>
