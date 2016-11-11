@@ -220,7 +220,7 @@ class Administrator implements AdminInterface
     }
 
     //获取用户所有权限
-    protected function getPermissions($user_id, $is_name = false)
+    public function getPermissions($user_id, $is_name = false)
     {
         $role_ids = DB::table('roles_users')->where('user_id', $user_id)->get(['role_id']);
         if (empty($role_ids)) {

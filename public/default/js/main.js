@@ -72,6 +72,7 @@ var Confirm = function (msg) {
         }
         return false;
     });
+
     return false;
 };
 

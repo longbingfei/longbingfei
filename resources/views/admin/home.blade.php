@@ -54,6 +54,7 @@ if ($avatar = unserialize($user->avatar)) {
 <script>
     //点击用户名弹出框
     var AccessToken = '{{\Illuminate\Support\Facades\Auth::User()->access_token}}';
+    var Pms = '{!! \App\Http\CheckPermission\CheckPermission::getPermissions(\Illuminate\Support\Facades\Auth::User())!!}';
     var setProfileTime;
     var profileDiv = "<div class='profile_info'>" +
             "<ul class='list-group'>" +
@@ -95,6 +96,7 @@ if ($avatar = unserialize($user->avatar)) {
         }) ? localStorage.setItem("last_login_time_" + user_id, last_login_time) : true
     }
 </script>
+<script src="{{ url('default/js/afterVariableInit.js') }}"></script>
 </body>
 <footer>
     <div class="common-footer">

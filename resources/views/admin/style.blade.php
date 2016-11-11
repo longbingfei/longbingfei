@@ -13,10 +13,12 @@
 @section('body')
     <div class="app-container">
         <ul>
-            <li data-appinfo="文稿"><a class="glyphicon glyphicon-file" href="{{url('admin/feature/article')}}"></a></li>
-            <li data-appinfo="商品"><a class="glyphicon glyphicon-shopping-cart"
-                                     href="{{url('admin/feature/product')}}"></a></li>
-            <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth/list')}}"></a></li>
+            <li data-appinfo="文稿"><a class="glyphicon glyphicon-file" href="{{url('admin/feature/article')}}"
+                                     onclick="return checkpermission('article-list')"></a></li>
+            <li data-appinfo="商品"><a class="glyphicon glyphicon-shopping-cart" href="{{url('admin/feature/product')}}"
+                                     onclick="return checkpermission('product-list')"></a></li>
+            <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth/list')}}"
+                                     onclick="return checkpermission('user-list')"></a></li>
             <li data-appinfo="图片"><a class="glyphicon glyphicon-picture"></a></li>
             <li data-appinfo="视频"><a class="glyphicon glyphicon-facetime-video"></a></li>
             <li data-appinfo="日历"><a class="glyphicon glyphicon-calendar"></a></li>
