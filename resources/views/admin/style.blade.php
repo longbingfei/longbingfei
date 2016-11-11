@@ -31,6 +31,9 @@
     <script>
         //app图标显示样式
         $('.app-container ul li').hover(function () {
+            if ($(this).find('.app-cover-div').length) {
+                return false;
+            }
             $(this).children('a').css({color: '#00AA88'});
             var appinfo = $(this).data('appinfo');
             var coverDiv = $('<div>' + appinfo + '</div>').addClass('app-cover-div');
