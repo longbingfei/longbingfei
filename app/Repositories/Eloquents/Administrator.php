@@ -66,8 +66,17 @@ class Administrator implements AdminInterface
         if (!Auth::check()) {
             return ['errorCode' => 1008];
         }
-        $currentUser = AdminModel::where('id', Auth::id());
-        $currentUser->update(['last_login_time' => Carbon::now(), 'last_login_ip' => $info['ip']]);
+        $currentUser = AdminModel::where('id', Auth::id())->fiirst();
+        $timenow = Carbon::now();
+        $currentUser->update(
+            [
+                'last_login_time' => $currentUser->login_at,
+                'last_login_ip'   => $currentUser->login_ip,
+                'login_time'      => Carbon::now(),
+                'login_ip'        => $info['ip'],
+                'access_token'    => str_random(40),
+                'token_expr_at'   => Date('Y-m-d H:i:s', strtotime($timenow) + 3600)
+            ]);
         event('log', [[$this->module, 'l', Auth::User()->toArray()]]);
 
         return true;
@@ -82,8 +91,8 @@ class Administrator implements AdminInterface
         }
         $info['password'] = password_hash($info['password'], PASSWORD_BCRYPT);
         $info['creator_id'] = Auth::id();
-        $info['last_login_time'] = Carbon::now();
-        $info['last_login_ip'] = $info['ip'];
+        $info['login_time'] = Carbon::now();
+        $info['login_ip'] = $info['ip'];
 
         if ($user = AdminModel::create($info)->toArray()) {
             $this->attachRolesToUser($user['id'], $info['role_ids']);

@@ -3,7 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Administrator;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class Authenticate
 {
@@ -17,7 +20,8 @@ class Authenticate
     /**
      * Create a new middleware instance.
      *
-     * @param  Guard  $auth
+     * @param  Guard $auth
+     *
      * @return void
      */
     public function __construct(Guard $auth)
@@ -28,15 +32,26 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
+        //添加token验证
+        if ($access_token = trim($request->get('access_token'))) {
+            if (!$user = Administrator::where('access_token', $access_token)->first()) {
+                return Response::display(['errorCode' => 1010]);
+            }
+            if (strtotime($user->token_expr_at) - env('ACCESS_TOKEN_EXPR') > time()) {
+                return Response::display(['errorCode' => 1011]);
+            }
+            Auth::login($user);
+        }
         if ($this->auth->guest()) {
             if ($request->ajax()) {
-                return response('Unauthorized.', 401);
+                return Response::display(['errorCode' => 1012]);
             } else {
                 return redirect()->guest('admin/auth/login');
             }

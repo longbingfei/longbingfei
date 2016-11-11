@@ -53,6 +53,7 @@ if ($avatar = unserialize($user->avatar)) {
 @show
 <script>
     //点击用户名弹出框
+    var AccessToken = '{{\Illuminate\Support\Facades\Auth::User()->access_token}}';
     var setProfileTime;
     var profileDiv = "<div class='profile_info'>" +
             "<ul class='list-group'>" +
