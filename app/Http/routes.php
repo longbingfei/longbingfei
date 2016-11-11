@@ -15,7 +15,7 @@ Route::get('admin', function() {
     return redirect('admin/auth/login');
 });
 Route::group(['prefix' => 'admin'], function() {
-    Route::get('db', ['middleware' => ['auth', 'permission:db'], 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
+    Route::any('db', ['middleware' => ['auth', 'permission:db'], 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
     Route::get('system/{info?}', 'System\SystemInfoController@index');
     Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'admin'], function() {
         Route::get('login', function() {
