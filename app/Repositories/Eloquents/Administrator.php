@@ -66,13 +66,13 @@ class Administrator implements AdminInterface
         if (!Auth::check()) {
             return ['errorCode' => 1008];
         }
-        $currentUser = AdminModel::where('id', Auth::id())->fiirst();
+        $currentUser = AdminModel::where('id', Auth::id());
         $timenow = Carbon::now();
         $currentUser->update(
             [
-                'last_login_time' => $currentUser->login_at,
-                'last_login_ip'   => $currentUser->login_ip,
-                'login_time'      => Carbon::now(),
+                'last_login_time' => $currentUser->first()->login_at,
+                'last_login_ip'   => $currentUser->first()->login_ip,
+                'login_at'      => Carbon::now(),
                 'login_ip'        => $info['ip'],
                 'access_token'    => str_random(40),
                 'token_expr_at'   => Date('Y-m-d H:i:s', strtotime($timenow) + 3600)
