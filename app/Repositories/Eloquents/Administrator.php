@@ -72,10 +72,10 @@ class Administrator implements AdminInterface
             [
                 'last_login_time' => $currentUser->first()->login_at,
                 'last_login_ip'   => $currentUser->first()->login_ip,
-                'login_at'      => Carbon::now(),
+                'login_at'        => Carbon::now(),
                 'login_ip'        => $info['ip'],
                 'access_token'    => str_random(40),
-                'token_expr_at'   => Date('Y-m-d H:i:s', strtotime($timenow) + 3600)
+                'token_expr_at'   => Date('Y-m-d H:i:s', strtotime($timenow) + env('ACCESS_TOKEN_EXPR'))
             ]);
         event('log', [[$this->module, 'l', Auth::User()->toArray()]]);
 

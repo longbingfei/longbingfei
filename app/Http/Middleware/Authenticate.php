@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use App\Models\Administrator;
 use Illuminate\Contracts\Auth\Guard;
@@ -44,7 +45,7 @@ class Authenticate
             if (!$user = Administrator::where('access_token', $access_token)->first()) {
                 return Response::display(['errorCode' => 1010]);
             }
-            if (strtotime($user->token_expr_at) - env('ACCESS_TOKEN_EXPR') > time()) {
+            if (Carbon::now() > $user->token_expr_at) {
                 return Response::display(['errorCode' => 1011]);
             }
             Auth::login($user);
