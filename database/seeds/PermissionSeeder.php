@@ -35,6 +35,7 @@ class PermissionSeeder extends Seeder
                 ['pname' => 'product-sort', 'name' => '商品分类'],
                 ['pname' => 'style', 'name' => '首页样式'],
                 ['pname' => 'db', 'name' => '数据维护'],
+                ['pname' => 'image-list', 'name' => '图片列表'],
             ];
         DB::table('permissions')->insert($permissions);
         DB::table('roles')->insert([

@@ -19,7 +19,8 @@
                                      onclick="return checkpermission('product-list')"></a></li>
             <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth/list')}}"
                                      onclick="return checkpermission('user-list')"></a></li>
-            <li data-appinfo="图片"><a class="glyphicon glyphicon-picture"></a></li>
+            <li data-appinfo="图片"><a class="glyphicon glyphicon-picture" href="{{url('admin/feature/image')}}"
+                                     onclick="return checkpermission('image-list')"></a></li>
             <li data-appinfo="视频"><a class="glyphicon glyphicon-facetime-video"></a></li>
             <li data-appinfo="日历"><a class="glyphicon glyphicon-calendar"></a></li>
             <li data-appinfo="标签"><a class="glyphicon glyphicon-tags"></a></li>
