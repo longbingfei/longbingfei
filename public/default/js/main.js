@@ -801,3 +801,29 @@ var LongPolling = {
         });
     }
 };
+
+//瀑布流
+
+var WaterFall = {
+    mainDiv: null,
+    boxDivClass: null,
+    picDivClass: null,
+    dataUrl: null,
+    imageWidth: '165px',
+    heightArr: [],
+    init: function (obj) {
+        if (!obj.mainDiv || !obj.boxDiv || !obj.picDiv || !obj.dataUrl) {
+            return false;
+        }
+        this.mainDiv = document.getElementById(obj.mainDiv);
+        var boxDiv = this.mainDiv.getElementsByClassName(obj.boxDiv);
+        var clientWidth = document.body.clientWidth || document.body.offsetWidth;
+        var max = Math.floor(clientWidth / boxDiv[0].offsetWidth);
+        console.log(max);
+        this.mainDiv.style.cssText = 'width:' + (max * boxDiv[0].offsetWidth) + 'px;margin:0 auto';
+        this.flex();
+    },
+    flex: function () {
+    }
+
+};

@@ -12,7 +12,7 @@
 @section('subject','图片库')
 @section('body')
     @parent
-    <div class="container-image">
+    <div id="waterFall" class="container-image">
         @foreach($images as $vo)
             <div class="image-pic-box">
                 <div class="image-pic-inner">
@@ -22,5 +22,12 @@
         @endforeach
     </div>
     <script>
+        WaterFall.init({
+            mainDiv: 'waterFall',
+            boxDiv: 'image-pic-box',
+            picDiv: 'mage-pic-inner',
+            dataUrl: 'admin/feature/image',
+            imageWidth: null
+        });
     </script>
 @stop
