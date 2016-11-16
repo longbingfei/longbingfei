@@ -18,14 +18,20 @@ class Image implements ImageInterface
     protected $module = 'image';
 
     //图片列表
-    public function index($condition = [])
+    public function index(array $condition)
     {
+        $page = intval($condition['page']) ? intval($condition['page']) : 1;
+        $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 15;
+
         return ImageModel::leftJoin('administrators', 'administrators.id', '=', 'images.user_id')
             ->leftJoin('image_sorts', 'image_sorts.id', '=', 'images.sort_id')
             ->select('images.*', 'image_sorts.name as sort_name', 'administrators.username')
             ->where('images.sort_id', '<>', 1)
             ->orderBy('images.created_at', 'DESC')
-            ->get();
+            ->take($per_page_num)
+            ->skip(($page - 1) * $per_page_num)
+            ->get()
+            ->toArray();
     }
 
     //图片详情

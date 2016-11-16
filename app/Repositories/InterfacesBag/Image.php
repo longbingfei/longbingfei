@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface Image extends BaseInterface
 {
-    public function index($condition = []);
+    public function index(array $condition);
 
     public function show($id);
 

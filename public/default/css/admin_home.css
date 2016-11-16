@@ -1,4 +1,9 @@
 /*公共样式*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     padding-top: 50px;
     padding-bottom: 60px;
@@ -809,4 +814,24 @@ h3, h4 {
     font-weight: 600;
     color: #FFFFFF;
     line-height: 130px;
+}
+
+/*图片瀑布流*/
+.container-image{
+    position: relative;
+    border:1px solid #FFFFFF;
+}
+.image-pic-box{
+    padding:15px 0 0 15px;
+    float: left;
+}
+.image-pic-inner {
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+    /*position: absolute;*/
+}
+
+.image-pic-box img {
 }

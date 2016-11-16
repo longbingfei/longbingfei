@@ -19,9 +19,15 @@ class ImageController extends Controller
         $this->image = $image;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $fillable = [
+            'page',
+            'per_page_num'
+        ];
+        $resp = $this->image->index($request->only($fillable));
+
+        return view('admin.image', ['images' => $resp]);
     }
 
     public function show($id)
