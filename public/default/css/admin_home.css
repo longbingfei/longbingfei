@@ -819,7 +819,7 @@ h3, h4 {
 /*图片瀑布流*/
 .container-image{
     position: relative;
-    border:1px solid #FFFFFF;
+    /*overflow: hidden;*/
 }
 .image-pic-box{
     padding:15px 0 0 15px;
@@ -830,9 +830,9 @@ h3, h4 {
     padding: 10px;
     box-shadow: 0 0 5px #ccc;
     border-radius: 5px;
-    /*position: absolute;*/
 }
 
 .image-pic-box img {
     width:165px;
+    max-height:200px;
 }

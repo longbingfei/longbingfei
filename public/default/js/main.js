@@ -803,27 +803,64 @@ var LongPolling = {
 };
 
 //瀑布流
-
+//window.onload和$(document).ready()的区别;
+//function.apply数组的应用
 var WaterFall = {
     mainDiv: null,
-    boxDivClass: null,
-    picDivClass: null,
     dataUrl: null,
     imageWidth: '165px',
     heightArr: [],
+    cols: null,
+    page: 1,
     init: function (obj) {
         if (!obj.mainDiv || !obj.boxDiv || !obj.picDiv || !obj.dataUrl) {
             return false;
         }
         this.mainDiv = document.getElementById(obj.mainDiv);
         var boxDiv = this.mainDiv.getElementsByClassName(obj.boxDiv);
-        var clientWidth = document.body.clientWidth || document.body.offsetWidth;
-        var max = Math.floor(clientWidth / boxDiv[0].offsetWidth);
-        console.log(max);
-        this.mainDiv.style.cssText = 'width:' + (max * boxDiv[0].offsetWidth) + 'px;margin:0 auto';
-        this.flex();
+        var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
+        this.cols = Math.floor(clientWidth / boxDiv[0].offsetWidth);
+        this.mainDiv.style.cssText = 'width:' + (this.cols * boxDiv[0].offsetWidth) + 'px;margin:0 auto;';
+        var that = this;
+        window.onload = function () {
+            that.flex(boxDiv);
+            window.onscroll = function () {
+                if (that.checkscroll(boxDiv[boxDiv.length - 1])) {
+                    console.log(123);
+                }
+            }
+        };
     },
-    flex: function () {
+    flex: function (obj) {
+        for (var i = 0; i < obj.length; i++) {
+            if (i <= this.cols - 1) {
+                this.heightArr.push(obj[i].offsetHeight);
+            } else {
+                var key,
+                    minValue = Math.min.apply(null, this.heightArr);
+                key = this.getIndex(this.heightArr, minValue);
+                obj[i].style.cssText = 'position:absolute;top:' + this.heightArr[key] + 'px;left:' + key * obj[0].offsetWidth + 'px';
+                this.heightArr[key] = this.heightArr[key] + obj[i].offsetHeight;
+            }
+        }
+    },
+    getIndex: function (arr, val) {
+        for (var i in arr) {
+            if (arr[i] == val) {
+                return i;
+            }
+        }
+    },
+    getData: function () {
+        $.getJSON(this.dataUrl + '?page=' + this.page, function (data) {
+            console.log(data);
+        });
+    },
+    checkscroll: function (obj) {
+        var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
+        var lastBoxHeight = obj.offsetTop + Math.floor(obj.offsetHeight / 2);
+        return scrollTop + clientHeight > lastBoxHeight;
     }
 
 };

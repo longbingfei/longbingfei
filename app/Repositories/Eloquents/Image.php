@@ -21,17 +21,19 @@ class Image implements ImageInterface
     public function index(array $condition)
     {
         $page = intval($condition['page']) ? intval($condition['page']) : 1;
-        $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 15;
+        $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 50;
 
-        return ImageModel::leftJoin('administrators', 'administrators.id', '=', 'images.user_id')
+        $return = ImageModel::leftJoin('administrators', 'administrators.id', '=', 'images.user_id')
             ->leftJoin('image_sorts', 'image_sorts.id', '=', 'images.sort_id')
             ->select('images.*', 'image_sorts.name as sort_name', 'administrators.username')
             ->where('images.sort_id', '<>', 1)
-            ->orderBy('images.created_at', 'DESC')
+//            ->orderBy('images.created_at', 'DESC')
             ->take($per_page_num)
             ->skip(($page - 1) * $per_page_num)
             ->get()
             ->toArray();
+
+        return $return;
     }
 
     //图片详情
