@@ -25,8 +25,8 @@
         WaterFall.init({
             mainDiv: 'waterFall',
             boxDiv: 'image-pic-box',
-            picDiv: 'mage-pic-inner',
-            dataUrl: 'admin/feature/image',
+            picDiv: 'image-pic-inner',
+            dataUrl: "{{url('admin/feature/image')}}",
             imageWidth: null
         });
     </script>

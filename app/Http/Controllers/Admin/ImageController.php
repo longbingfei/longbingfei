@@ -27,7 +27,7 @@ class ImageController extends Controller
         ];
         $resp = $this->image->index($request->only($fillable));
 
-        return view('admin.image', ['images' => $resp]);
+        return $request->get('is_ajax') ? Response::display($resp) : view('admin.image', ['images' => $resp]);
     }
 
     public function show($id)

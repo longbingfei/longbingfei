@@ -804,63 +804,87 @@ var LongPolling = {
 
 //瀑布流
 //window.onload和$(document).ready()的区别;
+//window.onscroll()应用;
 //function.apply数组的应用
 var WaterFall = {
-    mainDiv: null,
-    dataUrl: null,
-    imageWidth: '165px',
-    heightArr: [],
-    cols: null,
-    page: 1,
-    init: function (obj) {
-        if (!obj.mainDiv || !obj.boxDiv || !obj.picDiv || !obj.dataUrl) {
-            return false;
-        }
-        this.mainDiv = document.getElementById(obj.mainDiv);
-        var boxDiv = this.mainDiv.getElementsByClassName(obj.boxDiv);
-        var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
-        this.cols = Math.floor(clientWidth / boxDiv[0].offsetWidth);
-        this.mainDiv.style.cssText = 'width:' + (this.cols * boxDiv[0].offsetWidth) + 'px;margin:0 auto;';
-        var that = this;
-        window.onload = function () {
-            that.flex(boxDiv);
-            window.onscroll = function () {
-                if (that.checkscroll(boxDiv[boxDiv.length - 1])) {
-                    console.log(123);
+        mainDiv: null,
+        dataUrl: null,
+        imageWidth: '165px',
+        cols: null,
+        page: 1,
+        is_last: false,
+        init: function (obj) {
+            if (!obj.mainDiv || !obj.boxDiv || !obj.picDiv || !obj.dataUrl) {
+                return false;
+            }
+            this.mainDiv = document.getElementById(obj.mainDiv);
+            var boxDiv = this.mainDiv.getElementsByClassName(obj.boxDiv);
+            var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
+            this.cols = Math.floor(clientWidth / boxDiv[0].offsetWidth);
+            this.mainDiv.style.cssText = 'width:' + (this.cols * boxDiv[0].offsetWidth) + 'px;margin:0 auto;';
+            this.dataUrl = obj.dataUrl;
+            var that = this;
+            window.onload = function () {
+                that.flex(boxDiv);
+                window.onscroll = function () {
+                    if (that.checkscroll(boxDiv[boxDiv.length - 1]) && !that.is_last) {
+                        $.getJSON(that.dataUrl + '?is_ajax=1&page=' + (that.page + 1), function (data) {
+                                if (data.length) {
+                                    for (var j = 0; j < data.length; j++) {
+                                        var picbox = document.createElement('div');
+                                        picbox.className = 'image-pic-box';
+                                        var picdiv = document.createElement('div');
+                                        picdiv.className = 'image-pic-inner';
+                                        picbox.appendChild(picdiv);
+                                        var pic = document.createElement('img');
+                                        pic.src = 'http://localhost:8000/' + data[j].thumb;
+                                        picdiv.appendChild(pic);
+                                        that.mainDiv.appendChild(picbox);
+                                    }
+                                    that.page++;
+                                } else {
+                                    that.is_last = true;
+                                }
+                                that.flex(boxDiv);
+                            }
+                        );
+                    }
                 }
             }
-        };
-    },
-    flex: function (obj) {
-        for (var i = 0; i < obj.length; i++) {
-            if (i <= this.cols - 1) {
-                this.heightArr.push(obj[i].offsetHeight);
-            } else {
-                var key,
-                    minValue = Math.min.apply(null, this.heightArr);
-                key = this.getIndex(this.heightArr, minValue);
-                obj[i].style.cssText = 'position:absolute;top:' + this.heightArr[key] + 'px;left:' + key * obj[0].offsetWidth + 'px';
-                this.heightArr[key] = this.heightArr[key] + obj[i].offsetHeight;
+        },
+        flex: function (obj) {
+            var heightArr = [];
+            for (var i = 0; i < obj.length; i++) {
+                if (i <= this.cols - 1) {
+                    heightArr.push(obj[i].offsetHeight);
+                } else {
+                    var key,
+                        minValue = Math.min.apply(null, heightArr);
+                    key = this.getIndex(heightArr, minValue);
+                    console.log(obj[i].offsetHeight);
+                    obj[i].style.cssText = 'position:absolute;top:' + heightArr[key] + 'px;left:' + key * obj[0].offsetWidth + 'px';
+                    heightArr[key] = heightArr[key] + obj[i].offsetHeight;
+                }
             }
         }
-    },
-    getIndex: function (arr, val) {
-        for (var i in arr) {
-            if (arr[i] == val) {
-                return i;
+        ,
+        getIndex: function (arr, val) {
+            for (var i in arr) {
+                if (arr[i] == val) {
+                    return i;
+                }
             }
         }
-    },
-    getData: function () {
-        $.getJSON(this.dataUrl + '?page=' + this.page, function (data) {
-            console.log(data);
-        });
-    },
-    checkscroll: function (obj) {
-        var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-        var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
-        var lastBoxHeight = obj.offsetTop + Math.floor(obj.offsetHeight / 2);
-        return scrollTop + clientHeight > lastBoxHeight;
-    }
+        ,
+        checkscroll: function (obj) {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            //var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
+            var lastBoxHeight = obj.offsetTop + Math.floor(obj.offsetHeight);
+            return scrollTop + $(window).height() > lastBoxHeight;
+        },
+        //showInfo: function () {
+        //
+        //}
 
-};
+    }
+    ;
