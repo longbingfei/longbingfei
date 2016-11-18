@@ -35,10 +35,11 @@ var Confirm = function (msg) {
         return false;
     }
     var coverDiv = $("<div></div>").css({
-        width: $(document).width(),
-        height: $(document).height(),
+        width: "100%",
+        height: "100%",
         position: "absolute",
         top: 0,
+        left: 0,
         backgroundColor: "black",
         opacity: "0.6",
         zIndex: 98
