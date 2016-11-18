@@ -13,21 +13,24 @@
 @section('body')
     @parent
     <div id="waterFall" class="container-image">
-        @foreach($images as $vo)
-            <div class="image-pic-box">
-                <div class="image-pic-inner">
-                    <img src="{{url($vo['thumb'])}}">
+        @if(empty($images))
+            <h5 style="margin:120px auto;color:#faf2cc;text-align: center">无相关图片!</h5>
+        @else
+            @foreach($images as $vo)
+                <div class="image-pic-box">
+                    <div class="image-pic-inner">
+                        <img src="{{url($vo['thumb'])}}">
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+            <script>
+                WaterFall.init({
+                    mainDiv: 'waterFall',
+                    boxDiv: 'image-pic-box',
+                    picDiv: 'image-pic-inner',
+                    dataUrl: "{{url('admin/feature/image')}}",
+                });
+            </script>
+        @endif
     </div>
-    <script>
-        WaterFall.init({
-            mainDiv: 'waterFall',
-            boxDiv: 'image-pic-box',
-            picDiv: 'image-pic-inner',
-            dataUrl: "{{url('admin/feature/image')}}",
-            imageWidth: null
-        });
-    </script>
 @stop

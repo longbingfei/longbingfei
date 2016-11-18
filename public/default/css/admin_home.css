@@ -34,6 +34,24 @@ h3, h4 {
     text-align: center
 }
 
+.loading {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 50px;
+    line-height: 56px;
+    color: #fff;
+    padding-left: 49px;
+    font-size: 15px;
+    background: #000 url('../images/loading.gif') no-repeat 10px 50%;
+    opacity: 0.7;
+    z-index: 9999;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    /*border-radius: 20px;*/
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+}
+
 .color-a {
     color: #366097;
 }
@@ -817,13 +835,16 @@ h3, h4 {
 }
 
 /*图片瀑布流*/
-.container-image{
+.container-image {
     position: relative;
+    box-shadow: 0 0 5px #ccc inset;
 }
-.image-pic-box{
-    padding:15px 0 0 15px;
+
+.image-pic-box {
+    padding: 15px 0 0 15px;
     float: left;
 }
+
 .image-pic-inner {
     border: 1px solid #ccc;
     padding: 10px;
@@ -832,6 +853,6 @@ h3, h4 {
 }
 
 .image-pic-box img {
-    width:165px;
-    max-height:200px;
+    width: 165px;
+    max-height: 200px;
 }

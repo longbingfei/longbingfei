@@ -809,7 +809,6 @@ var LongPolling = {
 var WaterFall = {
         mainDiv: null,
         dataUrl: null,
-        imageWidth: '165px',
         cols: null,
         page: 1,
         is_last: false,
@@ -821,13 +820,16 @@ var WaterFall = {
             var boxDiv = this.mainDiv.getElementsByClassName(obj.boxDiv);
             var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
             this.cols = Math.floor(clientWidth / boxDiv[0].offsetWidth);
-            this.mainDiv.style.cssText = 'width:' + (this.cols * boxDiv[0].offsetWidth) + 'px;margin:0 auto;';
+            this.mainDiv.style.cssText = 'width:' + (this.cols * boxDiv[0].offsetWidth) + 'px;margin:0  auto;';
             this.dataUrl = obj.dataUrl;
             var that = this;
             window.onload = function () {
                 that.flex(boxDiv);
-                window.onscroll = function () {
-                    if (that.checkscroll(boxDiv[boxDiv.length - 1]) && !that.is_last) {
+                $(window).scroll(function () {
+                    var scrollTop = $(this).scrollTop();
+                    var scrollHeight = $(document).height();
+                    var windowHeight = $(this).height();
+                    if (scrollTop + windowHeight == scrollHeight && !that.is_last) {
                         $.getJSON(that.dataUrl + '?is_ajax=1&page=' + (that.page + 1), function (data) {
                                 if (data.length) {
                                     for (var j = 0; j < data.length; j++) {
@@ -848,8 +850,10 @@ var WaterFall = {
                                 that.flex(boxDiv);
                             }
                         );
+                    } else {
+                        //Confirm({message: '已经全部加载'});
                     }
-                }
+                });
             }
         },
         flex: function (obj) {
@@ -861,7 +865,6 @@ var WaterFall = {
                     var key,
                         minValue = Math.min.apply(null, heightArr);
                     key = this.getIndex(heightArr, minValue);
-                    console.log(obj[i].offsetHeight);
                     obj[i].style.cssText = 'position:absolute;top:' + heightArr[key] + 'px;left:' + key * obj[0].offsetWidth + 'px';
                     heightArr[key] = heightArr[key] + obj[i].offsetHeight;
                 }
@@ -875,16 +878,5 @@ var WaterFall = {
                 }
             }
         }
-        ,
-        checkscroll: function (obj) {
-            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-            //var clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
-            var lastBoxHeight = obj.offsetTop + Math.floor(obj.offsetHeight);
-            return scrollTop + $(window).height() > lastBoxHeight;
-        },
-        //showInfo: function () {
-        //
-        //}
-
     }
     ;
