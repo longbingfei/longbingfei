@@ -17,7 +17,7 @@ class AdminAuthController extends Controller
     {
         $this->admin = $admin;
         $this->middleware('auth', ['except' => ['login']]);
-        $this->middleware('permission:user-op', ['except' => ['login','logout']]);
+        $this->middleware('permission:user-op', ['except' => ['login', 'logout']]);
         $this->middleware('permission:user-list', ['only' => 'index']);
     }
 
@@ -56,6 +56,16 @@ class AdminAuthController extends Controller
         $info['ip'] = $request->getClientIp();
 
         return $this->admin->register($info);
+    }
+
+    public function roles()
+    {
+        return $this->admin->getAllRoles();
+    }
+
+    public function permissions()
+    {
+        return $this->admin->getAllPermissions();
     }
 
     public function update(Request $request, $id)

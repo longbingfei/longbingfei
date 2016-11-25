@@ -821,6 +821,7 @@ var WaterFall = {
         var boxDiv = this.mainDiv.getElementsByClassName(obj.boxDiv);
         var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
         this.cols = Math.floor(clientWidth / boxDiv[0].offsetWidth);
+        this.cols = this.cols > 6 ? 6 : (this.cols < 2 ? 2 : this.cols);
         this.mainDiv.style.cssText = 'width:' + (this.cols * boxDiv[0].offsetWidth) + 'px;margin:0  auto;';
         this.dataUrl = obj.dataUrl;
         var that = this;
@@ -841,6 +842,7 @@ var WaterFall = {
                                     picdiv.className = 'image-pic-inner';
                                     picbox.appendChild(picdiv);
                                     var pic = document.createElement('img');
+                                    pic.className = 'image_scale image_cover';
                                     pic.src = 'http://localhost:8000/' + data[j].thumb;
                                     Tip.init({});
                                     picdiv.appendChild(pic);
@@ -850,7 +852,7 @@ var WaterFall = {
                             } else {
                                 that.is_last = true;
                             }
-                        that.flex(boxDiv);
+                            that.flex(boxDiv);
                         }
                     );
                 } else {
@@ -867,7 +869,6 @@ var WaterFall = {
             } else {
                 var key,
                     minValue = Math.min.apply(null, heightArr);
-                console.log(obj[i].offsetHeight);
                 key = this.getIndex(heightArr, minValue);
                 obj[i].style.cssText = 'position:absolute;top:' + heightArr[key] + 'px;left:' + key * obj[0].offsetWidth + 'px';
                 heightArr[key] = heightArr[key] + obj[i].offsetHeight;

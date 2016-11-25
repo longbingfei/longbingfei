@@ -19,7 +19,7 @@
             @foreach($images as $vo)
                 <div class="image-pic-box">
                     <div class="image-pic-inner">
-                        <img src="{{url($vo['thumb'])}}">
+                        <img class="image_scale image_cover" src="{{url($vo['thumb'])}}">
                     </div>
                 </div>
             @endforeach

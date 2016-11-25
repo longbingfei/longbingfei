@@ -18,7 +18,7 @@ class ImageSeeder extends Seeder
         DB::table('image_sorts')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
         ImageSort::create([
-            'name'    => '系统',
+            'name'    => '系统图片',
             'fid'     => 0,
             'user_id' => 1
         ]);
@@ -33,7 +33,12 @@ class ImageSeeder extends Seeder
             'user_id' => 1
         ]);
         ImageSort::create([
-            'name'    => '普通',
+            'name'    => '文稿索引',
+            'fid'     => 0,
+            'user_id' => 1
+        ]);
+        ImageSort::create([
+            'name'    => '一般图片',
             'fid'     => 0,
             'user_id' => 1
         ]);

@@ -86,7 +86,7 @@ class Product implements ProductInterface
         $params = [
             'path'       => PRODUCT_IMAGE_PATH . '/' . $pid,
             'thumb_path' => PRODUCT_IMAGE_PATH . '/' . $pid . '/thumb',
-            'sort_id'    => 4,
+            'sort_id'    => 3,
         ];
         $files = is_array($files) ? $files : [$files];
         $images = array_map(function($y) use ($params) {

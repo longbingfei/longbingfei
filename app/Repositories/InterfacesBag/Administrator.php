@@ -16,11 +16,15 @@ interface Administrator extends BaseInterface
 
     public function update($id, array $info);
 
+    public function getAllRoles();
+
+    public function getAllPermissions();
+
     public function attachPermissionsToRole($role_id, $permission_ids = null);
 
     public function attachRolesToUser($user_id, $role_ids = null);
 
     public function checkPermissions($user_id, array $permissions, $strict = false);
 
-    public function getPermissions($user_id,$is_name = false);
+    public function getPermissions($user_id, $is_name = false);
 }

@@ -7,6 +7,7 @@
  */
 namespace App\Repositories\Eloquents;
 
+use App\Models\Role;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Role as RoleModel;
@@ -130,6 +131,28 @@ class Administrator implements AdminInterface
 
             return $after;
         }
+    }
+
+    //获取所有角色
+    public function getAllRoles()
+    {
+        return array_map(function($y) {
+            $permission_ids = DB::table('roles_permissions')->where('role_id', $y['id'])->select([DB::raw
+            ('group_concat(permission_id) as pids')])->first();
+            $permission_ids = current($permission_ids);
+            if($permission_ids){
+                return PermissionModel::whereIn('id',explode($permission_ids))->get()->toArray();
+            }
+            return [];
+
+        }, RoleModel::all()->toArray());
+
+//        return $roles;
+    }
+
+    //获取所有权限
+    public function getAllPermissions()
+    {
     }
 
     //用户绑定角色

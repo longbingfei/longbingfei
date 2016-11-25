@@ -27,6 +27,8 @@ Route::group(['prefix' => 'admin'], function() {
         });
         Route::post('register', 'AdminAuthController@register');
         Route::get('list', 'AdminAuthController@index');
+        Route::get('roles','AdminAuthController@roles');
+        Route::get('permissions','AdminAuthController@permissions');
         Route::post('attach_roles/{user_id}', 'AdminAuthController@AttachRoles');
         Route::post('attach_permissions/{role_id}', 'AdminAuthController@AttachPermissions');
         Route::put('update/{id}', 'AdminAuthController@update');

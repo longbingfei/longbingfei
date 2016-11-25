@@ -847,13 +847,29 @@ h3, h4 {
 
 .image-pic-inner {
     border: 1px solid #ccc;
-    padding: 5px;
+    /*padding: 5px;*/
     box-shadow: 0 0 15px cadetblue;
     border-radius: 5px;
+    overflow: hidden;
 }
 
 .image-pic-box img {
     width: 165px;
-    min-height:100px;
+    min-height: 100px;
     max-height: 200px;
+    cursor:pointer;
+}
+
+.image_scale {
+    transition: transform 1s;
+    -moz-transition: transform 1s;
+    -webkit-transition: transform 1s;
+    -o-transition: transform 1s;
+}
+
+.image_scale:hover {
+    transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    -o-transform: scale(1.5);
 }
