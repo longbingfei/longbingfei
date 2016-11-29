@@ -84,6 +84,13 @@ class Administrator implements AdminInterface
 
     public function register(array $info)
     {
+        $info = array_filter($info);
+        if(!isset($info['username'])){
+            return ['errorCode' => 1013];
+        }
+        if(!isset($info['password'])){
+            return ['errorCode' => 1014];
+        }
         if (AdminModel::where('username', $info['username'])->count()) {
             event('log', [[$this->module, 'r', 'username has already exists', 0]]);
 

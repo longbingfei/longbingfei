@@ -55,7 +55,9 @@ class AdminAuthController extends Controller
         $info = $request->only(['username', 'password', 'role_ids']);
         $info['ip'] = $request->getClientIp();
 
-        return $this->admin->register($info);
+        $resp = $this->admin->register($info);
+
+        return Response::display($resp);
     }
 
     public function roles()

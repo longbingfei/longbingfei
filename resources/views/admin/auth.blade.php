@@ -40,34 +40,48 @@
     box-shadow:1px 1px 2px 1px mediumpurple;
     }
     .all-auth{
-        display:inline-block;
-        height:20px;
-        width:70px;
-        color:mediumpurple;
-        font-weight: 600;
-        box-shadow:1px 1px 2px 1px mediumpurple;
+    display:inline-block;
+    height:20px;
+    width:70px;
+    color:mediumpurple;
+    font-weight: 600;
+    box-shadow:1px 1px 2px 1px mediumpurple;
     }
     .auth-tab{
-        height:300px !important;
-        over-flow:scroll;
-        font-size: 16px;
-        font-weight:500;
+    height:300px !important;
+    over-flow:scroll;
+    font-size: 16px;
+    font-weight:500;
     }
     .auth-tab input{
-        display: inline-block;
-        width: 200px;
-        height: 30px;
-        text-align:center;
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    }
+    .auth-tab ul{
+    position:relative;
     }
     .auth-tab ul li{
-        list-style-type:none;
-        padding:5px;
-        margin-right:5px;
-        {{--width: 30px;--}}
-        font-size: 10px;
-        float: left !important;
-        font-weight:500;
-        box-shadow:1px 1px 2px 1px mediumpurple;
+    list-style-type:none;
+    padding:5px;
+    margin-right:5px;
+    font-size: 10px;
+    float: left !important;
+    font-weight:500;
+    box-shadow:1px 1px 2px 2px #fcc;
+    cursor:pointer;
+    }
+    .selected_role{
+    background:#FFC;
+    }
+    .show_role{
+    font-size:13px;
+    display:inline-block;
+    border:1px solid #fcc;
+    padding:2px;
+    }
+    .modal-footer{
+    text-align:center;
     }
 
 @stop
@@ -78,8 +92,8 @@
 @section('body')
     @parent
     <div class="container">
-        <a class="btn btn-default top-btn" data-toggle="modal" data-target="#auth-edit-modal" onclick="load_role()">
-            <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;新增用户
+        <a class="btn btn-default top-btn add_user_a" data-toggle="modal" data-target="#auth-edit-modal">
+            <i class="glyphicon glyphicon-plus-sign "></i>&nbsp;新增用户
         </a>
         <div class="auth-main">
             <table class="table table-hover auth-table">
@@ -169,21 +183,70 @@
                 </div>
                 <div class="modal-body">
                     <div class="auth-tab">
-                        用户名:&nbsp;&nbsp;<input type="text"><hr/>
-                        角&nbsp;&nbsp;&nbsp;&nbsp;色:&nbsp;&nbsp;<hr/>
+                        用户名:&nbsp;&nbsp;<input type="text">
+                        <hr/>
+                        密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;<input type="password">
+                        <hr/>
+                        角&nbsp;&nbsp;&nbsp;&nbsp;色:&nbsp;&nbsp;<span class="show_role" data-id="">无角色</span>
+                        <hr/>
                         <ul></ul>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-default role-cancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary role-submit">保存</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        function load_role(){
-
-        }
+        $('.add_user_a').click(function () {
+            if (!$(".auth-tab ul").html()) {
+                $.getJSON('roles', function (data) {
+                    if (data.length) {
+                        for (var i in data) {
+                            $(".auth-tab ul").append('<li data-id=' + data[i].id + '>' + data[i].name + '</li>');
+                        }
+                        $(".auth-tab ul").append("<div style='clear:both;'></div>");
+                    }
+                });
+            }
+        });
+        $("body").on('click', '.auth-tab ul li', function () {
+            var data_id = $(this).attr('data-id');
+            var role = $(this).html();
+            var that = this;
+            if ($('.show_role').attr('data-id') == data_id) {
+                $('.show_role').attr('data-id', 0).html('无角色');
+                $(that).removeClass('selected_role');
+                return false;
+            }
+            $(that).addClass('selected_role').siblings().removeClass('selected_role');
+            $('.show_role').attr('data-id', data_id).html(role);
+        });
+        $(".role-submit").click(function () {
+            var name = $('.auth-tab input:eq(0)').val();
+            var password = $('.auth-tab input:eq(1)').val();
+            var role_id = $('.show_role').attr('data-id');
+            if (!name || !password || !role_id) {
+                return Confirm({message: '信息不完整'});
+            }
+            $.ajax({
+                method: 'post',
+                url: 'register',
+                data: {
+                    username: name,
+                    password: password,
+                    role_ids: role_id
+                },
+                success: function (data) {
+                    if (data.id) {
+                        location.reload();
+                    } else {
+                        return Confirm({message: data.error_message});
+                    }
+                }
+            });
+        });
     </script>
 @stop

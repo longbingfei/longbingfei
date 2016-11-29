@@ -42,7 +42,7 @@ var Confirm = function (msg) {
         left: 0,
         backgroundColor: "black",
         opacity: "0.6",
-        zIndex: 98
+        zIndex: 9998
     }).addClass("msg_modal");
     var confirmDiv = $("<div></div>").css({
         width: "400px",
@@ -53,7 +53,7 @@ var Confirm = function (msg) {
         left: $(window).width() / 2 - 200,
         top: $(window).height() / 2 - 100,
         textAlign: "center",
-        zIndex: 99,
+        zIndex: 9999,
         color: "black"
     }).addClass("msg_modal");
     var confirmBody = "<h4><span class='glyphicon glyphicon-exclamation-sign' style='color:indianred'></span>&nbsp&nbsp" +
