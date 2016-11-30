@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Style;
 use App\Repositories\InterfacesBag\Article;
 use App\Repositories\InterfacesBag\Product;
@@ -16,30 +17,43 @@ class WebController extends Controller
     protected $article;
     protected $product;
 
-    public function __construct(Style $style,Article $article,Product $product){
+    public function __construct(Style $style, Article $article, Product $product)
+    {
         $this->article = $article;
         $this->product = $product;
         $this->style = $style;
     }
 
-    public function index(){
+    public function index()
+    {
         $style = $this->styleIndex();
-        return view('web.homepage',['style'=>$style]);
+
+        return view('web.homepage', ['style' => $style]);
     }
 
-    public function styleIndex(){
-        return $this->style->index();
+    public function styleIndex()
+    {
+        $resp = $this->style->index();
+
+        return Response::display($resp);
     }
 
-    public function articleIndex(){
-        return $this->article->index();
+    public function articleIndex()
+    {
+        $resp = $this->article->index();
+
+        return Response::display($resp);
     }
 
-    public function articleShow($id){
-        return $this->article->show($id);
+    public function articleShow($id)
+    {
+        $resp = $this->article->show($id);
+
+        return Response::display($resp);
     }
 
-    public function productIndex(Request $request){
+    public function productIndex(Request $request)
+    {
         $fillable = [
             'page',
             'perpage',
@@ -51,11 +65,15 @@ class WebController extends Controller
             'order'
         ];
 
-        $return = $this->product->index($request->only($fillable));
-        return $return;
+        $resp = $this->product->index($request->only($fillable));
+
+        return Response::display($resp);
     }
 
-    public function productShow($id){
-        return $this->product->show($id);
+    public function productShow($id)
+    {
+        $resp = $this->product->show($id);
+
+        return Response::display($resp);
     }
 }

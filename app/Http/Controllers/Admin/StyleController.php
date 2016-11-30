@@ -17,14 +17,7 @@ class StyleController extends Controller
         $this->middleware('auth');
         $this->style = $style;
     }
-
-    public function index()
-    {
-        $resp = $this->style->index();
-
-        return view('admin.style', ['detail' => $resp]);
-    }
-
+    
     public function update(Request $request, $id)
     {
         $fillable = [
