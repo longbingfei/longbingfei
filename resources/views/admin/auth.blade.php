@@ -183,9 +183,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="auth-tab">
-                        用户名:&nbsp;&nbsp;<input type="text">
+                        用户名:&nbsp;&nbsp;<input type="text" autocomplete="new-name" autofocus>
                         <hr/>
-                        密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;<input type="password">
+                        密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;<input type="password" autocomplete="new-password">
                         <hr/>
                         角&nbsp;&nbsp;&nbsp;&nbsp;色:&nbsp;&nbsp;<span class="show_role" data-id="">无角色</span>
                         <hr/>
@@ -217,7 +217,7 @@
             var role = $(this).html();
             var that = this;
             if ($('.show_role').attr('data-id') == data_id) {
-                $('.show_role').attr('data-id', 0).html('无角色');
+                $('.show_role').attr('data-id', '').html('无角色');
                 $(that).removeClass('selected_role');
                 return false;
             }
@@ -228,17 +228,20 @@
             var name = $('.auth-tab input:eq(0)').val();
             var password = $('.auth-tab input:eq(1)').val();
             var role_id = $('.show_role').attr('data-id');
-            if (!name || !password || !role_id) {
+            if (!name || !password) {
                 return Confirm({message: '信息不完整'});
+            }
+            var data = {
+                username: name,
+                password: password
+            };
+            if (role_id) {
+                data.role_ids = role_id;
             }
             $.ajax({
                 method: 'post',
                 url: 'register',
-                data: {
-                    username: name,
-                    password: password,
-                    role_ids: role_id
-                },
+                data: data,
                 success: function (data) {
                     if (data.id) {
                         location.reload();

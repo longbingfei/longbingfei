@@ -85,10 +85,10 @@ class Administrator implements AdminInterface
     public function register(array $info)
     {
         $info = array_filter($info);
-        if(!isset($info['username'])){
+        if (!isset($info['username'])) {
             return ['errorCode' => 1013];
         }
-        if(!isset($info['password'])){
+        if (!isset($info['password'])) {
             return ['errorCode' => 1014];
         }
         if (AdminModel::where('username', $info['username'])->count()) {
@@ -102,7 +102,7 @@ class Administrator implements AdminInterface
         $info['login_ip'] = $info['ip'];
 
         if ($user = AdminModel::create($info)->toArray()) {
-            $this->attachRolesToUser($user['id'], $info['role_ids']);
+            $this->attachRolesToUser($user['id'], isset($info['role_ids']) ? trim($info['role_ids']) : null);
             event('log', [[$this->module, 'r', $user]]);
 
             return $user;
