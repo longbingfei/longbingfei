@@ -112,6 +112,13 @@ class AdminAuthController extends Controller
         return Response::display($resp);
     }
 
+    public function delete($id)
+    {
+        $resp = $this->admin->delete($id);
+
+        return Response::display($resp);
+    }
+
     public function logout()
     {
         Auth::logout();

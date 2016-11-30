@@ -16,6 +16,8 @@ interface Administrator extends BaseInterface
 
     public function update($id, array $info);
 
+    public function delete($id);
+
     public function getAllRoles();
 
     public function getAllPermissions();

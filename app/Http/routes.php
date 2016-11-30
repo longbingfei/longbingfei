@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('attach_roles/{user_id}', 'AdminAuthController@AttachRoles');
         Route::post('attach_permissions/{role_id}', 'AdminAuthController@AttachPermissions');
         Route::put('update/{id}', 'AdminAuthController@update');
+        Route::get('delete/{id}', 'AdminAuthController@delete');
         Route::get('logout', 'AdminAuthController@logout');
     });
     Route::group(['namespace' => 'Admin', 'prefix' => 'feature'], function() {

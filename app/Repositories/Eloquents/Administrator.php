@@ -222,7 +222,7 @@ class Administrator implements AdminInterface
         }
         DB::table('roles_permissions')->where('role_id', $role_id)->delete();
         if (DB::table('roles_permissions')->insert($params)) {
-            env('log', [[$this->module, 'u', $params]]);
+            event('log', [[$this->module, 'u', $params]]);
             $return = ['result' => 'success'];
         } else {
             $return = ['errorCode' => 1323];
@@ -270,5 +270,18 @@ class Administrator implements AdminInterface
         }, PermissionModel::whereIn('id', $permission_ids)->get()->toArray());
 
         return $permissions;
+    }
+
+    public function delete($id)
+    {
+        if (!$user = AdminModel::where('id', $id)->first()) {
+            return ['errorCode' => 1007];
+        }
+        if (AdminModel::destroy($id)) {
+            event('log', [[$this->module, 'd', $user->toArray()]]);
+            return $user;
+        } else {
+            return ['errorCode' => 1015];
+        }
     }
 }

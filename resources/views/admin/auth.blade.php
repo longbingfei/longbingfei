@@ -118,9 +118,8 @@
                                 </div>
                             </td>
                             <td>
-                                <span style="font-weight: 600;color:steelblue" class="ellipsis_ padding_move"
-                                      data-toggle="modal"
-                                      data-target="#auth-edit-modal" title="编辑">{{$vo['username']}}</span>
+                                <span style="font-weight: 600;color:steelblue"
+                                      class="ellipsis_ padding_move">{{$vo['username']}}</span>
                             </td>
                             <td class="auth-td">
                                 @if($vo['status'] == 3)
@@ -248,6 +247,27 @@
                     } else {
                         return Confirm({message: data.error_message});
                     }
+                }
+            });
+        });
+        $(".auth-del").click(function () {
+            var user_id = $(this).parent().attr('data-id');
+            if (!user_id) {
+                return false;
+            }
+            Confirm({
+                message: '确认删除此用户?',
+                callback: function () {
+                    $.ajax({
+                        url: 'delete/' + user_id,
+                        success: function (data) {
+                            if (data.id) {
+                                location.reload();
+                            } else {
+                                return Confirm({message: data.error_message});
+                            }
+                        }
+                    });
                 }
             });
         });
