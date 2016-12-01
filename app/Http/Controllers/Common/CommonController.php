@@ -47,15 +47,33 @@ class CommonController extends Controller
     public function downloadFile(Request $request)
     {
         $url = urldecode(trim($request->get('url')));
-        if (!$urlinfo = $this->getUrlInfo($url)) {
-            return Response::display(['errorCode' => 1400]);
+        $urlinfo = $this->getUrlInfo($url);
+        if ($urlinfo['st'] != 200) {
+            switch($urlinfo['st']){
+                case 302:
+                    $errorCode = 1401;
+                    break;
+                case 401:
+                    $errorCode = 1402;
+                    break;
+                case 403:
+                    $errorCode = 1403;
+                    break;
+                case 500:
+                    $errorCode = 1404;
+                    break;
+            }
+            return Response::display(['errorCode' => $errorCode]);
         }
         $filename = last(explode('/', $url));
         $mode = stripos(PHP_OS, 'WIN') === 0 ? 'rb' : 'r';
-        $handle = fopen($url, $mode);
-        header('Content-Type:' . $urlinfo[2]);
+        $handle = @fopen($url, $mode);
+        if (!$handle) {
+            return Response::display(['errorCode' => 1405]);
+        }
+        header('Content-Type:' . $urlinfo['ct']);
         header('Accept-Range:bytes');
-        header('Accept-Length:' . $urlinfo[3]);
+        header('Accept-Length:' . $urlinfo['cl']);
         header('Content-Disposition:attachment;filename=' . $filename);
         $contents = '';
         while (!feof($handle)) {
@@ -76,9 +94,18 @@ class CommonController extends Controller
         if (!$res) {
             return false;
         }
-        $regex = '/HTTP\/1\.\d\s(\d{3})[\s\w:,-=\/\(\)]*?Content-Type:\s(\w+\/\w+)[\s\w:,-=\/\(\)]*?Content-Length:\s(\d+)/';
-        preg_match($regex, $res, $match);
+        $regex_st = '/HTTP\/1\.\d\s(\d{3})/';
+        $regex_ct = '/Content-Type:\s(\w+\/[\w-]*)/';
+        $regex_cl = '/Content-Length:\s(\d+)/';
+        preg_match($regex_st, $res, $match_st);
+        preg_match($regex_ct, $res, $match_ct);
+        preg_match($regex_cl, $res, $match_cl);
+        $match = [
+            'st' => isset($match_st[1]) ? $match_st[1] : 500,
+            'ct' => isset($match_ct[1]) ? $match_ct[1] : 'application/octet-stream',
+            'cl' => isset($match_cl[1]) ? $match_cl[1] : 0
+        ];
 
-        return count($match) === 4 && $match[1] == 200 ? $match : false;
+        return $match;
     }
 }
