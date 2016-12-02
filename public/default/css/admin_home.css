@@ -628,17 +628,19 @@ h3, h4 {
 
 /*分类*/
 .sort_main_div {
-    margin: 0 auto;
-    width: 800px;
+    margin: 50px auto;
+    width: 1000px;
     overflow-x: auto;
     white-space: nowrap;
     position: relative;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 4px #2a2730;
 }
 
 .sort_child_div {
     display: inline-block;
-    border-left: 1px solid grey;
-    border-right: 1px solid grey;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
     width: 200px;
     height: 100%;
     overflow: hidden;

@@ -24,7 +24,7 @@
             <li data-appinfo="视频"><a class="glyphicon glyphicon-facetime-video"></a></li>
             <li data-appinfo="日历"><a class="glyphicon glyphicon-calendar"></a></li>
             <li data-appinfo="标签"><a class="glyphicon glyphicon-tags"></a></li>
-            <li data-appinfo="操作日志"><a class="glyphicon glyphicon-th-list"></a></li>
+            <li data-appinfo="日志"><a class="glyphicon glyphicon-th-list"></a></li>
             <li data-appinfo="设置"><a class="glyphicon glyphicon-cog"></a></li>
             <li data-appinfo="分享"><a class="glyphicon glyphicon-send"></a></li>
         </ul>
