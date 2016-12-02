@@ -1,37 +1,47 @@
 body {
     padding-bottom: 40px;
-    /*background-color: #d58512;*/
-    color:rgb(199,0,54);
+    color: rgb(199, 0, 54);
 }
 
-.navbar-wrapper {
+.main {
+    width: 1000px;
+    border: 1px solid grey;
+    margin: 0 auto;
+}
+
+.website-navbar {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0px;
+    width: 1000px;
+    height: 100px;
+}
+
+.website-navbar > ul {
+    position: absolute;
     left: 0;
-    z-index: 20;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    height: 50px;
 }
 
-.navbar-wrapper > .container {
-    padding-right: 0;
-    padding-left: 0;
-}
-
-.navbar-wrapper .navbar {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-.navbar-wrapper .navbar .container {
-    width: auto;
+.website-navbar > ul > li {
+    float: left;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: 1px solid grey;
 }
 
 .carousel {
+    width: 1000px;
     height: 500px;
-    margin-top: 50px;
+    margin-top: 100px;
     margin-bottom: 60px;
     background-color: #FFFFFF;
-    opacity: 0.5
+    opacity: 1
 }
 
 .carousel-caption {
@@ -53,6 +63,10 @@ body {
     width: 50px;
 }
 
+.carousel-control .glyphicon-chevron-left {
+    top: 44%;
+}
+
 .carousel .item {
     height: 500px;
     background-color: #777;
@@ -67,70 +81,22 @@ body {
     min-height: 600px;
 }
 
-.marketing .col-lg-4 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.marketing h2 {
-    font-weight: normal;
-}
-
-.marketing .col-lg-4 p {
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.row-top, .row-middle {
-    border: 1px solid #cccccc;
-}
-
-.featurette-divider {
-    margin: 80px 0;
-}
-
-.featurette .col-md-4 a {
+.carousel-inner > .item > div {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
     width: 100%;
-    height: 250px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFFFFF;
+    line-height: 60px;
+    padding-left: 10px;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.featurette .col-md-4 a img {
-    width: 100%;
-    height: 100%
-}
-
-@media (min-width: 768px) {
-    .navbar-wrapper {
-        margin-top: 20px;
-    }
-
-    .navbar-wrapper .container {
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-
-    .navbar-wrapper .navbar {
-        padding-right: 0;
-        padding-left: 0;
-    }
-
-    .navbar-wrapper .navbar {
-        border-radius: 4px;
-    }
-
-    .carousel-caption p {
-        margin-bottom: 20px;
-        font-size: 21px;
-        line-height: 1.4;
-    }
-
-    .featurette-heading {
-        font-size: 50px;
-    }
-}
-
-@media (min-width: 992px) {
-    .featurette-heading {
-        margin-top: 120px;
-    }
+.carousel-indicators {
+    bottom: 50px;
 }
