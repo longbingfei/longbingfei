@@ -48,7 +48,7 @@ var Confirm = function (msg) {
         width: "400px",
         height: "200px",
         backgroundColor: "white",
-        boxShadow: "1px 1px 3px 3px #337ab7",
+        boxShadow: "0px 0px 15px 5px rgb(45, 59, 67)",
         position: "absolute",
         left: $(window).width() / 2 - 200,
         top: $(window).height() / 2 - 100,
