@@ -109,21 +109,26 @@ var Tip = {
 ;(function ($) {
     $.extend({
         handleImage: {
+            container: null,
             main: null,
             dragging: false,
             base64Data: null,
             init: function (Width, Height) {
                 this.width = Width ? Width : 200;
                 this.height = Height ? Height : this.width * 3 / 4;
-                this.main = $('<div></div>').css({
-                    position: 'relative',
-                    width: '400px',
-                    height: '300px',
+                this.container = $('<div></div>').css({
+                    position: 'absolute',
+                    width: '1000px',
+                    height: '500px',
+                    bottom: 0,
                     border: '1px solid grey',
                     overflow: 'hidden',
                     zIndex: 10000,
-                    boxShadow:'0 0 4px 4px grey'
+                    boxShadow: '0 0 2px 2px grey'
                 });
+                var html = '<div class="left" style="width:700px;height:500px;border:1px solid grey;position:absolute;left:0;top:0;border-right:0;overflow:hidden"></div>' +
+                    '<div class="right" style="width:280px;height:500px;border:1px solid grey;position:absolute;right:0;top:0;border-right:0;padding:10px;text-align:center"></div>';
+                this.container.html(html);
                 var input = $('<input type="file">').css({
                     display: 'inline-block',
                     position: 'absolute',
@@ -132,7 +137,9 @@ var Tip = {
                     width: '100px',
                     height: '40px',
                 });
-                $('body').append(this.main.append(input));
+                this.main = this.container.children('div:eq(0)');
+                this.main.append(input);
+                $('body').append(this.container);
                 var that = this;
                 $(input).change(function () {
                     var file_path = $(this).get(0).files[0];
@@ -200,10 +207,16 @@ var Tip = {
                 ctx.clearRect(0, 0, canvas.width(), canvas.height());
                 ctx.drawImage(img, left, top, canvas.width(), canvas.height(), 0, 0, canvas.width(), canvas.height());
                 this.base64Data = canvas[0].toDataURL("image/png");
-                //$(imgs).addClass('nico');
-                //$('body').find('.nico').remove();
-                //$('body').append(imgs);
-                //this.send(imgs.src);
+                this.previewImage();
+            },
+            previewImage: function () {
+                var left = this.container.find('.right')[0];
+                var img = new Image();
+                img.onload = function(){
+                    $(left).empty().append(img);
+                    img.width = img.width > 260 ? 260 : img.width;
+                };
+                img.src = this.base64Data;
             },
             send: function (binaryData) {
                 if (!binaryData) {
