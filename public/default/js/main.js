@@ -106,28 +106,123 @@ var Tip = {
 };
 
 //图片裁剪 obj:{dom,src}
-var ImageFunction = {
-    init: function (obj) {
-        var scale = obj.scale ? obj.scale : 4 / 3;
-        var dom = obj.dom ? obj.dom : $("body");
-        var src = obj.src;
-        if (!src) {
-            return false;
+;(function ($) {
+    $.extend({
+        handleImage: {
+            main: null,
+            dragging: false,
+            base64Data: null,
+            init: function (Width, Height) {
+                this.width = Width ? Width : 200;
+                this.height = Height ? Height : this.width * 3 / 4;
+                this.main = $('<div></div>').css({
+                    position: 'relative',
+                    width: '400px',
+                    height: '300px',
+                    border: '1px solid grey',
+                    overflow: 'hidden',
+                    zIndex: 10000,
+                    boxShadow:'0 0 4px 4px grey'
+                });
+                var input = $('<input type="file">').css({
+                    display: 'inline-block',
+                    position: 'absolute',
+                    left: '150px',
+                    top: '130px',
+                    width: '100px',
+                    height: '40px',
+                });
+                $('body').append(this.main.append(input));
+                var that = this;
+                $(input).change(function () {
+                    var file_path = $(this).get(0).files[0];
+                    var file = new FileReader();
+                    file.readAsDataURL(file_path);
+                    file.onload = function (e) {
+                        var src = e.target.result;
+                        var img = new Image();
+                        img.onload = function () {
+                            $(img).css({opacity: 0.5});
+                            that.main.append(img);
+                            $(input).hide();
+                            that.initCover(img);
+                        };
+                        img.src = src;
+                    }
+                });
+            },
+            initCover: function (img) {
+                if (!this.main.find('img').length) {
+                    return false;
+                }
+                var cover = $("<canvas>浏览器不支持canvas</canvas>").css({
+                    position: 'absolute',
+                    cursor: 'pointer'
+                }).addClass('coverDiv');
+                cover.attr({width: this.width + 'px', height: this.height + 'px'});
+                cover.css({
+                    left: (this.main.width() - parseInt(cover.attr('width'))) / 2,
+                    top: (this.main.height() - parseInt(cover.attr('height'))) / 2
+                });
+                this.main.append(cover);
+                $.handleImage.drawImage(cover, img);
+                var that = this;
+                this.main.on({
+                    fistX: false,
+                    fistY: false,
+                    mousedown: function (e) {
+                        if ($(e.target).hasClass('coverDiv')) {
+                            that.dragging = true;
+                            this.fistX = e.pageX;
+                            this.fistY = e.pageY;
+                        }
+                    },
+                    mouseup: function () {
+                        that.dragging = false;
+                    },
+                    mousemove: function (e) {
+                        if ($(e.target).hasClass('coverDiv') && that.dragging) {
+                            var left = cover.position().left + (e.pageX - this.fistX);
+                            var top = cover.position().top + (e.pageY - this.fistY);
+                            this.fistX = e.pageX;
+                            this.fistY = e.pageY;
+                            cover.css({left: left + 'px', top: top + 'px'});
+                            that.drawImage(cover, img, top, left);
+                        }
+                    }
+                });
+            },
+            drawImage: function (canvas, img, top, left) {
+                var ctx = canvas[0].getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                left = left ? left : canvas.position().left;
+                top = top ? top : canvas.position().top;
+                ctx.clearRect(0, 0, canvas.width(), canvas.height());
+                ctx.drawImage(img, left, top, canvas.width(), canvas.height(), 0, 0, canvas.width(), canvas.height());
+                this.base64Data = canvas[0].toDataURL("image/png");
+                //$(imgs).addClass('nico');
+                //$('body').find('.nico').remove();
+                //$('body').append(imgs);
+                //this.send(imgs.src);
+            },
+            send: function (binaryData) {
+                if (!binaryData) {
+                    return false;
+                }
+                $.ajax({
+                    url: 'http://localhost:8000/test',
+                    method: 'post',
+                    data: {
+                        image: binaryData
+                    },
+                    success: function (data) {
+                        console.log(data)
+                    }
+                });
+            }
         }
-        var wrapDiv = $("<div></div>").css({
-            left: $(window).width() / 2 - 200,
-            top: $(window).height() / 2 - 200
-        }).addClass("cut_wrap_div");
-        var img = $("<img src='" + src + "'>").addClass("cut_origin_image");
-        var dragDiv = $("<div></div>").css({
-            width: "200px",
-            height: 400 / (2 * scale),
-            left: "100px",
-            top: 200 - 400 / (4 * scale)
-        }).addClass("cut_drag_div");
-        dom.append(wrapDiv.append(img).append(dragDiv));
-    }
-};
+    });
+})($);
 
 //图片轮播obj:{images:json,payload:dom}
 var Carousel = {
