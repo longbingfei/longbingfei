@@ -105,7 +105,7 @@ var Tip = {
     }
 };
 
-//图片裁剪 obj:{dom,src}
+//图片裁剪 obj:{width,height,src/input,callback}
 ;(function ($) {
     $.extend({
         handleImage: {
@@ -113,91 +113,125 @@ var Tip = {
             main: null,
             dragging: false,
             base64Data: null,
-            init: function (Width, Height) {
-                this.width = Width ? Width : 200;
-                this.height = Height ? Height : this.width * 3 / 4;
+            width: null,
+            height: null,
+            originWidth: null,
+            originHeight: null,
+            scale: 1,
+            callback: null,
+            init: function (obj) {
+                this.reset();
+                this.width = obj.width ? obj.width : 200;
+                this.height = obj.height ? obj.height : this.width * 3 / 4;
+                this.callback = obj.callback && (typeof obj.callback == 'function') ? obj.callback : null;
                 this.container = $('<div></div>').css({
                     position: 'absolute',
+                    left: $(window).width() / 2 - 500,
+                    top: $(window).height() / 2 - 250,
                     width: '1000px',
                     height: '500px',
-                    bottom: 0,
                     border: '1px solid grey',
                     overflow: 'hidden',
                     zIndex: 10000,
-                    boxShadow: '0 0 2px 2px grey'
-                });
+                    boxShadow: '0 0 2px 2px grey',
+                    borderRadius: '4px',
+                    backgroundColor: '#000',
+                    color: '#ccc'
+                }).addClass('handleImageContainer');
                 var html = '<div class="left" style="width:700px;height:500px;border:1px solid grey;position:absolute;left:0;top:0;border-right:0;overflow:hidden"></div>' +
-                    '<div class="right" style="width:280px;height:500px;border:1px solid grey;position:absolute;right:0;top:0;border-right:0;padding:10px;text-align:center"></div>';
+                    '<div class="right" style="width:280px;height:500px;border:1px solid grey;position:absolute;right:0;top:0;border-right:0;padding:10px;text-align:center">' +
+                    '<div class="top-preview" style="text-align:left"></div>' +
+                    '<div class="info-show" style="position:absolute;width:260px;height:160px;bottom:10px;border:0;text-align:left"></div></div>';
                 this.container.html(html);
-                var input = $('<input type="file">').css({
-                    display: 'inline-block',
-                    position: 'absolute',
-                    left: '150px',
-                    top: '130px',
-                    width: '100px',
-                    height: '40px',
-                });
                 this.main = this.container.children('div:eq(0)');
-                this.main.append(input);
-                $('body').append(this.container);
-                var that = this;
-                $(input).change(function () {
-                    var file_path = $(this).get(0).files[0];
-                    var file = new FileReader();
-                    file.readAsDataURL(file_path);
-                    file.onload = function (e) {
-                        var src = e.target.result;
-                        var img = new Image();
-                        img.onload = function () {
-                            $(img).css({opacity: 0.5});
-                            that.main.append(img);
-                            $(input).hide();
-                            that.initCover(img);
-                        };
-                        img.src = src;
-                    }
-                });
-            },
-            initCover: function (img) {
-                if (!this.main.find('img').length) {
+                if (obj.src) {
+                    this.src = obj.src;
+                    $('body').append(this.container);
+                    this.initCover();
+                } else if (obj.input) {
+                    var that = this;
+                    $(obj.input).change(function () {
+                        $('body').append(that.container);
+                        var file_path = $(this).get(0).files[0];
+                        var file = new FileReader();
+                        file.readAsDataURL(file_path);
+                        file.onload = function (e) {
+                            that.src = e.target.result;
+                            that.initCover();
+                        }
+                    });
+                } else {
                     return false;
                 }
-                var cover = $("<canvas>浏览器不支持canvas</canvas>").css({
-                    position: 'absolute',
-                    cursor: 'pointer'
-                }).addClass('coverDiv');
-                cover.attr({width: this.width + 'px', height: this.height + 'px'});
-                cover.css({
-                    left: (this.main.width() - parseInt(cover.attr('width'))) / 2,
-                    top: (this.main.height() - parseInt(cover.attr('height'))) / 2
-                });
-                this.main.append(cover);
-                $.handleImage.drawImage(cover, img);
+            },
+            controlScale: function (src, scale) {
+                var img = new Image();
+                img.src = src;
+                if (!scale) {
+                    scale = img.width > 1000 ? 0.6 : 1;
+                    this.scale = scale;
+                }
+                var canvas = $('<canvas width=' + img.width * scale + ' height=' + img.height * scale + '></canvas>');
+                var fx = canvas[0].getContext("2d");
+                fx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width * scale, img.height * scale);
+                return canvas[0].toDataURL("image/png");
+            },
+            initCover: function (scale) {
+                var img = new Image();
                 var that = this;
-                this.main.on({
-                    fistX: false,
-                    fistY: false,
-                    mousedown: function (e) {
-                        if ($(e.target).hasClass('coverDiv')) {
-                            that.dragging = true;
-                            this.fistX = e.pageX;
-                            this.fistY = e.pageY;
-                        }
-                    },
-                    mouseup: function () {
-                        that.dragging = false;
-                    },
-                    mousemove: function (e) {
-                        if ($(e.target).hasClass('coverDiv') && that.dragging) {
-                            var left = cover.position().left + (e.pageX - this.fistX);
-                            var top = cover.position().top + (e.pageY - this.fistY);
-                            this.fistX = e.pageX;
-                            this.fistY = e.pageY;
-                            cover.css({left: left + 'px', top: top + 'px'});
-                            that.drawImage(cover, img, top, left);
-                        }
+                img.onload = function () {
+                    if (!scale || scale == 1) {
+                        that.originWidth = img.width;
+                        that.originHeight = img.height;
                     }
-                });
+                    $(img).css({padding: '10px', opacity: 0.3});
+                    that.main.empty().append(img);
+                    var cover = $("<canvas>浏览器不支持canvas</canvas>").css({
+                        position: 'absolute',
+                        cursor: 'pointer',
+                        zIndex: 999
+                    }).addClass('coverDiv');
+                    cover.attr({width: that.width + 'px', height: that.height + 'px'});
+                    cover.css({
+                        left: (that.main.width() - parseInt(cover.attr('width'))) / 2,
+                        top: (that.main.height() - parseInt(cover.attr('height'))) / 2
+                    });
+                    that.main.append(cover);
+                    that.drawImage(cover, img);
+                    that.main.off().on({
+                        mousedown: function (e) {
+                            if ($(e.target).hasClass('coverDiv')) {
+                                that.dragging = true;
+                                that.fistX = e.pageX;
+                                that.fistY = e.pageY;
+                            }
+                        },
+                        mouseup: function () {
+                            that.dragging = false;
+                        },
+                        mousemove: function (e) {
+                            if ($(e.target).hasClass('coverDiv') && that.dragging) {
+                                var left = cover.position().left + (e.pageX - that.fistX);
+                                var top = cover.position().top + (e.pageY - that.fistY);
+                                that.fistX = e.pageX;
+                                that.fistY = e.pageY;
+                                cover.css({left: left + 'px', top: top + 'px'});
+                                that.drawImage(cover, img, top, left);
+                            }
+                        },
+                        mousewheel: function (e) {
+                            var d = e.originalEvent.wheelDelta;
+                            if (d > 0) {
+                                scale = that.scale + 0.1 >= 1 ? 1 : that.scale + 0.1;
+                            } else {
+                                scale = that.scale - 0.1 <= 0.1 ? 0.1 : that.scale - 0.1;
+                            }
+                            that.scale = scale;
+                            that.initCover(scale);
+                        }
+                    });
+                };
+                img.src = this.controlScale(this.src, scale);
             },
             drawImage: function (canvas, img, top, left) {
                 var ctx = canvas[0].getContext("2d");
@@ -210,28 +244,43 @@ var Tip = {
                 this.previewImage();
             },
             previewImage: function () {
-                var left = this.container.find('.right')[0];
+                var right = this.container.find('.right')[0];
                 var img = new Image();
-                img.onload = function(){
-                    $(left).empty().append(img);
-                    img.width = img.width > 260 ? 260 : img.width;
+                $(img).css({width: '260px', border: '1px solid grey'});
+                var that = this;
+                img.onload = function () {
+                    var topPreview = $(right).find('.top-preview')[0];
+                    var infoShow = $(right).find('.info-show')[0];
+                    $(topPreview).empty().append(img);
+                    var ul = $('<ul style="margin:0;padding:0;list-style-type:none">' +
+                        '<li>原图规格: ' + that.originWidth + ' X ' + that.originHeight + '</li>' +
+                        '<li>剪切规格: ' + that.width + ' X ' + that.height + '</li>' +
+                        '<li>缩&nbsp;&nbsp;放&nbsp;&nbsp;比: ' + (that.scale.toFixed(1) * 100) + '%</li>' +
+                        '<li class="cut-image" style="margin-top:20px;margin-right:10px;display:inline-block;width:100px;height:40px;border:1px solid grey;' +
+                        'text-align:center;line-height:40px;floralwhite;border-radius:4px;cursor:pointer">裁剪</li>' +
+                        '<li class="reset-box" style="margin-top:20px;display:inline-block;width:100px;height:40px;border:1px solid grey;' +
+                        'text-align:center;line-height:40px;border-radius:4px;cursor:pointer">取消</li></ul>');
+                    $(infoShow).empty().append(ul);
+                    $('.cut-image').click(function () {
+                        that.cutImage();
+                    });
+                    $('.reset-box').click(function () {
+                        that.reset();
+                    });
                 };
                 img.src = this.base64Data;
             },
-            send: function (binaryData) {
-                if (!binaryData) {
-                    return false;
+            cutImage: function () {
+                if (this.callback) {
+                    this.callback(this.base64Data);
                 }
-                $.ajax({
-                    url: 'http://localhost:8000/test',
-                    method: 'post',
-                    data: {
-                        image: binaryData
-                    },
-                    success: function (data) {
-                        console.log(data)
-                    }
-                });
+                this.reset();
+            },
+            reset: function () {
+                this.dragging = false;
+                this.base64Data = this.originWidth = this.originHeight = null;
+                this.scale = 1;
+                $('body').find('.handleImageContainer').remove();
             }
         }
     });
