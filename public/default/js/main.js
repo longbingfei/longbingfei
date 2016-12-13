@@ -164,74 +164,73 @@ var Tip = {
                     return false;
                 }
             },
-            controlScale: function (src, scale) {
-                var img = new Image();
-                img.src = src;
-                if (!scale) {
-                    scale = img.width > 1000 ? 0.6 : 1;
-                    this.scale = scale;
-                }
-                var canvas = $('<canvas width=' + img.width * scale + ' height=' + img.height * scale + '></canvas>');
-                var fx = canvas[0].getContext("2d");
-                fx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width * scale, img.height * scale);
-                return canvas[0].toDataURL("image/png");
-            },
             initCover: function (scale) {
-                var img = new Image();
+                var IMG = new Image();
                 var that = this;
-                img.onload = function () {
-                    if (!scale || scale == 1) {
-                        that.originWidth = img.width;
-                        that.originHeight = img.height;
+                IMG.onload = function () {
+                    if (!scale) {
+                        scale = IMG.width > 1000 ? 0.6 : 1;
+                        that.scale = scale;
                     }
-                    $(img).css({padding: '10px', opacity: 0.3});
-                    that.main.empty().append(img);
-                    var cover = $("<canvas>浏览器不支持canvas</canvas>").css({
-                        position: 'absolute',
-                        cursor: 'pointer',
-                        zIndex: 999
-                    }).addClass('coverDiv');
-                    cover.attr({width: that.width + 'px', height: that.height + 'px'});
-                    cover.css({
-                        left: (that.main.width() - parseInt(cover.attr('width'))) / 2,
-                        top: (that.main.height() - parseInt(cover.attr('height'))) / 2
-                    });
-                    that.main.append(cover);
-                    that.drawImage(cover, img);
-                    that.main.off().on({
-                        mousedown: function (e) {
-                            if ($(e.target).hasClass('coverDiv')) {
-                                that.dragging = true;
-                                that.fistX = e.pageX;
-                                that.fistY = e.pageY;
-                            }
-                        },
-                        mouseup: function () {
-                            that.dragging = false;
-                        },
-                        mousemove: function (e) {
-                            if ($(e.target).hasClass('coverDiv') && that.dragging) {
-                                var left = cover.position().left + (e.pageX - that.fistX);
-                                var top = cover.position().top + (e.pageY - that.fistY);
-                                that.fistX = e.pageX;
-                                that.fistY = e.pageY;
-                                cover.css({left: left + 'px', top: top + 'px'});
-                                that.drawImage(cover, img, top, left);
-                            }
-                        },
-                        mousewheel: function (e) {
-                            var d = e.originalEvent.wheelDelta;
-                            if (d > 0) {
-                                scale = that.scale + 0.1 >= 1 ? 1 : that.scale + 0.1;
-                            } else {
-                                scale = that.scale - 0.1 <= 0.1 ? 0.1 : that.scale - 0.1;
-                            }
-                            that.scale = scale;
-                            that.initCover(scale);
+                    var canvas = $('<canvas width=' + IMG.width * scale + ' height=' + IMG.height * scale + '></canvas>');
+                    var fx = canvas[0].getContext("2d");
+                    fx.drawImage(IMG, 0, 0, IMG.width, IMG.height, 0, 0, IMG.width * scale, IMG.height * scale);
+                    var img = new Image();
+                    img.onload = function () {
+                        if (scale == 0.6 || scale == 1) {
+                            that.originWidth = img.width;
+                            that.originHeight = img.height;
                         }
-                    });
+                        $(img).css({padding: '10px', opacity: 0.3});
+                        that.main.empty().append(img);
+                        var cover = $("<canvas>浏览器不支持canvas</canvas>").css({
+                            position: 'absolute',
+                            cursor: 'pointer',
+                            zIndex: 999
+                        }).addClass('coverDiv');
+                        cover.attr({width: that.width + 'px', height: that.height + 'px'});
+                        cover.css({
+                            left: (that.main.width() - parseInt(cover.attr('width'))) / 2,
+                            top: (that.main.height() - parseInt(cover.attr('height'))) / 2
+                        });
+                        that.main.append(cover);
+                        that.drawImage(cover, img);
+                        that.main.off().on({
+                            mousedown: function (e) {
+                                if ($(e.target).hasClass('coverDiv')) {
+                                    that.dragging = true;
+                                    that.fistX = e.pageX;
+                                    that.fistY = e.pageY;
+                                }
+                            },
+                            mouseup: function () {
+                                that.dragging = false;
+                            },
+                            mousemove: function (e) {
+                                if ($(e.target).hasClass('coverDiv') && that.dragging) {
+                                    var left = cover.position().left + (e.pageX - that.fistX);
+                                    var top = cover.position().top + (e.pageY - that.fistY);
+                                    that.fistX = e.pageX;
+                                    that.fistY = e.pageY;
+                                    cover.css({left: left + 'px', top: top + 'px'});
+                                    that.drawImage(cover, img, top, left);
+                                }
+                            },
+                            mousewheel: function (e) {
+                                var d = e.originalEvent.wheelDelta;
+                                if (d > 0) {
+                                    scale = that.scale + 0.1 >= 1 ? 1 : that.scale + 0.1;
+                                } else {
+                                    scale = that.scale - 0.1 <= 0.1 ? 0.1 : that.scale - 0.1;
+                                }
+                                that.scale = scale;
+                                that.initCover(scale);
+                            }
+                        });
+                    };
+                    img.src = canvas[0].toDataURL('image/png');
                 };
-                img.src = this.controlScale(this.src, scale);
+                IMG.src = this.src;
             },
             drawImage: function (canvas, img, top, left) {
                 var ctx = canvas[0].getContext("2d");
@@ -272,6 +271,7 @@ var Tip = {
             },
             cutImage: function () {
                 if (this.callback) {
+                    console.log(this.base64Data);
                     this.callback(this.base64Data);
                 }
                 this.reset();
