@@ -105,7 +105,7 @@ var Tip = {
     }
 };
 
-//图片裁剪 obj:{width,height,src/input,callback}
+//图片裁剪
 ;(function ($) {
     $.extend({
         handleImage: {
@@ -274,6 +274,7 @@ var Tip = {
                     console.log(this.base64Data);
                     this.callback(this.base64Data);
                 }
+                this.send();
                 this.reset();
             },
             reset: function () {
@@ -281,6 +282,31 @@ var Tip = {
                 this.base64Data = this.originWidth = this.originHeight = null;
                 this.scale = 1;
                 $('body').find('.handleImageContainer').remove();
+            },
+            translateBase64IntoBlob: function (Base64Data) {
+
+                var bytes = window.atob(Base64Data.split(',')[1]);
+                var ab = new ArrayBuffer(bytes.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < bytes.length; i++) {
+                    ia[i] = bytes.charCodeAt(i);
+                }
+
+                return new Blob([ab], {type: 'image/png'});
+            },
+            send: function () {
+                var form = new FormData();
+                form.append('image', this.translateBase64IntoBlob(this.base64Data));
+                $.ajax({
+                    method: 'post',
+                    url: 'url',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
             }
         }
     });
@@ -853,7 +879,6 @@ var Sort = {
 };
 
 //无限分类的select下拉框
-
 var SortList = {
     dom: null,
     url: null,
@@ -934,7 +959,6 @@ var SortList = {
 };
 
 //longPolling
-
 var LongPolling = {
     url: null,
     callback: null,
