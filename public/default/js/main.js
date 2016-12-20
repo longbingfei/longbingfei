@@ -369,14 +369,27 @@ var Helper = {
                     var infoShow = $(right).find('.info-show')[0];
                     $(topPreview).empty().append(img);
                     var ul = $('<ul style="margin:0;padding:0;list-style-type:none">' +
-                        '<li>原图规格: ' + that.originWidth + ' X ' + that.originHeight + '</li>' +
+                        '<li>缩&nbsp;&nbsp;放&nbsp;&nbsp;比: <i class="zoom zoom-out glyphicon glyphicon-minus-sign"></i>&nbsp;&nbsp;' + (that.scale.toFixed(1) * 100) + '%&nbsp;&nbsp;<i class="zoom zoom-in glyphicon glyphicon-plus-sign"></i></li>' +
+                        '<li>原图规格: ' + that.originWidth + 'px X ' + that.originHeight + 'px</li>' +
                         '<li>剪切规格: ' + that.width + ' X ' + that.height + '</li>' +
-                        '<li>缩&nbsp;&nbsp;放&nbsp;&nbsp;比: ' + (that.scale.toFixed(1) * 100) + '%</li>' +
                         '<li class="cut-image" style="margin-top:20px;margin-right:10px;display:inline-block;width:100px;height:40px;border:1px solid grey;' +
                         'text-align:center;line-height:40px;floralwhite;border-radius:4px;cursor:pointer">裁剪</li>' +
                         '<li class="reset-box" style="margin-top:20px;display:inline-block;width:100px;height:40px;border:1px solid grey;' +
                         'text-align:center;line-height:40px;border-radius:4px;cursor:pointer">取消</li></ul>');
                     $(infoShow).empty().append(ul);
+                    $('.zoom').css({
+                        fontSize:'16px',
+                        cursor:'pointer'
+                    }).click(function () {
+                        var scale;
+                        if ($(this).hasClass('zoom-in')) {
+                            scale = that.scale + 0.1 >= 1 ? 1 : that.scale + 0.1;
+                        } else {
+                            scale = that.scale - 0.1 <= 0.1 ? 0.1 : that.scale - 0.1;
+                        }
+                        that.scale = scale;
+                        that.initCover(scale);
+                    });
                     $('.cut-image').click(function () {
                         that.cutImage();
                     });
