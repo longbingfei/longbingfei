@@ -70,7 +70,7 @@
         var content = '{!! isset($single_data) ? $single_data['describe'] : '' !!}';
         um.setContent(content);
         //加载图片上传模块
-        UploadPic.Init({dom: $(".show-product-images")});
+        $.UploadImage.Init({dom: $(".show-product-images")});
         //表单提交模块
         $(".main_product_form").on("click", ".btn-submit", function () {
             var data = {
@@ -88,7 +88,7 @@
             $.each(data, function (x, y) {
                 formData.append(x, y);
             });
-            $.each(UploadPic.uploadFiles, function (x, y) {
+            $.each($.UploadImage.uploadFiles, function (x, y) {
                 formData.append('file[]', y);
             });
             $.ajax({

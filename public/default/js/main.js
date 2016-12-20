@@ -105,6 +105,118 @@ var Tip = {
     }
 };
 
+//图片轮播obj:{images:json,payload:dom}
+var Carousel = {
+    host: '',
+    init: function (obj) {
+        var max = 8;
+        var images = obj.images;
+        var payload = obj.payload;
+        var time = obj.time ? obj.time : 3000;
+        if (!images || !images.length || !payload) {
+            return false;
+        }
+        if (obj.host) {
+            this.host = obj.host;
+        }
+        images = JSON.parse(images);
+        var carouselDiv = $("<div></div>").css({
+            width: payload.width() > 320 ? payload.width() : 320,
+            height: payload.height() > 240 ? payload.height() : 240
+        }).addClass("carousel");
+        var carouselListDiv = $("<div></div>").addClass("carousel-list");
+        var that = this;
+        $.each(images, function (x, y) {
+            if (x < max) {
+                var item = carouselListDiv.clone().css({
+                    left: 45 * x + 5,
+                    backgroundImage: 'url(' + that.host + y.thumb + ')'
+                }).data({src: that.host + y.path, id: x});
+                carouselDiv.append(item);
+            }
+        });
+        var img = $("<img>").css({
+            width: carouselDiv.width(),
+            height: carouselDiv.height()
+        });
+        img.attr('src', this.host + images[0].path).data('id', 0);
+        img.appendTo(carouselDiv);
+        payload.append(carouselDiv);
+        $(".carousel-list").mouseover(function () {
+            img.attr('src', $(this).data('src')).data('id', $(this).data('id'));
+        });
+        setInterval(function () {
+            Carousel.action(images);
+        }, time);
+    },
+    action: function (images) {
+        var img_ = $(".carousel").children("img")[0];
+        var id = $(img_).data('id');
+        id = id < images.length - 1 ? id + 1 : 0;
+        $(img_).attr('src', this.host + images[id].path).data('id', id);
+    }
+};
+
+//联系助手
+var Helper = {
+    init: function (obj) {
+        var connectDiv = $("<div></div>").css({
+            width: "120px",
+            height: "200px",
+            position: "fixed",
+            marginTop: "80px",
+            marginLeft: "1px",
+            boxShadow: "0px 0px 2px 3px orange",
+            zIndex: 99
+        });
+        var rowDiv = $("<div></div>").css({
+            width: "100px",
+            height: "25px",
+            margin: "10px auto",
+            boxShadow: "0px 0px 2px 2px orange",
+            textAlign: "center",
+            lineHeight: "25px",
+            cursor: "pointer",
+            color: "orange"
+        }).addClass("clickDiv");
+        connectDiv.on('click', ".clickDiv", function () {
+            Helper.slide($(this));
+        });
+        connectDiv.append(
+            rowDiv.clone().addClass("tel").html('联系方式'),
+            rowDiv.clone().addClass("qq").html('QQ'),
+            rowDiv.clone().addClass("wechat").html('微信')
+        );
+        var dom = obj ? obj : $("body");
+        dom.append(connectDiv);
+        $(".tel").click();
+    },
+    slide: function (obj) {
+        var showDiv = $("<div></div>").css({
+            width: "100px",
+            height: "80px",
+            margin: "10px auto",
+            display: "block",
+            fontSize: "13px",
+            boxShadow: "0px 0px 2px 2px orange"
+        }).addClass("showDiv");
+        var html;
+        if (obj.hasClass("tel")) {
+            html = "哈哈哈";
+        } else if (obj.hasClass("qq")) {
+            html = "hehe";
+        } else {
+            html = "额";
+        }
+        showDiv.html(html);
+        if (!obj) {
+            return false;
+        }
+        obj.parent().find(".showDiv").remove();
+        obj.after(showDiv);
+    }
+};
+
 //图片裁剪
 ;(function ($) {
     $.extend({
@@ -119,6 +231,9 @@ var Tip = {
             originHeight: null,
             scale: 1,
             callback: null,
+            fileName: null,
+            fileType: null,
+            src: null,
             init: function (obj) {
                 this.reset();
                 this.width = obj.width ? obj.width : 200;
@@ -156,6 +271,8 @@ var Tip = {
                         var file = new FileReader();
                         file.readAsDataURL(file_path);
                         file.onload = function (e) {
+                            that.fileName = file_path.name;
+                            that.fileType = file_path.type;
                             that.src = e.target.result;
                             that.initCover();
                         }
@@ -271,15 +388,13 @@ var Tip = {
             },
             cutImage: function () {
                 if (this.callback) {
-                    console.log(this.base64Data);
-                    this.callback(this.base64Data);
+                    this.callback(this.translateBase64IntoBlob(this.base64Data, 'image'), this.base64Data, this.fileName);
                 }
-                this.send();
                 this.reset();
             },
             reset: function () {
                 this.dragging = false;
-                this.base64Data = this.originWidth = this.originHeight = null;
+                this.base64Data = this.originWidth = this.originHeight = this.fileName = this.fileType = this.src = null;
                 this.scale = 1;
                 $('body').find('.handleImageContainer').remove();
             },
@@ -292,7 +407,7 @@ var Tip = {
                     ia[i] = bytes.charCodeAt(i);
                 }
 
-                return new Blob([ab], {type: 'image/png'});
+                return new Blob([ab], {type: this.fileType});
             },
             send: function () {
                 var form = new FormData();
@@ -312,242 +427,130 @@ var Tip = {
     });
 })($);
 
-//图片轮播obj:{images:json,payload:dom}
-var Carousel = {
-    host: '',
-    init: function (obj) {
-        var max = 8;
-        var images = obj.images;
-        var payload = obj.payload;
-        var time = obj.time ? obj.time : 3000;
-        if (!images || !images.length || !payload) {
-            return false;
-        }
-        if (obj.host) {
-            this.host = obj.host;
-        }
-        images = JSON.parse(images);
-        var carouselDiv = $("<div></div>").css({
-            width: payload.width() > 320 ? payload.width() : 320,
-            height: payload.height() > 240 ? payload.height() : 240
-        }).addClass("carousel");
-        var carouselListDiv = $("<div></div>").addClass("carousel-list");
-        var that = this;
-        $.each(images, function (x, y) {
-            if (x < max) {
-                var item = carouselListDiv.clone().css({
-                    left: 45 * x + 5,
-                    backgroundImage: 'url(' + that.host + y.thumb + ')'
-                }).data({src: that.host + y.path, id: x});
-                carouselDiv.append(item);
-            }
-        });
-        var img = $("<img>").css({
-            width: carouselDiv.width(),
-            height: carouselDiv.height()
-        });
-        img.attr('src', this.host + images[0].path).data('id', 0);
-        img.appendTo(carouselDiv);
-        payload.append(carouselDiv);
-        $(".carousel-list").mouseover(function () {
-            img.attr('src', $(this).data('src')).data('id', $(this).data('id'));
-        });
-        setInterval(function () {
-            Carousel.action(images);
-        }, time);
-    },
-    action: function (images) {
-        var img_ = $(".carousel").children("img")[0];
-        var id = $(img_).data('id');
-        id = id < images.length - 1 ? id + 1 : 0;
-        $(img_).attr('src', this.host + images[id].path).data('id', id);
-    }
-};
-
-//联系助手
-var Helper = {
-    init: function (obj) {
-        var connectDiv = $("<div></div>").css({
-            width: "120px",
-            height: "200px",
-            position: "fixed",
-            marginTop: "80px",
-            marginLeft: "1px",
-            boxShadow: "0px 0px 2px 3px orange",
-            zIndex: 99
-        });
-        var rowDiv = $("<div></div>").css({
-            width: "100px",
-            height: "25px",
-            margin: "10px auto",
-            boxShadow: "0px 0px 2px 2px orange",
-            textAlign: "center",
-            lineHeight: "25px",
-            cursor: "pointer",
-            color: "orange"
-        }).addClass("clickDiv");
-        connectDiv.on('click', ".clickDiv", function () {
-            Helper.slide($(this));
-        });
-        connectDiv.append(
-            rowDiv.clone().addClass("tel").html('联系方式'),
-            rowDiv.clone().addClass("qq").html('QQ'),
-            rowDiv.clone().addClass("wechat").html('微信')
-        );
-        var dom = obj ? obj : $("body");
-        dom.append(connectDiv);
-        $(".tel").click();
-    },
-    slide: function (obj) {
-        var showDiv = $("<div></div>").css({
-            width: "100px",
-            height: "80px",
-            margin: "10px auto",
-            display: "block",
-            fontSize: "13px",
-            boxShadow: "0px 0px 2px 2px orange"
-        }).addClass("showDiv");
-        var html;
-        if (obj.hasClass("tel")) {
-            html = "哈哈哈";
-        } else if (obj.hasClass("qq")) {
-            html = "hehe";
-        } else {
-            html = "额";
-        }
-        showDiv.html(html);
-        if (!obj) {
-            return false;
-        }
-        obj.parent().find(".showDiv").remove();
-        obj.after(showDiv);
-    }
-};
-
 //图片上传与显示{dom:xxx;max:xxx}
-var UploadPic = {
-    i: 0,
-    uploadFiles: {},
-    maxLength: 0,
-    Show: function (obj) {
-        var file = obj.context.files[0];
-        this.uploadFiles[this.i] = file;
-        var that = this;
-        var Reader = new FileReader();
-        Reader.readAsDataURL(file);
-        Reader.onload = function (e) {
-            var url = e.target.result;
-            var newDom = $("<div data-id=" + that.i + "></div>")
-                .addClass("plug-upload-div")
-                .css({backgroundImage: "url" + "(" + url + ")", backgroundSize: "100% 100%"})
-                .append($("<div></div>").addClass("plug-cancel-style glyphicon glyphicon-remove-circle"));
-            $(".plug-show-div").prepend(newDom);
-            $("body").off('mouseover mouseout', '.plug-upload-div').on('mouseover mouseout', '.plug-upload-div', function (e) {
-                that.Preview(e, $(this));
-            });
-            $("body").off('click', '.plug-cancel-style').on('click', '.plug-cancel-style', function () {
-                that.Delete($(this));
-            });
-            that.i++;
-            //控制最大图片数
-            if (that.maxLength && Object.keys(that.uploadFiles).length >= that.maxLength) {
-                $(".default-plug-upload-div").css('display', 'none');
-                return false;
-            }
-        };
-    },
-    Preview: function (e, obj) {
-        switch (e.type) {
-            case "mouseover":
-                obj.children('.plug-cancel-style').show();
-                if (!$(e.target).hasClass('plug-cancel-style')) {
-                    var showPicDiv = $("<div></div>").css({
-                        "backgroundImage": obj.css("backgroundImage"),
-                        left: e.pageX,
-                        top: e.pageY - 300
-                    }).addClass("plug-preview-div plug-preview-pic");
-                    $("body").append(showPicDiv);
+;(function ($) {
+    $.extend({
+        UploadImage: {
+            i: 0,
+            uploadFiles: {},
+            maxLength: 0,
+            Show: function (blob, base64Data, filename) {
+                var that = $.UploadImage;
+                that.uploadFiles[that.i] = new File([blob], filename, {type: blob.type});
+                var newDom = $("<div data-id=" + that.i + "></div>")
+                    .addClass("plug-upload-div")
+                    .css({backgroundImage: "url" + "(" + base64Data + ")", backgroundSize: "100% 100%"})
+                    .append($("<div></div>").addClass("plug-cancel-style glyphicon glyphicon-remove-circle"));
+                $(".plug-show-div").prepend(newDom);
+                $("body").off('mouseover mouseout', '.plug-upload-div').on('mouseover mouseout', '.plug-upload-div', function (e) {
+                    that.Preview(e, $(this));
+                });
+                $("body").off('click', '.plug-cancel-style').on('click', '.plug-cancel-style', function () {
+                    that.Delete($(this));
+                });
+                that.i++;
+                //控制最大图片数
+                if (that.maxLength && Object.keys(that.uploadFiles).length >= that.maxLength) {
+                    $(".default-plug-upload-div").css('display', 'none');
+                    return false;
                 }
-                break;
-            case "mouseout":
-                obj.children('.plug-cancel-style').hide();
-                $("body").find(".plug-preview-pic").remove();
-                break;
-        }
-    },
-    //单个图片
-    Send: function (name, sortId) {
-        var images = [];
-        $.each(this.uploadFiles, function (x, v) {
-            var form = new FormData;
-            form.append('name', name);
-            form.append('sort_id', sortId);
-            form.append('image', v);
-            $.ajax({
-                method: 'POST',
-                async: false, //同步
-                url: "feature/image",
-                data: form,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.id > 0) {
-                        images.push(data);
-                    }
+            },
+            Preview: function (e, obj) {
+                switch (e.type) {
+                    case "mouseover":
+                        obj.children('.plug-cancel-style').show();
+                        if (!$(e.target).hasClass('plug-cancel-style')) {
+                            var showPicDiv = $("<div></div>").css({
+                                "backgroundImage": obj.css("backgroundImage"),
+                                left: e.pageX,
+                                top: e.pageY - 300
+                            }).addClass("plug-preview-div plug-preview-pic");
+                            $("body").append(showPicDiv);
+                        }
+                        break;
+                    case "mouseout":
+                        obj.children('.plug-cancel-style').hide();
+                        $("body").find(".plug-preview-pic").remove();
+                        break;
                 }
-            });
-        });
+            },
+            //单个图片
+            Send: function (name, sortId) {
+                var images = [];
+                $.each(this.uploadFiles, function (x, v) {
+                    var form = new FormData;
+                    form.append('name', name);
+                    form.append('sort_id', sortId);
+                    form.append('image', v);
+                    $.ajax({
+                        method: 'POST',
+                        async: false, //同步
+                        url: "feature/image",
+                        data: form,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data.id > 0) {
+                                images.push(data);
+                            }
+                        }
+                    });
+                });
 
-        return images;
-    },
-    Delete: function (obj) {
-        var id = obj.parent().data("id");
-        delete this.uploadFiles[id];
-        $("#plug-upload-input").val('');
-        obj.parent().remove();
-        if (this.maxLength && Object.keys(this.uploadFiles).length < this.maxLength) {
-            $(".default-plug-upload-div").css('display', 'block');
+                return images;
+            },
+            Delete: function (obj) {
+                var id = obj.parent().data("id");
+                delete this.uploadFiles[id];
+                $("#plug-upload-input").val('');
+                obj.parent().remove();
+                if (this.maxLength && Object.keys(this.uploadFiles).length < this.maxLength) {
+                    $(".default-plug-upload-div").css('display', 'block');
+                }
+            },
+            Reset: function () {
+                $(".plug-show-div").find(".plug-upload-div").remove();
+                this.i = 0;
+                this.uploadFiles = {};
+                this.maxLength = 0;
+            },
+            Init: function (obj) {
+                this.Reset();
+                if (!obj.dom) {
+                    return false;
+                }
+                if (obj.max) {
+                    this.maxLength = obj.max;
+                }
+                var showDiv =
+                    '<div class="plug-show-div">' +
+                    '<div class="plug-upload-div default-plug-upload-div">' +
+                    '<div class="plug-mark">' +
+                    '<div class="plug-plus-x"></div>' +
+                    '<div class="plug-plus-y"></div>' +
+                    '</div>' +
+                    '<input id="plug-upload-input" type="file" name="image[]">' +
+                    '</div>' +
+                    '<div style="clear:both;"></div>' +
+                    '</div>';
+                $(obj.dom).empty().append(showDiv);
+                //如果涉及到更改单个索引图,显示现有图片
+                if (obj.bgsrc) {
+                    $('.default-plug-upload-div').css({
+                        backgroundImage: 'url("' + obj.bgsrc + '")',
+                        backgroundSize: '80px 80px'
+                    });
+                }
+                $.handleImage.init({
+                    width: '600px',
+                    height: '450px',
+                    input: $('#plug-upload-input'),
+                    callback: this.Show
+                });
+            }
         }
-    },
-    Reset: function () {
-        $(".plug-show-div").find(".plug-upload-div").remove();
-        this.i = 0;
-        this.uploadFiles = {};
-        this.maxLength = 0;
-    },
-    Init: function (obj) {
-        this.Reset();
-        if (!obj.dom) {
-            return false;
-        }
-        if (obj.max) {
-            this.maxLength = obj.max;
-        }
-        var showDiv =
-            '<div class="plug-show-div">' +
-            '<div class="plug-upload-div default-plug-upload-div">' +
-            '<div class="plug-mark">' +
-            '<div class="plug-plus-x"></div>' +
-            '<div class="plug-plus-y"></div>' +
-            '</div>' +
-            '<input id="plug-upload-input" type="file" name="image[]">' +
-            '</div>' +
-            '<div style="clear:both;"></div>' +
-            '</div>';
-        $(obj.dom).empty().append(showDiv);
-        //如果涉及到更改单个索引图,显示现有图片
-        if (obj.bgsrc) {
-            $('.default-plug-upload-div').css({
-                backgroundImage: 'url("' + obj.bgsrc + '")',
-                backgroundSize: '80px 80px'
-            });
-        }
-        var that = this;
-        $("#plug-upload-input").on('change', function () {
-            that.Show($(this));
-        });
-    }
-};
+    });
+})($);
 
 //视频播放器
 var Video = {
@@ -1055,8 +1058,7 @@ var WaterFall = {
                 heightArr[key] = heightArr[key] + obj[i].offsetHeight;
             }
         }
-    }
-    ,
+    },
     getIndex: function (arr, val) {
         for (var i in arr) {
             if (arr[i] == val) {
