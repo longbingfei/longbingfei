@@ -81,6 +81,15 @@ class Image implements ImageInterface
         }
     }
 
+    //服务器现有图片文件入库
+    public function createFormExistImage(array $image)
+    {
+        $info = ImageModel::create($image);
+        event('log', [[$this->module, 'c', $info]]);
+
+        return $info->toArray();
+    }
+
     //创建目录
     protected function checkDir($path)
     {

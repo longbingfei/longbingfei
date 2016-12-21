@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\InterfacesBag\Video;
 
 class VideoController extends Controller
@@ -21,27 +22,28 @@ class VideoController extends Controller
 
     public function index()
     {
-        return $this->video->index();
+        $resp = $this->video->index();
+
+        return Response::display($resp);
     }
 
     public function show($id)
     {
-        return $this->video->show($id);
+        $resp = $this->video->show($id);
+
+        return Response::display($resp);
     }
 
     public function store(Request $request)
     {
         if (!$video = $request->file("video")) {
-            return '{"Error":"no video file"}';
+            return Response::display(['errorCode' => 1505]);
         }
         if ($video->getSize() == 0) {
-            return '{"Error":"invalid size"}';
+            return Response::display(['errorCode' => 1506]);
         }
-        if (!$type = $video->guessExtension()) {
-            return '{"Error":"invalid extension"}';
-        }
-        if (!in_array($type, $this->types)) {
-            return '{"Error":"invalid type"}';
+        if (!($type = $video->guessExtension()) || !in_array($video->guessExtension(), $this->types)) {
+            return Response::display(['errorCode' => 1507]);
         }
         $name = trim($request->get('name'));
         if ($name) {
@@ -51,13 +53,16 @@ class VideoController extends Controller
         if ($sort_id) {
             $video->sort_id = $sort_id;
         }
+        $resp = $this->video->create($video);
 
-        return $this->video->create($video);
+        return Response::display($resp);
     }
 
     public function destroy($id)
     {
-        return $this->video->delete($id);
+        $resp = $this->video->delete($id);
+
+        return Response::display($resp);
     }
 
 }

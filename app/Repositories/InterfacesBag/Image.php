@@ -17,5 +17,7 @@ interface Image extends BaseInterface
 
     public function create(UploadedFile $file, array $params = []);
 
+    public function createFormExistImage(array $image);
+
     public function delete($ids);
 }
