@@ -30,7 +30,7 @@ class Video implements VideoInterface
     {
         return VideoModel::leftJoin('administrators', 'administrators.id', '=', 'videos.user_id')->leftJoin
         ('video_sorts', 'video_sorts.id', '=', 'videos.sort_id')->select('videos.*', 'video_sorts.name as sort_name',
-            'administrators.username')->orderBy('videos.created_at', 'DESC')->get()->groupBy('sort_id');
+            'administrators.username')->orderBy('videos.created_at', 'DESC')->get();
     }
 
     public function show($id)
@@ -65,7 +65,7 @@ class Video implements VideoInterface
             return ['errorCode' => 1504];
         }
         $videoInfo['frame_path'] = $this->image->createFormExistImage([
-            'name'    => '视频截图-' . $originName,
+            'name'    => '视频截图-' . $videoInfo['name'],
             'sort_id' => '3',
             'path'    => $framePath,
             'user_id' => Auth::id()
