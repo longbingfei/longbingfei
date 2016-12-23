@@ -12,7 +12,7 @@ class VideoController extends Controller
 {
     protected $video;
 
-    protected $types = ['mp4'];
+    protected $types = ['mp4','avi'];
 
     public function __construct(Video $video)
     {

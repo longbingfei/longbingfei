@@ -87,7 +87,7 @@
             if (!id) {
                 return false;
             }
-            Confirm({
+            $.Confirm({
                 title: "删除确认",
                 message: "你确定删除这篇文稿吗?",
                 callback: function () {
@@ -98,7 +98,7 @@
                             if (data.id) {
                                 location.reload();
                             } else {
-                                Confirm({message: data.error_message});
+                                $.Confirm({message: data.error_message});
                             }
                         }
                     });

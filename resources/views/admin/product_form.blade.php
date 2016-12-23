@@ -100,7 +100,7 @@
                 success: function (data) {
                     if (!data.id) {
                         //加载alert框
-                        Confirm({title: '错误提示', message: data.error_message});
+                        $.Confirm({title: '错误提示', message: data.error_message});
                         return false;
                     }
                     location.href = "{{url('admin/feature/product')}}";
@@ -121,7 +121,7 @@
             var dropimageid = $(this).data('id');
             if (dropimageid) {
                 if ($(".product-show-image-list").children().length == 2) {
-                    Confirm({title: "操作提示", message: "商品展示图至少保留1张!"});
+                    $.Confirm({title: "操作提示", message: "商品展示图至少保留1张!"});
                 } else {
                     $(".product-show-image-list").find("div[data-id=" + dropimageid + "]").remove();
                     productDropImageIDs.push(dropimageid);

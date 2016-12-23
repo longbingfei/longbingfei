@@ -99,7 +99,7 @@
             if (!id) {
                 return false;
             }
-            Confirm({
+            $.Confirm({
                 title: "删除确认",
                 message: "你确定删除这个商品吗?",
                 callback: function () {
@@ -110,7 +110,7 @@
                             if (data.id) {
                                 location.reload();
                             } else {
-                                Confirm({message: data.error_message});
+                                $.Confirm({message: data.error_message});
                             }
                         }
                     });
@@ -129,7 +129,7 @@
                 action_name = send_data.is_carousel ? '轮播' : '取消轮播';
             }
             var that = $(this);
-            Confirm({
+            $.Confirm({
                 title: '操作确认',
                 message: "你确定" + action_name + "此商品吗?",
                 callback: function () {
@@ -145,7 +145,7 @@
                                     that.removeClass('color-b').addClass('color-a');
                                 }
                             } else {
-                                Confirm({message: data.error_message});
+                                $.Confirm({message: data.error_message});
                             }
                         }
                     });

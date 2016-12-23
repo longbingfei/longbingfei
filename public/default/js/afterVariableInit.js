@@ -11,5 +11,5 @@ function checkpermission(permission) {
         }
     }
 
-    return Confirm({title: '操作提示', message: '无操作权限'});
+    return $.Confirm({title: '操作提示', message: '无操作权限'});
 }

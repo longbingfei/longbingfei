@@ -74,7 +74,7 @@
                 contentType: false,
                 success: function (data) {
                     if (!data.id) {
-                        Confirm({title: '错误提示', message: data.error_message});
+                        $.Confirm({title: '错误提示', message: data.error_message});
                         return false;
                     }
                     location.href = "{{url('admin/feature/article')}}";

@@ -89,7 +89,7 @@ if ($avatar = unserialize($user->avatar)) {
     var last_login_time = '{{\Illuminate\Support\Facades\Auth::User()->last_login_time}}';
     var user_id = '{{\Illuminate\Support\Facades\Auth::Id()}}';
     if (localStorage.getItem("last_login_time_" + user_id) !== last_login_time) {
-        Tip.init({
+        $.Tip({
             message: '上次登录时间:' + last_login_time,
             width: '300px',
             height: '50px'

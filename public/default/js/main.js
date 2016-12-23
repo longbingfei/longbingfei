@@ -14,96 +14,86 @@ var Frame = {
     }
 };
 
-//警告框
-var Tool = {
-    Alert: function (obj, message) {
-        var alertDom =
-            '<div class="alert alert-warning" role="alert">' +
-            '<div>' + message + '</div>' +
-            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-            '<span aria-hidden="true">x</span>' +
-            '</button>' +
-            '</div>';
-        $(alertDom).css({width: "100%", height: "100%"});
-        obj.append($(alertDom));
-    }
-};
-
 //确认框 msg:{title,message,callback}
-var Confirm = function (msg) {
-    if (!msg || !msg.message) {
-        return false;
-    }
-    var coverDiv = $("<div></div>").css({
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        backgroundColor: "black",
-        opacity: "0.6",
-        zIndex: 9998
-    }).addClass("msg_modal");
-    var confirmDiv = $("<div></div>").css({
-        width: "400px",
-        height: "200px",
-        backgroundColor: "white",
-        boxShadow: "0px 0px 15px 5px rgb(45, 59, 67)",
-        position: "absolute",
-        left: $(window).width() / 2 - 200,
-        top: $(window).height() / 2 - 100,
-        textAlign: "center",
-        zIndex: 9999,
-        color: "black"
-    }).addClass("msg_modal");
-    var confirmBody = "<h4><span class='glyphicon glyphicon-exclamation-sign' style='color:indianred'></span>&nbsp&nbsp" +
-        (msg && msg.title ? msg.title : '提示') + "</h4><hr style='margin:4px 4px" +
-        " !important;'/>" +
-        "<div style='width:300px;height:100px;margin:0 auto;line-height:100px'>" + msg.message +
-        "</div><hr style='margin:4px 4px !important;' />" +
-        "<div><botton class='btn btn-default btn-cancel' style='margin-right: 60px'>取消</botton>" +
-        "<botton class='btn btn-default btn-ok'>确定</botton></div>";
-    $("body").append(coverDiv).append(confirmDiv.append(confirmBody));
-    $(".msg_modal").on('click', '.btn', function () {
-        if ($(this).hasClass('btn-cancel')) {
-            $("body").find(".msg_modal").remove();
-        } else if ($(this).hasClass('btn-ok')) {
-            $("body").find(".msg_modal").remove();
-            (typeof msg.callback == 'function') ? msg.callback() : '';
-        }
-        return false;
-    });
+;(function ($) {
+    $.extend({
+        Confirm: function (msg) {
+            if (!msg || !msg.message) {
+                return false;
+            }
+            var coverDiv = $("<div></div>").css({
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                backgroundColor: "black",
+                opacity: "0.6",
+                zIndex: 9998
+            }).addClass("msg_modal");
+            var confirmDiv = $("<div></div>").css({
+                width: "400px",
+                height: "200px",
+                backgroundColor: "white",
+                boxShadow: "0px 0px 15px 5px rgb(45, 59, 67)",
+                position: "absolute",
+                left: $(window).width() / 2 - 200,
+                top: $(window).height() / 2 - 100,
+                textAlign: "center",
+                zIndex: 9999,
+                color: "black"
+            }).addClass("msg_modal");
+            var confirmBody = "<h4 style='margin: 0 0;height: 40px;line-height: 40px;'><span class='glyphicon glyphicon-exclamation-sign' style='color:indianred'></span>&nbsp&nbsp" +
+                (msg && msg.title ? msg.title : '提示') + "</h4><hr style='margin:4px 4px !important;'/>" +
+                "<div style='width:300px;height:100px;margin:0 auto;line-height:100px'>" + msg.message +
+                "</div><hr style='margin:4px 4px !important;' />" +
+                "<div style='height: 40px;line-height: 35px;'><botton class='btn btn-default btn-cancel' style='margin-right: 60px'>取消</botton>" +
+                "<botton class='btn btn-default btn-ok'>确定</botton></div>";
+            $("body").append(coverDiv).append(confirmDiv.append(confirmBody));
+            $(".msg_modal").on('click', '.btn', function () {
+                if ($(this).hasClass('btn-cancel')) {
+                    $("body").find(".msg_modal").remove();
+                } else if ($(this).hasClass('btn-ok')) {
+                    $("body").find(".msg_modal").remove();
+                    (typeof msg.callback == 'function') ? msg.callback() : '';
+                }
+                return false;
+            });
 
-    return false;
-};
+            return false;
+        }
+    });
+})($);
 
 //冒泡提示框
-var Tip = {
-    init: function (obj) {
-        if (!obj.message) {
-            return false
+;(function ($) {
+    $.extend({
+        Tip: function (obj) {
+            if (!obj.message) {
+                return false
+            }
+            var width = obj.width ? obj.width : '200px';
+            var height = obj.height ? obj.height : '40px';
+            var tipDiv = $("<div>" + obj.message + "</div>").css({
+                width: width,
+                height: height,
+                lineHeight: height,
+                bottom: 0,
+                right: 0
+            }).addClass('tipDiv');
+            $('body').append(tipDiv);
+            $(document).ready(function () {
+                $('.tipDiv').css({display: 'block'}).animate({bottom: '50px'});
+                setTimeout(function () {
+                    $('.tipDiv').animate({bottom: '0px'}, function () {
+                        $(this).remove();
+                    });
+                }, 3000);
+            });
+            return true;
         }
-        var width = obj.width ? obj.width : '200px';
-        var height = obj.height ? obj.height : '40px';
-        var tipDiv = $("<div>" + obj.message + "</div>").css({
-            width: width,
-            height: height,
-            lineHeight: height,
-            bottom: 0,
-            right: 0
-        }).addClass('tipDiv');
-        $('body').append(tipDiv);
-        $(document).ready(function () {
-            $('.tipDiv').css({display: 'block'}).animate({bottom: '50px'});
-            setTimeout(function () {
-                $('.tipDiv').animate({bottom: '0px'}, function () {
-                    $(this).remove();
-                });
-            }, 3000);
-        });
-        return true;
-    }
-};
+    });
+})($);
 
 //图片轮播obj:{images:json,payload:dom}
 var Carousel = {
@@ -154,66 +144,6 @@ var Carousel = {
         var id = $(img_).data('id');
         id = id < images.length - 1 ? id + 1 : 0;
         $(img_).attr('src', this.host + images[id].path).data('id', id);
-    }
-};
-
-//联系助手
-var Helper = {
-    init: function (obj) {
-        var connectDiv = $("<div></div>").css({
-            width: "120px",
-            height: "200px",
-            position: "fixed",
-            marginTop: "80px",
-            marginLeft: "1px",
-            boxShadow: "0px 0px 2px 3px orange",
-            zIndex: 99
-        });
-        var rowDiv = $("<div></div>").css({
-            width: "100px",
-            height: "25px",
-            margin: "10px auto",
-            boxShadow: "0px 0px 2px 2px orange",
-            textAlign: "center",
-            lineHeight: "25px",
-            cursor: "pointer",
-            color: "orange"
-        }).addClass("clickDiv");
-        connectDiv.on('click', ".clickDiv", function () {
-            Helper.slide($(this));
-        });
-        connectDiv.append(
-            rowDiv.clone().addClass("tel").html('联系方式'),
-            rowDiv.clone().addClass("qq").html('QQ'),
-            rowDiv.clone().addClass("wechat").html('微信')
-        );
-        var dom = obj ? obj : $("body");
-        dom.append(connectDiv);
-        $(".tel").click();
-    },
-    slide: function (obj) {
-        var showDiv = $("<div></div>").css({
-            width: "100px",
-            height: "80px",
-            margin: "10px auto",
-            display: "block",
-            fontSize: "13px",
-            boxShadow: "0px 0px 2px 2px orange"
-        }).addClass("showDiv");
-        var html;
-        if (obj.hasClass("tel")) {
-            html = "哈哈哈";
-        } else if (obj.hasClass("qq")) {
-            html = "hehe";
-        } else {
-            html = "额";
-        }
-        showDiv.html(html);
-        if (!obj) {
-            return false;
-        }
-        obj.parent().find(".showDiv").remove();
-        obj.after(showDiv);
     }
 };
 
@@ -378,8 +308,8 @@ var Helper = {
                         'text-align:center;line-height:40px;border-radius:4px;cursor:pointer">取消</li></ul>');
                     $(infoShow).empty().append(ul);
                     $('.zoom').css({
-                        fontSize:'16px',
-                        cursor:'pointer'
+                        fontSize: '16px',
+                        cursor: 'pointer'
                     }).click(function () {
                         var scale;
                         if ($(this).hasClass('zoom-in')) {
@@ -796,7 +726,7 @@ var Sort = {
                         parent.children('.item_delete').css('display', 'none');
                         that.main_div.find('.sort_cover_div').remove();
                         if (data.error_code) {
-                            Confirm({message: data.error_message});
+                            $.Confirm({message: data.error_message});
                         } else if (data.id) {
                             parent.children('.content_span').html(newName);
 
@@ -808,7 +738,7 @@ var Sort = {
         //绑定删除操作
         this.main_div.off('click', '.item_delete').on("click", ".item_delete", function (e) {
             var e_ = e;
-            Confirm({
+            $.Confirm({
                 title: '删除确认', message: '确认删除此分类吗?', callback: function () {
                     var sort_id = $(e_.target).parent().attr('_id');
                     $.ajax({
@@ -820,7 +750,7 @@ var Sort = {
                                 //同时删除展开框
                                 that.main_div.find('[class=sort_child_div][fid=' + data.id + ']').remove();
                             } else {
-                                Confirm({message: data.error_message});
+                                $.Confirm({message: data.error_message});
                             }
                         }
                     });
@@ -861,7 +791,7 @@ var Sort = {
                             sort_div.find('#edit_').remove();
                             that.main_div.find('.sort_cover_div').remove();
                             if (data.error_code) {
-                                Confirm({message: data.error_message});
+                                $.Confirm({message: data.error_message});
                             } else if (data.id) {
                                 //成功则添加一个item
                                 that.data = {0: data};
@@ -974,32 +904,6 @@ var SortList = {
     }
 };
 
-//longPolling
-var LongPolling = {
-    url: null,
-    callback: null,
-    init: function (url, callback) {
-        if (!url || typeof callback !== 'function') {
-            return false;
-        }
-        this.url = url;
-        this.callback = callback;
-        this.send();
-    },
-    send: function () {
-        var that = this;
-        $.ajax({
-            method: 'get',
-            url: that.url,
-            async: true,
-            success: function (data) {
-                that.callback(data);
-                that.send();
-            }
-        });
-    }
-};
-
 //瀑布流
 //window.onload和$(document).ready()的区别;
 //window.onscroll()应用;
@@ -1041,7 +945,6 @@ var WaterFall = {
                                     var pic = document.createElement('img');
                                     pic.className = 'image_scale image_cover';
                                     pic.src = 'http://localhost:8000/' + data[j].thumb;
-                                    Tip.init({});
                                     picdiv.appendChild(pic);
                                     that.mainDiv.appendChild(picbox);
                                 }

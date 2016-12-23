@@ -228,7 +228,7 @@
             var password = $('.auth-tab input:eq(1)').val();
             var role_id = $('.show_role').attr('data-id');
             if (!name || !password) {
-                return Confirm({message: '信息不完整'});
+                return $.Confirm({message: '信息不完整'});
             }
             var data = {
                 username: name,
@@ -245,7 +245,7 @@
                     if (data.id) {
                         location.reload();
                     } else {
-                        return Confirm({message: data.error_message});
+                        return $.Confirm({message: data.error_message});
                     }
                 }
             });
@@ -255,7 +255,7 @@
             if (!user_id) {
                 return false;
             }
-            Confirm({
+            $.Confirm({
                 message: '确认删除此用户?',
                 callback: function () {
                     $.ajax({
@@ -264,7 +264,7 @@
                             if (data.id) {
                                 location.reload();
                             } else {
-                                return Confirm({message: data.error_message});
+                                return $.Confirm({message: data.error_message});
                             }
                         }
                     });
