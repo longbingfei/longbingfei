@@ -76,7 +76,7 @@ class Publish implements PublishInterface
         $params = [
             'title'     => $detail['title'],
             'keywords'  => '',
-            'index_pic' => $detail['index_pic'],
+            'index_pic' => empty($detail['index_pic']) ? '' : $detail['index_pic']['thumb'],
             'tags'      => '',
             'user_id'   => Auth::id()
         ];
