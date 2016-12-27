@@ -560,8 +560,8 @@ var Carousel = {
                     });
                 }
                 $.handleImage.init({
-                    width: '600px',
-                    height: '450px',
+                    width: obj.width || '600px',
+                    height: obj.height || '450px',
                     input: $('#plug-upload-input'),
                     callback: this.Show
                 });

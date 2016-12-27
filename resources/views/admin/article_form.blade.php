@@ -44,6 +44,8 @@
         $.UploadImage.Init({
             dom: $('.index_pic_div'),
             max: 1,
+            width: '320px',
+            height: '240px',
             bgsrc: "{{isset($single_data) ? (empty($single_data['index_pic']) ? '' : url($single_data['index_pic']['path'])) :''}}"
         });
         var um = UM.getEditor('describe');
