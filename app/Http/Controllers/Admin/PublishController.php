@@ -19,7 +19,14 @@ class PublishController extends Controller
 
     public function index(Request $request)
     {
-        $fillable = [];
+        $fillable = [
+            'type',
+            'keywords',
+            'title',
+            'weight',
+            'page',
+            'per_page_num'
+        ];
         $resp = $this->publish->index($request->only($fillable));
 
         return Response::display($resp);
@@ -27,7 +34,12 @@ class PublishController extends Controller
 
     public function store(Request $request)
     {
-        $fillable = [];
+        $fillable = [
+            'id',
+            'type',
+            'tpl_id',
+            'path'
+        ];
         $resp = $this->publish->create($request->only($fillable));
 
         return Response::display($resp);
@@ -37,12 +49,15 @@ class PublishController extends Controller
     {
         $resp = $this->publish->show($id);
 
-        return Response::display($resp);
+        return $resp;
     }
 
     public function update(Request $request, $id)
     {
-        $fillable = [];
+        $fillable = [
+            'weight',
+            'tags',
+        ];
         $resp = $this->publish->update($id, $request->only($fillable));
 
         return Response::display($resp);

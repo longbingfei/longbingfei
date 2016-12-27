@@ -57,7 +57,7 @@ class Article implements ArticleInterface
         $page = intval($condition['page']) ? intval($condition['page']) : 0;
         $articles = $articles->paginate($per_page_num, ['*'], 'page', $page)->toArray();
         $articles['data'] = array_map(function($value) {
-            $value['index_pic'] = $value['index_pic'] ? unserialize($value['index_pic']) : [];
+            $value['index_pic'] = $value['index_pic'] ? unserialize($value['index_pic']) : null;
 
             return $value;
         }, $articles['data']);
@@ -80,7 +80,7 @@ class Article implements ArticleInterface
                 'administrators.username as author_name'
             );
         $article = $article->first()->toArray();
-        $article['index_pic'] = $article['index_pic'] ? unserialize($article['index_pic']) : [];
+        $article['index_pic'] = $article['index_pic'] ? unserialize($article['index_pic']) : null;
 
         return $article;
     }

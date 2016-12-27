@@ -13,7 +13,7 @@ class Publish extends Model
         'type',
         'title',
         'keywords',
-        'index_image',
+        'index_pic',
         'path',
         'tags',
         'user_id'
