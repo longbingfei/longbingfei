@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('article_sort', 'ArticleSortController');
         Route::resource('article', 'ArticleController');
         Route::resource('publish', 'PublishController');
+        Route::resource('gallery', 'GalleryController');
         Route::get('article/show/{id}', 'ArticleController@detail');
         Route::get('article_form/{id?}', 'ArticleController@form');
         Route::get('article_settings', 'ArticleSortController@settings');
