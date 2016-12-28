@@ -55,8 +55,11 @@ class Gallery implements GalleryInterface
         if (!$gallery = GalleryModel::find($id)) {
             return ['errorCode' => 1700];
         }
+        $gallery['index_pic'] = json_decode($gallery['index_pic'], 1);
+        $gallery['images'] = json_decode($gallery['images'], 1);
+        $gallery['describes'] = json_decode($gallery['describes'], 1);
 
-        return $gallery->toArray();
+        return $gallery;
     }
 
     public function create(array $data)
@@ -102,15 +105,20 @@ class Gallery implements GalleryInterface
             return ['errorCode' => 1702];
         }
         event('log', [[$this->module, 'c', $gallery]]);
+        $gallery['index_pic'] = json_decode($gallery['index_pic'], 1);
+        $gallery['images'] = json_decode($gallery['images'], 1);
+        $gallery['describes'] = json_decode($gallery['describes'], 1);
 
-        return $gallery->toArray();
+        return $gallery;
     }
 
     public function update($id, array $data)
     {
+
     }
 
     public function delete($id)
     {
+
     }
 }
