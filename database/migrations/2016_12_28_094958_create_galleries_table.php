@@ -18,8 +18,9 @@ class CreateGalleriesTable extends Migration
             $table->string('keywords')->nullable();
             $table->string('index_pic')->nullable();
             $table->text('images')->nullable();
+            $table->text('describes')->nullable();
             $table->string('tags')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
             $table->integer('weight')->default(0);
             $table->integer('user_id');
             $table->timestamps();

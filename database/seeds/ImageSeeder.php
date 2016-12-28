@@ -42,6 +42,11 @@ class ImageSeeder extends Seeder
             'fid'     => 0,
             'user_id' => 1
         ]);
+        ImageSort::create([
+            'name'    => '相册图片',
+            'fid'     => 0,
+            'user_id' => 1
+        ]);
         Image::create([
             'name'    => '默认头像',
             'sort_id' => 1,

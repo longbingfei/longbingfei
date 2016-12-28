@@ -35,6 +35,13 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $fillable = [
+            'title',
+            'keywords',
+            'file',
+            'describes',
+            'index_id',
+            'tags',
+            'weight'
         ];
         $resp = $this->gallery->create($request->only($fillable));
 

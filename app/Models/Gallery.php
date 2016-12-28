@@ -13,6 +13,7 @@ class Gallery extends Model
         'keywords',
         'index_pic',
         'images',
+        'describes',
         'status',
         'weight',
         'tags',
