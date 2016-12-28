@@ -88,11 +88,10 @@ class Gallery implements GalleryInterface
                 array_map(function($y) use ($data, &$describes) {
                     $describes[$y] = isset($data['describes'][$y]) ? $data['describes'][$y] : null;
                 }, array_keys($images));
-                $params['images'] = json_encode($images);
-                $params['describes'] = json_encode($describes);
-                $index_id = $data['index_id'];
-                $params['index_pic'] = isset($images[$index_id]) ? json_encode($images[$index_id]) : json_encode(current($images));
+                $params['images'] = json_encode(array_values($images));
+                $params['describes'] = json_encode(array_values($describes));
             }
+            $params['index_pic'] = isset($images[$data['index_id']]) ? json_encode($images[$data['index_id']]) : json_encode(current($images) ? : []);
         }
         if ($data['tags']) {
             $params['tags'] = $data['tags'];
@@ -114,11 +113,115 @@ class Gallery implements GalleryInterface
 
     public function update($id, array $data)
     {
+        if (!$gallery = GalleryModel::find($id)) {
+            return ['errorCode' => 1700];
+        }
+        $params = [];
+        if ($data['title']) {
+            $params['title'] = $data['title'];
+        }
+        $pImages = json_decode($gallery->images, 1);
+        $pDescribes = json_decode($gallery->describes, 1);
+        $pIndexPic = json_decode($gallery->index_pic, 1);
+        $dropImages = [];
+        //如果有图片删除,则过滤掉确实存在且需要删除的图片、注释
+        if ($drop_image_ids = $data['drop_image_ids']) {
+            $drop_image_ids = explode(',', $drop_image_ids);
+            array_map(function($y) use ($drop_image_ids, &$pImages, &$pDescribes, &$dropImages) {
+                if (in_array($pImages[$y]['id'], $drop_image_ids)) {
+                    $dropImages[] = $pImages[$y]['id'];
+                    unset($pImages[$y], $pDescribes[$y]);
+                }
+            }, array_keys($pImages));
+            //如果删除的图片中有索引图,剩余不为空则默认第一个索引图
+            if (!empty($pIndexPic) && in_array($pIndexPic['id'], $drop_image_ids)) {
+                $index_pic = current($pImages);
+                $params['index_pic'] = json_encode($index_pic ? : []);
+            }
+        }
+        //如果有新建图片,则入图片库
+        if ($file = $data['file']) {
+            $file = is_array($file) ? $file : [$file];
+            $nImages = array_map(function(UploadedFile $image) {
+                $mime = $image->getClientMimeType();
+                if (strpos($mime, 'image/') !== 0) {
+                    return null;
+                }
+                $params = [
+                    'path'       => 'gallery/origin/' . Date('Y/m/d'),
+                    'thumb_path' => 'gallery/thumb/' . Date('Y/m/d'),
+                    'sort_id'    => 5,
+                ];
 
+                return $this->image->create($image, $params);
+            }, $file);
+            $nImages = array_filter($nImages);
+            //新建图片数组不为空则追加图片和注释到对应的过滤数组之后
+            if (!empty($nImages)) {
+                array_map(function($y) use ($data, $nImages, &$pImages, &$pDescribes) {
+                    $pImages[] = $nImages[$y];
+                    $pDescribes[] = isset($data['describes'][$y]) ? $data['describes'][$y] : null;
+                }, array_keys($nImages));
+                //新建图片组若存在索引图则设置为相册索引图
+                if (!is_null($data['index_id']) && isset($nImages[$data['index_id']])) {
+                    $params['index_pic'] = json_encode($nImages[$data['index_id']]);
+                }
+            }
+        }
+        $params['images'] = json_encode(array_values($pImages));
+        $params['describes'] = json_encode(array_values($pDescribes));
+        if ($data['tags']) {
+            $params['tags'] = $data['tags'];
+        }
+        if (!is_null($data['weight'])) {
+            $params['weight'] = intval($data['weight']);
+        }
+        $params['user_id'] = Auth::Id();
+        $before = $gallery->toArray();
+        if (!$gallery->update($params)) {
+            //更新失败,则删除新建图片数组。
+            if (isset($nImages) && !empty($nImages)) {
+                $image_ids = [];
+                array_map(function($y) use (&$image_ids) {
+                    $image_ids[] = $y['id'];
+                }, $nImages);
+                $this->image->delete(implode(',', $image_ids));
+            }
+
+            return ['errorCode' => 1703];
+        }
+        $after = $gallery->toArray();
+        //更新成功,则删除丢弃图片数组
+        if (!empty($dropImages)) {
+            $this->image->delete(implode(',', $dropImages));
+        }
+        event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
+        $after['index_pic'] = json_decode($after['index_pic'], 1);
+        $after['images'] = json_decode($after['images'], 1);
+        $after['describes'] = json_decode($after['describes'], 1);
+
+        return $after;
     }
 
     public function delete($id)
     {
+        if (!$gallery = GalleryModel::find($id)) {
+            return ['errorCode' => 1700];
+        }
+        $before = $gallery->toArray();
+        if (!$gallery->delete()) {
+            return ['errorCode' => 1704];
+        }
+        $images = json_decode($before['images'], 1);
+        if (!empty($images)) {
+            $image_ids = [];
+            array_map(function($y) use (&$image_ids) {
+                $image_ids[] = $y['id'];
+            }, $images);
+            $this->image->delete(implode(',', $image_ids));
+        }
+        event('log', [[$this->module, 'd', $before]]);
 
+        return $before;
     }
 }

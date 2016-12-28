@@ -60,8 +60,14 @@ class GalleryController extends Controller
     public function update(Request $request, $id)
     {
         $fillable = [
-            'weight',
+            'title',
+            'keywords',
+            'file',
+            'describes',
+            'drop_image_ids',
+            'index_id',
             'tags',
+            'weight'
         ];
         $resp = $this->gallery->update($id, $request->only($fillable));
 
