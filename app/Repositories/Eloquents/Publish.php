@@ -14,20 +14,22 @@ use App\Repositories\InterfacesBag\Video as VideoInterface;
 use App\Repositories\InterfacesBag\Article as ArticleInterface;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
 use App\Repositories\InterfacesBag\Publish as PublishInterface;
+use App\Repositories\InterfacesBag\Gallery as GalleryInterface;
 
 class Publish implements PublishInterface
 {
     protected $module = 'publish';
 
-    protected $image, $video, $article, $product;
+    protected $image, $video, $article, $product, $gallery;
 
     public function __construct(ImageInterface $image, VideoInterface $video, ArticleInterface $article,
-                                ProductInterface $product)
+                                ProductInterface $product, GalleryInterface $gallery)
     {
         $this->image = $image;
         $this->video = $video;
         $this->article = $article;
         $this->product = $product;
+        $this->gallery = $gallery;
 
     }
 

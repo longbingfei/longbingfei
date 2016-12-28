@@ -17,16 +17,14 @@ class GallerySeeder extends Seeder
             'title'     => '初始化相册',
             'keywords'  => '相册',
             'index_pic' => json_encode([
-                [
-                    "name"       => "naruto",
-                    "sort_id"    => 1,
-                    "path"       => "default/images/gallery1.jpeg",
-                    "thumb"      => "default/images/gallery1-thumb.jpeg",
-                    "user_id"    => 1,
-                    "updated_at" => Date('Y-m-d H:i:s', time()),
-                    "created_at" => Date('Y-m-d H:i:s', time()),
-                    "id"         => 1
-                ]
+                "name"       => "naruto",
+                "sort_id"    => 1,
+                "path"       => "default/images/gallery1.jpeg",
+                "thumb"      => "default/images/gallery1-thumb.jpeg",
+                "user_id"    => 1,
+                "updated_at" => Date('Y-m-d H:i:s', time()),
+                "created_at" => Date('Y-m-d H:i:s', time()),
+                "id"         => 1
             ]),
             'images'    => json_encode([
                 [

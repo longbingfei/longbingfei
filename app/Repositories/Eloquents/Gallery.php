@@ -59,7 +59,7 @@ class Gallery implements GalleryInterface
         $gallery['images'] = json_decode($gallery['images'], 1);
         $gallery['describes'] = json_decode($gallery['describes'], 1);
 
-        return $gallery;
+        return $gallery->toArray();
     }
 
     public function create(array $data)
