@@ -25,7 +25,9 @@ class GalleryController extends Controller
             'title',
             'weight',
             'page',
-            'per_page_num'
+            'per_page_num',
+            'orderby',
+            'order'
         ];
         $resp = $this->gallery->index($request->only($fillable));
 

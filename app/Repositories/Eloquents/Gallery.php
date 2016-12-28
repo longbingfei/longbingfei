@@ -29,14 +29,23 @@ class Gallery implements GalleryInterface
         $condition = array_filter($condition, 'strlen');
         $page = isset($condition['page']) ? $condition['page'] : 1;
         $per_page_num = isset($condition['per_page_num']) ? $condition['per_page_num'] : 15;
-        $gallery = GalleryModel::where('id', '>', '1');
+        $orderby = isset($condition['orderby']) ? $condition['orderby'] : 'id';
+        $order = isset($condition['order']) && $condition['order'] === 'asc' ? 'asc' : 'desc';
+        $gallery = GalleryModel::where('id', '>', '0');
         array_map(function($y) use (&$gallery, $condition) {
             if (isset($condition[$y])) {
                 $w = in_array($y, ['keywords', 'title']) ? '%' . $condition[$y] . '%' : $condition[$y];
                 $gallery = $gallery->where($y, $w);
             }
         }, ['keywords', 'title', 'weight']);
-        $gallery = $gallery->paginate($per_page_num, ['*'], 'page', $page)->toArray();
+        $gallery = $gallery->orderby($orderby, $order)->paginate($per_page_num, ['*'], 'page', $page)->toArray();
+        $gallery['data'] = array_map(function($y) {
+            $y['index_pic'] = json_decode($y['index_pic'], 1);
+            $y['images'] = json_decode($y['images'], 1);
+            $y['describes'] = json_decode($y['describes'], 1);
+
+            return $y;
+        }, $gallery['data']);
 
         return $gallery;
     }
