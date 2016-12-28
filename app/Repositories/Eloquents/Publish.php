@@ -57,7 +57,7 @@ class Publish implements PublishInterface
         if (file_exists(public_path($publish->path))) {
             return redirect(url($publish->path));
         }
-        $publish = $this->create(['id' => $id, 'type' => $publish->type, 'tpl_id' => null, 'path' => null]);
+        $publish = $this->create(['id' => $publish->cid, 'type' => $publish->type, 'tpl_id' => null, 'path' => null]);
 
         return redirect(url($publish->path));
     }
@@ -80,8 +80,9 @@ class Publish implements PublishInterface
             'tags'      => '',
             'user_id'   => Auth::id()
         ];
-        if ($publish = PublishModel::where('cid', $id)->first()) {
+        if ($publish = PublishModel::where('cid', $id)->where('type', $type)->first()) {
             $path = $publish->path;
+            $this->checkDir(dirname($path));
             file_put_contents(public_path($path), $html);
             $publish = $this->update($publish->id, $params);
         } else {
@@ -112,7 +113,7 @@ class Publish implements PublishInterface
         if (!PublishModel::where('id', $id)->update($data)) {
             return ['errorCode' => 1605];
         }
-        $after = PublishModel::find($id)->toArray();
+        $after = PublishModel::find($id);
         event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
 
         return $after;

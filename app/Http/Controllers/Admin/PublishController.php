@@ -1,12 +1,17 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: zhangxian
+ * Date: 16/12/27
+ * Time: 上午10:50
+ */
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\InterfacesBag\Publish;
 use Illuminate\Support\Facades\Response;
+use App\Repositories\InterfacesBag\Publish;
 
 class PublishController extends Controller
 {

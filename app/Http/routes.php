@@ -10,16 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::post('test', function() {
-    if ($binaryImage = request()->get('image')) {
-        preg_match('/data:\w+\/(\w+);base64,(.*)/', $binaryImage, $match);
-        if (count($match) == 3) {
-            $handle = fopen('/tmp/' . microtime(true) * 10000 . '.' . $match[1], 'w');
-            fwrite($handle, base64_decode($match[2]));
-            fclose($handle);
-        }
-    }
-});
 Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('download', 'Common\CommonController@downloadFile');
 Route::get('admin', function() {
