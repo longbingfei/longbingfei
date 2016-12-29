@@ -7,6 +7,7 @@
  */
 namespace App\Repositories\Eloquents;
 
+use App\Models\GallerySort;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gallery as GalleryModel;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,14 +32,25 @@ class Gallery implements GalleryInterface
         $per_page_num = isset($condition['per_page_num']) ? $condition['per_page_num'] : 15;
         $orderby = isset($condition['orderby']) ? $condition['orderby'] : 'id';
         $order = isset($condition['order']) && $condition['order'] === 'asc' ? 'asc' : 'desc';
-        $gallery = GalleryModel::where('id', '>', '0');
+        $gallery = GalleryModel::where('galleries.id', '>', '0');
         array_map(function($y) use (&$gallery, $condition) {
             if (isset($condition[$y])) {
-                $w = in_array($y, ['keywords', 'title']) ? '%' . $condition[$y] . '%' : $condition[$y];
-                $gallery = $gallery->where($y, $w);
+                $m = '=';
+                $w = $condition[$y];
+                if (in_array($y, ['keywords', 'title'])) {
+                    $m = 'like';
+                    $w = '%' . $condition[$y] . '%';
+                }
+                $gallery = $gallery->where('galleries.' . $y, $m, $w);
             }
         }, ['keywords', 'title', 'weight']);
-        $gallery = $gallery->orderby($orderby, $order)->paginate($per_page_num, ['*'], 'page', $page)->toArray();
+        $gallery = $gallery
+            ->leftJoin('gallery_sorts as gs', 'galleries.sort_id', '=', 'gs.id')
+            ->leftJoin('administrators as admin', 'galleries.user_id', '=', 'admin.id')
+            ->select('galleries.*', 'gs.name as sort_name', 'admin.username as username')
+            ->orderby('galleries.' . $orderby, $order)
+            ->paginate($per_page_num, ['*'], 'page', $page)
+            ->toArray();
         $gallery['data'] = array_map(function($y) {
             $y['index_pic'] = json_decode($y['index_pic'], 1);
             $y['images'] = json_decode($y['images'], 1);
@@ -55,11 +67,17 @@ class Gallery implements GalleryInterface
         if (!$gallery = GalleryModel::find($id)) {
             return ['errorCode' => 1700];
         }
+        $gallery = $gallery->leftJoin('gallery_sorts as gs', 'galleries.sort_id', '=', 'gs.id')
+            ->leftJoin('administrators as admin', 'galleries.user_id', '=', 'admin.id')
+            ->select('galleries.*', 'gs.name as sort_name', 'admin.username as username')
+            ->where('galleries.id', $id)
+            ->first()
+            ->toArray();
         $gallery['index_pic'] = json_decode($gallery['index_pic'], 1);
         $gallery['images'] = json_decode($gallery['images'], 1);
         $gallery['describes'] = json_decode($gallery['describes'], 1);
 
-        return $gallery->toArray();
+        return $gallery;
     }
 
     public function create(array $data)
@@ -96,6 +114,7 @@ class Gallery implements GalleryInterface
         if ($data['tags']) {
             $params['tags'] = $data['tags'];
         }
+        $params['sort_id'] = GallerySort::find(intval($data['sort_id'])) ? intval($data['sort_id']) : 1;
         if (!is_null($data['weight'])) {
             $params['weight'] = intval($data['weight']);
         }
@@ -104,6 +123,8 @@ class Gallery implements GalleryInterface
             return ['errorCode' => 1702];
         }
         event('log', [[$this->module, 'c', $gallery]]);
+        $gallery['sort_name'] = GallerySort::find($gallery->sort_id)->name;
+        $gallery['user_name'] = Auth::user()->username;
         $gallery['index_pic'] = json_decode($gallery['index_pic'], 1);
         $gallery['images'] = json_decode($gallery['images'], 1);
         $gallery['describes'] = json_decode($gallery['describes'], 1);
@@ -173,6 +194,9 @@ class Gallery implements GalleryInterface
         if ($data['tags']) {
             $params['tags'] = $data['tags'];
         }
+        if ($data['sort_id'] && GallerySort::find(intval($data['sort_id']))) {
+            $params['sort_id'] = intval($data['sort_id']);
+        }
         if (!is_null($data['weight'])) {
             $params['weight'] = intval($data['weight']);
         }
@@ -196,6 +220,8 @@ class Gallery implements GalleryInterface
             $this->image->delete(implode(',', $dropImages));
         }
         event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
+        $after['sort_name'] = GallerySort::find($after['sort_id'])->name;
+        $after['user_name'] = Auth::user()->username;
         $after['index_pic'] = json_decode($after['index_pic'], 1);
         $after['images'] = json_decode($after['images'], 1);
         $after['describes'] = json_decode($after['describes'], 1);

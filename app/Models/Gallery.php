@@ -17,6 +17,7 @@ class Gallery extends Model
         'status',
         'weight',
         'tags',
+        'sort_id',
         'user_id'
     ];
 }

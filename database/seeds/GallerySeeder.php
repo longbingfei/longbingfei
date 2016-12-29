@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Gallery;
+use App\Models\GallerySort;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GallerySeeder extends Seeder
 {
@@ -13,6 +15,14 @@ class GallerySeeder extends Seeder
     public function run()
     {
         Gallery::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        GallerySort::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        GallerySort::create([
+            'fid'     => 0,
+            'name'    => '系统',
+            'user_id' => 1
+        ]);
         Gallery::create([
             'title'     => '初始化相册',
             'keywords'  => '相册',
@@ -50,6 +60,7 @@ class GallerySeeder extends Seeder
             ]),
             'describes' => json_encode(['naruto', 'bijiu']),
             'tags'      => 'init',
+            'sort_id'   => 1,
             'status'    => 1,
             'weight'    => 0,
             'user_id'   => 1

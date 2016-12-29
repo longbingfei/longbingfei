@@ -43,6 +43,7 @@ class GalleryController extends Controller
             'describes',
             'index_id',
             'tags',
+            'sort_id',
             'weight'
         ];
         $resp = $this->gallery->create($request->only($fillable));
@@ -67,6 +68,7 @@ class GalleryController extends Controller
             'drop_image_ids',
             'index_id',
             'tags',
+            'sort_id',
             'weight'
         ];
         $resp = $this->gallery->update($id, $request->only($fillable));
