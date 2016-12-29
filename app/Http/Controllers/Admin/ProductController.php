@@ -79,8 +79,8 @@ class ProductController extends Controller
             'file',
             'evaluate'
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(['errorCode' => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['error_code' => $error_code]);
         }
         $resp = $this->product->create($request->only($fillable));
 
@@ -116,8 +116,8 @@ class ProductController extends Controller
             'file',
             'evaluate',
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(['errorCode' => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['error_code' => $error_code]);
         }
 
         $resp = $this->product->update($id, $request->only($fillable));

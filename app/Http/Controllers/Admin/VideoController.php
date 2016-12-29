@@ -37,13 +37,13 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         if (!$video = $request->file("video")) {
-            return Response::display(['errorCode' => 1505]);
+            return Response::display(['error_code' => 1505]);
         }
         if ($video->getSize() == 0) {
-            return Response::display(['errorCode' => 1506]);
+            return Response::display(['error_code' => 1506]);
         }
         if (!($type = $video->guessExtension()) || !in_array($video->guessExtension(), $this->types)) {
-            return Response::display(['errorCode' => 1507]);
+            return Response::display(['error_code' => 1507]);
         }
         $name = trim($request->get('name'));
         if ($name) {

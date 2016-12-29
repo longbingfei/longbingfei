@@ -54,7 +54,7 @@ class Publish implements PublishInterface
     public function show($id)
     {
         if (!$publish = PublishModel::find($id)) {
-            return ['errorCode' => 1604];
+            return ['error_code' => 1604];
         }
         if (file_exists(public_path($publish->path))) {
             return redirect(url($publish->path));
@@ -67,10 +67,10 @@ class Publish implements PublishInterface
     public function create(array $data)
     {
         if (!$id = $data['id']) {
-            return ['errorCode' => 1600];
+            return ['error_code' => 1600];
         }
         if ((!$type = $data['type']) || !isset($this->{strtolower($data['type'])})) {
-            return ['errorCode' => 1601];
+            return ['error_code' => 1601];
         }
         $detail = $this->$type->show($id);
         $tpl = $data['tpl_id'] ? : 'tpl.default.' . $type . '_detail';
@@ -89,7 +89,7 @@ class Publish implements PublishInterface
             $publish = $this->update($publish->id, $params);
         } else {
             if (!$path = $this->checkDir($data['path'] ? : $type . '/' . Date('Y/m/d') . '/')) {
-                return ['errorCode' => 1602];
+                return ['error_code' => 1602];
             }
             $filename = microtime(1) * 10000 . '.html';
             $path = $path . $filename;
@@ -98,7 +98,7 @@ class Publish implements PublishInterface
             $params['type'] = $type;
             $params['path'] = $path;
             if (!$publish = PublishModel::create($params)) {
-                return ['errorCode' => 1603];
+                return ['error_code' => 1603];
             }
             event('log', [[$this->module, 'c', $publish]]);
         }
@@ -109,11 +109,11 @@ class Publish implements PublishInterface
     public function update($id, array $data)
     {
         if (!$before = PublishModel::find($id)) {
-            return ['errorCode' => 1604];
+            return ['error_code' => 1604];
         }
         $data = array_intersect_key($data, array_flip(['title', 'keywords', 'index_pic', 'tags', 'user_id', 'path']));
         if (!PublishModel::where('id', $id)->update($data)) {
-            return ['errorCode' => 1605];
+            return ['error_code' => 1605];
         }
         $after = PublishModel::find($id);
         event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
@@ -124,11 +124,11 @@ class Publish implements PublishInterface
     public function delete($id)
     {
         if (!$publish = PublishModel::find($id)) {
-            return ['errorCode' => 1604];
+            return ['error_code' => 1604];
         }
         $path = $publish->path;
         if (!$publish->delete()) {
-            return ['errorCode' => 1606];
+            return ['error_code' => 1606];
         }
         unlink(public_path($path));
         event('log', [[$this->module, 'd', $publish]]);

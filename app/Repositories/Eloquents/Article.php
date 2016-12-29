@@ -69,7 +69,7 @@ class Article implements ArticleInterface
     public function show($id)
     {
         if (!$article = ArticleModel::where('id', $id)->first()) {
-            return ["errorCode" => 1203];
+            return ["error_code" => 1203];
         }
         $article = ArticleModel::where('articles.id', $id)
             ->leftJoin('article_sorts', 'articles.sort_id', '=', 'article_sorts.id')
@@ -102,7 +102,7 @@ class Article implements ArticleInterface
             return $article;
         }
 
-        return ["errorCode" => 1205];
+        return ["error_code" => 1205];
     }
 
     //文稿更新
@@ -110,7 +110,7 @@ class Article implements ArticleInterface
     {
         $data = array_filter($data);
         if (!$before = ArticleModel::where('id', $id)->first()) {
-            return ["errorCode" => 1203];
+            return ["error_code" => 1203];
         }
         $data['content'] = isset($data['content']) ? $data['content'] : '';
         $data['editor_id'] = Auth::id();
@@ -134,7 +134,7 @@ class Article implements ArticleInterface
     public function delete($id)
     {
         if (!$info = ArticleModel::where('id', $id)->first()) {
-            return ["errorCode" => 1203];
+            return ["error_code" => 1203];
         }
         if (ArticleModel::destroy($id)) {
             if ($info->index_pic && ($image = unserialize($info->index_pic))) {
@@ -145,6 +145,6 @@ class Article implements ArticleInterface
             return $info->toArray();
         }
 
-        return ["errorCode" => 1204];
+        return ["error_code" => 1204];
     }
 }

@@ -29,7 +29,7 @@ class Permission
         $permissions = $permissions ? explode('|', $permissions) : [];
         $res = $this->admin->checkPermissions(Auth::id(), $permissions);
         if (!$res) {
-            return Response::display(['errorCode' => 1318]);
+            return Response::display(['error_code' => 1318]);
         }
 
         return $next($request);

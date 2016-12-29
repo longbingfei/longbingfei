@@ -43,16 +43,16 @@ class Authenticate
         //添加token验证
         if ($access_token = trim($request->get('access_token'))) {
             if (!$user = Administrator::where('access_token', $access_token)->first()) {
-                return Response::display(['errorCode' => 1010]);
+                return Response::display(['error_code' => 1010]);
             }
             if (Carbon::now() > $user->token_expr_at) {
-                return Response::display(['errorCode' => 1011]);
+                return Response::display(['error_code' => 1011]);
             }
             Auth::login($user);
         }
         if ($this->auth->guest()) {
             if ($request->ajax()) {
-                return Response::display(['errorCode' => 1012]);
+                return Response::display(['error_code' => 1012]);
             } else {
                 return redirect()->guest('admin/auth/login');
             }

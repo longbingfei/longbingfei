@@ -43,7 +43,7 @@ class Style implements StyleInterface
         if (!empty($data)) {
             $before = ProductModel::where('id', $id)->first();
             if (is_null($before)) {
-                return ['errorCode' => 1300];
+                return ['error_code' => 1300];
             }
             if (ProductModel::where('id', $id)->update($data)) {
                 $after = ProductModel::where('id', $id)->first();

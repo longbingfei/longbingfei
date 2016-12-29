@@ -60,7 +60,7 @@ class Product implements ProductInterface
             $return['images'] = $images ? $images : [];
         }
 
-        return $return ? $return->toArray() : ['errorCode' => 1300];
+        return $return ? $return->toArray() : ['error_code' => 1300];
     }
 
     public function create(array $data)
@@ -99,7 +99,7 @@ class Product implements ProductInterface
     public function update($id, array $data)
     {
         if (!$before = ProductModel::where('id', $id)->first()) {
-            return ['errorCode' => 1300];
+            return ['error_code' => 1300];
         }
         $data = array_filter($data);
         $params['name'] = trim($data['name']);
@@ -134,7 +134,7 @@ class Product implements ProductInterface
     public function delete($id)
     {
         if (!$product = ProductModel::where('id', $id)->first()) {
-            return ['errorCode' => 1300];
+            return ['error_code' => 1300];
         }
         $images = unserialize($product['images']);
         if (!empty($images)) {

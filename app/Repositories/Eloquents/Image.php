@@ -40,7 +40,7 @@ class Image implements ImageInterface
     public function show($id)
     {
         if (!$return = ImageModel::where('id', $id)->first()) {
-            return ['errorCode' => 1102];
+            return ['error_code' => 1102];
         }
 
         return $return->toArray();
@@ -53,7 +53,7 @@ class Image implements ImageInterface
         if (!$this->checkDir(public_path($path))) {
             event('log', [[$this->module, 'c', 'mkdir@' . public_path($path) . 'failed!', 0]]);
 
-            return ['errorCode' => 1100];
+            return ['error_code' => 1100];
         }
         $basename = microtime(true) * 10000;
         $name = $basename . '.' . $file->guessExtension();
@@ -62,7 +62,7 @@ class Image implements ImageInterface
         if (!$this->checkDir(public_path($thumbPath))) {
             event('log', [[$this->module, 'c', 'mkdir@' . public_path($thumbPath) . 'failed!', 0]]);
 
-            return ['errorCode' => 1100];
+            return ['error_code' => 1100];
         }
         ImageContarct::make($path . '/' . $name)->resize(isset($params['thumb_width']) && $params['thumb_width'] ? $params['thumb_width'] : 320, null, function($constraint) {
             $constraint->aspectRatio();
@@ -106,7 +106,7 @@ class Image implements ImageInterface
         $ids = explode(',', $ids);
         $image = ImageModel::whereIn('id', $ids)->get()->toArray();
         if (empty($image)) {
-            return ['errorCode' => 1102];
+            return ['error_code' => 1102];
         }
         $result = array_map(function($y) {
             if ($y['sort_id'] == 1) {

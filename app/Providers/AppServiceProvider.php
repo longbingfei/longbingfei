@@ -18,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Response::macro('display', function($data = null) {
-            if (isset($data['errorCode']) && ($errorCode = $data['errorCode'])) {
-                $message = ['error_code' => config('error.' . $errorCode, false) ? $errorCode : '000', 'error_message' => config('error.' . $errorCode, '错误代码不存在')];
+            if (isset($data['error_code']) && ($error_code = $data['error_code'])) {
+                $message = ['error_code' => config('error.' . $error_code, false) ? $error_code : '000', 'error_message' => config('error.' . $error_code, '错误代码不存在')];
             } else {
                 $message = $data;
             }

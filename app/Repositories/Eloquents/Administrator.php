@@ -56,15 +56,15 @@ class Administrator implements AdminInterface
     {
         $userInfo = AdminModel::where('username', trim($info['username']));
         if (!$userInfo->count()) {
-            return ['errorCode' => 1007];
+            return ['error_code' => 1007];
         }
         $password = $userInfo->first()->password;
         if (!password_verify(trim($info['password']), $password)) {
-            return ['errorCode' => 1003];
+            return ['error_code' => 1003];
         }
         Auth::login($userInfo->first());
         if (!Auth::check()) {
-            return ['errorCode' => 1008];
+            return ['error_code' => 1008];
         }
         $currentUser = AdminModel::where('id', Auth::id());
         $timenow = Carbon::now();
@@ -86,15 +86,15 @@ class Administrator implements AdminInterface
     {
         $info = array_filter($info);
         if (!isset($info['username'])) {
-            return ['errorCode' => 1013];
+            return ['error_code' => 1013];
         }
         if (!isset($info['password'])) {
-            return ['errorCode' => 1014];
+            return ['error_code' => 1014];
         }
         if (AdminModel::where('username', $info['username'])->count()) {
             event('log', [[$this->module, 'r', 'username has already exists', 0]]);
 
-            return ['errorCode' => 1005];
+            return ['error_code' => 1005];
         }
         $info['password'] = password_hash($info['password'], PASSWORD_BCRYPT);
         $info['creator_id'] = Auth::id();
@@ -113,7 +113,7 @@ class Administrator implements AdminInterface
     {
         $info = array_filter($info);
         if (!$before = AdminModel::where('id', $id)->first()) {
-            return ['errorCode' => 1004];
+            return ['error_code' => 1004];
         }
         if (isset($info['file']) && $info['file'] instanceof UploadedFile) {
             $avatar_params = [
@@ -165,7 +165,7 @@ class Administrator implements AdminInterface
     public function attachRolesToUser($user_id, $role_ids = null)
     {
         if (!AdminModel::where('id', $user_id)->first()) {
-            return ['errorCode' => 1004];
+            return ['error_code' => 1004];
         }
         $role_ids = trim($role_ids) ? : env('DEFAULT_ROLE_IDS');
         $role_ids = array_unique(explode(',', $role_ids));
@@ -183,14 +183,14 @@ class Administrator implements AdminInterface
             return false;
         });
         if (empty($role_ids)) {
-            return ['errorCode' => 1319];
+            return ['error_code' => 1319];
         }
         DB::table('roles_users')->where('user_id', $user_id)->delete();
         if (DB::table('roles_users')->insert($params)) {
             env('log', [[$this->module, 'u', $params]]);
             $return = ['result' => 'success'];
         } else {
-            $return = ['errorCode' => 1324];
+            $return = ['error_code' => 1324];
         }
 
         return $return;
@@ -200,7 +200,7 @@ class Administrator implements AdminInterface
     public function attachPermissionsToRole($role_id, $payload = null)
     {
         if (!RoleModel::where('id', $role_id)->first()) {
-            return ['errorCode' => 1319];
+            return ['error_code' => 1319];
         }
         $payload = trim($payload) ? : env('DEFAULT_PERMISSION_IDS');
         $payload = array_unique(explode(',', $payload));
@@ -218,14 +218,14 @@ class Administrator implements AdminInterface
             return false;
         });
         if (empty($payload)) {
-            return ['errorCode' => 1321];
+            return ['error_code' => 1321];
         }
         DB::table('roles_permissions')->where('role_id', $role_id)->delete();
         if (DB::table('roles_permissions')->insert($params)) {
             event('log', [[$this->module, 'u', $params]]);
             $return = ['result' => 'success'];
         } else {
-            $return = ['errorCode' => 1323];
+            $return = ['error_code' => 1323];
         }
 
         return $return;
@@ -275,13 +275,13 @@ class Administrator implements AdminInterface
     public function delete($id)
     {
         if (!$user = AdminModel::where('id', $id)->first()) {
-            return ['errorCode' => 1007];
+            return ['error_code' => 1007];
         }
         if (AdminModel::destroy($id)) {
             event('log', [[$this->module, 'd', $user->toArray()]]);
             return $user;
         } else {
-            return ['errorCode' => 1015];
+            return ['error_code' => 1015];
         }
     }
 }

@@ -46,8 +46,8 @@ class SortController extends Controller
             'name',
             'fid'
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(['errorCode' => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['error_code' => $error_code]);
         }
         $resp = $this->gs->create($request->only($fillable));
 
@@ -62,8 +62,8 @@ class SortController extends Controller
         $fillable = [
             'name',
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(['errorCode' => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['error_code' => $error_code]);
         }
         $resp = $this->gs->update($id, $request->only($fillable));
 

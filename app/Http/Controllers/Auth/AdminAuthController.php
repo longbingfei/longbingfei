@@ -40,7 +40,7 @@ class AdminAuthController extends Controller
     public function login(Request $request)
     {
         if (strtoupper($request->get('verifycode')) != strtoupper(session('verifycode'))) {
-            $return = ['errorCode' => 1001];
+            $return = ['error_code' => 1001];
         } else {
             $info = $request->only(['username', 'password']);
             $info['ip'] = $request->getClientIp();
@@ -88,10 +88,10 @@ class AdminAuthController extends Controller
             'file'
         ];
         if (empty(array_filter($request->only($fillable)))) {
-            return Response::display(['errorCode' => 1009]);
+            return Response::display(['error_code' => 1009]);
         }
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(['errorCode' => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['error_code' => $error_code]);
         }
         $return = $this->admin->update($id, $request->only($fillable));
 

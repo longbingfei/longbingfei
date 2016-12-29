@@ -71,8 +71,8 @@ class ArticleController extends Controller
             'status',
             'file'
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(["errorCode" => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(["error_code" => $error_code]);
         }
         $resp = $this->article->create($request->only($fillable));
 
@@ -95,8 +95,8 @@ class ArticleController extends Controller
             'sort_id',
             'file'
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(["errorCode" => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(["error_code" => $error_code]);
         }
         $resp = $this->article->update($id, $request->only($fillable));
 

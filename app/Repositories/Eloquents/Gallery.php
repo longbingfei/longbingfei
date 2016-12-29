@@ -65,7 +65,7 @@ class Gallery implements GalleryInterface
     public function show($id)
     {
         if (!$gallery = GalleryModel::find($id)) {
-            return ['errorCode' => 1700];
+            return ['error_code' => 1700];
         }
         $gallery = $gallery->leftJoin('gallery_sorts as gs', 'galleries.sort_id', '=', 'gs.id')
             ->leftJoin('administrators as admin', 'galleries.user_id', '=', 'admin.id')
@@ -84,7 +84,7 @@ class Gallery implements GalleryInterface
     {
         $params = [];
         if (!$params['title'] = $data['title']) {
-            return ['errorCode' => 1701];
+            return ['error_code' => 1701];
         }
         if ($file = $data['file']) {
             $images = array_map(function(UploadedFile $image) {
@@ -120,7 +120,7 @@ class Gallery implements GalleryInterface
         }
         $params['user_id'] = Auth::Id();
         if (!$gallery = GalleryModel::create($params)) {
-            return ['errorCode' => 1702];
+            return ['error_code' => 1702];
         }
         event('log', [[$this->module, 'c', $gallery]]);
         $gallery['sort_name'] = GallerySort::find($gallery->sort_id)->name;
@@ -135,7 +135,7 @@ class Gallery implements GalleryInterface
     public function update($id, array $data)
     {
         if (!$gallery = GalleryModel::find($id)) {
-            return ['errorCode' => 1700];
+            return ['error_code' => 1700];
         }
         $params = [];
         if ($data['title']) {
@@ -212,7 +212,7 @@ class Gallery implements GalleryInterface
                 $this->image->delete(implode(',', $image_ids));
             }
 
-            return ['errorCode' => 1703];
+            return ['error_code' => 1703];
         }
         $after = $gallery->toArray();
         //更新成功,则删除丢弃图片数组
@@ -232,11 +232,11 @@ class Gallery implements GalleryInterface
     public function delete($id)
     {
         if (!$gallery = GalleryModel::find($id)) {
-            return ['errorCode' => 1700];
+            return ['error_code' => 1700];
         }
         $before = $gallery->toArray();
         if (!$gallery->delete()) {
-            return ['errorCode' => 1704];
+            return ['error_code' => 1704];
         }
         $images = json_decode($before['images'], 1);
         if (!empty($images)) {

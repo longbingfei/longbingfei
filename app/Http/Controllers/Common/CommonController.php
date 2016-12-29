@@ -51,25 +51,25 @@ class CommonController extends Controller
         if ($urlinfo['st'] != 200) {
             switch($urlinfo['st']){
                 case 302:
-                    $errorCode = 1401;
+                    $error_code = 1401;
                     break;
                 case 401:
-                    $errorCode = 1402;
+                    $error_code = 1402;
                     break;
                 case 403:
-                    $errorCode = 1403;
+                    $error_code = 1403;
                     break;
                 case 500:
-                    $errorCode = 1404;
+                    $error_code = 1404;
                     break;
             }
-            return Response::display(['errorCode' => $errorCode]);
+            return Response::display(['error_code' => $error_code]);
         }
         $filename = last(explode('/', $url));
         $mode = stripos(PHP_OS, 'WIN') === 0 ? 'rb' : 'r';
         $handle = @fopen($url, $mode);
         if (!$handle) {
-            return Response::display(['errorCode' => 1405]);
+            return Response::display(['error_code' => 1405]);
         }
         header('Content-Type:' . $urlinfo['ct']);
         header('Accept-Range:bytes');

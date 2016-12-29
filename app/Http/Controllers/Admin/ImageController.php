@@ -50,8 +50,8 @@ class ImageController extends Controller
             'path',
             'thumb_path'
         ];
-        if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
-            return Response::display(['errorCode' => $errorCode]);
+        if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
+            return Response::display(['error_code' => $error_code]);
         }
         $resp = $this->image->create($request->file('file'), $request->only($fillable));
 

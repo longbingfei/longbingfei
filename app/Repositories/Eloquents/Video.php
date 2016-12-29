@@ -36,7 +36,7 @@ class Video implements VideoInterface
     public function show($id)
     {
         if (!$resp = VideoModel::find($id)) {
-            return ['errorCode' => 1503];
+            return ['error_code' => 1503];
         }
 
         return $resp->toArray();
@@ -48,7 +48,7 @@ class Video implements VideoInterface
         if (!$this->checkDir(public_path($path))) {
             event('log', [[$this->module, 'c', 'mkdir@' . public_path($path) . 'failed!', 0]]);
 
-            return ['errorCode' => 1500];
+            return ['error_code' => 1500];
         }
         $extension = $file->guessExtension();
         $basename = microtime(true) * 10000;
@@ -62,7 +62,7 @@ class Video implements VideoInterface
             'user_id' => Auth::id(),
         ];
         if (!$framePath = $this->getFrameImage($path . '/' . $name, 'frames/' . Date('Y/m/d'), $basename)) {
-            return ['errorCode' => 1504];
+            return ['error_code' => 1504];
         }
         $videoInfo['frame_path'] = $this->image->createFormExistImage([
             'name'    => '视频截图-' . $videoInfo['name'],
@@ -71,7 +71,7 @@ class Video implements VideoInterface
             'user_id' => Auth::id()
         ])['path'];
         if (!$info = VideoModel::create($videoInfo)) {
-            return ['errorCode' => 1501];
+            return ['error_code' => 1501];
         }
         event('log', [[$this->module, 'c', $info]]);
 
@@ -86,12 +86,12 @@ class Video implements VideoInterface
     public function delete($id)
     {
         if (!$media = VideoModel::find($id)) {
-            return ['errorCode' => 1503];
+            return ['error_code' => 1503];
         }
         $path = $media->path;
         $framePath = $media->frame_path;
         if (!$media->delete($id)) {
-            return ['errorCode' => 1502];
+            return ['error_code' => 1502];
         }
         @unlink(public_path($path));
         if ($image = ImageModel::where('path', $framePath)->first()) {
