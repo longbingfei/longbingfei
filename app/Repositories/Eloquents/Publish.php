@@ -38,11 +38,16 @@ class Publish implements PublishInterface
         $condition = array_filter($condition, 'strlen');
         $page = isset($condition['page']) ? $condition['page'] : 1;
         $per_page_num = isset($condition['per_page_num']) ? $condition['per_page_num'] : 15;
-        $publish = PublishModel::where('id', '>', '1');
+        $publish = PublishModel::where('id', '>', '0');
         array_map(function($y) use (&$publish, $condition) {
             if (isset($condition[$y])) {
-                $w = in_array($y, ['keywords', 'title']) ? '%' . $condition[$y] . '%' : $condition[$y];
-                $publish = $publish->where($y, $w);
+                $s = '=';
+                $w = $condition[$y];
+                if (in_array($y, ['keywords', 'title'])) {
+                    $s = 'like';
+                    $w = '%' . $condition[$y] . '%';
+                }
+                $publish = $publish->where($y, $s, $w);
             }
         }, ['type', 'keywords', 'title', 'weight']);
         $publish = $publish->paginate($per_page_num, ['*'], 'page', $page)->toArray();
