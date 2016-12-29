@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use App\Repositories\InterfacesBag\ProductSort;
+use App\Repositories\InterfacesBag\Sort;
 
-class ProductSortController extends Controller
+class SortController extends Controller
 {
-    protected $ps;
+    protected $gs;
 
-    public function __construct(ProductSort $ps)
+    public function __construct(Request $request, Sort $gs)
     {
         $this->middleware('auth');
-        $this->middleware('permission:product-sort', ['except' => ['index', 'settings']]);
-        $this->ps = $ps;
+        $this->gs = $gs;
     }
 
     public function index(Request $request)
@@ -24,16 +25,15 @@ class ProductSortController extends Controller
         $fillable = [
             'fid'
         ];
-        $resp = $this->ps->index($request->only($fillable));
+        $resp = $this->gs->index($request->only($fillable));
 
         return Response::display($resp);
     }
 
-    public function settings()
+    public function settings(Request $request)
     {
-        return view('admin.product_settings');
+        return view('admin.' . strtolower($request->get('app')) . '_settings');
     }
-
 
     public function store(Request $request)
     {
@@ -49,7 +49,7 @@ class ProductSortController extends Controller
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
-        $resp = $this->ps->create($request->only($fillable));
+        $resp = $this->gs->create($request->only($fillable));
 
         return Response::display($resp);
     }
@@ -65,14 +65,14 @@ class ProductSortController extends Controller
         if ($errorCode = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['errorCode' => $errorCode]);
         }
-        $resp = $this->ps->update($id, $request->only($fillable));
+        $resp = $this->gs->update($id, $request->only($fillable));
 
         return Response::display($resp);
     }
 
     public function destroy($id)
     {
-        $resp = $this->ps->delete($id);
+        $resp = $this->gs->delete($id);
 
         return Response::display($resp);
     }

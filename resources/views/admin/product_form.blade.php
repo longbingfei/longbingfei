@@ -61,7 +61,7 @@
     </div>
     <script>
         //初始化分类选择框
-        SortList.init({dom: $(".pro_sort"), url: "{{url('admin/feature/product_sort')}}"});
+        SortList.init({dom: $(".pro_sort"), url: "{{url('admin/feature/sort')}}", app: 'product'});
         //需要删除的图片id
         var productDropImageIDs = [];
         //初始化编辑器

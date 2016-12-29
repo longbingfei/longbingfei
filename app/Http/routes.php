@@ -38,22 +38,19 @@ Route::group(['prefix' => 'admin'], function() {
     });
     Route::group(['namespace' => 'Admin', 'prefix' => 'feature', 'middleware' => 'auth'], function() {
         //具体操作
+        Route::resource('sort', 'SortController');
+        Route::get('sort_form', 'SortController@settings');
         Route::resource('publish', 'PublishController');
         Route::resource('gallery', 'GalleryController');
-        Route::resource('gallery_sort', 'GallerySortController');
         Route::resource('image', 'ImageController');
         Route::resource('video', 'VideoController');
-        Route::resource('article_sort', 'ArticleSortController');
         Route::resource('article', 'ArticleController');
         Route::resource('style', 'StyleController');
         Route::get('article/show/{id}', 'ArticleController@detail');
         Route::get('article_form/{id?}', 'ArticleController@form');
-        Route::get('article_settings', 'ArticleSortController@settings');
-        Route::resource('product_sort', 'ProductSortController');
         Route::resource('product', 'ProductController');
         Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
-        Route::get('product_settings', 'ProductSortController@settings');
         Route::get('log', 'LogController@index');
     });
 });

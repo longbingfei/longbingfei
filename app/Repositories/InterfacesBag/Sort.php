@@ -2,12 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: zhangxian
- * Date: 16/5/19
- * Time: 上午9:09
+ * Date: 16/12/29
+ * Time: 上午11:21
  */
 namespace App\Repositories\InterfacesBag;
 
-interface ProductSort extends BaseInterface
+interface Sort extends BaseInterface
 {
     public function index();
 

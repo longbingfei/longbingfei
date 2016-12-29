@@ -55,9 +55,7 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('resp', 'App\Http\Response\Resping');
         app()->bind('App\Repositories\InterfacesBag\Administrator', 'App\Repositories\Eloquents\Administrator');
         app()->bind('App\Repositories\InterfacesBag\Media', 'App\Repositories\Eloquents\Media');
-        app()->bind('App\Repositories\InterfacesBag\ProductSort', 'App\Repositories\Eloquents\ProductSort');
         app()->bind('App\Repositories\InterfacesBag\Product', 'App\Repositories\Eloquents\Product');
-        app()->bind('App\Repositories\InterfacesBag\ArticleSort', 'App\Repositories\Eloquents\ArticleSort');
         app()->bind('App\Repositories\InterfacesBag\Article', 'App\Repositories\Eloquents\Article');
         app()->bind('App\Repositories\InterfacesBag\Image', 'App\Repositories\Eloquents\Image');
         app()->bind('App\Repositories\InterfacesBag\Video', 'App\Repositories\Eloquents\Video');
@@ -65,7 +63,9 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('App\Repositories\InterfacesBag\Log', 'App\Repositories\Eloquents\Log');
         app()->bind('App\Repositories\InterfacesBag\Publish', 'App\Repositories\Eloquents\Publish');
         app()->bind('App\Repositories\InterfacesBag\Gallery', 'App\Repositories\Eloquents\Gallery');
-        app()->bind('App\Repositories\InterfacesBag\GallerySort', 'App\Repositories\Eloquents\GallerySort');
+        app()->bind('App\Repositories\InterfacesBag\Sort', function() {
+            return new \App\Repositories\Eloquents\Sort(request()->get('app'));
+        });
         //前端用户
         app()->bind('App\Repositories\InterfacesBag\User', 'App\Repositories\Eloquents\User');
         //权限验证门面

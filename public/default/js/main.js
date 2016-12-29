@@ -702,21 +702,19 @@ var Sort = {
         "<span>&nbsp新增分类</span>" +
         "</div>"),
     url: null,
+    app: null,
     init: function (obj) {
-        if (obj.dom) {
-            this.main_div = obj.dom;
-        }
-        if (obj.url) {
-            this.url = obj.url;
-        }
-        if (!this.url) {
+        if (!obj.dom || !obj.app || !obj.url) {
             return false;
         }
+        this.main_div = obj.dom;
+        this.app = obj.app;
+        this.url = obj.url;
         var that = this;
         if (!obj.data) {
             $.ajax({
                 method: 'get',
-                url: that.url,
+                url: that.url + '?app=' + that.app,
                 async: false,
                 success: function (data) {
                     that.data = data;
@@ -763,7 +761,7 @@ var Sort = {
             //非最底层则请求子类数据
             $.ajax({
                 method: 'get',
-                url: that.url + '?fid=' + fid,
+                url: that.url + '?fid=' + fid + '&app=' + that.app,
                 success: function (data) {
                     that.init({dom: that.main_div, data: data, fid: fid, _fid: _fid});
                 }
@@ -794,7 +792,7 @@ var Sort = {
                 $.ajax({
                     method: 'post',
                     url: that.url + '/' + parent.attr('_id'),
-                    data: {_method: 'put', name: newName},
+                    data: {_method: 'put', name: newName, app: that.app},
                     success: function (data) {
                         console.log(data, newName);
                         parent.attr('contenteditable', false).html(html).removeClass('sort_edit_div');
@@ -818,7 +816,7 @@ var Sort = {
                     var sort_id = $(e_.target).parent().attr('_id');
                     $.ajax({
                         method: 'delete',
-                        url: that.url + '/' + sort_id,
+                        url: that.url + '/' + sort_id + '?app=' + that.app,
                         success: function (data) {
                             if (data.id) {
                                 $(e_.target).parent().remove();
@@ -860,7 +858,7 @@ var Sort = {
                     $.ajax({
                         method: 'post',
                         url: that.url,
-                        data: {fid: fid, name: sort_name},
+                        data: {fid: fid, name: sort_name, app: that.app},
                         success: function (data) {
                             var sort_div = that.main_div.find('[fid=' + fid + ']');
                             sort_div.find('#edit_').remove();
@@ -903,6 +901,7 @@ var Sort = {
 var SortList = {
     dom: null,
     url: null,
+    app: null,
     list_box: $("<div></div>").addClass('list_box'),
     list_group: $("<div></div>").addClass('list_group'),
     list_item: $("<div></div>").addClass('list_item'),
@@ -910,10 +909,11 @@ var SortList = {
     item_next: $("<i></i>").addClass('list_item_next glyphicon glyphicon-chevron-right'),
     item_radio: $("<input type='radio' name='pool_'>").addClass('list_item_radio'),
     init: function (obj) {
-        if (!obj.dom || !obj.url) {
+        if (!obj.dom || !obj.url || !obj.app) {
             return false;
         }
         this.url = obj.url;
+        this.app = obj.app;
         this.dom = obj.dom.addClass('sort_list');
         this.list_box.css({
             width: this.dom.outerWidth(),
@@ -955,7 +955,7 @@ var SortList = {
         var res;
         $.ajax({
             method: 'get',
-            url: this.url + '?fid=' + fid,
+            url: this.url + '?fid=' + fid + '&app=' + this.app,
             async: false,//同步赋值,不然res为NAN
             success: function (data) {
                 res = data;

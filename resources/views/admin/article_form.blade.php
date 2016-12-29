@@ -39,7 +39,7 @@
     </div>
     <script>
         //初始化分类选择框
-        SortList.init({dom: $(".art_sort"), url: "{{url('admin/feature/article_sort')}}"});
+        SortList.init({dom: $(".art_sort"), url: "{{url('admin/feature/sort?app=article')}}", app: "article"});
         //初始化索引图上传控件
         $.UploadImage.Init({
             dom: $('.index_pic_div'),

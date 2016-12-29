@@ -13,6 +13,6 @@
     @parent
     <div class="article-sort"></div>
     <script>
-        Sort.init({dom: $(".article-sort"), url: "{{url('admin/feature/article_sort')}}"});
+        Sort.init({dom: $(".article-sort"), url: "{{url('admin/feature/sort')}}", app: "article"});
     </script>
 @stop

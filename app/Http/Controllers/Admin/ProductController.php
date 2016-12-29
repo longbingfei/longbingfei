@@ -13,9 +13,7 @@ class ProductController extends Controller
 {
     protected $product;
 
-    protected $product_sort;
-
-    public function __construct(Product $product, ProductSort $product_sort)
+    public function __construct(Product $product)
     {
         $this->middleware('auth');
         $this->middleware('permission:product-list', ['only' => 'index']);
@@ -23,7 +21,6 @@ class ProductController extends Controller
         $this->middleware('permission:product-edit', ['only' => 'update']);
         $this->middleware('permission:product-del', ['only' => 'destroy']);
         $this->product = $product;
-        $this->product_sort = $product_sort;
     }
 
     public function index(Request $request)
