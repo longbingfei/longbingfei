@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\Gallery;
+use Illuminate\Database\Seeder;
 
 class GallerySeeder extends Seeder
 {
