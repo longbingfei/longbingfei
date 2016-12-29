@@ -35,13 +35,13 @@ class Gallery implements GalleryInterface
         $gallery = GalleryModel::where('galleries.id', '>', '0');
         array_map(function($y) use (&$gallery, $condition) {
             if (isset($condition[$y])) {
-                $m = '=';
+                $s = '=';
                 $w = $condition[$y];
                 if (in_array($y, ['keywords', 'title'])) {
-                    $m = 'like';
+                    $s = 'like';
                     $w = '%' . $condition[$y] . '%';
                 }
-                $gallery = $gallery->where('galleries.' . $y, $m, $w);
+                $gallery = $gallery->where('galleries.' . $y, $s, $w);
             }
         }, ['keywords', 'title', 'weight']);
         $gallery = $gallery

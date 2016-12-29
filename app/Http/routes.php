@@ -36,10 +36,11 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('delete/{id}', 'AdminAuthController@delete');
         Route::get('logout', 'AdminAuthController@logout');
     });
-    Route::group(['namespace' => 'Admin', 'prefix' => 'feature','middleware' => 'auth'], function() {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'feature', 'middleware' => 'auth'], function() {
         //具体操作
         Route::resource('publish', 'PublishController');
         Route::resource('gallery', 'GalleryController');
+        Route::resource('gallery_sort', 'GallerySortController');
         Route::resource('image', 'ImageController');
         Route::resource('video', 'VideoController');
         Route::resource('article_sort', 'ArticleSortController');
