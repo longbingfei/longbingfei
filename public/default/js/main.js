@@ -755,7 +755,7 @@ var Sort = {
             }
             //是最底层则直接添加
             if (!($(this).attr('_is_last'))) {
-                that.init({dom: that.main_div, data: [], fid: fid, _fid: _fid});
+                that.init({dom: that.main_div, data: [], fid: fid, _fid: _fid, url: that.url, app: that.app});
                 return;
             }
             //非最底层则请求子类数据
@@ -763,7 +763,7 @@ var Sort = {
                 method: 'get',
                 url: that.url + '?fid=' + fid + '&app=' + that.app,
                 success: function (data) {
-                    that.init({dom: that.main_div, data: data, fid: fid, _fid: _fid});
+                    that.init({dom: that.main_div, data: data, fid: fid, _fid: _fid, url: that.url, app: that.app});
                 }
             });
             //横向超出滚动
