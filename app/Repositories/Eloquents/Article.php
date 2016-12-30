@@ -57,7 +57,7 @@ class Article implements ArticleInterface
         $page = intval($condition['page']) ? intval($condition['page']) : 0;
         $articles = $articles->paginate($per_page_num, ['*'], 'page', $page)->toArray();
         $articles['data'] = array_map(function($value) {
-            $value['index_pic'] = $value['index_pic'] ? unserialize($value['index_pic']) : [];
+            $value['index_pic'] = json_decode($value['index_pic'], 1) ? : [];
 
             return $value;
         }, $articles['data']);
@@ -80,7 +80,7 @@ class Article implements ArticleInterface
                 'administrators.username as author_name'
             );
         $article = $article->first()->toArray();
-        $article['index_pic'] = $article['index_pic'] ? unserialize($article['index_pic']) : [];
+        $article['index_pic'] = json_decode($article['index_pic'], 1) ? : [];
 
         return $article;
     }
@@ -93,11 +93,11 @@ class Article implements ArticleInterface
         $data['status'] = $data['status'] ? 1 : 0;
         if ($data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
-            $data['index_pic'] = serialize($image);
+            $data['index_pic'] = json_encode($image);
         }
 
         if ($article = ArticleModel::create($data)) {
-            event('log', [[$this->module, 'c', $data]]);
+            event('log', [[$this->module, 'c', $article]]);
 
             return $article;
         }
@@ -116,12 +116,12 @@ class Article implements ArticleInterface
         $data['editor_id'] = Auth::id();
         if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
-            $data['index_pic'] = serialize($image);
+            $data['index_pic'] = json_decode($image, 1);
             unset($data['file']);
         }
         if (ArticleModel::where('id', $id)->update($data)) {
             $after = ArticleModel::where('id', $id)->first();
-            if (isset($data['index_pic']) && $before->index_pic && ($image = unserialize($before->index_pic))) {
+            if (isset($data['index_pic']) && $before->index_pic && ($image = json_decode($before->index_pic, 1))) {
                 $this->image->delete($image['id']);
             }
             event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
@@ -137,7 +137,7 @@ class Article implements ArticleInterface
             return ["error_code" => 1203];
         }
         if (ArticleModel::destroy($id)) {
-            if ($info->index_pic && ($image = unserialize($info->index_pic))) {
+            if ($info->index_pic && ($image = json_decode($info->index_pic, 1))) {
                 $this->image->delete($image['id']);
             }
             event('log', [[$this->module, 'd', $info]]);

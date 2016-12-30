@@ -31,7 +31,30 @@ class Log implements LogInterfaceBag
         }
         $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 15;
         $page = intval($condition['page']) ? intval($condition['page']) : 0;
-        $logs = $logs->paginate($per_page_num, ['*'], 'page', $page)->toArray();
+        $logs = $logs->orderby('date', 'desc')->paginate($per_page_num, ['*'], 'page', $page)->toArray();
+        $logs['data'] = array_map(function($y) {
+            $y['info'] = json_decode($y['info'], 1);
+            if (isset($y['info']['index_pic'])) {
+                $y['info']['index_pic'] = json_decode($y['info']['index_pic'], 1);
+            }
+            if (isset($y['info']['before']['index_pic'])) {
+                $y['info']['before']['index_pic'] = json_decode($y['info']['before']['index_pic'], 1);
+            }
+            if (isset($y['info']['after']['index_pic'])) {
+                $y['info']['after']['index_pic'] = json_decode($y['info']['after']['index_pic'], 1);
+            }
+            if (isset($y['info']['images'])) {
+                $y['info']['images'] = json_decode($y['info']['images'], 1);
+            }
+            if (isset($y['info']['before']['images'])) {
+                $y['info']['before']['images'] = json_decode($y['info']['before']['images'], 1);
+            }
+            if (isset($y['info']['after']['images'])) {
+                $y['info']['after']['images'] = json_decode($y['info']['after']['images'], 1);
+            }
+
+            return $y;
+        }, $logs['data']);
 
         return $logs;
     }
