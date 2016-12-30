@@ -41,7 +41,7 @@ class Product implements ProductInterface
         $perpage = intval($condition['perpage']) ? intval($condition['perpage']) : 10;
         $product = $product->paginate($perpage, ['*'], 'page', $page)->toArray();//每页条数,字段数组,页码标记,第几页
         $product['data'] = array_map(function($value) {
-            $value['images'] = $value['images'] ? unserialize($value['images']) : [];
+            $value['images'] = json_decode($value['images'], 1) ? : [];
 
             return $value;
         }, $product['data']);
@@ -56,8 +56,7 @@ class Product implements ProductInterface
             ->leftJoin('administrators', 'products.user_id', '=', 'administrators.id')
             ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first();
         if ($return) {
-            $images = unserialize($return['images']);
-            $return['images'] = $images ? $images : [];
+            $return['images'] = json_decode($return['images'], 1) ? : [];
         }
 
         return $return ? $return->toArray() : ['error_code' => 1300];
@@ -71,7 +70,7 @@ class Product implements ProductInterface
         $data['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $data['storage'] = isset($data['storage']) ? intval($data['storage']) : 1;
         $data['user_id'] = Auth::id();
-        $data['images'] = serialize(call_user_func([$this, 'createProductImages'], $data['file'], $data['pid']));
+        $data['images'] = json_encode(call_user_func([$this, 'createProductImages'], $data['file'], $data['pid']));
         $data['describe'] = isset($data['describe']) ? $data['describe'] : '';
         unset($data['file']);
         if ($product = ProductModel::create($data)) {
@@ -109,9 +108,7 @@ class Product implements ProductInterface
         $params['sort_id'] = intval($data['sort_id']);
         $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
         $params['user_id'] = Auth::id();
-        if (!$images = unserialize($before->images)) {
-            $images = [];
-        }
+        $images = json_decode($before->images, 1) ? : [];
         if (isset($data['drop_images']) && ($drop_images = explode(',', $data['drop_images']))) {
             $images = array_filter($images, function($y) use ($drop_images) {
                 return !in_array($y['id'], $drop_images);
@@ -122,7 +119,7 @@ class Product implements ProductInterface
             $new_images = call_user_func([$this, 'createProductImages'], $data['file'], $before->pid);
             $images = array_merge($images, $new_images);
         }
-        $params['images'] = serialize($images);
+        $params['images'] = json_encode($images);
         if (ProductModel::where('id', $id)->update($params)) {
             $after = ProductModel::where('id', $id)->first();
             event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
@@ -136,7 +133,7 @@ class Product implements ProductInterface
         if (!$product = ProductModel::where('id', $id)->first()) {
             return ['error_code' => 1300];
         }
-        $images = unserialize($product['images']);
+        $images = json_decode($product['images'], 1) ? : [];
         if (!empty($images)) {
             $ids = implode(',', array_column($images, 'id'));
             $this->image->delete($ids);
