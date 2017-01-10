@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\InterfacesBag\Log;
+use Illuminate\Support\Facades\Response;
 
 class LogController extends Controller
 {
@@ -29,6 +30,13 @@ class LogController extends Controller
         ];
         $resp = $this->log->index($request->only($fillable));
 
-        return $resp;
+        return Response::display($resp);
+    }
+
+    public function recovery($id)
+    {
+        $resp = $this->log->recovery($id);
+
+        return Response::display($resp);
     }
 }

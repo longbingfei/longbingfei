@@ -9,4 +9,6 @@ namespace App\Repositories\InterfacesBag;
 interface Log extends BaseInterface
 {
     public function index(array $condition);
+
+    public function recovery($id);
 }

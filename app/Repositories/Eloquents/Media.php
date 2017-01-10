@@ -8,12 +8,14 @@
 namespace App\Repositories\Eloquents;
 
 use Auth;
+use App\Traits\Functions;
 use App\Models\Media as MediaModel;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repositories\InterfacesBag\Media as MediaInterface;
 
 class Media implements MediaInterface
 {
+    use Functions;
     protected $module = 'media';
 
     public function index($condition = [])
@@ -73,15 +75,6 @@ class Media implements MediaInterface
 
             return 1;
         }
-    }
-
-    protected function checkDir($path)
-    {
-        if (!is_dir($path)) {
-            @mkdir($path, 0775, 1);
-        }
-
-        return is_dir($path) && is_writeable($path);
     }
 
     protected function getFrameImage($video, $path, $imageName)

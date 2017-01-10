@@ -51,7 +51,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('product', 'ProductController');
         Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
-        Route::get('log', 'LogController@index');
+        Route::get('log/list', 'LogController@index');
+        Route::get('log/recovery/{id}', 'LogController@recovery');
     });
 });
 

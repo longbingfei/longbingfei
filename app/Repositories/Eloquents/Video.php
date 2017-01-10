@@ -8,6 +8,7 @@
 namespace App\Repositories\Eloquents;
 
 use Auth;
+use App\Traits\Functions;
 use App\Models\Image as ImageModel;
 use App\Models\Video as VideoModel;
 use Illuminate\Support\Facades\Response;
@@ -17,6 +18,7 @@ use App\Repositories\InterfacesBag\Video as VideoInterface;
 
 class Video implements VideoInterface
 {
+    use Functions;
     protected $module = 'video';
 
     protected $image;
@@ -101,15 +103,6 @@ class Video implements VideoInterface
         event('log', [[$this->module, 'd', $media]]);
 
         return $media->toArray();
-    }
-
-    protected function checkDir($path)
-    {
-        if (!is_dir($path)) {
-            @mkdir($path, 0775, 1);
-        }
-
-        return is_dir($path) && is_writeable($path);
     }
 
     protected function getFrameImage($video, $path, $imageName)

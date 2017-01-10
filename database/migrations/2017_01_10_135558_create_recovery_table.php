@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CerateLogsTable extends Migration
+class CreateRecoveryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,13 @@ class CerateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function(Blueprint $tables) {
+        Schema::create('recovery', function(Blueprint $tables) {
             $tables->increments('id')->unsigned();
-            $tables->dateTime('date');
+            $tables->string('type', 20);
+            $tables->integer('content_id')->unsigned();
+            $tables->integer('material_id')->unsigned();
             $tables->integer('user_id');
-            $tables->string('username', 20);
-            $tables->string('module', 20);
-            $tables->string('action', 20);
-            $tables->text('info');
-            $tables->smallInteger('status');
+            $tables->timestamps();
         });
     }
 
@@ -31,6 +29,6 @@ class CerateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('logs');
+        Schema::drop('recovery');
     }
 }

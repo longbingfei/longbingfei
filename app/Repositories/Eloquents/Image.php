@@ -8,6 +8,7 @@
 namespace App\Repositories\Eloquents;
 
 use Auth;
+use App\Traits\Functions;
 use App\Models\Image as ImageModel;
 use Intervention\Image\Facades\Image as ImageContarct;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,6 +16,7 @@ use App\Repositories\InterfacesBag\Image as ImageInterface;
 
 class Image implements ImageInterface
 {
+    use Functions;
     protected $module = 'image';
 
     //图片列表
@@ -90,16 +92,6 @@ class Image implements ImageInterface
         return $info->toArray();
     }
 
-    //创建目录
-    protected function checkDir($path)
-    {
-        if (!is_dir($path)) {
-            @mkdir($path, 0775, 1);
-        }
-
-        return is_dir($path) && is_writeable($path);
-    }
-
     //图片删除
     public function delete($ids)
     {
@@ -113,8 +105,6 @@ class Image implements ImageInterface
                 return [$y['id'] => 1105];
             }
             if (ImageModel::destroy($y['id'])) {
-                @unlink(public_path($y['path']));
-                @unlink(public_path($y['thumb']));
                 event('log', [[$this->module, 'd', $y]]);
 
                 return [$y['id'] => 'success'];

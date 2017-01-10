@@ -7,6 +7,7 @@
  */
 namespace App\Repositories\Eloquents;
 
+use App\Traits\Functions;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Publish as PublishModel;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
@@ -18,6 +19,7 @@ use App\Repositories\InterfacesBag\Gallery as GalleryInterface;
 
 class Publish implements PublishInterface
 {
+    use Functions;
     protected $module = 'publish';
 
     protected $image, $video, $article, $product, $gallery;
@@ -89,11 +91,11 @@ class Publish implements PublishInterface
         ];
         if ($publish = PublishModel::where('cid', $id)->where('type', $type)->first()) {
             $path = $publish->path;
-            $this->checkDir(dirname($path));
+            $this->checkDir(dirname($path), 1);
             file_put_contents(public_path($path), $html);
             $publish = $this->update($publish->id, $params);
         } else {
-            if (!$path = $this->checkDir($data['path'] ? : $type . '/' . Date('Y/m/d') . '/')) {
+            if (!$path = $this->checkDir($data['path'] ? : $type . '/' . Date('Y/m/d') . '/', 1)) {
                 return ['error_code' => 1602];
             }
             $filename = microtime(1) * 10000 . '.html';
@@ -139,15 +141,5 @@ class Publish implements PublishInterface
         event('log', [[$this->module, 'd', $publish]]);
 
         return $publish;
-    }
-
-    protected function checkDir($path)
-    {
-        $realpath = public_path($path);
-        if (!is_dir($realpath)) {
-            @mkdir($realpath, 0775, 1);
-        }
-
-        return is_dir($realpath) && is_writeable($realpath) ? $path : false;
     }
 }

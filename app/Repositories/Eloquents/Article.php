@@ -116,7 +116,7 @@ class Article implements ArticleInterface
         $data['editor_id'] = Auth::id();
         if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
-            $data['index_pic'] = json_decode($image, 1);
+            $data['index_pic'] = json_encode($image);
             unset($data['file']);
         }
         if (ArticleModel::where('id', $id)->update($data)) {
