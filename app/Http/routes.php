@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
         Route::get('log/list', 'LogController@index');
-        Route::get('log/recovery/{id}', 'LogController@recovery');
+        Route::get('recovery/{id}', 'LogController@recovery');
     });
 });
 

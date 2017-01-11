@@ -93,7 +93,7 @@ class Log implements LogInterfaceBag
                 if (!$last_info = $model::find($info['before']['id'])) {
                     return ['error_code' => 1802];
                 }
-                //对比还原点变动前的images和此条内容最新的images
+                //对比还原点变动前的image和此条内容最新的image
                 switch ($module) {
                     case 'article':
                         $before = (array)json_decode($info['before']['index_pic'], 1);
@@ -110,6 +110,7 @@ class Log implements LogInterfaceBag
                         $last = (array)json_decode($last_info['images'], 1);
                         break;
                     default;
+                        return ['error_code' => 1807];
                         break;
                 }
                 if (!$this->arrayCompare($before, $last)) {
@@ -135,6 +136,7 @@ class Log implements LogInterfaceBag
                         $before = (array)json_decode($info['images'], 1);
                         break;
                     default;
+                        return ['error_code' => 1807];
                         break;
                 }
                 $res = $this->handleFiles($before, []);
@@ -147,6 +149,7 @@ class Log implements LogInterfaceBag
                 $id = $info['id'];
                 break;
             default:
+                return ['error_code' => 1801];
                 break;
         }
 
@@ -155,15 +158,13 @@ class Log implements LogInterfaceBag
 
     protected function handleFiles($before, $last)
     {
-        $return = true;
         $drop = $keep = $recovery = [];
         //删除还原点之后新增的图片
-//        dd($before, $last);
         array_map(function($y) use (&$drop, &$keep, $before) {
             !in_array($y, $before) ? $drop[] = $y['id'] : $keep[] = array_search($y, $before);
         }, $last);
         if (!empty($drop)) {
-            $return = $this->image->delete(implode(',', $drop));
+            $this->image->delete(implode(',', $drop));
         }
         //恢复还原点之后删除的图片
         foreach ($before as $key => $vo) {
@@ -175,7 +176,7 @@ class Log implements LogInterfaceBag
             return $this->doRecovery('image', $recovery);
         }
 
-        return $return;
+        return true;
     }
 
     protected function doRecovery($module, $ids)
@@ -199,7 +200,6 @@ class Log implements LogInterfaceBag
         array_map(function($y) use (&$data) {
             $data[] = json_decode($y['info'], 1);
         }, $recovery);
-
         if (DB::table((new $model)->table)->insert($data)) {
             return $query->delete();
         }
