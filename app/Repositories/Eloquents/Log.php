@@ -80,7 +80,7 @@ class Log implements LogInterfaceBag
         if (in_array($module, ['image'])) {
             return ['error_code' => 1800];
         }
-        if (!in_array($action, ['update', 'delete'])) {
+        if (!in_array($action, ['update', 'delete', 'recovery'])) {
             return ['error_code' => 1801];
         }
         if (!$model = $this->getModel($module)) {
@@ -89,28 +89,68 @@ class Log implements LogInterfaceBag
         $info = json_decode($log->info, 1);
         switch ($action) {
             case 'update':
+            case 'recovery':
                 if (!$last_info = $model::find($info['before']['id'])) {
                     return ['error_code' => 1802];
                 }
                 //对比还原点变动前的images和此条内容最新的images
-                $before = (array)json_decode($info['before']['images'], 1);
-                $last = (array)json_decode($last_info['images'], 1);
-                if ($this->checkDiff('image', $before, $last)) {
+                switch ($module) {
+                    case 'article':
+                        $before = (array)json_decode($info['before']['index_pic'], 1);
+                        if (!empty($before)) {
+                            $before = [$before];
+                        }
+                        $last = (array)json_decode($last_info['index_pic'], 1);
+                        if (!empty($last)) {
+                            $last = [$last];
+                        }
+                        break;
+                    case 'product':
+                        $before = (array)json_decode($info['before']['images'], 1);
+                        $last = (array)json_decode($last_info['images'], 1);
+                        break;
+                    default;
+                        break;
+                }
+                if (!$this->arrayCompare($before, $last)) {
                     $res = $this->handleFiles($before, $last);
                     if (isset($res['error_code'])) {
                         return $res;
                     }
                 }
-
                 if ($return = $model::where('id', $info['before']['id'])->update($info['before'])) {
                     event('log', [[$module, 't', ['before' => $last_info, 'after' => $info['before']]]]);
                 }
+                $id = $info['before']['id'];
                 break;
             case 'delete':
+                switch ($module) {
+                    case 'article':
+                        $before = (array)json_decode($info['index_pic'], 1);
+                        if (!empty($before)) {
+                            $before = [$before];
+                        }
+                        break;
+                    case 'product':
+                        $before = (array)json_decode($info['images'], 1);
+                        break;
+                    default;
+                        break;
+                }
+                $res = $this->handleFiles($before, []);
+                if (isset($res['error_code'])) {
+                    return $res;
+                }
+                if ($return = DB::table((new $model)->table)->insert($info)) {
+                    event('log', [[$module, 't', $info]]);
+                }
+                $id = $info['id'];
                 break;
             default:
                 break;
         }
+
+        return $model::find($id);
     }
 
     protected function handleFiles($before, $last)
@@ -118,6 +158,7 @@ class Log implements LogInterfaceBag
         $return = true;
         $drop = $keep = $recovery = [];
         //删除还原点之后新增的图片
+//        dd($before, $last);
         array_map(function($y) use (&$drop, &$keep, $before) {
             !in_array($y, $before) ? $drop[] = $y['id'] : $keep[] = array_search($y, $before);
         }, $last);
@@ -125,15 +166,13 @@ class Log implements LogInterfaceBag
             $return = $this->image->delete(implode(',', $drop));
         }
         //恢复还原点之后删除的图片
-        if (!empty($keep)) {
-            foreach ($before as $key => $vo) {
-                if (!in_array($key, $keep)) {
-                    $recovery[] = $vo['id'];
-                }
+        foreach ($before as $key => $vo) {
+            if (!in_array($key, $keep)) {
+                $recovery[] = $vo['id'];
             }
-            if (!empty($recovery)) {
-                return $this->doRecovery('image', $recovery);
-            }
+        }
+        if (!empty($recovery)) {
+            return $this->doRecovery('image', $recovery);
         }
 
         return $return;
@@ -141,10 +180,11 @@ class Log implements LogInterfaceBag
 
     protected function doRecovery($module, $ids)
     {
-        if (!in_array($module, ['image', 'video', 'gallery'])) {
+        if (!in_array($module, ['image', 'video'])) {
             return ['error_code' => 1805];
         }
-        $recovery = RecoveryModel::where('type', $module)->whereIn('material_id', $ids)->get()->toArray();
+        $query = RecoveryModel::where('type', $module)->whereIn('material_id', $ids);
+        $recovery = $query->get()->toArray();
         if (empty($recovery)) {
 
             return ['error_code' => 1804];
@@ -160,17 +200,8 @@ class Log implements LogInterfaceBag
             $data[] = json_decode($y['info'], 1);
         }, $recovery);
 
-        return DB::table((new $model)->table)->insert($data);
-    }
-
-    protected function checkDiff($type, $A, $B, $check_key = false)
-    {
-        switch ($type) {
-            case 'image':
-                return true;
-                break;
-            default;
-                break;
+        if (DB::table((new $model)->table)->insert($data)) {
+            return $query->delete();
         }
     }
 }

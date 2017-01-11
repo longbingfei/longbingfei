@@ -28,4 +28,33 @@ Trait Functions
 
         return class_exists($model) ? $model : false;
     }
+
+    //数组对比
+    protected function arrayCompare($A, $B, $check_key = true)
+    {
+        sort($A);
+        sort($B);
+        if (count($A) !== count($B)) {
+            return false;
+        }
+        if (!$check_key) {
+            $A = array_values($A);
+            $B = array_values($B);
+        }
+        foreach ($A as $key => $vo) {
+            if (is_array($vo)) {
+                if (!isset($B[$key])) {
+                    return false;
+                }
+
+                return $this->arrayCompare($vo, $B[$key], $check_key);
+            } else {
+                if ($vo !== $B[$key]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
