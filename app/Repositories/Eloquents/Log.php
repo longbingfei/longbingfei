@@ -7,12 +7,16 @@
  */
 namespace App\Repositories\Eloquents;
 
+use App\Traits\Functions;
 use App\Models\Log as LogModel;
+use Illuminate\Support\Facades\DB;
+use App\Models\Recovery as RecoveryModel;
 use App\Repositories\InterfacesBag\Log as LogInterfaceBag;
 use App\Repositories\InterfacesBag\Image as ImageInterfaceBag;
 
 class Log implements LogInterfaceBag
 {
+    use Functions;
     protected $module = 'log';
     protected $image;
 
@@ -73,17 +77,13 @@ class Log implements LogInterfaceBag
         }
         $module = $log->module;
         $action = $log->action;
-        if (in_array($action, ['image'])) {
+        if (in_array($module, ['image'])) {
             return ['error_code' => 1800];
         }
         if (!in_array($action, ['update', 'delete'])) {
             return ['error_code' => 1801];
         }
-        $model = array_reduce(explode('_', $module), function($x, $y) {
-            return ucfirst($x) . ucfirst($y);
-        });
-        $model = 'App\Models\\' . $model;
-        if (!class_exists($model)) {
+        if (!$model = $this->getModel($module)) {
             return ['error_code' => 13083];
         }
         $info = json_decode($log->info, 1);
@@ -93,8 +93,18 @@ class Log implements LogInterfaceBag
                     return ['error_code' => 1802];
                 }
                 //对比还原点变动前的images和此条内容最新的images
-                $this->handleFiles($info['before']['images'], $last_info['images']);
-                $model::where('id', $info['before']['id'])->update($info['before']);
+                $before = (array)json_decode($info['before']['images'], 1);
+                $last = (array)json_decode($last_info['images'], 1);
+                if ($this->checkDiff('image', $before, $last)) {
+                    $res = $this->handleFiles($before, $last);
+                    if (isset($res['error_code'])) {
+                        return $res;
+                    }
+                }
+
+                if ($return = $model::where('id', $info['before']['id'])->update($info['before'])) {
+                    event('log', [[$module, 't', ['before' => $last_info, 'after' => $info['before']]]]);
+                }
                 break;
             case 'delete':
                 break;
@@ -103,25 +113,64 @@ class Log implements LogInterfaceBag
         }
     }
 
-    protected function handleFiles($that, $last)
+    protected function handleFiles($before, $last)
     {
-        $drop = $keep = [];
-        $that = (array)json_decode($that, 1);
-        $last = (array)json_decode($last, 1);
+        $return = true;
+        $drop = $keep = $recovery = [];
         //删除还原点之后新增的图片
-        array_map(function($y) use (&$drop, &$keep, $that) {
-            !in_array($y, $that) ? $drop[] = $y['id'] : $keep[] = array_search($y, $that);
+        array_map(function($y) use (&$drop, &$keep, $before) {
+            !in_array($y, $before) ? $drop[] = $y['id'] : $keep[] = array_search($y, $before);
         }, $last);
         if (!empty($drop)) {
-            $this->image->delete(implode(',', $drop));
+            $return = $this->image->delete(implode(',', $drop));
         }
-//        if (!empty($keep)) {
-//            array_map(function($y) use ($keep, $that) {
-//                if (!in_array($y, $keep)) {
-//                    return $this->doRecovery('image', [$that[$y]['path'], $that[$y]['thumb']]);
-//                }
-//            }, array_keys($that));
-//        }
         //恢复还原点之后删除的图片
+        if (!empty($keep)) {
+            foreach ($before as $key => $vo) {
+                if (!in_array($key, $keep)) {
+                    $recovery[] = $vo['id'];
+                }
+            }
+            if (!empty($recovery)) {
+                return $this->doRecovery('image', $recovery);
+            }
+        }
+
+        return $return;
+    }
+
+    protected function doRecovery($module, $ids)
+    {
+        if (!in_array($module, ['image', 'video', 'gallery'])) {
+            return ['error_code' => 1805];
+        }
+        $recovery = RecoveryModel::where('type', $module)->whereIn('material_id', $ids)->get()->toArray();
+        if (empty($recovery)) {
+
+            return ['error_code' => 1804];
+        }
+        if (!$model = $this->getModel($module)) {
+            return ['error_code' => 13083];
+        }
+        if ($model::whereIn('id', $ids)->count()) {
+            return ['error_code' => 1806];
+        }
+        $data = [];
+        array_map(function($y) use (&$data) {
+            $data[] = json_decode($y['info'], 1);
+        }, $recovery);
+
+        return DB::table((new $model)->table)->insert($data);
+    }
+
+    protected function checkDiff($type, $A, $B, $check_key = false)
+    {
+        switch ($type) {
+            case 'image':
+                return true;
+                break;
+            default;
+                break;
+        }
     }
 }

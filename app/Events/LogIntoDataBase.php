@@ -34,6 +34,18 @@ class LogIntoDatabase
             'username' => Auth::User()->username,
             'date'     => Carbon::now(),
         ];
+        //插入日志
         DB::table('logs')->insert($data);
+        //插入还原表
+        if (isset($payload['recovery']) && $payload['recovery']) {
+            $data = [
+                'material_id' => $payload[2]['id'],
+                'type'        => $payload[0],
+                'info'        => $content,
+                'user_id'     => Auth::id(),
+                'created_at'  => Carbon::now()
+            ];
+            DB::table('recovery')->insert($data);
+        }
     }
 }

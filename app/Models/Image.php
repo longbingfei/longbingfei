@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $table = 'images';
-
+    public $table = 'images';
     protected $fillable = [
         'name',
         'sort_id',

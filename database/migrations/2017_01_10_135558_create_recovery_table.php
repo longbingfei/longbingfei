@@ -14,11 +14,11 @@ class CreateRecoveryTable extends Migration
     {
         Schema::create('recovery', function(Blueprint $tables) {
             $tables->increments('id')->unsigned();
-            $tables->string('type', 20);
-            $tables->integer('content_id')->unsigned();
             $tables->integer('material_id')->unsigned();
+            $tables->string('type', 20);
+            $tables->text('info');
             $tables->integer('user_id');
-            $tables->timestamps();
+            $tables->dateTime('created_at');
         });
     }
 

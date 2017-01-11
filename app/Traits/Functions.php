@@ -17,4 +17,15 @@ Trait Functions
 
         return is_dir($path) && is_writeable($path) ? ($show_path ? $path : true) : false;
     }
+
+    //获取模型
+    protected function getModel($module)
+    {
+        $model = array_reduce(explode('_', $module), function($x, $y) {
+            return ucfirst($x) . ucfirst($y);
+        });
+        $model = 'App\Models\\' . $model;
+
+        return class_exists($model) ? $model : false;
+    }
 }

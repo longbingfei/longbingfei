@@ -9,9 +9,11 @@ class Recovery extends Model
     protected $table = 'recovery';
 
     protected $fillable = [
-        'from',
-        'to',
+        'material_id',
         'type',
+        'info',
         'user_id'
     ];
+
+    public $timestamps = false;
 }

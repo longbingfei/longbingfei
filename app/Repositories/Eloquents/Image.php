@@ -17,7 +17,7 @@ use App\Repositories\InterfacesBag\Image as ImageInterface;
 class Image implements ImageInterface
 {
     use Functions;
-    protected $module = 'image';
+    public $module = 'image';
 
     //图片列表
     public function index(array $condition)
@@ -105,7 +105,7 @@ class Image implements ImageInterface
                 return [$y['id'] => 1105];
             }
             if (ImageModel::destroy($y['id'])) {
-                event('log', [[$this->module, 'd', $y]]);
+                event('log', [[$this->module, 'd', $y, 'recovery' => true]]);
 
                 return [$y['id'] => 'success'];
             }
