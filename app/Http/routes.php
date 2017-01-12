@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('product_form/{id?}', 'ProductController@form');
         Route::get('log/list', 'LogController@index');
         Route::get('recovery/{id}', 'LogController@recovery');
+        Route::resource('tag', 'TagController');
     });
 });
 

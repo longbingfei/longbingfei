@@ -63,6 +63,7 @@ class AppServiceProvider extends ServiceProvider
         app()->bind('App\Repositories\InterfacesBag\Log', 'App\Repositories\Eloquents\Log');
         app()->bind('App\Repositories\InterfacesBag\Publish', 'App\Repositories\Eloquents\Publish');
         app()->bind('App\Repositories\InterfacesBag\Gallery', 'App\Repositories\Eloquents\Gallery');
+        app()->bind('App\Repositories\InterfacesBag\Tag', 'App\Repositories\Eloquents\Tag');
         app()->bind('App\Repositories\InterfacesBag\Sort', function() {
             return new \App\Repositories\Eloquents\Sort(request()->get('app'));
         });
