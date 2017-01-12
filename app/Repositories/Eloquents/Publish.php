@@ -73,25 +73,33 @@ class Publish implements PublishInterface
 
     public function create(array $data)
     {
-        if (!$id = $data['id']) {
+        if (!$content_id = $data['content_id']) {
             return ['error_code' => 1600];
         }
         if ((!$type = $data['type']) || !isset($this->{strtolower($data['type'])})) {
             return ['error_code' => 1601];
         }
-        $detail = $this->$type->show($id);
+        $detail = $this->$type->show($content_id);
         $tpl = $data['tpl_id'] ? : 'tpl.default.' . $type . '_detail';
         $html = view($tpl, ['detail' => $detail])->render();
-        $params = [
+        $params = $type == 'product' ? [
+            'name'       => $detail['name'],
+            'index_pic'  => empty($detail['images']) ? [] : current($detail['images'])['thumb'],
+            'price'      => $detail['price'],
+            'describe'   => $detail['describe'],
+            'storage'    => $detail['storage'],
+            'sort_name'  => $detail['sort_name'],
+            'created_at' => $detail['created_at'],
+        ] : [
             'title'     => $detail['title'],
             'keywords'  => '',
             'index_pic' => empty($detail['index_pic']) ? '' : $detail['index_pic']['thumb'],
             'tags'      => '',
             'user_id'   => Auth::id()
         ];
-        if ($publish = PublishModel::where('cid', $id)->where('type', $type)->first()) {
+        if ($publish = PublishModel::where('cid', $content_id)->where('type', $type)->first()) {
             $path = $publish->path;
-            $this->checkDir(dirname($path), 1);
+            $this->checkDir(dirname($path));
             file_put_contents(public_path($path), $html);
             $publish = $this->update($publish->id, $params);
         } else {
@@ -101,7 +109,7 @@ class Publish implements PublishInterface
             $filename = microtime(1) * 10000 . '.html';
             $path = $path . $filename;
             file_put_contents(public_path($path), $html);
-            $params['cid'] = $id;
+            $params['cid'] = $content_id;
             $params['type'] = $type;
             $params['path'] = $path;
             if (!$publish = PublishModel::create($params)) {

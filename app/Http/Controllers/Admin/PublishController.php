@@ -40,7 +40,7 @@ class PublishController extends Controller
     public function store(Request $request)
     {
         $fillable = [
-            'id',
+            'content_id',
             'type',
             'tpl_id',
             'path'
