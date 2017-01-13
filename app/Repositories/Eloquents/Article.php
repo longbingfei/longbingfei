@@ -38,6 +38,7 @@ class Article implements ArticleInterface
         if ($sort_id = intval($condition['sort_id'])) {
             $articles = $articles->where('articles.sort_id', $sort_id);
         }
+        //查询符合标签ids的内容
         if ($tag_ids = trim($condition['tag_ids'])) {
             foreach (explode(',', $tag_ids) as $vo) {
                 $articles = $articles->whereRaw("FIND_IN_SET($vo, articles.tag_ids)");
@@ -52,12 +53,16 @@ class Article implements ArticleInterface
         if ($updated_at = trim($condition['updated_at'])) {
             $articles = $articles->where('articles.updated_at', '>=', $updated_at);
         }
-        $articles = $articles->leftJoin('article_sorts', 'articles.sort_id', '=', 'article_sorts.id')
+        $articles = $articles
+            ->leftJoin('article_sorts', 'articles.sort_id', '=', 'article_sorts.id')
             ->leftJoin('administrators', 'articles.author_id', '=', 'administrators.id')
+            ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,articles.tag_ids)'), DB::raw(null), DB::raw(null))
+            ->groupBy('articles.id')
             ->select(
                 'articles.*',
-                'article_sorts.name as sort_name',
-                'administrators.username as author_name'
+                'article_sorts.name AS sort_name',
+                'administrators.username AS author_name',
+                DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
             );
         $orderBy = trim($condition['order_by']) ? trim($condition['order_by']) : 'id';
         $order = strtoupper(trim($condition['order'])) === 'ASC' ? 'ASC' : 'DESC';
@@ -70,7 +75,6 @@ class Article implements ArticleInterface
 
             return $value;
         }, $articles['data']);
-        dd($articles);
 
         return $articles;
     }
@@ -84,10 +88,13 @@ class Article implements ArticleInterface
         $article = ArticleModel::where('articles.id', $id)
             ->leftJoin('article_sorts', 'articles.sort_id', '=', 'article_sorts.id')
             ->leftJoin('administrators', 'articles.author_id', '=', 'administrators.id')
+            ->leftJoin('tags', DB::raw("FIND_IN_SET(tags.id,articles.tag_ids)"), DB::raw(null), DB::raw(null))
+            ->groupBy('articles.id')
             ->select(
                 'articles.*',
-                'article_sorts.name as sort_name',
-                'administrators.username as author_name'
+                'article_sorts.name AS sort_name',
+                'administrators.username AS author_name',
+                DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
             );
         $article = $article->first()->toArray();
         $article['index_pic'] = json_decode($article['index_pic'], 1) ? : [];
@@ -130,7 +137,7 @@ class Article implements ArticleInterface
         if (isset($data['content'])) {
             $data['content'] = trim($data['content']);
         }
-        if ($data['tag_ids']) {
+        if (isset($data['tag_ids'])) {
             $data['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
         }
         $data['editor_id'] = Auth::id();
@@ -146,7 +153,7 @@ class Article implements ArticleInterface
         if (isset($data['index_pic']) && $before->index_pic && ($image = json_decode($before->index_pic, 1))) {
             $this->image->delete($image['id']);
         }
-        if ($data['tag_ids']) {
+        if (isset($data['tag_ids']) && !empty($data['tag_ids'])) {
             $this->tag->changeTagCount(['before' => $before->tag_ids, 'after' => $data['tag_ids']]);
         }
         event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
