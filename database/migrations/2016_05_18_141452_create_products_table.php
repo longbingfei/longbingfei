@@ -35,6 +35,8 @@ class CreateProductsTable extends Migration
             $tables->tinyInteger('evaluate')->default(5);
             $tables->string('tag_ids', 50)->nullable()->default(0);
             $tables->integer('user_id');
+            $tables->tinyInteger('is_promote')->default(0);
+            $tables->tinyInteger('is_carousel')->default(0);
             $tables->timestamps();
         });
     }
