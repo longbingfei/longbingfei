@@ -27,7 +27,7 @@ class CreateGalleriesTable extends Migration
             $table->string('index_pic')->nullable();
             $table->text('images')->nullable();
             $table->text('describes')->nullable();
-            $table->string('tags')->nullable();
+            $table->string('tag_ids', 50)->nullable()->default(0);
             $table->integer('sort_id')->unsigned();
             $table->foreign('sort_id')->references('id')->on('gallery_sorts')->onDelete('cascade');
             $table->tinyInteger('status')->default(1);

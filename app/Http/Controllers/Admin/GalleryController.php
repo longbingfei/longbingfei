@@ -27,7 +27,8 @@ class GalleryController extends Controller
             'page',
             'per_page_num',
             'orderby',
-            'order'
+            'order',
+            'tag_ids'
         ];
         $resp = $this->gallery->index($request->only($fillable));
 
@@ -42,7 +43,7 @@ class GalleryController extends Controller
             'file',
             'describes',
             'index_id',
-            'tags',
+            'tag_ids',
             'sort_id',
             'weight'
         ];
@@ -67,7 +68,7 @@ class GalleryController extends Controller
             'describes',
             'drop_image_ids',
             'index_id',
-            'tags',
+            'tag_ids',
             'sort_id',
             'weight'
         ];

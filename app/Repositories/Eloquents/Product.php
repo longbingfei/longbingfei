@@ -106,7 +106,7 @@ class Product implements ProductInterface
             return ['error_code' => 13071];
         }
         event('log', [[$this->modules, 'c', $product]]);
-        if (isset($data['tag_ids']) && !empty($data['tag_ids'])) {
+        if (isset($data['tag_ids']) && $data['tag_ids']) {
             $this->tag->changeTagCount(['after' => $data['tag_ids']]);
         }
 
@@ -169,7 +169,7 @@ class Product implements ProductInterface
         }
         $after = ProductModel::where('id', $id)->first();
         event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
-        if (isset($params['tag_ids']) && !empty($params['tag_ids'])) {
+        if (isset($params['tag_ids']) && $params['tag_ids']) {
             $this->tag->changeTagCount(['before' => $before->tag_ids, 'after' => $params['tag_ids']]);
         }
 

@@ -30,7 +30,7 @@ class CreateArticlesTable extends Migration
             $tables->foreign('sort_id')->references('id')->on('article_sorts')->onDelete('cascade');
             $tables->tinyInteger('status')->default(0);
             $tables->text('index_pic')->nullable();
-            $tables->string('tag_ids', 50)->nullable();
+            $tables->string('tag_ids', 50)->nullable()->default(0);
             $tables->integer('editor_id')->unsigned()->nullable();
             $tables->timestamps();
         });

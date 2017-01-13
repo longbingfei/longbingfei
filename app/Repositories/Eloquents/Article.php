@@ -157,7 +157,7 @@ class Article implements ArticleInterface
         if (isset($data['index_pic']) && $before->index_pic && ($image = json_decode($before->index_pic, 1))) {
             $this->image->delete($image['id']);
         }
-        if (isset($data['tag_ids']) && !empty($data['tag_ids'])) {
+        if (isset($data['tag_ids']) && $data['tag_ids']) {
             $this->tag->changeTagCount(['before' => $before->tag_ids, 'after' => $data['tag_ids']]);
         }
         event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);

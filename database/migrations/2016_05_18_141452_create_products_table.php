@@ -33,7 +33,7 @@ class CreateProductsTable extends Migration
             $tables->foreign('sort_id')->references('id')->on('product_sorts')->onDelete('cascade');
             $tables->tinyInteger('status')->default(0);
             $tables->tinyInteger('evaluate')->default(5);
-            $tables->string('tag_ids', 50)->nullable();
+            $tables->string('tag_ids', 50)->nullable()->default(0);
             $tables->integer('user_id');
             $tables->timestamps();
         });

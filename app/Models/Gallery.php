@@ -18,6 +18,7 @@ class Gallery extends Model
         'weight',
         'tags',
         'sort_id',
+        'tag_ids',
         'user_id'
     ];
 }

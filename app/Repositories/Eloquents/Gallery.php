@@ -8,9 +8,11 @@
 namespace App\Repositories\Eloquents;
 
 use App\Models\GallerySort;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gallery as GalleryModel;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repositories\InterfacesBag\Tag as TagInterface;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
 use App\Repositories\InterfacesBag\Gallery as GalleryInterface;
 
@@ -20,9 +22,12 @@ class Gallery implements GalleryInterface
 
     protected $image;
 
-    public function __construct(ImageInterface $image)
+    protected $tag;
+
+    public function __construct(ImageInterface $image, TagInterface $tag)
     {
         $this->image = $image;
+        $this->tag = $tag;
     }
 
     public function index(array $condition)
@@ -47,7 +52,16 @@ class Gallery implements GalleryInterface
         $gallery = $gallery
             ->leftJoin('gallery_sorts as gs', 'galleries.sort_id', '=', 'gs.id')
             ->leftJoin('administrators as admin', 'galleries.user_id', '=', 'admin.id')
-            ->select('galleries.*', 'gs.name as sort_name', 'admin.username as username')
+            ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,galleries.tag_ids)'), DB::raw(null), DB::raw(null))
+            ->groupBy('galleries.id')
+            ->select(
+                [
+                    'galleries.*',
+                    'gs.name as sort_name',
+                    'admin.username as username',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
+            )
             ->orderby('galleries.' . $orderby, $order)
             ->paginate($per_page_num, ['*'], 'page', $page)
             ->toArray();
@@ -69,7 +83,16 @@ class Gallery implements GalleryInterface
         }
         $gallery = $gallery->leftJoin('gallery_sorts as gs', 'galleries.sort_id', '=', 'gs.id')
             ->leftJoin('administrators as admin', 'galleries.user_id', '=', 'admin.id')
-            ->select('galleries.*', 'gs.name as sort_name', 'admin.username as username')
+            ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,galleries.tag_ids)'), DB::raw(null), DB::raw(null))
+            ->groupBy('galleries.id')
+            ->select(
+                [
+                    'galleries.*',
+                    'gs.name as sort_name',
+                    'admin.username as username',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
+            )
             ->where('galleries.id', $id)
             ->first()
             ->toArray();
@@ -111,18 +134,21 @@ class Gallery implements GalleryInterface
             }
             $params['index_pic'] = isset($images[$data['index_id']]) ? json_encode($images[$data['index_id']]) : json_encode(current($images) ? : []);
         }
-        if ($data['tags']) {
-            $params['tags'] = $data['tags'];
-        }
         $params['sort_id'] = GallerySort::find(intval($data['sort_id'])) ? intval($data['sort_id']) : 1;
         if (!is_null($data['weight'])) {
             $params['weight'] = intval($data['weight']);
+        }
+        if ($data['tag_ids']) {
+            $params['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
         }
         $params['user_id'] = Auth::Id();
         if (!$gallery = GalleryModel::create($params)) {
             return ['error_code' => 1702];
         }
         event('log', [[$this->module, 'c', $gallery]]);
+        if (isset($params['tag_ids']) && $params['tag_ids']) {
+            $this->tag->changeTagCount(['after' => $params['tag_ids']]);
+        }
         $gallery['sort_name'] = GallerySort::find($gallery->sort_id)->name;
         $gallery['user_name'] = Auth::user()->username;
         $gallery['index_pic'] = json_decode($gallery['index_pic'], 1);
@@ -191,11 +217,11 @@ class Gallery implements GalleryInterface
         }
         $params['images'] = json_encode(array_values($pImages));
         $params['describes'] = json_encode(array_values($pDescribes));
-        if ($data['tags']) {
-            $params['tags'] = $data['tags'];
-        }
         if ($data['sort_id'] && GallerySort::find(intval($data['sort_id']))) {
             $params['sort_id'] = intval($data['sort_id']);
+        }
+        if ($data['tag_ids']) {
+            $params['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
         }
         if (!is_null($data['weight'])) {
             $params['weight'] = intval($data['weight']);
@@ -220,6 +246,9 @@ class Gallery implements GalleryInterface
             $this->image->delete(implode(',', $dropImages));
         }
         event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
+        if (isset($params['tag_ids']) && $params['tag_ids']) {
+            $this->tag->changeTagCount(['before' => $before['tag_ids'], 'after' => $params['tag_ids']]);
+        }
         $after['sort_name'] = GallerySort::find($after['sort_id'])->name;
         $after['user_name'] = Auth::user()->username;
         $after['index_pic'] = json_decode($after['index_pic'], 1);
@@ -247,6 +276,9 @@ class Gallery implements GalleryInterface
             $this->image->delete(implode(',', $image_ids));
         }
         event('log', [[$this->module, 'd', $before]]);
+        if ($tag_ids = $gallery->tag_ids) {
+            $this->tag->changeTagCount(['before' => $tag_ids]);
+        }
 
         return $before;
     }

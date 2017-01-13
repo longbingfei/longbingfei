@@ -59,7 +59,6 @@ class GallerySeeder extends Seeder
                 ]
             ]),
             'describes' => json_encode(['naruto', 'bijiu']),
-            'tags'      => 'init',
             'sort_id'   => 1,
             'status'    => 1,
             'weight'    => 0,
