@@ -33,7 +33,8 @@ class ProductController extends Controller
             'storage',
             'price',
             'title',
-            'order'
+            'order',
+            'tag_ids'
         ];
 
         $return = $this->product->index($request->only($fillable));
@@ -77,7 +78,8 @@ class ProductController extends Controller
             'sort_id',
             'status',
             'file',
-            'evaluate'
+            'evaluate',
+            'tag_ids'
         ];
         if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['error_code' => $error_code]);
@@ -115,6 +117,7 @@ class ProductController extends Controller
             'drop_images',
             'file',
             'evaluate',
+            'tag_ids'
         ];
         if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(['error_code' => $error_code]);

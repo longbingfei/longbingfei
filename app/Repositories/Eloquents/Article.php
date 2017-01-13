@@ -59,10 +59,12 @@ class Article implements ArticleInterface
             ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,articles.tag_ids)'), DB::raw(null), DB::raw(null))
             ->groupBy('articles.id')
             ->select(
-                'articles.*',
-                'article_sorts.name AS sort_name',
-                'administrators.username AS author_name',
-                DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                [
+                    'articles.*',
+                    'article_sorts.name AS sort_name',
+                    'administrators.username AS author_name',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
             );
         $orderBy = trim($condition['order_by']) ? trim($condition['order_by']) : 'id';
         $order = strtoupper(trim($condition['order'])) === 'ASC' ? 'ASC' : 'DESC';
@@ -91,10 +93,12 @@ class Article implements ArticleInterface
             ->leftJoin('tags', DB::raw("FIND_IN_SET(tags.id,articles.tag_ids)"), DB::raw(null), DB::raw(null))
             ->groupBy('articles.id')
             ->select(
-                'articles.*',
-                'article_sorts.name AS sort_name',
-                'administrators.username AS author_name',
-                DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                [
+                    'articles.*',
+                    'article_sorts.name AS sort_name',
+                    'administrators.username AS author_name',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
             );
         $article = $article->first()->toArray();
         $article['index_pic'] = json_decode($article['index_pic'], 1) ? : [];

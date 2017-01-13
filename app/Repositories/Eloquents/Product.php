@@ -8,7 +8,9 @@
 namespace App\Repositories\Eloquents;
 
 use Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Product as ProductModel;
+use App\Repositories\InterfacesBag\Tag as TagInterface;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
 use App\Repositories\InterfacesBag\Product as ProductInterface;
 
@@ -19,10 +21,12 @@ class Product implements ProductInterface
     protected $modules = 'product';
 
     protected $image;
+    protected $tag;
 
-    public function __construct(ImageInterface $image)
+    public function __construct(ImageInterface $image, TagInterface $tag)
     {
         $this->image = $image;
+        $this->tag = $tag;
     }
 
     public function index(array $condition = [])
@@ -33,12 +37,26 @@ class Product implements ProductInterface
         $product = ProductModel::orderBy($orderBy, $order)
             ->leftJoin('product_sorts', 'product_sorts.id', '=', 'products.sort_id')
             ->leftJoin('administrators', 'products.user_id', '=', 'administrators.id')
-            ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username');
+            ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,products.tag_ids)'), DB::raw(null), DB::raw(null))
+            ->groupBy('products.id')
+            ->select(
+                [
+                    'products.*',
+                    'product_sorts.name AS sort_name',
+                    'administrators.username',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
+            );
         if ($sort_id = intval($condition['sort_id'])) {
             $product = $product->where('sort_id', $sort_id);
         }
         $page = intval($condition['page']) ? intval($condition['page']) : 1;
         $perpage = intval($condition['perpage']) ? intval($condition['perpage']) : 10;
+        if ($tag_ids = trim($condition['tag_ids'])) {
+            foreach (explode(',', $tag_ids) as $vo) {
+                $product = $product->whereRaw("FIND_IN_SET($vo, products.tag_ids)");
+            }
+        }
         $product = $product->paginate($perpage, ['*'], 'page', $page)->toArray();//每页条数,字段数组,页码标记,第几页
         $product['data'] = array_map(function($value) {
             $value['images'] = json_decode($value['images'], 1) ? : [];
@@ -54,7 +72,15 @@ class Product implements ProductInterface
         $return = ProductModel::where('products.id', $id)
             ->leftJoin('product_sorts', 'product_sorts.id', '=', 'products.sort_id')
             ->leftJoin('administrators', 'products.user_id', '=', 'administrators.id')
-            ->select('products.*', 'product_sorts.name as sort_name', 'administrators.username')->first();
+            ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,products.tag_ids)'), DB::raw(null), DB::raw(null))
+            ->select(
+                [
+                    'products.*',
+                    'product_sorts.name as sort_name',
+                    'administrators.username',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
+            )->first();
         if ($return) {
             $return['images'] = json_decode($return['images'], 1) ? : [];
         }
@@ -72,12 +98,19 @@ class Product implements ProductInterface
         $data['user_id'] = Auth::id();
         $data['images'] = json_encode(call_user_func([$this, 'createProductImages'], $data['file'], $data['pid']));
         $data['describe'] = isset($data['describe']) ? $data['describe'] : '';
-        unset($data['file']);
-        if ($product = ProductModel::create($data)) {
-            event('log', [[$this->modules, 'c', $product]]);
-
-            return $product;
+        if (isset($data['tag_ids'])) {
+            $data['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
         }
+        unset($data['file']);
+        if (!$product = ProductModel::create($data)) {
+            return ['error_code' => 13071];
+        }
+        event('log', [[$this->modules, 'c', $product]]);
+        if (isset($data['tag_ids']) && !empty($data['tag_ids'])) {
+            $this->tag->changeTagCount(['after' => $data['tag_ids']]);
+        }
+
+        return $product;
     }
 
     protected function createProductImages($files, $pid)
@@ -103,10 +136,21 @@ class Product implements ProductInterface
         $data = array_filter($data);
         $params['name'] = trim($data['name']);
         $params['price'] = trim($data['price']);
-        $params['describe'] = isset($data['describe']) ? trim($data['describe']) : '';
-        $params['storage'] = isset($data['storage']) ? intval($data['storage']) : 0;
-        $params['sort_id'] = intval($data['sort_id']);
-        $params['evaluate'] = isset($data['evaluate']) ? intval($data['evaluate']) : 5;
+        if (isset($data['describe'])) {
+            $params['describe'] = trim($data['describe']);
+        }
+        if (isset($data['storage'])) {
+            $params['storage'] = intval($data['storage']);
+        }
+        if (isset($data['sort_id'])) {
+            $params['sort_id'] = intval($data['sort_id']);
+        }
+        if (isset($data['evaluate'])) {
+            $params['evaluate'] = intval($data['evaluate']);
+        }
+        if (isset($data['tag_ids'])) {
+            $params['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
+        }
         $params['user_id'] = Auth::id();
         $images = json_decode($before->images, 1) ? : [];
         if (isset($data['drop_images']) && ($drop_images = explode(',', $data['drop_images']))) {
@@ -120,12 +164,16 @@ class Product implements ProductInterface
             $images = array_merge($images, $new_images);
         }
         $params['images'] = json_encode($images);
-        if (ProductModel::where('id', $id)->update($params)) {
-            $after = ProductModel::where('id', $id)->first();
-            event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
-
-            return $after;
+        if (!ProductModel::where('id', $id)->update($params)) {
+            return ['error_code' => 13072];
         }
+        $after = ProductModel::where('id', $id)->first();
+        event('log', [[$this->modules, 'u', ['before' => $before, 'after' => $after]]]);
+        if (isset($params['tag_ids']) && !empty($params['tag_ids'])) {
+            $this->tag->changeTagCount(['before' => $before->tag_ids, 'after' => $params['tag_ids']]);
+        }
+
+        return $after;
     }
 
     public function delete($id)
@@ -140,10 +188,14 @@ class Product implements ProductInterface
             @rmdir(public_path(PRODUCT_IMAGE_PATH . '/' . $product->pid . '/thumb'));
             @rmdir(public_path(PRODUCT_IMAGE_PATH . '/' . $product->pid));
         }
-        if (ProductModel::destroy($id)) {
-            event('log', [[$this->modules, 'd', $product]]);
-
-            return $product;
+        if (!ProductModel::destroy($id)) {
+            return ['error_code' => 13073];
         }
+        event('log', [[$this->modules, 'd', $product]]);
+        if ($tag_ids = $product->tag_ids) {
+            $this->tag->changeTagCount(['before' => $tag_ids]);
+        }
+
+        return $product;
     }
 }

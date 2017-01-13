@@ -17,6 +17,7 @@ class Product extends Model
         'storage',
         'sort_id',
         'status',
+        'tag_ids',
         'user_id',
         'evaluate',
         'is_promote',
