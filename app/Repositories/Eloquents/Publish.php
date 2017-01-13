@@ -86,13 +86,12 @@ class Publish implements PublishInterface
             'title'     => $detail['name'],
             'keywords'  => '',
             'index_pic' => empty($detail['images']) ? [] : current($detail['images'])['thumb'],
-            'tags'      => '',
         ] : [
             'title'     => $detail['title'],
             'keywords'  => '',
             'index_pic' => empty($detail['index_pic']) ? '' : $detail['index_pic']['thumb'],
-            'tags'      => '',
         ];
+        $params['tag_ids'] = $detail['tag_ids'];
         $params['user_id'] = Auth::id();
         if ($publish = PublishModel::where('cid', $content_id)->where('type', $type)->first()) {
             $path = $publish->path;
@@ -123,7 +122,17 @@ class Publish implements PublishInterface
         if (!$before = PublishModel::find($id)) {
             return ['error_code' => 1604];
         }
-        $data = array_intersect_key($data, array_flip(['title', 'keywords', 'index_pic', 'tags', 'user_id', 'path']));
+        $data = array_intersect_key($data, array_flip(
+                [
+                    'title',
+                    'keywords',
+                    'index_pic',
+                    'tag_ids',
+                    'user_id',
+                    'path'
+                ]
+            )
+        );
         if (!PublishModel::where('id', $id)->update($data)) {
             return ['error_code' => 1605];
         }

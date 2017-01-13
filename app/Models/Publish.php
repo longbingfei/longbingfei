@@ -15,7 +15,7 @@ class Publish extends Model
         'keywords',
         'index_pic',
         'path',
-        'tags',
+        'tag_ids',
         'user_id'
     ];
 }

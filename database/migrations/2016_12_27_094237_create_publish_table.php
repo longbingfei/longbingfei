@@ -18,7 +18,7 @@ class CreatePublishTable extends Migration
             $table->string('title');
             $table->string('keywords')->nullable();
             $table->string('index_pic')->nullable();
-            $table->string('tags')->nullable();
+            $table->string('tag_ids')->nullable()->default(0);
             $table->string('type', 20);
             $table->string('path', 255);
             $table->integer('user_id');
