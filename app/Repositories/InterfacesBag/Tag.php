@@ -18,4 +18,8 @@ interface Tag extends BaseInterface
     public function update($id, array $data);
 
     public function delete($id);
+
+    public function filterTagByIds($ids, $model = false);
+
+    public function changeTagCount($ids);
 }

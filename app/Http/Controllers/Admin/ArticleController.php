@@ -33,7 +33,8 @@ class ArticleController extends Controller
             'per_page_num',
             'page',
             'order_by',
-            'order'
+            'order',
+            'tag_ids'
         ];
         $resp = $this->article->index($request->only($fileable));
 
@@ -69,7 +70,8 @@ class ArticleController extends Controller
             'content',
             'sort_id',
             'status',
-            'file'
+            'file',
+            'tag_ids'
         ];
         if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(["error_code" => $error_code]);
@@ -93,7 +95,8 @@ class ArticleController extends Controller
             'title',
             'content',
             'sort_id',
-            'file'
+            'file',
+            'tag_ids'
         ];
         if ($error_code = call_user_func(app('ValidatorForm'), $request, $rules)) {
             return Response::display(["error_code" => $error_code]);

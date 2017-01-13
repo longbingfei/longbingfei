@@ -16,6 +16,7 @@ class Article extends Model
         'sort_id',
         'editor_id',
         'status',
+        'tag_ids',
         'index_pic'
     ];
 }

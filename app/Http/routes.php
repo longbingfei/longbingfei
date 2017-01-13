@@ -10,6 +10,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('test', function() {
+    dd(array_diff([2,3,4],[2,3]));
+});
 Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('download', 'Common\CommonController@downloadFile');
 Route::get('admin', function() {

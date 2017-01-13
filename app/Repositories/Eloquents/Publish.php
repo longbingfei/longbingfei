@@ -83,20 +83,17 @@ class Publish implements PublishInterface
         $tpl = $data['tpl_id'] ? : 'tpl.default.' . $type . '_detail';
         $html = view($tpl, ['detail' => $detail])->render();
         $params = $type == 'product' ? [
-            'name'       => $detail['name'],
-            'index_pic'  => empty($detail['images']) ? [] : current($detail['images'])['thumb'],
-            'price'      => $detail['price'],
-            'describe'   => $detail['describe'],
-            'storage'    => $detail['storage'],
-            'sort_name'  => $detail['sort_name'],
-            'created_at' => $detail['created_at'],
+            'title'     => $detail['name'],
+            'keywords'  => '',
+            'index_pic' => empty($detail['images']) ? [] : current($detail['images'])['thumb'],
+            'tags'      => '',
         ] : [
             'title'     => $detail['title'],
             'keywords'  => '',
             'index_pic' => empty($detail['index_pic']) ? '' : $detail['index_pic']['thumb'],
             'tags'      => '',
-            'user_id'   => Auth::id()
         ];
+        $params['user_id'] = Auth::id();
         if ($publish = PublishModel::where('cid', $content_id)->where('type', $type)->first()) {
             $path = $publish->path;
             $this->checkDir(dirname($path));

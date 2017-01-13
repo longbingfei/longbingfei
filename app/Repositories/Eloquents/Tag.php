@@ -9,6 +9,7 @@ namespace App\Repositories\Eloquents;
 
 use App\Traits\Functions;
 use App\Models\Tag as TagModel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\InterfacesBag\Tag as TagInterface;
 
@@ -130,5 +131,27 @@ class Tag implements TagInterface
         }
 
         return ["error_code" => 1906];
+    }
+
+    public function filterTagByIds($ids, $model = false)
+    {
+        $ids = is_array($ids) ? $ids : explode(',', $ids);
+        $tags = TagModel::whereIn('id', $ids)->select(DB::raw("GROUP_CONCAT(id) as ids"))->first();
+
+        return $tags->ids ? ($model ? explode(',', $tags->ids) : $tags->ids) : 0;
+    }
+
+    public function changeTagCount($ids)
+    {
+        $before = isset($ids['before']) ? $this->filterTagByIds($ids['before'], true) : [];
+        $after = isset($ids['after']) ? $this->filterTagByIds($ids['after'], true) : [];
+        $plus = array_diff($after, $before);
+        $reduce = array_diff($before, $after);
+        if (!empty($plus)) {
+            TagModel::whereIn('id', array_values($plus))->update(['count' => DB::raw('count+1')]);
+        }
+        if (!empty($reduce)) {
+            TagModel::whereIn('id', array_values($reduce))->update(['count' => DB::raw('count-1')]);
+        }
     }
 }

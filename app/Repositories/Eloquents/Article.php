@@ -10,7 +10,9 @@ namespace App\Repositories\Eloquents;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Article as ArticleModel;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repositories\InterfacesBag\Tag as TagInterface;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
 use App\Repositories\InterfacesBag\Article as ArticleInterface;
 
@@ -18,10 +20,12 @@ class Article implements ArticleInterface
 {
     protected $module = 'article';
     protected $image;
+    protected $tag;
 
-    public function __construct(ImageInterface $image)
+    public function __construct(ImageInterface $image, TagInterface $tag)
     {
         $this->image = $image;
+        $this->tag = $tag;
     }
 
     //文稿列表
@@ -33,6 +37,11 @@ class Article implements ArticleInterface
         }
         if ($sort_id = intval($condition['sort_id'])) {
             $articles = $articles->where('articles.sort_id', $sort_id);
+        }
+        if ($tag_ids = trim($condition['tag_ids'])) {
+            foreach (explode(',', $tag_ids) as $vo) {
+                $articles = $articles->whereRaw("FIND_IN_SET($vo, articles.tag_ids)");
+            }
         }
         if ($title = trim($condition['title'])) {
             $articles = $articles->where('articles.title', 'like', '%' . $title . '%');
@@ -61,6 +70,7 @@ class Article implements ArticleInterface
 
             return $value;
         }, $articles['data']);
+        dd($articles);
 
         return $articles;
     }
@@ -91,18 +101,23 @@ class Article implements ArticleInterface
         $data['author_id'] = Auth::id();
         $data['sort_id'] = $data['sort_id'] ? $data['sort_id'] : 1;
         $data['status'] = $data['status'] ? 1 : 0;
+        if ($data['tag_ids']) {
+            $data['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
+        }
         if ($data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
             $data['index_pic'] = json_encode($image);
         }
 
-        if ($article = ArticleModel::create($data)) {
-            event('log', [[$this->module, 'c', $article]]);
-
-            return $article;
+        if (!$article = ArticleModel::create($data)) {
+            return ["error_code" => 1205];
+        }
+        event('log', [[$this->module, 'c', $article]]);
+        if ($data['tag_ids']) {
+            $this->tag->changeTagCount(['after' => $data['tag_ids']]);
         }
 
-        return ["error_code" => 1205];
+        return $article;
     }
 
     //文稿更新
@@ -112,22 +127,31 @@ class Article implements ArticleInterface
         if (!$before = ArticleModel::where('id', $id)->first()) {
             return ["error_code" => 1203];
         }
-        $data['content'] = isset($data['content']) ? $data['content'] : '';
+        if (isset($data['content'])) {
+            $data['content'] = trim($data['content']);
+        }
+        if ($data['tag_ids']) {
+            $data['tag_ids'] = $this->tag->filterTagByIds($data['tag_ids']);
+        }
         $data['editor_id'] = Auth::id();
         if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
             $image = $this->image->create($data['file']);
             $data['index_pic'] = json_encode($image);
             unset($data['file']);
         }
-        if (ArticleModel::where('id', $id)->update($data)) {
-            $after = ArticleModel::where('id', $id)->first();
-            if (isset($data['index_pic']) && $before->index_pic && ($image = json_decode($before->index_pic, 1))) {
-                $this->image->delete($image['id']);
-            }
-            event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
-
-            return $after;
+        if (!ArticleModel::where('id', $id)->update($data)) {
+            return ["error_code" => 1209];
         }
+        $after = ArticleModel::where('id', $id)->first();
+        if (isset($data['index_pic']) && $before->index_pic && ($image = json_decode($before->index_pic, 1))) {
+            $this->image->delete($image['id']);
+        }
+        if ($data['tag_ids']) {
+            $this->tag->changeTagCount(['before' => $before->tag_ids, 'after' => $data['tag_ids']]);
+        }
+        event('log', [[$this->module, 'u', ['before' => $before, 'after' => $after]]]);
+
+        return $after;
     }
 
     //文稿删除
@@ -136,15 +160,17 @@ class Article implements ArticleInterface
         if (!$info = ArticleModel::where('id', $id)->first()) {
             return ["error_code" => 1203];
         }
-        if (ArticleModel::destroy($id)) {
-            if ($info->index_pic && ($image = json_decode($info->index_pic, 1))) {
-                $this->image->delete($image['id']);
-            }
-            event('log', [[$this->module, 'd', $info]]);
-
-            return $info->toArray();
+        if (!ArticleModel::destroy($id)) {
+            return ["error_code" => 1204];
         }
+        if ($info->index_pic && ($image = json_decode($info->index_pic, 1))) {
+            $this->image->delete($image['id']);
+        }
+        if ($tag_ids = $info->tag_ids) {
+            $this->tag->changeTagCount(['before' => $tag_ids]);
+        }
+        event('log', [[$this->module, 'd', $info]]);
 
-        return ["error_code" => 1204];
+        return $info->toArray();
     }
 }
