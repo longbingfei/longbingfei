@@ -9,8 +9,8 @@ namespace App\Repositories\Eloquents;
 
 use Auth;
 use Illuminate\Http\Request;
-use App\Models\Article as ArticleModel;
 use Illuminate\Support\Facades\DB;
+use App\Models\Article as ArticleModel;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repositories\InterfacesBag\Tag as TagInterface;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
