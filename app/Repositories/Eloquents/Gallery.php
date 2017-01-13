@@ -38,6 +38,11 @@ class Gallery implements GalleryInterface
         $orderby = isset($condition['orderby']) ? $condition['orderby'] : 'id';
         $order = isset($condition['order']) && $condition['order'] === 'asc' ? 'asc' : 'desc';
         $gallery = GalleryModel::where('galleries.id', '>', '0');
+        if (isset($condition['tag_ids']) && ($tag_ids = trim($condition['tag_ids']))) {
+            foreach (explode(',', $tag_ids) as $vo) {
+                $gallery = $gallery->whereRaw("FIND_IN_SET($vo, galleries.tag_ids)");
+            }
+        }
         array_map(function($y) use (&$gallery, $condition) {
             if (isset($condition[$y])) {
                 $s = '=';
