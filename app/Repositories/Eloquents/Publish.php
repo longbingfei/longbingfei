@@ -8,6 +8,7 @@
 namespace App\Repositories\Eloquents;
 
 use App\Traits\Functions;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Publish as PublishModel;
 use App\Repositories\InterfacesBag\Image as ImageInterface;
@@ -40,7 +41,7 @@ class Publish implements PublishInterface
         $condition = array_filter($condition, 'strlen');
         $page = isset($condition['page']) ? $condition['page'] : 1;
         $per_page_num = isset($condition['per_page_num']) ? $condition['per_page_num'] : 15;
-        $publish = PublishModel::where('id', '>', '0');
+        $publish = PublishModel::where('publish.id', '>', '0');
         array_map(function($y) use (&$publish, $condition) {
             if (isset($condition[$y])) {
                 $s = '=';
@@ -49,9 +50,26 @@ class Publish implements PublishInterface
                     $s = 'like';
                     $w = '%' . $condition[$y] . '%';
                 }
-                $publish = $publish->where($y, $s, $w);
+                $publish = $publish->where('publish.' . $y, $s, $w);
             }
         }, ['type', 'keywords', 'title', 'weight']);
+        //查询符合标签ids的内容
+        if (isset($condition['tag_ids'])) {
+            foreach (explode(',', trim($condition['tag_ids'])) as $vo) {
+                $publish = $publish->whereRaw("FIND_IN_SET($vo, publish.tag_ids)");
+            }
+        }
+        $publish = $publish
+            ->leftJoin('administrators', 'publish.user_id', '=', 'administrators.id')
+            ->leftJoin('tags', DB::raw('FIND_IN_SET(tags.id,publish.tag_ids)'), DB::raw(null), DB::raw(null))
+            ->groupBy('publish.id')
+            ->select(
+                [
+                    'publish.*',
+                    'administrators.username AS user_name',
+                    DB::raw('GROUP_CONCAT(tags.name) AS tag_names')
+                ]
+            );
         $publish = $publish->paginate($per_page_num, ['*'], 'page', $page)->toArray();
 
         return $publish;

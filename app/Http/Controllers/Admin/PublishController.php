@@ -30,7 +30,8 @@ class PublishController extends Controller
             'title',
             'weight',
             'page',
-            'per_page_num'
+            'per_page_num',
+            'tag_ids'
         ];
         $resp = $this->publish->index($request->only($fillable));
 
