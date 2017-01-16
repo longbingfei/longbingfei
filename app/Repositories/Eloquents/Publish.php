@@ -117,7 +117,7 @@ class Publish implements PublishInterface
             file_put_contents(public_path($path), $html);
             $publish = $this->update($publish->id, $params);
         } else {
-            if (!$path = $this->checkDir($data['path'] ? : $type . '/' . Date('Y/m/d') . '/', 1)) {
+            if (!$path = $this->checkDir($data['path'] ? : 'sargeras/' . $type . '/' . Date('Y/m/d') . '/', 1)) {
                 return ['error_code' => 1602];
             }
             $filename = microtime(1) * 10000 . '.html';

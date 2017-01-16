@@ -45,7 +45,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('image', 'ImageController');
         Route::resource('video', 'VideoController');
         Route::resource('article', 'ArticleController');
-        Route::resource('style', 'StyleController');
         Route::get('article/show/{id}', 'ArticleController@detail');
         Route::get('article_form/{id?}', 'ArticleController@form');
         Route::resource('product', 'ProductController');
@@ -58,12 +57,7 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::group(['namespace' => 'Web'], function() {
-    Route::get('/', 'WebController@index');
-    Route::get('article', 'WebController@articleIndex');
-    Route::get('article/{id}', 'WebController@articleShow');
-    Route::get('product', 'WebController@productIndex');
-    Route::get('product/{id}', 'WebController@productShow');
-    Route::get('media/{id}', 'WebController@mediaShow');
+  //
 });
 
 //前端涉及到用户登录的操作
