@@ -36,6 +36,7 @@ class PermissionSeeder extends Seeder
                 ['pname' => 'style', 'name' => '首页样式'],
                 ['pname' => 'db', 'name' => '数据维护'],
                 ['pname' => 'image-list', 'name' => '图片列表'],
+                ['pname' => 'sys', 'name' => '服务状态'],
             ];
         DB::table('permissions')->insert($permissions);
         DB::table('roles')->insert([
