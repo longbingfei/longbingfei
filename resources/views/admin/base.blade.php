@@ -42,7 +42,7 @@ if ($avatar = unserialize($user->avatar)) {
         <div class="container-fluid sys-nav">
             <div class="navbar-header">
                 <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
-                <span class="control navbar-brand"><a href="{{url('admin/apps')}}">首页</a></span>
+                <span class="control navbar-brand"><a href="{{url('admin')}}">首页</a></span>
                 <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
             </div>
         </div>

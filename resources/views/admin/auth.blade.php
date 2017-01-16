@@ -259,7 +259,7 @@
                 message: '确认删除此用户?',
                 callback: function () {
                     $.ajax({
-                        url: 'delete/' + user_id,
+                        url: 'auth_delete/' + user_id,
                         success: function (data) {
                             if (data.id) {
                                 location.reload();

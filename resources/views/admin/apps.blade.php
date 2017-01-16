@@ -17,7 +17,7 @@
                                      onclick="return checkpermission('article-list')"></a></li>
             <li data-appinfo="商品"><a class="glyphicon glyphicon-shopping-cart" href="{{url('admin/product')}}"
                                      onclick="return checkpermission('product-list')"></a></li>
-            <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth/list')}}"
+            <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth_list')}}"
                                      onclick="return checkpermission('user-list')"></a></li>
             <li data-appinfo="图片"><a class="glyphicon glyphicon-picture" href="{{url('admin/image')}}"
                                      onclick="return checkpermission('image-list')"></a></li>

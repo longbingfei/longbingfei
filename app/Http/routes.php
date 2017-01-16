@@ -27,7 +27,7 @@ Route::group(['prefix' => 'admin'], function() {
         //注册
         Route::post('register', 'AdminAuthController@register');
         //用户列表
-        Route::get('list', 'AdminAuthController@index');
+        Route::get('auth_list', 'AdminAuthController@index');
         //角色
         Route::get('roles', 'AdminAuthController@roles');
         //权限
@@ -37,17 +37,13 @@ Route::group(['prefix' => 'admin'], function() {
         //权限绑定角色
         Route::post('attach_permissions/{role_id}', 'AdminAuthController@AttachPermissions');
         //用户更新
-        Route::put('update/{id}', 'AdminAuthController@update');
+        Route::put('auth_update/{id}', 'AdminAuthController@update');
         //用户删除
-        Route::get('delete/{id}', 'AdminAuthController@delete');
+        Route::get('auth_delete/{id}', 'AdminAuthController@delete');
         //登出
         Route::get('logout', 'AdminAuthController@logout');
     });
     Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function() {
-        //首页
-        Route::get('apps', function() {
-            return view('admin.apps');
-        });
         //分类
         Route::resource('sort', 'SortController');
         Route::get('sort_form', 'SortController@settings');
