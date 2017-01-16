@@ -57,7 +57,7 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::group(['namespace' => 'Web'], function() {
-  //
+    Route::get('/', 'WebController@index');
 });
 
 //前端涉及到用户登录的操作
