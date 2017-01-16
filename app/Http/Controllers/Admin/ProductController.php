@@ -46,14 +46,7 @@ class ProductController extends Controller
     {
         $resp = $this->product->show($id);
 
-        return Response::display($resp);
-    }
-
-    public function detail($id)
-    {
-        $detail = $this->show($id);
-
-        return view('admin.product_detail', ['detail' => $detail]);
+        return view('admin.product_detail', ['detail' => $resp]);
     }
 
     public function store(Request $request)

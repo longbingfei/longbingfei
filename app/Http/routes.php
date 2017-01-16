@@ -59,11 +59,9 @@ Route::group(['prefix' => 'admin'], function() {
         Route::resource('video', 'VideoController');
         //文稿
         Route::resource('article', 'ArticleController');
-        Route::get('article/show/{id}', 'ArticleController@detail');
         Route::get('article_form/{id?}', 'ArticleController@form');
         //商品
         Route::resource('product', 'ProductController');
-        Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
         //日志
         Route::get('log', 'LogController@index');

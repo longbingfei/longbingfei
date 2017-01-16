@@ -44,7 +44,7 @@
                             </td>
                             <td>
                                 <a class="ellipsis_ padding_move"
-                                   href="{{url('admin/product/show/'.$value['id'])}}">{{$value['name']}}</a>
+                                   href="{{url('admin/product/'.$value['id'])}}">{{$value['name']}}</a>
                             </td>
                             <td class="sort">{{$value['sort_name']}}</td>
                             <td>{{$value['storage']}}</td>
