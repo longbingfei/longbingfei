@@ -12,47 +12,66 @@
 */
 Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('download', 'Common\CommonController@downloadFile');
-Route::get('admin', function() {
-    return redirect('admin/auth/login');
-});
 Route::group(['prefix' => 'admin'], function() {
+    //数据库
     Route::any('db', ['middleware' => ['auth', 'permission:db'], 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
+    //系统信息
     Route::get('system/{info?}', 'System\SystemInfoController@index');
-    Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => 'admin'], function() {
-        Route::get('login', function() {
-            return view('admin.login');
+    //角色与权限
+    Route::group(['namespace' => 'Auth'], function() {
+        //登录
+        Route::get('/', function() {
+            return view('admin.' . (Auth::check() ? 'apps' : 'login'));
         });
         Route::post('login', 'AdminAuthController@login');
-        Route::get('home', function() {
-            return view('admin.home');
-        });
+        //注册
         Route::post('register', 'AdminAuthController@register');
+        //用户列表
         Route::get('list', 'AdminAuthController@index');
+        //角色
         Route::get('roles', 'AdminAuthController@roles');
+        //权限
         Route::get('permissions', 'AdminAuthController@permissions');
+        //角色绑定用户
         Route::post('attach_roles/{user_id}', 'AdminAuthController@AttachRoles');
+        //权限绑定角色
         Route::post('attach_permissions/{role_id}', 'AdminAuthController@AttachPermissions');
+        //用户更新
         Route::put('update/{id}', 'AdminAuthController@update');
+        //用户删除
         Route::get('delete/{id}', 'AdminAuthController@delete');
+        //登出
         Route::get('logout', 'AdminAuthController@logout');
     });
-    Route::group(['namespace' => 'Admin', 'prefix' => 'feature', 'middleware' => 'auth'], function() {
-        //具体操作
+    Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function() {
+        //首页
+        Route::get('apps', function() {
+            return view('admin.apps');
+        });
+        //分类
         Route::resource('sort', 'SortController');
         Route::get('sort_form', 'SortController@settings');
+        //标签
+        Route::resource('tag', 'TagController');
+        //发布
         Route::resource('publish', 'PublishController');
+        //相册
         Route::resource('gallery', 'GalleryController');
+        //图片
         Route::resource('image', 'ImageController');
+        //视频
         Route::resource('video', 'VideoController');
+        //文稿
         Route::resource('article', 'ArticleController');
         Route::get('article/show/{id}', 'ArticleController@detail');
         Route::get('article_form/{id?}', 'ArticleController@form');
+        //商品
         Route::resource('product', 'ProductController');
         Route::get('product/show/{id}', 'ProductController@detail');
         Route::get('product_form/{id?}', 'ProductController@form');
-        Route::get('log/list', 'LogController@index');
+        //日志
+        Route::get('log', 'LogController@index');
         Route::get('recovery/{id}', 'LogController@recovery');
-        Route::resource('tag', 'TagController');
     });
 });
 

@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title','用户与权限')
 @section('link')
     @parent

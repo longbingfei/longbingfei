@@ -3,7 +3,7 @@
         die('数据不存在!');
     }
 ?>
-@extends('admin.home')
+@extends('admin.base')
 @section('title','文稿详情')
 @section('link')
     @parent
@@ -13,7 +13,7 @@
 @section('nav')
     @parent
 @stop
-@section('subject',$detail['title'].'<a class="a-edit-article" href="'.url('admin/feature/article_form/'.$detail['id']).'">编辑</a>')
+@section('subject',$detail['title'].'<a class="a-edit-article" href="'.url('admin/article_form/'.$detail['id']).'">编辑</a>')
 @section('body')
     <div class="detail-title">
         <span class="title-sort">分类:&nbsp{{$detail['sort_name']}}</span>

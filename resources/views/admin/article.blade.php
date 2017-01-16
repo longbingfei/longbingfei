@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title','新闻')
 @section('link')
     @parent
@@ -13,7 +13,7 @@
 @section('body')
     @parent
     <div class="container">
-        <a class="btn btn-default top-btn" href="{{url('admin/feature/sort_form?app=article')}}"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
+        <a class="btn btn-default top-btn" href="{{url('admin/sort_form?app=article')}}"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
         <a class="btn btn-default top-btn" href="article_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div class="article-main">
             <table class="table table-hover article-table">
@@ -42,7 +42,7 @@
                             </td>
                             <td>
                                 <a class="ellipsis_ padding_move"
-                                   href="{{url('admin/feature/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
+                                   href="{{url('admin/article/show/'.$vo['id'])}}">{{$vo['title']}}</a>
                             </td>
                             <td><span class="ellipsis_ sort">{{$vo['sort_name']}}</span></td>
                             <td>{{$vo['author_name']}}</td>

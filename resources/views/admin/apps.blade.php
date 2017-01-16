@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title','应用列表')
 @section('link')
     @parent
@@ -13,13 +13,13 @@
 @section('body')
     <div class="app-container">
         <ul>
-            <li data-appinfo="文稿"><a class="glyphicon glyphicon-file" href="{{url('admin/feature/article')}}"
+            <li data-appinfo="文稿"><a class="glyphicon glyphicon-file" href="{{url('admin/article')}}"
                                      onclick="return checkpermission('article-list')"></a></li>
-            <li data-appinfo="商品"><a class="glyphicon glyphicon-shopping-cart" href="{{url('admin/feature/product')}}"
+            <li data-appinfo="商品"><a class="glyphicon glyphicon-shopping-cart" href="{{url('admin/product')}}"
                                      onclick="return checkpermission('product-list')"></a></li>
             <li data-appinfo="权限"><a class="glyphicon glyphicon-user" href="{{url('admin/auth/list')}}"
                                      onclick="return checkpermission('user-list')"></a></li>
-            <li data-appinfo="图片"><a class="glyphicon glyphicon-picture" href="{{url('admin/feature/image')}}"
+            <li data-appinfo="图片"><a class="glyphicon glyphicon-picture" href="{{url('admin/image')}}"
                                      onclick="return checkpermission('image-list')"></a></li>
             <li data-appinfo="视频"><a class="glyphicon glyphicon-facetime-video"></a></li>
             <li data-appinfo="日历"><a class="glyphicon glyphicon-calendar"></a></li>

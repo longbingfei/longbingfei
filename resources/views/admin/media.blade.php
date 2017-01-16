@@ -209,13 +209,13 @@ $frame = isset($_POST['data']['frame']) ? $_POST['data']['frame'] : [];
                 form.append('file',e.data.file);
             $.ajax({
                 method:'POST',
-                url:"{{url('admin/feature/media')}}",
+                url:"{{url('admin/media')}}",
                 data:form,
                 processData : false,
                 contentType:false,
                 success:function(data){
                    if(data[0]){
-                       $.getJSON('{{url("admin/feature/media/")}}'+'/'+data[0],function(data){
+                       $.getJSON('{{url("admin/media/")}}'+'/'+data[0],function(data){
                            MediaUpload.Append(data);
                        });
                    }

@@ -42,7 +42,7 @@ if ($avatar = unserialize($user->avatar)) {
         <div class="container-fluid sys-nav">
             <div class="navbar-header">
                 <span class="navbar-brand"><i class="web-icon glyphicon glyphicon-grain"></i></span>
-                <span class="control navbar-brand"><a href="{{url('admin/feature/style')}}">首页</a></span>
+                <span class="control navbar-brand"><a href="{{url('admin/apps')}}">首页</a></span>
                 <div class="profile navbar-brand">欢迎你,管理员:&nbsp<a>{{$user->username}}</a></div>
             </div>
         </div>
@@ -68,7 +68,7 @@ if ($avatar = unserialize($user->avatar)) {
             "<span class='login_info'>{{$user->last_login_ip}}</span>" +
             "</li>" +
             "<li class='list-group-item' style='text-align:center'>" +
-            "<a class='btn btn-default' href='{{url('admin/auth/logout')}}'>退出登录</a>" +
+            "<a class='btn btn-default' href='{{url('admin/logout')}}'>退出登录</a>" +
             "</li>" +
             "</ul>" +
             "</div>";

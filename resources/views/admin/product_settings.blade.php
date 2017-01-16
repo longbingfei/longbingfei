@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title','商品分类设置')
 @section('link')
     @parent
@@ -13,6 +13,6 @@
     @parent
     <div class="product-sort"></div>
     <script>
-        Sort.init({dom: $(".product-sort"), url: "{{url('admin/feature/sort')}}", app: "product"});
+        Sort.init({dom: $(".product-sort"), url: "{{url('admin/sort')}}", app: "product"});
     </script>
 @stop

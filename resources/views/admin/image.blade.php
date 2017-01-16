@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title','图片库')
 @section('link')
     @parent
@@ -28,7 +28,7 @@
                     mainDiv: 'waterFall',
                     boxDiv: 'image-pic-box',
                     picDiv: 'image-pic-inner',
-                    dataUrl: "{{url('admin/feature/image')}}",
+                    dataUrl: "{{url('admin/image')}}",
                 });
             </script>
         @endif

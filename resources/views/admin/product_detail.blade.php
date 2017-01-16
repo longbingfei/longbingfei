@@ -3,7 +3,7 @@ if (!isset($detail) || empty($detail) || isset($detail['error_code'])) {
     die('数据不存在!');
 }
 ?>
-@extends('admin.home')
+@extends('admin.base')
 @section('title','商品详情')
 @section('link')
     @parent
@@ -13,7 +13,7 @@ if (!isset($detail) || empty($detail) || isset($detail['error_code'])) {
 @section('nav')
     @parent
 @stop
-@section('subject',$detail['name'].'<a class="a-edit-product" href="'.url('admin/feature/product_form/'.$detail['id']).'">编辑</a>')
+@section('subject',$detail['name'].'<a class="a-edit-product" href="'.url('admin/product_form/'.$detail['id']).'">编辑</a>')
 @section('body')
     <div class="detail-title">
         <span class="title-sort">分类:&nbsp{{$detail['sort_name']}}</span>

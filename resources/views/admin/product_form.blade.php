@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title',isset($single_data) ? '更新商品' : '新增商品')
 @section('link')
     @parent
@@ -61,7 +61,7 @@
     </div>
     <script>
         //初始化分类选择框
-        SortList.init({dom: $(".pro_sort"), url: "{{url('admin/feature/sort')}}", app: 'product'});
+        SortList.init({dom: $(".pro_sort"), url: "{{url('admin/sort')}}", app: 'product'});
         //需要删除的图片id
         var productDropImageIDs = [];
         //初始化编辑器
@@ -92,7 +92,7 @@
                 formData.append('file[]', y);
             });
             $.ajax({
-                url: "{{url('admin/feature/product/'.(isset($single_data) ? $single_data['id'] : ''))}}",
+                url: "{{url('admin/product/'.(isset($single_data) ? $single_data['id'] : ''))}}",
                 method: "POST",
                 data: formData,
                 processData: false,
@@ -103,7 +103,7 @@
                         $.Confirm({title: '错误提示', message: data.error_message});
                         return false;
                     }
-                    location.href = "{{url('admin/feature/product')}}";
+                    location.href = "{{url('admin/product')}}";
                 }
             });
         });

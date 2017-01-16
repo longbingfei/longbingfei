@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title','商品列表')
 @section('link')
     @parent
@@ -12,7 +12,7 @@
 @section('subject','商品列表')
 @section('body')
     <div class="container">
-        <a class="btn btn-default top-btn" href="{{url('admin/feature/sort_form?app=product')}}"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
+        <a class="btn btn-default top-btn" href="{{url('admin/sort_form?app=product')}}"><i class="glyphicon glyphicon-cog"></i>&nbsp配置</a>
         <a class="btn btn-default top-btn" href="product_form"><i class="glyphicon glyphicon-plus-sign"></i>&nbsp新增</a>
         <div style="clear:both"></div>
         <div class="product-main">
@@ -44,7 +44,7 @@
                             </td>
                             <td>
                                 <a class="ellipsis_ padding_move"
-                                   href="{{url('admin/feature/product/show/'.$value['id'])}}">{{$value['name']}}</a>
+                                   href="{{url('admin/product/show/'.$value['id'])}}">{{$value['name']}}</a>
                             </td>
                             <td class="sort">{{$value['sort_name']}}</td>
                             <td>{{$value['storage']}}</td>

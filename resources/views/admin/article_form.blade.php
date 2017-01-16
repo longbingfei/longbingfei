@@ -1,4 +1,4 @@
-@extends('admin.home')
+@extends('admin.base')
 @section('title',isset($single_data) ? '更新文稿' : '新增文稿')
 @section('link')
     @parent
@@ -39,7 +39,7 @@
     </div>
     <script>
         //初始化分类选择框
-        SortList.init({dom: $(".art_sort"), url: "{{url('admin/feature/sort?app=article')}}", app: "article"});
+        SortList.init({dom: $(".art_sort"), url: "{{url('admin/sort?app=article')}}", app: "article"});
         //初始化索引图上传控件
         $.UploadImage.Init({
             dom: $('.index_pic_div'),
@@ -69,7 +69,7 @@
                 });
             }
             $.ajax({
-                url: "{{url('admin/feature/article/'.(isset($single_data) ? $single_data['id'] : ''))}}",
+                url: "{{url('admin/article/'.(isset($single_data) ? $single_data['id'] : ''))}}",
                 method: "POST",
                 data: formData,
                 processData: false,
@@ -79,7 +79,7 @@
                         $.Confirm({title: '错误提示', message: data.error_message});
                         return false;
                     }
-                    location.href = "{{url('admin/feature/article')}}";
+                    location.href = "{{url('admin/article')}}";
                 }
             });
         });

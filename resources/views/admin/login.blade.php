@@ -147,7 +147,7 @@
 </head>
 <body>
 <div class="container">
-    <form id="contact" action="{{url('admin/auth/login')}}" method="post">
+    <form id="contact" action="{{url('admin/login')}}" method="post">
         <h3>后台登录系统</h3><br/>
         <fieldset>
             <span>用户名</span>

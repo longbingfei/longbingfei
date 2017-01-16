@@ -47,7 +47,7 @@ class AdminAuthController extends Controller
             $return = $this->admin->login($info);
         }
 
-        return $return === true ? redirect('admin/feature/style') : back()->withErrors([config('error.' . current($return))]);
+        return $return === true ? redirect('admin/apps') : back()->withErrors([config('error.' . current($return))]);
     }
 
     public function register(Request $request)
@@ -123,6 +123,6 @@ class AdminAuthController extends Controller
     {
         Auth::logout();
 
-        return redirect('admin/auth/login');
+        return redirect('admin');
     }
 }

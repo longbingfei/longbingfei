@@ -54,7 +54,7 @@ class Authenticate
             if ($request->ajax()) {
                 return Response::display(['error_code' => 1012]);
             } else {
-                return redirect()->guest('admin/auth/login');
+                return redirect()->guest('admin/login');
             }
         }
 

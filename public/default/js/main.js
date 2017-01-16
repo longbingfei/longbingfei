@@ -503,7 +503,7 @@ var Carousel = {
                     $.ajax({
                         method: 'POST',
                         async: false, //同步
-                        url: "feature/image",
+                        url: "image",
                         data: form,
                         processData: false,
                         contentType: false,
