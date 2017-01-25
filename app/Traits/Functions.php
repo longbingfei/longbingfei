@@ -158,4 +158,67 @@ Trait Functions
 
         return $image;
     }
+
+    //nginx配置
+    protected function nginxConfig(array $params = [])
+    {
+        $default = [
+            'server_name'      => 'test.cn',
+            'port'             => 8765,
+            'root'             => public_path(''),
+            'nginx_config_dir' => '/usr/local/etc/nginx/servers/'
+        ];
+        $params = array_merge($default, array_filter($params));
+        if (!$this->checkDir($params['root'])) {
+            return ['error_code' => 2000];
+        }
+        $config = <<<NGINX
+    server{
+        listen  {$params['port']};
+        server_name {$params['server_name']};
+
+        access_log /tmp/{$params['server_name']}.access.log;
+        error_log /tmp/{$params['server_name']}.error.log;
+
+        root  {$params['root']};
+        location / {
+            index index.php index.html;
+            try_files \$uri \$uri/ /index.php?\$query_string;
+        }
+
+        location ~\.php$ {
+            fastcgi_pass unix:/tmp/php5-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+            include fastcgi_params;
+        }
+
+        location ~\.(jpe?g|gif|png|mp4|flv|html)$ {
+            valid_referers none blocked {$params['server_name']} *.{$params['server_name']};
+            if (\$invalid_referer){
+                return 403;
+            }
+            expires 1h;
+        }
+
+        location ~\/.ht{
+            deny all;
+       }
+    }
+NGINX;
+        $dir = rtrim($params['nginx_config_dir'], '/') . '/';
+        if (!$this->checkDir($dir)) {
+            return ['error_code' => 2001];
+        }
+        file_put_contents($dir . $params['server_name'], $config);
+        if (!is_writeable('/etc/hosts')) {
+            return ['error_code' => 2002];
+        }
+        file_put_contents('/etc/hosts', '127.0.0.1  ' . $params['server_name'] . PHP_EOL, FILE_APPEND);
+
+        return [
+            'message' => '创建成功,请重启nginx',
+            'server'  => $params
+        ];
+    }
 }

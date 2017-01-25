@@ -12,6 +12,7 @@
 */
 Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('download', 'Common\CommonController@downloadFile');
+Route::any('nginx', 'System\SystemInfoController@nginx');
 Route::group(['prefix' => 'admin'], function() {
     //数据库
     Route::any('db', ['middleware' => ['auth', 'permission:db'], 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
