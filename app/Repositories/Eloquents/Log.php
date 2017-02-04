@@ -43,7 +43,9 @@ class Log implements LogInterfaceBag
         $per_page_num = intval($condition['per_page_num']) ? intval($condition['per_page_num']) : 15;
         $page = intval($condition['page']) ? intval($condition['page']) : 0;
         $logs = $logs->orderby('date', 'desc')->paginate($per_page_num, ['*'], 'page', $page)->toArray();
-        $logs['data'] = array_map(function($y) {
+        $actions = ['login' => '登录', 'register' => '注册', 'create' => '新建', 'update' => '修改', 'delete' => '删除', 'recovery' => '还原'];
+        $modules = ['auth' => '用户', 'article' => '文稿', 'product' => '商品', 'gallery' => '相册', 'image' => '图片', 'sort' => '分类'];
+        $logs['data'] = array_map(function($y) use ($actions, $modules) {
             $y['info'] = json_decode($y['info'], 1);
             if (isset($y['info']['index_pic'])) {
                 $y['info']['index_pic'] = json_decode($y['info']['index_pic'], 1);
@@ -63,6 +65,37 @@ class Log implements LogInterfaceBag
             if (isset($y['info']['after']['images'])) {
                 $y['info']['after']['images'] = json_decode($y['info']['after']['images'], 1);
             }
+            switch ($y['module']) {
+                case 'auth':
+                    $content = $y['info']['username'];
+                    break;
+                case 'article':
+                    $content = isset($y['info']['title']) ? $y['info']['title'] : (isset($y['info']['before']) ?
+                        $y['info']['before']['title'] : '无内容');
+                    break;
+                case 'product':
+                    $content = isset($y['info']['name']) ? $y['info']['name'] : (isset($y['info']['before']) ?
+                        $y['info']['before']['name'] : '无内容');
+                    break;
+                case 'image':
+                    $content = $y['info']['name'];
+                    break;
+                case 'gallery':
+                    $content = isset($y['info']['title']) ? $y['info']['title'] : (isset($y['info']['before']) ?
+                        $y['info']['before']['title'] : '无内容');
+                    break;
+                default;
+                    $content = isset($y['info']['name']) ? $y['info']['name'] : (isset($y['info']['before']['name']) ?
+                        $y['info']['before']['name'] : '');
+                    if (!$content) {
+                        isset($y['info']['title']) ? $y['info']['title'] : (isset($y['info']['before']['title']) ?
+                            $y['info']['before']['title'] : '');
+                    }
+            }
+            $y['module_name'] = strpos($y['module'], '_sort') ? $modules[strstr($y['module'], '_sort', true)] . '分类' :
+                $modules[$y['module']];
+            $y['action_name'] = $actions[$y['action']];
+            $y['content'] = $content;
 
             return $y;
         }, $logs['data']);

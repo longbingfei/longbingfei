@@ -29,8 +29,9 @@ class LogController extends Controller
             'page'
         ];
         $resp = $this->log->index($request->only($fillable));
+//        return $resp;
 
-        return Response::display($resp);
+        return isset($resp['error_code']) ? Response::display($resp) : view('admin.log', ['data' => $resp]);
     }
 
     public function recovery($id)

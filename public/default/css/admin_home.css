@@ -34,6 +34,10 @@ h3, h4 {
     text-align: center
 }
 
+.tl {
+    text-align: left;
+}
+
 .color-a {
     color: #366097;
 }
@@ -574,8 +578,8 @@ h3, h4 {
     border-radius: 5px;
 }
 
-.carousel-inner div img{
-    width:1000px !important;
+.carousel-inner div img {
+    width: 1000px !important;
 }
 
 /*图片功能*/
