@@ -12,6 +12,6 @@ class WebController extends Controller
 {
     public function index()
     {
-        return 'coming soon';
+        return view('tpl.default.index');
     }
 }
