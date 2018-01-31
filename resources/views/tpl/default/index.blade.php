@@ -419,8 +419,6 @@
     <a href="javascript:;" class="go u-hov"></a>
 </div>
 
-
-
 <section>
     <div class="container">
         <div class="row">
@@ -466,13 +464,13 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
+                            <li class="col-md-4 col-sm-5 col-xs-6">
+
+                            </li>
+                            <li class="col-md-4 col-sm-5 col-xs-6">
                                123
                             </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                               123
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
+                            <li class="col-md-4 col-sm-5 col-xs-6 ">
                               123
                             </li>
                         </ul>
@@ -658,14 +656,7 @@
     <script>
         var error = 0;
         var success = 0;
-
-
     </script>
-
-
-
-
-
 </footer>
 <script src="/asset/web/plugins/jquery/jquery.min.js"></script>
 <script src="/asset/web/plugins/bootstrap/js/bootstrap.min.js"></script>
