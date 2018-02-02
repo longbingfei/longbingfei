@@ -110,50 +110,50 @@
             </div>
         </div>
     </div>
-    {{--<div class="header-top header-show">--}}
-    {{--<div class="container clearfix">--}}
-    {{--<div class="row">--}}
-    {{--<div class="col-xs-12 col-left col-right">--}}
-    {{--<nav class="navbar bg-blue navbar-default hov-nav" role="navigation">--}}
-    {{--<div class="collapse navbar-collapse pull-right g-nav pd-left0" id="example-navbar-collapse">--}}
-    {{--<div class="div-hover hidden-xs"></div>--}}
-    {{--<ul class="nav navbar-nav overhide">--}}
-    {{--<li  class="hActive" ><a class="topborbtm" href="/"  >首页</a></li>--}}
-    {{--<li><a class="topborbtm" href=""  >需求</a></li>--}}
-    {{--<li><a class="topborbtm" href=""  >厂家</a></li>--}}
-    {{--<li><a class="topborbtm" href=""  >产品</a></li>--}}
-    {{--<li><a class="topborbtm" href=""  >个人中心</a></li>--}}
-    {{--<li class="pd-navppd">--}}
-    {{--<form class="navbar-form navbar-left hd-seachW" action="/task" role="search" method="get" class="switchSearch">--}}
-    {{--<div class="input-group input-group-btnInput">--}}
-    {{--<div class="input-group-btn search-aBtn">--}}
-    {{--<a type="button" class="search-btn-toggle btn btn-default dropdown-toggle f-click bg-white bor-radius2 hidden-xs hidden-sm" data-toggle="dropdown">--}}
-    {{--找任务--}}
-    {{--</a>--}}
-    {{--<span class="caret hidden-xs hidden-sm"></span>--}}
-    {{--<ul class="dropdown-menu s-listseed dropdown-yellow search-btn-select">--}}
-    {{--<li><a href="javascript:void(0)" url="/task" onclick="switchSearch(this)">找任务</a></li>--}}
-    {{--<li><a href="javascript:void(0)" url="/bre/service" onclick="switchSearch(this)">找服务商</a></li>--}}
-    {{--</ul>--}}
-    {{--</div><!-- /btn-group -->--}}
-    {{--<button type="submit" class="form-control-feedback fa fa-search s-navfonticon hidden-sm hidden-xs"></button>--}}
-    {{--<input type="text" name="keywords" class="input-boxshaw form-control-feedback-btn form-control bor-radius2 hidden-sm hidden-xs" value="">--}}
-    {{--<a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布任务</a>--}}
-    {{--</div>--}}
-    {{--<span class="hidden-md hidden-xs hidden-sm">&nbsp;&nbsp;<span class="u-tit">或</span>&nbsp;&nbsp;--}}
-    {{--<a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2">发布任务</a></span>--}}
-    {{--</form>--}}
-    {{--</li>--}}
-    {{--<li class="s-sign clearfix hidden-md hidden-xs hidden-sm navactiveImg">--}}
-    {{--<a href="http://localhost:8000/login" class="text-size14 pull-left">登录</a><a class="pull-left">|</a><a href="http://localhost:8000/register" class="text-size14 pull-right">注册</a>--}}
-    {{--</li>--}}
-    {{--</ul>--}}
-    {{--</div>--}}
-    {{--</nav>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
+    <div class="header-top header-show">
+    <div class="container clearfix">
+    <div class="row">
+    <div class="col-xs-12 col-left col-right">
+    <nav class="navbar bg-blue navbar-default hov-nav" role="navigation">
+    <div class="collapse navbar-collapse pull-right g-nav pd-left0" id="example-navbar-collapse">
+    <div class="div-hover hidden-xs"></div>
+    <ul class="nav navbar-nav overhide">
+    <li  class="hActive" ><a class="topborbtm" href="/"  >首页</a></li>
+    <li><a class="topborbtm" href=""  >需求</a></li>
+    <li><a class="topborbtm" href=""  >厂家</a></li>
+    <li><a class="topborbtm" href=""  >产品</a></li>
+    <li><a class="topborbtm" href=""  >个人中心</a></li>
+    <li class="pd-navppd">
+    <form class="navbar-form navbar-left hd-seachW" action="/task" role="search" method="get" class="switchSearch">
+    <div class="input-group input-group-btnInput">
+    <div class="input-group-btn search-aBtn">
+    <a type="button" class="search-btn-toggle btn btn-default dropdown-toggle f-click bg-white bor-radius2 hidden-xs hidden-sm" data-toggle="dropdown">
+    找任务
+    </a>
+    <span class="caret hidden-xs hidden-sm"></span>
+    <ul class="dropdown-menu s-listseed dropdown-yellow search-btn-select">
+    <li><a href="javascript:void(0)" url="/task" onclick="switchSearch(this)">找任务</a></li>
+    <li><a href="javascript:void(0)" url="/bre/service" onclick="switchSearch(this)">找服务商</a></li>
+    </ul>
+    </div><!-- /btn-group -->
+    <button type="submit" class="form-control-feedback fa fa-search s-navfonticon hidden-sm hidden-xs"></button>
+    <input type="text" name="keywords" class="input-boxshaw form-control-feedback-btn form-control bor-radius2 hidden-sm hidden-xs" value="">
+    <a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布任务</a>
+    </div>
+    <span class="hidden-md hidden-xs hidden-sm">&nbsp;&nbsp;<span class="u-tit">或</span>&nbsp;&nbsp;
+    <a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2">发布任务</a></span>
+    </form>
+    </li>
+    <li class="s-sign clearfix hidden-md hidden-xs hidden-sm navactiveImg">
+    <a href="http://localhost:8000/login" class="text-size14 pull-left">登录</a><a class="pull-left">|</a><a href="http://localhost:8000/register" class="text-size14 pull-right">注册</a>
+    </li>
+    </ul>
+    </div>
+    </nav>
+    </div>
+    </div>
+    </div>
+    </div>
 </header>
 <nav>
     <div class="g-taskbarnav homemenu-taskbarnav">
