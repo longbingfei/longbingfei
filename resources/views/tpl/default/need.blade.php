@@ -884,27 +884,6 @@
         </div>
     </div>
     <link media="all" type="text/css" rel="stylesheet" href="/asset/web/css/im.css">
-    <div class="im clearfix hidden-xs">
-        <div class="im-side pull-left im-info ">
-            <ul class="mg-margin0 pd-padding0 ">
-                <!--<li class="im-side-itm clearfix listImg">-->
-                <!--<div class="pull-left ">-->
-                <!--<img src="../images/evaluate.jpg" alt="..." class="img-circle chat-head" width="28" height="28"/>-->
-                <!--</div>-->
-                <!--<div class="im-side1-title ">-->
-                <!--<h4 class="f-size12 mg-margin0 title-tit chat-name"></h4>-->
-                <!--</div>-->
-                <!--</li>-->
-                <!--<li class="im-side-itm clearfix">-->
-                <!--<div class="pull-left">-->
-                <!--<img src="../images/weedout.png" alt="..." class="img-circle chat-head1" width="28" height="28"/>-->
-                <!--</div>-->
-                <!--<div class="im-side1-title">-->
-                <!--<h4 class="f-size12 mg-margin0 title-tit chat-name1"></h4>-->
-                <!--</div>-->
-                <!--</li>-->
-            </ul>
-        </div>
         <div class="im-side1 pull-left im-info im-ck ">
             <div class="text-right im-side1-colos">
                 <a href=""><i class="fa fa-close imClose" data-dismiss="alert"></i></a>
