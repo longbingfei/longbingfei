@@ -884,48 +884,6 @@
         </div>
     </div>
     <link media="all" type="text/css" rel="stylesheet" href="/asset/web/css/im.css">
-        <div class="im-side1 pull-left im-info im-ck ">
-            <div class="text-right im-side1-colos">
-                <a href=""><i class="fa fa-close imClose" data-dismiss="alert"></i></a>
-            </div>
-            <div class="im-side1-list1 clearfix">
-                <div class="pull-left chat-t-head">
-                    <img src="" alt="..." class="img-circle" width="44" height="44"/>
-                </div>
-                <div class="im-side1-title">
-                    <h4 class="f-size16 mg-margin0 title-tit cor-gury51 chat-t-name"></h4>
-
-                    <p class="cor-gury9c f-size12 tit-time mg-margin0 chat-t-sign"></p>
-                </div>
-            </div>
-            <div class="im-side1-list2 clearfix">
-                <ul class="pd-padding0  mg-margin0 clearfix" id="talkarea">
-                    <!-- 聊天区域 -->
-                </ul>
-            </div>
-            <div class="im-side1-list3 clearfix">
-            <textarea name="" id="chat-text" cols="30" rows="100%" placeholder="说点什么"
-                      class="im-side1-list3-input"></textarea>
-
-                <div class="text-right">
-                    <button class="btn im-btn"><i class="fa  fa-paper-plane"></i> 发送</button>
-                </div>
-            </div>
-        </div>
-        <div class="im-side2 pull-left">
-
-            <div class="im-side1-list3 clearfix imContact">
-                <i class="fa fa-paper-plane f-size20 pull-left mg-top12"></i>
-                <!--<a href="" class="f-size12">登录</a>-->
-                <a href="http://demo.kppw.cn/login">请先登录</a>
-
-            </div>
-        </div>
-    </div>
-    <input type="hidden" name="fromUid" value="">
-    <div id="ImIp" data-im="118.31.189.221"></div>
-    <div id="ImPort" data-im="9501"></div>
-    <div id="online" data-im-online=""></div>
 
 </footer>
 <script src="/asset/web/plugins/jquery/jquery.min.js"></script>
