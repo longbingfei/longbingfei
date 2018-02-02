@@ -6,7 +6,7 @@
     <title>小丑鱼</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=0.1">
-    <link rel="shortcut icon" href="/asset/web/image/fav.ico" />
+    <link rel="shortcut icon" href="/asset/web/image/fav.ico"/>
     <link rel="stylesheet" href="/asset/web/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/asset/web/plugins/ace/css/ace.min.css">
     <link rel="stylesheet" href="/asset/web/css/font-awesome.min.css">
@@ -26,23 +26,31 @@
                     <div class="pull-left">
                     </div>
                     <div class="pull-right">
-                        <div class="pull-left">HI~</a>请 [<a href="http://localhost:8000/login">登录</a>] [<a href="http://localhost:8000/register">免费注册</a>]</div>
+                        <div class="pull-left">HI~</a>请 [<a href="http://localhost:8000/login">登录</a>] [<a
+                                    href="http://localhost:8000/register">免费注册</a>]
+                        </div>
                         <ul class="pull-left g-taskbarlist hidden-sm hidden-xs">
-                            <li class="pull-left g-taskbarli"><a class="g-taskbar1 g-taskbarbor" href="/user/myTasksList">我是雇主 <i
+                            <li class="pull-left g-taskbarli"><a class="g-taskbar1 g-taskbarbor"
+                                                                 href="/user/myTasksList">我是雇主 <i
                                             class="fa fa-caret-down"></i></a>
                                 <div class="g-taskbardown1">
                                     <div><a class="cor-blue2f" href="/task/create">发布任务</a></div>
-                                    <div><a class="cor-blue2f" href="/user/myTasksList">我发布的任务<span class="red"></span></a></div>
+                                    <div><a class="cor-blue2f" href="/user/myTasksList">我发布的任务<span class="red"></span></a>
+                                    </div>
                                 </div>
                             </li>
-                            <li class="pull-left g-taskbarli"><a class="g-taskbar2 g-taskbarbor" href="/user/acceptTasksList">我是威客 <i class="fa fa-caret-down"></i></a>
+                            <li class="pull-left g-taskbarli"><a class="g-taskbar2 g-taskbarbor"
+                                                                 href="/user/acceptTasksList">我是威客 <i
+                                            class="fa fa-caret-down"></i></a>
                                 <div class="g-taskbardown1">
                                     <div><a class="cor-blue2f" href="/user/personCase">我的空间</a></div>
-                                    <div><a class="cor-blue2f" href="/user/myTask">我的任务<span class="red"></span></a></div>
+                                    <div><a class="cor-blue2f" href="/user/myTask">我的任务<span class="red"></span></a>
+                                    </div>
                                 </div>
                             </li>
                             <li class="pull-left"><a class="g-taskbarbor" href="/article/aboutUs/31">帮助中心</a></li>
-                            <li class="pull-left g-taskbarli"><a class="g-nomdright g-taskbarbor" href="javascript:;">分类导航 <i class="fa fa-caret-down"></i></a>
+                            <li class="pull-left g-taskbarli"><a class="g-nomdright g-taskbarbor" href="javascript:;">分类导航
+                                    <i class="fa fa-caret-down"></i></a>
                                 <div class="g-taskbardown1">
                                     <div><a class="cor-blue2f" href="/task?category=170">软件开发</a></div>
                                     <div><a class="cor-blue2f" href="/task?category=169">生活服务</a></div>
@@ -75,9 +83,11 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
                         <div class="g-tasksearch row">
-                            <form action="/task" method="get" class="switchSearch" />
+                            <form action="/task" method="get" class="switchSearch"/>
                             <div class="btn-group search-aBtn" role="group">
-                                <a href="javascript:;" type="button" class="btn btn-default dropdown-toggle search-btn-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a href="javascript:;" type="button"
+                                   class="btn btn-default dropdown-toggle search-btn-toggle" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
                                     找任务
                                 </a>
                                 <span class="fa fa-angle-down"></span>
@@ -100,50 +110,50 @@
             </div>
         </div>
     </div>
-    <div class="header-top header-show">
-        <div class="container clearfix">
-            <div class="row">
-                <div class="col-xs-12 col-left col-right">
-                    <nav class="navbar bg-blue navbar-default hov-nav" role="navigation">
-                        <div class="collapse navbar-collapse pull-right g-nav pd-left0" id="example-navbar-collapse">
-                            <div class="div-hover hidden-xs"></div>
-                            <ul class="nav navbar-nav overhide">
-                                <li  class="hActive" ><a class="topborbtm" href="/"  >首页</a></li>
-                                <li><a class="topborbtm" href=""  >需求</a></li>
-                                <li><a class="topborbtm" href=""  >厂家</a></li>
-                                <li><a class="topborbtm" href=""  >产品</a></li>
-                                <li><a class="topborbtm" href=""  >个人中心</a></li>
-                                <li class="pd-navppd">
-                                    <form class="navbar-form navbar-left hd-seachW" action="/task" role="search" method="get" class="switchSearch">
-                                        <div class="input-group input-group-btnInput">
-                                            <div class="input-group-btn search-aBtn">
-                                                <a type="button" class="search-btn-toggle btn btn-default dropdown-toggle f-click bg-white bor-radius2 hidden-xs hidden-sm" data-toggle="dropdown">
-                                                    找任务
-                                                </a>
-                                                <span class="caret hidden-xs hidden-sm"></span>
-                                                <ul class="dropdown-menu s-listseed dropdown-yellow search-btn-select">
-                                                    <li><a href="javascript:void(0)" url="/task" onclick="switchSearch(this)">找任务</a></li>
-                                                    <li><a href="javascript:void(0)" url="/bre/service" onclick="switchSearch(this)">找服务商</a></li>
-                                                </ul>
-                                            </div><!-- /btn-group -->
-                                            <button type="submit" class="form-control-feedback fa fa-search s-navfonticon hidden-sm hidden-xs"></button>
-                                            <input type="text" name="keywords" class="input-boxshaw form-control-feedback-btn form-control bor-radius2 hidden-sm hidden-xs" value="">
-                                            <a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布任务</a>
-                                        </div>
-                                        <span class="hidden-md hidden-xs hidden-sm">&nbsp;&nbsp;<span class="u-tit">或</span>&nbsp;&nbsp;
-                                    <a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2">发布任务</a></span>
-                                    </form>
-                                </li>
-                                <li class="s-sign clearfix hidden-md hidden-xs hidden-sm navactiveImg">
-                                    <a href="http://localhost:8000/login" class="text-size14 pull-left">登录</a><a class="pull-left">|</a><a href="http://localhost:8000/register" class="text-size14 pull-right">注册</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{--<div class="header-top header-show">--}}
+    {{--<div class="container clearfix">--}}
+    {{--<div class="row">--}}
+    {{--<div class="col-xs-12 col-left col-right">--}}
+    {{--<nav class="navbar bg-blue navbar-default hov-nav" role="navigation">--}}
+    {{--<div class="collapse navbar-collapse pull-right g-nav pd-left0" id="example-navbar-collapse">--}}
+    {{--<div class="div-hover hidden-xs"></div>--}}
+    {{--<ul class="nav navbar-nav overhide">--}}
+    {{--<li  class="hActive" ><a class="topborbtm" href="/"  >首页</a></li>--}}
+    {{--<li><a class="topborbtm" href=""  >需求</a></li>--}}
+    {{--<li><a class="topborbtm" href=""  >厂家</a></li>--}}
+    {{--<li><a class="topborbtm" href=""  >产品</a></li>--}}
+    {{--<li><a class="topborbtm" href=""  >个人中心</a></li>--}}
+    {{--<li class="pd-navppd">--}}
+    {{--<form class="navbar-form navbar-left hd-seachW" action="/task" role="search" method="get" class="switchSearch">--}}
+    {{--<div class="input-group input-group-btnInput">--}}
+    {{--<div class="input-group-btn search-aBtn">--}}
+    {{--<a type="button" class="search-btn-toggle btn btn-default dropdown-toggle f-click bg-white bor-radius2 hidden-xs hidden-sm" data-toggle="dropdown">--}}
+    {{--找任务--}}
+    {{--</a>--}}
+    {{--<span class="caret hidden-xs hidden-sm"></span>--}}
+    {{--<ul class="dropdown-menu s-listseed dropdown-yellow search-btn-select">--}}
+    {{--<li><a href="javascript:void(0)" url="/task" onclick="switchSearch(this)">找任务</a></li>--}}
+    {{--<li><a href="javascript:void(0)" url="/bre/service" onclick="switchSearch(this)">找服务商</a></li>--}}
+    {{--</ul>--}}
+    {{--</div><!-- /btn-group -->--}}
+    {{--<button type="submit" class="form-control-feedback fa fa-search s-navfonticon hidden-sm hidden-xs"></button>--}}
+    {{--<input type="text" name="keywords" class="input-boxshaw form-control-feedback-btn form-control bor-radius2 hidden-sm hidden-xs" value="">--}}
+    {{--<a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布任务</a>--}}
+    {{--</div>--}}
+    {{--<span class="hidden-md hidden-xs hidden-sm">&nbsp;&nbsp;<span class="u-tit">或</span>&nbsp;&nbsp;--}}
+    {{--<a href="/task/create" type="submit" class="btn btn-default f-click cor-blue bor-radius2">发布任务</a></span>--}}
+    {{--</form>--}}
+    {{--</li>--}}
+    {{--<li class="s-sign clearfix hidden-md hidden-xs hidden-sm navactiveImg">--}}
+    {{--<a href="http://localhost:8000/login" class="text-size14 pull-left">登录</a><a class="pull-left">|</a><a href="http://localhost:8000/register" class="text-size14 pull-right">注册</a>--}}
+    {{--</li>--}}
+    {{--</ul>--}}
+    {{--</div>--}}
+    {{--</nav>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
 </header>
 <nav>
     <div class="g-taskbarnav homemenu-taskbarnav">
@@ -192,11 +202,11 @@
                             </ul>
                         </div>
                         <div class="g-navList">
-                            <a href=""   class="z-navHome" >首页</a>
-                            <a href=""  >需求</a>
-                            <a href=""  >厂家</a>
-                            <a href=""  >产品</a>
-                            <a href=""  >个人中心</a>
+                            <a href="" class="z-navHome">首页</a>
+                            <a href="">需求</a>
+                            <a href="">厂家</a>
+                            <a href="">产品</a>
+                            <a href="">个人中心</a>
                         </div>
                     </div>
                     <div class="pull-right g-tasknavbtn hidden-sm hidden-xs">
@@ -215,7 +225,8 @@
                             <a href="/user/personCase" class=""><i class="fa fa-sign-in"></i> 登录</a>
                         </div>
                     </div>
-                    <nav  class="navbar navbar-default navbar-static navbar-static-position hidden-sm hidden-md hidden-lg col-xs-12"  id="navbar-example" role="navigation">
+                    <nav class="navbar navbar-default navbar-static navbar-static-position hidden-sm hidden-md hidden-lg col-xs-12"
+                         id="navbar-example" role="navigation">
                         <div class="navbar-header">
                             <button class="navbar-toggle z-activeNavlist" type="button" data-toggle="collapse"
                                     data-target=".bs-js-navbar-scrollspy">
@@ -231,11 +242,11 @@
                         </div>
                         <div class="collapse navbar-collapse bs-js-navbar-scrollspy">
                             <ul class="nav navbar-nav">
-                                <li><a href=""   class="z-navHome" >首页</a></li>
-                                <li><a href=""  >需求</a></li>
-                                <li><a href=""  >厂家</a></li>
-                                <li><a href=""  >产品</a></li>
-                                <li><a href=""  >个人中心</a></li>
+                                <li><a href="" class="z-navHome">首页</a></li>
+                                <li><a href="">需求</a></li>
+                                <li><a href="">厂家</a></li>
+                                <li><a href="">产品</a></li>
+                                <li><a href="">个人中心</a></li>
                             </ul>
                         </div>
                         <div class="collapse navbar-collapse bs-js-navbar-scrollspy1 bg-white">
@@ -273,45 +284,51 @@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-            <div  class="item active item-banner1" >
+            <div class="item active item-banner1">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive itm-banner" data-adaptive-background='1'>
+                        <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive itm-banner"
+                             data-adaptive-background='1'>
                     </div>
                 </a>
             </div>
             <div class="item item-banner2">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner2.jpg" alt="..." class="img-responsive itm-banner" data-adaptive-background='2'>
+                        <img src="/asset/web/images/banner2.jpg" alt="..." class="img-responsive itm-banner"
+                             data-adaptive-background='2'>
                     </div>
                 </a>
             </div>
             <div class="item item-banner3">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner3.jpg" alt="..." class="img-responsive itm-banner" data-adaptive-background='3'>
+                        <img src="/asset/web/images/banner3.jpg" alt="..." class="img-responsive itm-banner"
+                             data-adaptive-background='3'>
                     </div>
                 </a>
             </div>
             <div class="item item-banner4">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner4.jpg" alt="..." class="img-responsive itm-banner" data-adaptive-background='4'>
+                        <img src="/asset/web/images/banner4.jpg" alt="..." class="img-responsive itm-banner"
+                             data-adaptive-background='4'>
                     </div>
                 </a>
             </div>
             <div class="item item-banner5">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner5.jpg" alt="..." class="img-responsive itm-banner" data-adaptive-background='5'>
+                        <img src="/asset/web/images/banner5.jpg" alt="..." class="img-responsive itm-banner"
+                             data-adaptive-background='5'>
                     </div>
                 </a>
             </div>
             <div class="item item-banner6">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive itm-banner" data-adaptive-background='6'>
+                        <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive itm-banner"
+                             data-adaptive-background='6'>
                     </div>
                 </a>
             </div>
@@ -345,12 +362,14 @@
                         </div>
                         <div class="item">
                             <a href="javascript:;">
-                                <img src="/asset/web/images/banner2.jpg" height="460" width="100%" alt="..." class="img-responsive">
+                                <img src="/asset/web/images/banner2.jpg" height="460" width="100%" alt="..."
+                                     class="img-responsive">
                             </a>
                         </div>
                         <div class="item">
                             <a href="javascript:;">
-                                <img src="/asset/web/images/banner3.jpg" height="460" width="100%" alt="..." class="img-responsive">
+                                <img src="/asset/web/images/banner3.jpg" height="460" width="100%" alt="..."
+                                     class="img-responsive">
                             </a>
                         </div>
                         <div class="item">
@@ -360,12 +379,14 @@
                         </div>
                         <div class="item">
                             <a href="javascript:;">
-                                <img src="/asset/web/images/banner5.jpg" height="460" width="100%" alt="..." class="img-responsive">
+                                <img src="/asset/web/images/banner5.jpg" height="460" width="100%" alt="..."
+                                     class="img-responsive">
                             </a>
                         </div>
                         <div class="item">
                             <a href="javascript:;">
-                                <img src="/asset/web/images/banner1.jpg" height="460" width="100%" alt="..." class="img-responsive">
+                                <img src="/asset/web/images/banner1.jpg" height="460" width="100%" alt="..."
+                                     class="img-responsive">
                             </a>
                         </div>
                     </div>
@@ -379,16 +400,18 @@
 <!--侧边小插件-->
 <div class="go-top dn" id="go-top">
     <div class="uc-2vm u-hov">
-        <form class="form-horizontal" action="/bre/feedbackInfo" method="post" enctype="multipart/form-data" id="complain">
+        <form class="form-horizontal" action="/bre/feedbackInfo" method="post" enctype="multipart/form-data"
+              id="complain">
             <input type="hidden" name="_token" value="knwYG0ZcXYGXNghR5QHjF0QS8oLGmEjHGttp4Y4n">
             <div class="u-pop dn clearfix">
-                <input type="text" name="uid"  style="display:none">
+                <input type="text" name="uid" style="display:none">
                 <h2 class="mg-margin text-size12 cor-gray51">一句话点评</h2>
                 <div class="space-4"></div>
-                <textarea class="form-control" rows="3" name="desc" placeholder="期待您的一句话点评，不管是批评、感谢还是建议，我们都将会细心聆听，及时回复"></textarea>
+                <textarea class="form-control" rows="3" name="desc"
+                          placeholder="期待您的一句话点评，不管是批评、感谢还是建议，我们都将会细心聆听，及时回复"></textarea>
 
                 <div class="space-4"></div>
-                <input type="text" name="phone"  placeholder="填写手机号">
+                <input type="text" name="phone" placeholder="填写手机号">
 
                 <button type="submit" class="btn-blue btn btn-sm btn-primary">提交</button>
                 <div class="arrow">
@@ -403,7 +426,8 @@
             <h2 class="mg-margin text-size12 cor-gray51">在线时间：09:00 -18:00</h2>
             <div class="space-4"></div>
             <div>
-                <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1668966921&amp;site=qq&amp;menu=yes" target="_blank"><img src="/asset/web/images/pa.jpg" alt=""></a>
+                <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1668966921&amp;site=qq&amp;menu=yes" target="_blank"><img
+                            src="/asset/web/images/pa.jpg" alt=""></a>
             </div>
             <div class="hr"></div>
             <div class="iss-ico1">
@@ -456,22 +480,64 @@
             <div class="space-10"></div>
             <div class="clearfix">
                 <div class="col-sm-12 m-task col-left col-right">
-                    <div class="clearfix">
-                        <h4 class="pull-left text-size24 cor-gray45">最新需求</h4>
-                        <a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>
+                    <div class="clearfix txc">
+                        <h4 class="text-size24 cor-gray45">最新需求</h4>
+                        {{--<a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>--}}
                     </div>
                     <div class="space-4"></div>
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
                             <li class="col-md-4 col-sm-5 col-xs-6">
-
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6">
-                               123
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 ">
-                              123
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -481,22 +547,64 @@
             <div class="space-10"></div>
             <div class="clearfix">
                 <div class="col-sm-12 m-task col-left col-right">
-                    <div class="clearfix">
-                        <h4 class="pull-left text-size24 cor-gray45">推荐需求</h4>
-                        <a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>
+                    <div class="clearfix txc">
+                        <h4 class="text-size24 cor-gray45">推荐需求</h4>
+                        {{--<a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>--}}
                     </div>
                     <div class="space-4"></div>
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                            <li class="col-md-4 col-sm-5 col-xs-6">
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                            <li class="col-md-4 col-sm-5 col-xs-6">
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                            <li class="col-md-4 col-sm-5 col-xs-6 ">
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -506,22 +614,64 @@
             <div class="space-10"></div>
             <div class="clearfix">
                 <div class="col-sm-12 m-task col-left col-right">
-                    <div class="clearfix">
-                        <h4 class="pull-left text-size24 cor-gray45">最新入驻厂家</h4>
-                        <a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>
+                    <div class="clearfix txc">
+                        <h4 class="text-size24 cor-gray45">最新入驻厂家</h4>
+                        {{--<a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>--}}
                     </div>
                     <div class="space-4"></div>
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2">
+                                    <div>
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2">
+                                    <div>
+                                        <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif" alt="logo">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="暴漫">暴漫</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2">
+                                    <div>
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -531,22 +681,64 @@
             <div class="space-10"></div>
             <div class="clearfix">
                 <div class="col-sm-12 m-task col-left col-right">
-                    <div class="clearfix">
-                        <h4 class="pull-left text-size24 cor-gray45">推荐厂家</h4>
-                        <a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>
+                    <div class="clearfix txc">
+                        <h4 class="text-size24 cor-gray45">推荐厂家</h4>
+                        {{--<a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>--}}
                     </div>
                     <div class="space-4"></div>
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2">
+                                    <div>
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2">
+                                    <div>
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2">
+                                    <div>
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -556,22 +748,64 @@
             <div class="space-10"></div>
             <div class="clearfix">
                 <div class="col-sm-12 m-task col-left col-right">
-                    <div class="clearfix">
-                        <h4 class="pull-left text-size24 cor-gray45">最新发布产品</h4>
-                        <a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>
+                    <div class="clearfix txc">
+                        <h4 class="text-size24 cor-gray45">最新发布产品</h4>
+                        {{--<a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>--}}
                     </div>
                     <div class="space-4"></div>
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2 z3">
+                                    <div>
+                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2 z3">
+                                    <div>
+                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2 z3">
+                                    <div>
+                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -581,22 +815,64 @@
             <div class="space-10"></div>
             <div class="clearfix">
                 <div class="col-sm-12 m-task col-left col-right">
-                    <div class="clearfix">
-                        <h4 class="pull-left text-size24 cor-gray45">推荐产品</h4>
-                        <a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>
+                    <div class="clearfix txc">
+                        <h4 class="text-size24 cor-gray45">推荐产品</h4>
+                        {{--<a class="pull-right cor-gray97 u-more" href="/task" target="_blank">More></a>--}}
                     </div>
                     <div class="space-4"></div>
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2 z3">
+                                    <div>
+                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2 z3">
+                                    <div>
+                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                123
+                                <div class="z2 z3">
+                                    <div>
+                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
+                                    </div>
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -643,7 +919,8 @@
                             <div class="foc-ewm">
                                 <div class="foc-ewm-arrow1"></div>
                                 <div class="foc-ewm-arrow2"></div>
-                                <img src="http://localhost:8000/attachment/sys/9d964f8f9e9cec692e02e9d532ed2068.png" alt="" width="100" height="100">
+                                <img src="http://localhost:8000/attachment/sys/9d964f8f9e9cec692e02e9d532ed2068.png"
+                                     alt="" width="100" height="100">
                             </div>
                         </div>
 
@@ -652,11 +929,6 @@
             </div>
         </div>
     </div>
-    <script>document.write(1);</script>
-    <script>
-        var error = 0;
-        var success = 0;
-    </script>
 </footer>
 <script src="/asset/web/plugins/jquery/jquery.min.js"></script>
 <script src="/asset/web/plugins/bootstrap/js/bootstrap.min.js"></script>
