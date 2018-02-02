@@ -1,0 +1,94 @@
+.z1, .z2 {
+    color: #000;
+    padding: 20px;
+    width: 375px;
+    height: 160px;
+    background: url('../image/z1_bg.png') no-repeat;
+}
+
+/*.z1:hover{*/
+/*border:1px solid blue;*/
+/*}*/
+.z1 tr, .z2 tr {
+    display: block;
+}
+
+.z1 td, .z2 td {
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.z1 td:nth-child(odd), .z2 td:nth-child(odd) {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.z1 td:nth-child(1) {
+    width: 340px;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 5px;
+}
+
+.z1 tr:nth-child(2), .z2 tr:nth-child(2) {
+    color: #8c8c8c;
+}
+
+.z1 div {
+    margin: 10px 0px 0px 10px;
+    padding-top: 8px;
+    border-top: 1px solid #d4d4d4;
+}
+
+.z1 > div > span {
+    display: inline-block;
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+}
+
+.z2 > div:nth-child(1) {
+    float: left;
+    background-color: #e7c3c3;
+    width: 100px;
+    height: 100px;
+    margin: 10px 5px;
+}
+
+.z2 > div:nth-child(1) img {
+    width:100px;
+    height:100px;
+    border:0
+}
+
+.z2 > div:nth-child(2) {
+    float: left;
+    width: 210px;
+    height: 100px;
+    margin: 10px 5px;
+}
+
+.z2 td:nth-child(odd) {
+    width: 210px;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 15px;
+}
+
+.z2 td:nth-child(odd) > i {
+    color: orangered;
+}
+
+.z2 tr:nth-child(odd) {
+    margin-top: 10px;
+}
+.txc{
+    text-align: center;
+}
+.z3 td:last-child > span{
+    font-size: 16px;
+}
