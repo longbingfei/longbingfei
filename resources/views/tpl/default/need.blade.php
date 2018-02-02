@@ -275,7 +275,7 @@
     <div class="container">
         <div class="row">
             <div class="g-taskposition col-lg-12 col-left">您的位置：<a href="/">首页</a> > 任务大厅</div>
-            <div class="col-lg-9 col-left">
+            <div class="col-lg-12 col-left">
                 <div class="g-taskprocess hidden-xs">
                     <div class="row">
                         <div class="col-md-4 col-xs-4">
