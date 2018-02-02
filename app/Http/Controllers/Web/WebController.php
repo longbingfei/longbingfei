@@ -14,4 +14,9 @@ class WebController extends Controller
     {
         return view('tpl.default.index');
     }
+
+    public function need()
+    {
+        return view('tpl.default.need');
+    }
 }
