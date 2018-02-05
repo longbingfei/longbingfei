@@ -64,7 +64,7 @@
                             </dd>
                         </dl>
                     </div>
-                    <div class="z8 z9">
+                    <div class="z8 z9_">
                         <h2>报名企业</h2>
                         <ul class="g-taskmainlist">
                             <li class="clearfix zz1">
