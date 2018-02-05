@@ -11,9 +11,6 @@
     background: url('../image/z1_bg.png') no-repeat;
 }
 
-/*.z1:hover{*/
-/*border:1px solid blue;*/
-/*}*/
 .z1 tr, .z2 tr {
     display: block;
 }
@@ -44,7 +41,6 @@
 .z1 div {
     width: 343px;
     margin-top: 10px;
-    /*margin: 10px 0px 0px 10px;*/
     padding-top: 8px;
     border-top: 1px solid #d4d4d4;
 }
@@ -143,6 +139,10 @@
 
 .z4 > p > span:nth-child(odd) {
     font-size: 20px;
+}
+
+.ee {
+    padding-left: 10px !important;
 }
 
 .z5 {
@@ -251,18 +251,23 @@
     height: 102px;
     border: 1px solid #eaeaea;
 }
-.z9{margin-bottom: 20px}
+
+.z9 {
+    margin-bottom: 20px
+}
 
 .z9 .logo {
     float: left;
     width: 100px;
     height: 100px;
 }
-.z9 .logo img{
-    width:100px;
-    height:100px;
-    border:0px;
+
+.z9 .logo img {
+    width: 100px;
+    height: 100px;
+    border: 0px;
 }
+
 .z9 .name {
     float: left;
     width: 400px;
@@ -281,17 +286,19 @@
 }
 
 .z9 .info span {
-    margin-top:10px;
+    margin-top: 10px;
     display: block;
     height: 20px;
     line-height: 20px;
 }
-.ecli{
+
+.ecli {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.kk{
+
+.kk {
     margin-top: 33px;
 }
 

@@ -7,7 +7,7 @@
             </div>
 
             <div class="col-xs-12">
-                <div class="row">
+                <div class="row ee">
                     <div class="status_img">
                         <h2>需求状态</h2>
                         <img src="/asset/web/image/flow_1.jpg">
