@@ -28,9 +28,9 @@
                                         <span class="cor-gray87">插件开发</span>
                                     </p>
                                     <p class="personal-tag hidden-xs cor-gray51">经营范围：&nbsp;
-                                        <span class="cor-gray87">程序开发</span>
-                                        <span class="cor-gray87">软件皮肤</span>
-                                        <span class="cor-gray87">插件开发</span>
+                                        <span class="cor-gray87">1111</span>
+                                        <span class="cor-gray87">2222</span>
+                                        <span class="cor-gray87">3333333</span>
                                     </p>
                                     <p class="hidden-xs cor-gray51">企业联系人:</p>
                                     <p class="hidden-xs cor-gray51">企业联系方式:</p>
