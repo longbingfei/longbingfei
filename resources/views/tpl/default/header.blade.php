@@ -124,9 +124,9 @@
                             <ul class="nav navbar-nav overhide">
                                 <li class="hActive"><a class="topborbtm" href="/">首页</a></li>
                                 <li><a class="topborbtm" href="/need">需求</a></li>
-                                <li><a class="topborbtm" href="">厂家</a></li>
-                                <li><a class="topborbtm" href="">产品</a></li>
-                                <li><a class="topborbtm" href="">个人中心</a></li>
+                                <li><a class="topborbtm" href="/company">厂家</a></li>
+                                <li><a class="topborbtm" href="/product">产品</a></li>
+                                <li><a class="topborbtm" href="/zone">个人中心</a></li>
                                 <li class="pd-navppd">
                                     <form class="navbar-form navbar-left hd-seachW" action="/task" role="search"
                                           method="get" class="switchSearch">
@@ -223,8 +223,8 @@
                             <a href="/" class="z-navHome">首页</a>
                             <a href="/need">需求</a>
                             <a href="/company">厂家</a>
-                            <a href="">产品</a>
-                            <a href="">个人中心</a>
+                            <a href="/product">产品</a>
+                            <a href="/zone">个人中心</a>
                         </div>
                     </div>
                     <div class="pull-right g-tasknavbtn hidden-sm hidden-xs">
@@ -265,8 +265,8 @@
                                 <li><a href="/" class="z-navHome">首页</a></li>
                                 <li><a href="/need">需求</a></li>
                                 <li><a href="/company">厂家</a></li>
-                                <li><a href="">产品</a></li>
-                                <li><a href="">个人中心</a></li>
+                                <li><a href="/product">产品</a></li>
+                                <li><a href="/zone">个人中心</a></li>
                             </ul>
                         </div>
                         <div class="collapse navbar-collapse bs-js-navbar-scrollspy1 bg-white">
