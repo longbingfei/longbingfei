@@ -1,5 +1,4 @@
 @include('tpl.default.header')
-
 <section>
     <div class="container">
         <div class="row">
@@ -8,13 +7,13 @@
                 <div class="g-taskprocess hidden-xs">
                     <div class="row">
                         <div class="col-md-4 col-xs-4">
-                            <div class="g-taskpro1 pull-left"><span>免费发布任务</span>
+                            <div class="g-taskpro1 pull-left"><span>免费发布需求</span>
                                 <p>免费发布</p></div>
                             <div class="g-taskproico1 pull-right">></div>
                         </div>
                         <div class="col-md-4 col-xs-4">
-                            <div class="g-taskpro2 pull-left"><span>服务商投标</span>
-                                <p>多家威客，择优雇佣</p></div>
+                            <div class="g-taskpro2 pull-left"><span>厂家投标</span>
+                                <p>众多企业，技术前沿</p></div>
                             <div class="g-taskproico2 pull-right">></div>
                         </div>
                         <div class="col-md-4 col-xs-4">
@@ -68,10 +67,9 @@
                 <div class="g-taskmain">
                     <div class="clearfix g-taskmainhd">
                         <div class="pull-left">
-                            <a class="g-taskmact" href="http://demo.kppw.cn/task?">默认</a><span>|</span>
-                            <a class=" g-taskmaintime"
-                               href="http://demo.kppw.cn/task?desc=created_at">发布时间</a><span>|</span>
-                            <a class="" href="http://demo.kppw.cn/task?desc=delivery_count">热度</a>
+                            <a class="g-taskmact" href="">默认</a><span>|</span>
+                            <a class=" g-taskmaintime" href="">发布时间</a><span>|</span>
+                            <a class="" href="">热度</a>
                         </div>
                     </div>
                     <ul class="g-taskmainlist">

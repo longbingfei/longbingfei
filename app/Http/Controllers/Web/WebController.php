@@ -12,7 +12,10 @@ class WebController extends Controller
 {
     public function index()
     {
-        return view('tpl.default.index');
+        $data = [
+            'index' => true
+        ];
+        return view('tpl.default.index', $data);
     }
 
     public function need()
@@ -23,5 +26,14 @@ class WebController extends Controller
     public function needDetail($id)
     {
         return view('tpl.default.need_detail');
+    }
+
+    public function company()
+    {
+        return view('tpl.default.company');
+    }
+    public function companyDetail($id)
+    {
+        return view('tpl.default.company_detail');
     }
 }

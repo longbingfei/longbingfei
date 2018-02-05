@@ -54,5 +54,6 @@
 <script src="/asset/web/plugins/jquery/adaptive-backgrounds/jquery.adaptive-backgrounds.js"></script>
 <script src="/asset/web/plugins/ace/js/jquery.gritter.min.js"></script>
 <script src="/asset/web/js/doc/homepage.js"></script>
+<script src="/asset/web/js/use/index.js"></script>
 {{--<script src="/asset/web/js/doc/layer.js"></script>--}}
 </body>

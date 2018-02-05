@@ -74,6 +74,8 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('/', 'WebController@index');
     Route::get('/need', 'WebController@need');
     Route::get('/needDetail/{id}', 'WebController@needDetail');
+    Route::get('/company', 'WebController@company');
+    Route::get('/company/{id}', 'WebController@companyDetail');
 });
 
 //前端涉及到用户登录的操作
