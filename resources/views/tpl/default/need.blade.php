@@ -79,7 +79,7 @@
                             <div class="row zz">
                                 <div class="col-lg-9 col-sm-8">
                                     <div class="text-size16">
-                                        <a href="" target="_blank">
+                                        <a href="needDetail/1">
                                             <b>在 SegmentFault，学习技能、解决问题</b>
                                         </a>
                                     </div>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
                                     <div class="z5">
-                                        <a>查看详情</a>
+                                        <a href="needDetail/1">查看详情</a>
                                     </div>
                                 </div>
                                 <div class="z6">
@@ -110,7 +110,7 @@
                             <div class="row zz">
                                 <div class="col-lg-9 col-sm-8">
                                     <div class="text-size16">
-                                        <a href="" target="_blank">
+                                        <a href="needDetail/1">
                                             <b>在 SegmentFault，学习技能、解决问题</b>
                                         </a>
                                     </div>
@@ -127,7 +127,38 @@
                                 </div>
                                 <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
                                     <div class="z5">
-                                        <a>查看详情</a>
+                                        <a href="needDetail/1">查看详情</a>
+                                    </div>
+                                </div>
+                                <div class="z6">
+                                    <span title="需求类型"><i class="glyphicon glyphicon-th-large"></i> <span class="info">计算机编程</span></span>
+                                    <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                    <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="clearfix zz1">
+                            <div class="row zz">
+                                <div class="col-lg-9 col-sm-8">
+                                    <div class="text-size16">
+                                        <a href="needDetail/1">
+                                            <b>在 SegmentFault，学习技能、解决问题</b>
+                                        </a>
+                                    </div>
+                                    <div class="z4">
+                                        <p>
+                                            <span>10000</span>
+                                            <span>预算金额</span>
+                                        </p>
+                                        <p>
+                                            <span>356</span>
+                                            <span>报名人数</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
+                                    <div class="z5">
+                                        <a href="needDetail/1">查看详情</a>
                                     </div>
                                 </div>
                                 <div class="z6">

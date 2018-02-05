@@ -20,7 +20,7 @@ class WebController extends Controller
         return view('tpl.default.need');
     }
 
-    public function needDetail()
+    public function needDetail($id)
     {
         return view('tpl.default.need_detail');
     }

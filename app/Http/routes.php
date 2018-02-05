@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin'], function() {
 Route::group(['namespace' => 'Web'], function() {
     Route::get('/', 'WebController@index');
     Route::get('/need', 'WebController@need');
+    Route::get('/needDetail/{id}', 'WebController@needDetail');
 });
 
 //前端涉及到用户登录的操作

@@ -94,8 +94,16 @@
     margin-top: 10px;
 }
 
+.txl {
+    text-align: left;
+}
+
 .txc {
     text-align: center;
+}
+
+.txr {
+    text-align: right;
 }
 
 .z3 td:last-child > span {
@@ -181,6 +189,110 @@
 
 .z6 > span > span {
     font-size: 14px !important;
+}
+
+.ztb {
+    margin-top: 70px;
+    border: 1px solid #eaeaea;
+}
+
+.ztb td {
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    /*border:1px solid grey;*/
+    height: 50px;
+    width: 150px;
+    line-height: 30px;
+}
+
+.status_img > span {
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.status_img > img {
+    margin: 10px -35px;
+    height: 130px;
+    width: 601px;
+}
+
+.join {
+    display: inline-block;
+    /* border: 1px solid orange; */
+    background-color: orange;
+    cursor: pointer;
+    color: #fff;
+    padding: 3px;
+}
+
+.z7 h2 {
+    margin: 36px 0;
+}
+
+.z7 dd {
+    display: block;
+    margin: 10px 0px 15px 20px;
+}
+
+.z7 dt {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.z7 img {
+    width: 200px;
+    height: 150px;
+    margin-right: 30px;
+}
+
+.zzz {
+    height: 102px;
+    border: 1px solid #eaeaea;
+}
+.z9{margin-bottom: 20px}
+
+.z9 .logo {
+    float: left;
+    width: 100px;
+    height: 100px;
+}
+.z9 .logo img{
+    width:100px;
+    height:100px;
+    border:0px;
+}
+.z9 .name {
+    float: left;
+    width: 400px;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 25px;
+    margin-left: 35px;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.z9 .info {
+    width: 250px;
+}
+
+.z9 .info span {
+    margin-top:10px;
+    display: block;
+    height: 20px;
+    line-height: 20px;
+}
+.ecli{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.kk{
+    margin-top: 33px;
 }
 
 @media screen and (min-width: 1200px) {
