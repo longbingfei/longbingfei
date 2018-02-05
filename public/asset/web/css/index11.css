@@ -2,6 +2,7 @@
     overflow: hidden;
     height: 215px !important;
 }
+
 .z1, .z2 {
     color: #000;
     padding: 20px;
@@ -41,7 +42,9 @@
 }
 
 .z1 div {
-    margin: 10px 0px 0px 10px;
+    width: 343px;
+    margin-top: 10px;
+    /*margin: 10px 0px 0px 10px;*/
     padding-top: 8px;
     border-top: 1px solid #d4d4d4;
 }
@@ -62,9 +65,9 @@
 }
 
 .z2 > div:nth-child(1) img {
-    width:100px;
-    height:100px;
-    border:0
+    width: 100px;
+    height: 100px;
+    border: 0
 }
 
 .z2 > div:nth-child(2) {
@@ -90,12 +93,96 @@
 .z2 tr:nth-child(odd) {
     margin-top: 10px;
 }
-.txc{
+
+.txc {
     text-align: center;
 }
-.z3 td:last-child > span{
+
+.z3 td:last-child > span {
     font-size: 16px;
 }
+
+.zz1 {
+    padding: 15px 0 !important;
+    border: 0px !important;
+}
+
+.zz {
+    padding: 0 10px;
+}
+
+.z4 > p {
+    display: inline-block;
+    width: 200px;
+    height: 60px !important;
+}
+
+.z4 > p > span {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    /*text-align: center;*/
+    font-size: 16px;
+}
+
+.z4 > p:first-child > span:first-child {
+    color: orangered;
+}
+
+.z4 > p:last-child > span:first-child {
+    color: lightblue;
+}
+
+.z4 > p > span:nth-child(odd) {
+    font-size: 20px;
+}
+
+.z5 {
+    width: 160px;
+    height: 40px;
+    text-align: center;
+    line-height: 38px;
+    font-size: 15px;
+    /*float: right;*/
+    background: #fff;
+}
+
+.z5 > a {
+    width: 158px;
+    height: 38px;
+    float: left;
+    color: #4ba0ff;
+    border: 1px solid #4ba0ff;
+    border-radius: 3px;
+}
+
+.z6 {
+    width: 100%;
+    /*margin-left: 22px;*/
+    border-top: 1px solid #e1e1e1;
+    height: auto;
+    float: left;
+    font-family: "微软雅黑";
+    margin-top: 20px;
+}
+
+.z6 > span {
+    display: inline-block;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    margin-right: 10px;
+}
+
+.z6 > span > i {
+    color: #00a0e9;
+    font-size: 14px !important;
+}
+
+.z6 > span > span {
+    font-size: 14px !important;
+}
+
 @media screen and (min-width: 1200px) {
     .m-homelist {
         min-height: 200px !important;
