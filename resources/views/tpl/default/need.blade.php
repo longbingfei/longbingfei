@@ -77,7 +77,7 @@
                             <div class="row zz">
                                 <div class="col-lg-9 col-sm-8">
                                     <div class="text-size16">
-                                        <a href="needDetail/1">
+                                        <a href="need/1">
                                             <b>在 SegmentFault，学习技能、解决问题</b>
                                         </a>
                                     </div>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
                                     <div class="z5">
-                                        <a href="needDetail/1">查看详情</a>
+                                        <a href="need/1">查看详情</a>
                                     </div>
                                 </div>
                                 <div class="z6">
@@ -108,7 +108,7 @@
                             <div class="row zz">
                                 <div class="col-lg-9 col-sm-8">
                                     <div class="text-size16">
-                                        <a href="needDetail/1">
+                                        <a href="need/1">
                                             <b>在 SegmentFault，学习技能、解决问题</b>
                                         </a>
                                     </div>
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
                                     <div class="z5">
-                                        <a href="needDetail/1">查看详情</a>
+                                        <a href="need/1">查看详情</a>
                                     </div>
                                 </div>
                                 <div class="z6">
@@ -139,7 +139,7 @@
                             <div class="row zz">
                                 <div class="col-lg-9 col-sm-8">
                                     <div class="text-size16">
-                                        <a href="needDetail/1">
+                                        <a href="need/1">
                                             <b>在 SegmentFault，学习技能、解决问题</b>
                                         </a>
                                     </div>
@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
                                     <div class="z5">
-                                        <a href="needDetail/1">查看详情</a>
+                                        <a href="need/1">查看详情</a>
                                     </div>
                                 </div>
                                 <div class="z6">
