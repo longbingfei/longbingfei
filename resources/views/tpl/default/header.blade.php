@@ -43,13 +43,13 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 hidden-xs">
                         <div class="row">
                             <a href="/">
-                                <img src="/asset/web/image/logo.png" class="img-responsive wrap-side-img">
+                                <img src="/asset/web/image/logo.png" class="img-responsive wrap-side-img" style="width: 150px;height: 60px;">
                             </a>
                         </div>
                     </div>
                     <div class="col-xs-12 hidden-sm visible-xs-block">
                         <div class="text-center">
-                            <img src="/asset/web/image/logo.png">
+                            <img src="/asset/web/image/logo.png" style="width: 150px;height: 60px;">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
