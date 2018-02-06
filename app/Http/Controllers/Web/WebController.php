@@ -32,8 +32,19 @@ class WebController extends Controller
     {
         return view('tpl.default.company');
     }
+
     public function companyDetail($id)
     {
         return view('tpl.default.company_detail');
+    }
+
+    public function product()
+    {
+        return view('tpl.default.product');
+    }
+
+    public function productDetail($id)
+    {
+        return view('tpl.default.product_detail');
     }
 }

@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="col-lg-3 col-sm-4">
                                         <div class="z5 kk">
-                                            <a href="cp/1">公司详情</a>
+                                            <a href="/company/1">公司详情</a>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="col-lg-3 col-sm-4">
                                         <div class="z5 kk">
-                                            <a href="cp/1">公司详情</a>
+                                            <a href="/company/1">公司详情</a>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                     </div>
                                     <div class="col-lg-3 col-sm-4">
                                         <div class="z5 kk">
-                                            <a href="cp/1">公司详情</a>
+                                            <a href="/company/1">公司详情</a>
                                         </div>
                                     </div>
                                 </div>

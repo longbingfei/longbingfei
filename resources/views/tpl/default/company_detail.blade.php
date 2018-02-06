@@ -61,22 +61,16 @@
                     <div class="shop-wares">
                         <div class="shop-evalhd clearfix">
                             <h4 class="pull-left text-size20">产品</h4>
-                            <a href="" class="pull-right">More></a>
                         </div>
                         <div class="shop-mainlistwrap">
                             <ul class="row shop-mainlist">
                                 <li class="col-md-3 col-sm-4 col-xs-6">
-                                    <div class="shop-mainimg shop-mainimg234"><a href="product/1"> <img
-                                                    src="/asset/web/image/jp_head_bg.jpg">
-                                        </a></div>
+                                    <div class="shop-mainimg shop-mainimg234">
+                                        <a href="/product/1"> <img src="/asset/web/image/jp_head_bg.jpg"></a>
+                                    </div>
                                     <div class="shop-maininfo">
-                                        <h5 class="text-size14 cor-gray51 p-space"><a href="product/1">PHP小站</a></h5>
+                                        <h5 class="text-size14 cor-gray51 p-space"><a href="/product/1">PHP小站</a></h5>
                                         <div class="space-6"></div>
-                                        <p class="clearfix cor-gray89">
-                                            {{--<span class="case-tag pull-left"> <i--}}
-                                            {{--class="fa fa-tag cor-grayD3 text-size16"></i>&nbsp;&nbsp;市场调查</span>--}}
-                                            {{--<span class="pull-right cor-orange">￥11.00</span>--}}
-                                        </p>
                                     </div>
                                 </li>
                             </ul>
@@ -85,5 +79,6 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
 @include('tpl.default.footer')
