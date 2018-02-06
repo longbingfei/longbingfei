@@ -72,6 +72,7 @@ Route::group(['prefix' => 'admin'], function() {
 
 Route::group(['namespace' => 'Web'], function() {
     Route::get('/', 'WebController@index');
+    Route::get('/index', 'WebController@index');
     Route::get('/need', 'WebController@need');
     Route::get('/need/{id}', 'WebController@needDetail');
     Route::get('/company', 'WebController@company');
