@@ -24,7 +24,7 @@ $(function () {
                     position: 'relative',
                     width: payload.width() > 320 ? payload.width() : 320,
                     height: payload.height() > 240 ? payload.height() : 240
-                }).addClass("carousel");
+                }).addClass("carousel_s");
                 $(carouselDiv.children()[0]).css({
                     width: carouselDiv.width(),
                     height: '60px',
@@ -44,7 +44,7 @@ $(function () {
                     cursor: 'pointer',
                     boxShadow: '0px 0px 1px 1px cadetblue inset',
                     borderRadius: '5px'
-                }).addClass("carousel-list");
+                }).addClass("carousel_s-list");
                 var that = this;
                 $.each(images, function (x, y) {
                     if (x < max) {
@@ -62,7 +62,7 @@ $(function () {
                 img.attr('src', this.host + images[0].path).data('id', 0);
                 img.appendTo(carouselDiv);
                 payload.append(carouselDiv);
-                $(".carousel-list").mouseover(function () {
+                $(".carousel_s-list").mouseover(function () {
                     img.attr('src', $(this).data('src')).data('id', $(this).data('id'));
                 });
                 setInterval(function () {
@@ -70,7 +70,7 @@ $(function () {
                 }, time);
             },
             action: function (images) {
-                var img_ = $(".carousel").children("img")[0];
+                var img_ = $(".carousel_s").children("img")[0];
                 var id = $(img_).data('id');
                 id = id < images.length - 1 ? id + 1 : 0;
                 $(img_).attr('src', this.host + images[id].path).data('id', id);

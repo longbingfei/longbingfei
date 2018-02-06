@@ -406,11 +406,11 @@ product
     float:left;
 }
 
-.carousel {
+.carousel_s {
     position: relative;
 }
 
-.carousel > .carousel-list {
+.carousel_s > .carousel_s-list {
     width: 40px;
     height: 40px;
     position: absolute;
@@ -419,10 +419,6 @@ product
     cursor: pointer;
     box-shadow: 0px 0px 1px 1px cadetblue inset;
     border-radius: 5px;
-}
-
-.carousel-inner div img {
-    width: 1000px !important;
 }
 
 .img-roll{
