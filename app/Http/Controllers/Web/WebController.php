@@ -51,6 +51,9 @@ class WebController extends Controller
 
     public function zone($id)
     {
+        if (!session('id') || session('id') != $id) {
+            return redirect('/');
+        }
         return view('tpl.default.zone');
     }
 
@@ -85,13 +88,15 @@ class WebController extends Controller
         return redirect('/');
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         session()->clear();
         return redirect('/');
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $info = $request->only(['username', 'password', 'role_ids']);
         $info['ip'] = $request->getClientIp();
 
