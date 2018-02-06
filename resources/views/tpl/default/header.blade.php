@@ -89,7 +89,7 @@
                                 <li class="hActive"><a class="topborbtm" href="/">首页</a></li>
                                 <li><a class="topborbtm" href="/need">需求</a></li>
                                 <li><a class="topborbtm" href="/company">厂家</a></li>
-                                <li><a class="topborbtm" href="/product">产品</a></li>
+                                <li><a class="topborbtm" href="/p">产品</a></li>
                                 <li><a class="topborbtm" href="/zone">个人中心</a></li>
                                 <li class="pd-navppd">
                                     <form class="navbar-form navbar-left hd-seachW switchSearch" action="" role="search"
@@ -185,7 +185,7 @@
                             <a href="/" class="z-navHome">首页</a>
                             <a href="/need">需求</a>
                             <a href="/company">厂家</a>
-                            <a href="/product">产品</a>
+                            <a href="/p">产品</a>
                             <a href="/zone">个人中心</a>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                                 <li><a href="/" class="z-navHome">首页</a></li>
                                 <li><a href="/need">需求</a></li>
                                 <li><a href="/company">厂家</a></li>
-                                <li><a href="/product">产品</a></li>
+                                <li><a href="/p">产品</a></li>
                                 <li><a href="/zone">个人中心</a></li>
                             </ul>
                         </div>

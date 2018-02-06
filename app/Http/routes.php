@@ -76,7 +76,7 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('/need/{id}', 'WebController@needDetail');
     Route::get('/company', 'WebController@company');
     Route::get('/company/{id}', 'WebController@companyDetail');
-    Route::get('/product', 'WebController@product');
+    Route::get('/p', 'WebController@product');
     Route::get('/product/{id}', 'WebController@productDetail');
     Route::get('/zone/{id}', 'WebController@zone');
 });
