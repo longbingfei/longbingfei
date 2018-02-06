@@ -32,19 +32,14 @@
                 <div class="loginmain">
                     <p class="text-size16" style="margin-top: 10px">帐号登录</p>
                     <hr/>
-                    <form style="margin-top:30px;">
+                    <form style="margin-top:30px;" action="/login" method="post" autocomplete="off">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="userName" placeholder="用户名">
+                            <input type="text" name="username" class="form-control" placeholder="用户名" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码">
+                            <input type="password" name="password" class="form-control" placeholder="密码" autocomplete="off">
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox">记住密码
-                            </label>
-                        </div>
-                        <button type="button" class="btn btn-primary" style="width: 100%;height:45px;margin-top: 10px">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;height:45px;margin-top: 10px">
                             立即登录
                         </button>
                     </form>

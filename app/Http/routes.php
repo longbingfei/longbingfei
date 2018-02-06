@@ -13,15 +13,15 @@
 Route::get('getverifycode', 'Common\CommonController@getVerifyCode');
 Route::get('download', 'Common\CommonController@downloadFile');
 Route::any('nginx', 'System\SystemInfoController@nginx');
-Route::group(['prefix' => 'admin'], function() {
+Route::group(['prefix' => 'admin'], function () {
     //数据库
     Route::any('db', ['middleware' => ['auth', 'permission:db'], 'uses' => '\Miroc\LaravelAdminer\AdminerController@index']);
     //系统信息
     Route::get('system/{info?}', 'System\SystemInfoController@index');
     //角色与权限
-    Route::group(['namespace' => 'Auth'], function() {
+    Route::group(['namespace' => 'Auth'], function () {
         //登录
-        Route::get('/', function() {
+        Route::get('/', function () {
             return view('admin.' . (Auth::check() ? 'apps' : 'login'));
         });
         Route::post('login', 'AdminAuthController@login');
@@ -44,7 +44,7 @@ Route::group(['prefix' => 'admin'], function() {
         //登出
         Route::get('logout', 'AdminAuthController@logout');
     });
-    Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function() {
+    Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function () {
         //分类
         Route::resource('sort', 'SortController');
         Route::get('sort_form', 'SortController@settings');
@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin'], function() {
     });
 });
 
-Route::group(['namespace' => 'Web'], function() {
+Route::group(['namespace' => 'Web'], function () {
     Route::get('/', 'WebController@index');
     Route::get('/index', 'WebController@index');
     Route::get('/need', 'WebController@need');
@@ -80,22 +80,25 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('/p', 'WebController@product');
     Route::get('/product/{id}', 'WebController@productDetail');
     Route::get('/zone/{id}', 'WebController@zone');
-    Route::get('/register', function(){
+    Route::get('/register', function () {
         return view('tpl.default.register');
     });
-    Route::get('/login', function(){
+    Route::post('/register', 'WebController@register');
+    Route::get('/login', function () {
         return view('tpl.default.login');
     });
+    Route::post('/login', 'WebController@login');
+    Route::get('/logout', 'WebController@logout');
 });
 
 //前端涉及到用户登录的操作
 $api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function($api) {
-    $api->group(['namespace' => 'App\Http\Controllers\Auth'], function($api) {
+$api->version('v1', function ($api) {
+    $api->group(['namespace' => 'App\Http\Controllers\Auth'], function ($api) {
         $api->post('login', 'AuthController@login');
         $api->get('logout', 'AuthController@logout');
     });
-    $api->group(['namespace' => 'App\Http\Controllers\Web', 'middleware' => 'validate'], function($api) {
+    $api->group(['namespace' => 'App\Http\Controllers\Web', 'middleware' => 'validate'], function ($api) {
         //
     });
 });

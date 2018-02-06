@@ -31,25 +31,25 @@
             <div class="fr col-lg-5 col-md-5 col-sm-12 col-xs-12">
                 <div class="loginmain">
                     <p class="text-size16">邮箱注册</p>
-                    <form style="margin-top:30px;">
+                    <form style="margin-top:30px;" action="/register" method="post">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="userName" placeholder="用户名">
+                            <input type="text" class="form-control" name="username" placeholder="用户名" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="邮箱">
+                            <input type="email" class="form-control" name="email" placeholder="邮箱" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码">
+                            <input type="password" class="form-control" name="password" placeholder="密码" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="确认密码">
+                            <input type="password" class="form-control" name="repassword" placeholder="确认密码" autocomplete="off">
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox">我已阅读并同意 《协议》
+                                <input type="checkbox" checked disabled>我已阅读并同意 《协议》
                             </label>
                         </div>
-                        <button type="button" class="btn btn-primary" style="width: 100%;">立即注册</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">立即注册</button>
                     </form>
                 </div>
             </div>

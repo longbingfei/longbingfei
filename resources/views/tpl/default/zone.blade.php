@@ -15,7 +15,7 @@
                         <div class="col-sm-6 col-lg-12">
                             <div class="space-8"></div>
                             <div class="space-20 visible-sm-block visible-md-block"></div>
-                            <p class="cor-gray51 text-size18 p-space">11223344</p>
+                            <p class="cor-gray51 text-size18 p-space">{{session('username')}}</p>
                             <div class="space-2 col-lg-12"></div>
                         </div>
                     </div>

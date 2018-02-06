@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TagSeeder::class);
         //front
         $this->call(UserSeeder::class);
+        $this->call(WebUserSeeder::class);
         Model::reguard();
     }
 }

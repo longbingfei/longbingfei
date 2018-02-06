@@ -30,7 +30,12 @@
                     <div class="pull-left">
                     </div>
                     <div class="pull-right">
-                        <div class="pull-left">HI~</a>请 [<a href="/login">登录</a>] [<a href="/register">免费注册</a>]</div>
+                        <div class="pull-left">@if(session('id'))欢迎你 <span
+                                    style="color:orange;font-size: 16px">{{ session('username') }}</span> [<a
+                                    href="/logout">退出</a>]@else请 [<a
+                                    href="/login">登录</a>] [<a
+                                    href="/register">免费注册</a>]@endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,7 +48,8 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 hidden-xs">
                         <div class="row">
                             <a href="/">
-                                <img src="/asset/web/image/logo.png" class="img-responsive wrap-side-img" style="width: 150px;height: 60px;">
+                                <img src="/asset/web/image/logo.png" class="img-responsive wrap-side-img"
+                                     style="width: 150px;height: 60px;">
                             </a>
                         </div>
                     </div>
@@ -90,7 +96,7 @@
                                 <li><a class="topborbtm" href="/need">需求</a></li>
                                 <li><a class="topborbtm" href="/company">厂家</a></li>
                                 <li><a class="topborbtm" href="/p">产品</a></li>
-                                <li><a class="topborbtm" href="/zone/1">个人中心</a></li>
+                                <li><a class="topborbtm" href="/zone/{{ session('id') }}">个人中心</a></li>
                                 <li class="pd-navppd">
                                     <form class="navbar-form navbar-left hd-seachW switchSearch" action="" role="search"
                                           method="get">
@@ -121,9 +127,15 @@
                                     </form>
                                 </li>
                                 <li class="s-sign clearfix hidden-md hidden-xs hidden-sm navactiveImg">
-                                    <a href="/login" class="text-size14 pull-left">登录</a>
-                                    <a class="pull-left">|</a>
-                                    <a href="/register" class="text-size14 pull-right">注册</a>
+                                    @if(session('id'))
+                                        <a href="/zone/{{ session('id') }}" class="text-size14 pull-left">{{ session('username') }}</a>
+                                        <a class="pull-left">|</a>
+                                        <a href="/logout" class="text-size14 pull-right">退出</a>
+                                    @else
+                                        <a href="/login" class="text-size14 pull-left">登录</a>
+                                        <a class="pull-left">|</a>
+                                        <a href="/register" class="text-size14 pull-right">注册</a>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
@@ -186,7 +198,7 @@
                             <a href="/need">需求</a>
                             <a href="/company">厂家</a>
                             <a href="/p">产品</a>
-                            <a href="/zone/1">个人中心</a>
+                            <a href="/zone/{{ session('id') }}">个人中心</a>
                         </div>
                     </div>
                     <div class="pull-right g-tasknavbtn hidden-sm hidden-xs">
@@ -201,10 +213,12 @@
                                 <p><a class="text-under">企业管理</a></p>
                                 <p><a class="text-under">发布需求</a></p>
                             </div>
-                            <div class="tab-bot" style="text-align: center">
-                                <a href="/register" class=""><i class="fa fa-user"></i> 注册</a>
-                                <a href="/login" class=""><i class="fa fa-sign-in"></i> 登录</a>
-                            </div>
+                            @if(!session('id'))
+                                <div class="tab-bot" style="text-align: center">
+                                    <a href="/register" class=""><i class="fa fa-user"></i> 注册</a>
+                                    <a href="/login" class=""><i class="fa fa-sign-in"></i> 登录</a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                     <nav class="navbar navbar-default navbar-static navbar-static-position hidden-sm hidden-md hidden-lg col-xs-12"
@@ -215,7 +229,7 @@
                                 <li><a href="/need">需求</a></li>
                                 <li><a href="/company">厂家</a></li>
                                 <li><a href="/p">产品</a></li>
-                                <li><a href="/zone/1">个人中心</a></li>
+                                <li><a href="/zone/{{ session('id') }}">个人中心</a></li>
                             </ul>
                         </div>
                         <div class="collapse navbar-collapse bs-js-navbar-scrollspy1 bg-white">
