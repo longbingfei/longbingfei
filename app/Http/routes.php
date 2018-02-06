@@ -79,6 +79,12 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('/p', 'WebController@product');
     Route::get('/product/{id}', 'WebController@productDetail');
     Route::get('/zone/{id}', 'WebController@zone');
+    Route::get('/register', function(){
+        return view('tpl.default.register');
+    });
+    Route::get('/login', function(){
+        return view('tpl.default.login');
+    });
 });
 
 //前端涉及到用户登录的操作

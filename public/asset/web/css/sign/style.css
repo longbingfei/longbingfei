@@ -1,0 +1,80 @@
+body,html{
+    color: #333;
+}
+.container-all{
+    width:100%;
+}
+.header-top{
+    width:60%;
+    height:135px;
+    line-height:135px;
+    margin:0 auto;
+}
+.fl{
+    float:left;
+}
+.fr{
+    float:right;
+}
+.login-logo {
+    width: 240px;
+    height: 40px;
+}
+.text-size22 {
+    font-size: 22px;
+    font-weight: 700;
+}
+.mg-left30 {
+    margin-left: 30px;
+    vertical-align: top;
+}
+.login-welcome {
+    font-size: 16px;
+}
+.text-under{
+    text-decoration: underline;
+}
+.form-group{
+    margin-top: 30px;
+}
+.cor-blue {
+    color: #2f55a0;
+}
+.content-wrap{
+    width:100%;
+    background-color: #e4e6e9;
+}
+.content-wrap-all{
+    padding: 12% 0;
+    width:65%;
+    margin:0px 21%;
+}
+.loginmain{
+    padding: 25px 40px;
+    box-shadow: 3px 3px 8px #ECECEC!important;
+    background-color: #fff;
+    height: 418px;
+    width: 334px;
+}
+.text-size16 {
+    font-size: 16px;
+    text-align: center;
+}
+.footer-container{
+    width:100%;
+    background:#fff;
+}
+.footer-row{
+    width:90%;
+    margin:0 auto;
+    padding:30px;
+}
+.footer-row>ul{
+    width:25%;
+    float:left;
+    text-align: center;
+}
+.footer-row>ul>li{
+    float:left;
+    padding:10px;
+}
