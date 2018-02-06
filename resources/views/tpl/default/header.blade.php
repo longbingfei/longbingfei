@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>小丑鱼</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=0.1">
     <link rel="shortcut icon" href="/asset/web/image/fav.ico"/>
     <link rel="stylesheet" href="/asset/web/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/asset/web/plugins/ace/css/ace.min.css">
@@ -96,7 +96,11 @@
                                 <li><a class="topborbtm" href="/need">需求</a></li>
                                 <li><a class="topborbtm" href="/company">厂家</a></li>
                                 <li><a class="topborbtm" href="/p">产品</a></li>
-                                <li><a class="topborbtm" href="/zone/{{ session('id') }}">个人中心</a></li>
+                                @if(session('id'))
+                                    <li><a class="topborbtm" href="/zone/{{ session('id') }}">个人中心</a></li>
+                                @else
+                                    <li><a class="topborbtm" href="/login">个人中心</a></li>
+                                @endif
                                 <li class="pd-navppd">
                                     <form class="navbar-form navbar-left hd-seachW switchSearch" action="" role="search"
                                           method="get">
@@ -128,7 +132,8 @@
                                 </li>
                                 <li class="s-sign clearfix hidden-md hidden-xs hidden-sm navactiveImg">
                                     @if(session('id'))
-                                        <a href="/zone/{{ session('id') }}" class="text-size14 pull-left">{{ session('username') }}</a>
+                                        <a href="/zone/{{ session('id') }}"
+                                           class="text-size14 pull-left">{{ session('username') }}</a>
                                         <a class="pull-left">|</a>
                                         <a href="/logout" class="text-size14 pull-right">退出</a>
                                     @else
@@ -198,7 +203,11 @@
                             <a href="/need">需求</a>
                             <a href="/company">厂家</a>
                             <a href="/p">产品</a>
-                            <a href="/zone/{{ session('id') }}">个人中心</a>
+                            @if(session('id'))
+                                <a href="/zone/{{ session('id') }}">个人中心</a>
+                            @else
+                                <a href="/login">个人中心</a>
+                            @endif
                         </div>
                     </div>
                     <div class="pull-right g-tasknavbtn hidden-sm hidden-xs">
@@ -229,7 +238,11 @@
                                 <li><a href="/need">需求</a></li>
                                 <li><a href="/company">厂家</a></li>
                                 <li><a href="/p">产品</a></li>
-                                <li><a href="/zone/{{ session('id') }}">个人中心</a></li>
+                                @if(session('id'))
+                                    <li><a href="/zone/{{ session('id') }}">个人中心</a></li>
+                                @else
+                                    <li><a href="/login">个人中心</a></li>
+                                @endif
                             </ul>
                         </div>
                         <div class="collapse navbar-collapse bs-js-navbar-scrollspy1 bg-white">
