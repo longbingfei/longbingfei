@@ -47,4 +47,9 @@ class WebController extends Controller
     {
         return view('tpl.default.product_detail');
     }
+
+    public function zone($id)
+    {
+        return view('tpl.default.zone');
+    }
 }
