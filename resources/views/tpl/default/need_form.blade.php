@@ -5,7 +5,7 @@
             <div class="g-taskposition col-xs-12 col-left">
                 您的位置：<a href="/">首页</a> > 发布需求
             </div>
-            <form class="needform" action="/need_create" method="post">
+            <form class="needform" id="needForm" action="/need_create" method="post">
                 <div class="col-xs-12">
                     <div class="row ee">
                         <div class="">
@@ -38,6 +38,9 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="sort_id" value="1">
+                        <input type="hidden" name="area_id" value="1">
+                        <input type="hidden" name="period" value="30">
                         <div class="form-group mt10">
                             <div class="input-group">
                                 <span class="input-group-addon">需求标题</span>
@@ -73,7 +76,7 @@
                                 <dd class="p_img_dd" style="height:150px;border:1px solid #eaeaea;margin-left: 0px"></dd>
                                 <dt>描述:</dt>
                                 <dd style="margin-left: 0px">
-                                    <textarea name="dec" style="border:1px solid #eaeaea;resize:none"
+                                    <textarea name="describe" style="border:1px solid #eaeaea;resize:none"
                                               class="form-control" rows="6"></textarea>
                                 </dd>
                                 <dt>备注:</dt>
@@ -84,7 +87,7 @@
                             </dl>
                         </div>
                         <div style="text-align: center">
-                            <button type="submit" class="btn"
+                            <button type="button" class="btn need_submit_btn"
                                     style="width:100px;background-color: #438eb9;margin:-10px auto 10px auto">提 交
                             </button>
                         </div>

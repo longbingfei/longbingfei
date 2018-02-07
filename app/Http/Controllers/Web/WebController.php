@@ -9,6 +9,7 @@ use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
+use App\models\Need as NeedModel;
 
 
 class WebController extends Controller
@@ -28,8 +29,54 @@ class WebController extends Controller
 
     public function needDetail($id)
     {
-        return view('tpl.default.need_detail');
+        $data = NeedModel::findOrFail($id);
+        $data->images = unserialize($data->images);
+        return view('tpl.default.need_detail', ['data' => $data->toArray()]);
     }
+
+    public function needForm()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $data = [
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
+        return view('tpl.default.need_form', $data);
+    }
+
+    public function createNeed()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $filters = [
+            'sort_id',
+            'area_id',
+            'period',
+            'fork',
+            'hot',
+            'title',
+            'company_name',
+            'budget',
+            'tel',
+            'qq',
+            'wechat',
+            'images',
+            'describe',
+            'mark',
+        ];
+        $data = request()->only($filters);
+        $data['user_id'] = session('id');
+        try {
+            $return = ['code' => 0, 'data' => ['id' => NeedModel::create(array_filter($data))->id]];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '需求创建失败!'];
+        }
+        return json_encode($return);
+    }
+
 
     public function company()
     {
@@ -121,18 +168,6 @@ class WebController extends Controller
         Auth::login($user);
         session($user->toArray());
         return redirect('/');
-    }
-
-    public function createNeed()
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-        $data = [
-            'qiniu_access_token' => $this->getQiniuUploadToken(),
-            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
-        ];
-        return view('tpl.default.need_form', $data);
     }
 
     private function getQiniuUploadToken()

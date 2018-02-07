@@ -19,17 +19,33 @@ $(function () {
             '</form>')).on('change', '.qiniuform > input[name=file]', function () {
             $('.qiniuform').submit();
             checkUploadStatus(_symbol, function () {
-                tmp_img_data && $('.p_img_dd').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="imgs[]" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+                tmp_img_data && $('.p_img_dd').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="images[]" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
                 tmp_img_data = null;
             });
         }).on('click', '.dd_img_delete', function () {
             $(this).parent().remove();
         });
-        ;
         $('.qiniuform > input[name=file]').off().click();
-    })
+    });
+
+    //创建需求
+    $('.need_submit_btn').click(function () {
+        $.ajax({
+            url: '/create_need',
+            type: 'post',
+            data: $('#needForm').serialize(),
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: '需求创建失败，请稍后再试!'});
+                }
+                location.href = '/need/' + data.data.id;
+            }
+        });
+    });
 });
 
+//图片上传查询
 function checkUploadStatus(symbol, callback) {
     clearInterval(taskMark);
     $.Confirm({message: '图片上传中...', hideToolBar: true});
