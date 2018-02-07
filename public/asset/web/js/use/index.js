@@ -1,3 +1,4 @@
+var taskMark;
 $(function () {
     $('.js1 > .z9').css('width', function () {
         return ($(this).parent().width() - 25) / 4 + 'px';
@@ -5,6 +6,7 @@ $(function () {
 
     //图片上传七牛云
     $('#qiniu').click(function () {
+        clearInterval(taskMark);
         if ($('.p_img_dd').find('.dd_wrap_div').length >= 3) {
             return $.Confirm({message: '最多上传三张图片！'});
         }
@@ -31,7 +33,7 @@ $(function () {
 function checkUploadStatus(symbol, callback) {
     $.Confirm({message: '图片上传中...', hideToolBar: true});
     var st = (new Date).getTime();
-    var taskMark = setInterval(function () {
+    taskMark = setInterval(function () {
         if ((new Date).getTime() - st > 10000) {
             clearInterval(taskMark);
             return $.Confirm({message: '图片上传失败，请稍后再试!'});
