@@ -70,11 +70,7 @@
                                 <dt>产品图片:
                                     <button type="button" id="qiniu">上传图片</button>
                                     <span style="font-size: 13px;">(允许上传三张图片)</span></dt>
-                                <dd style="height:150px;border:1px solid #eaeaea;margin-left: 0px">
-                                    {{--<img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">--}}
-                                    {{--<img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">--}}
-                                    {{--<img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">--}}
-                                </dd>
+                                <dd class="p_img_dd" style="height:150px;border:1px solid #eaeaea;margin-left: 0px"></dd>
                                 <dt>描述:</dt>
                                 <dd style="margin-left: 0px">
                                     <textarea name="dec" style="border:1px solid #eaeaea;resize:none"
@@ -101,6 +97,8 @@
 <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
 <script>
     var user_id = '{{session("id")}}',
-        qiniu_access_token = '{{$qiniu_access_token}}';
+        qiniu_access_token = '{{$qiniu_access_token}}',
+        qiniu_img_domain = '{{$qiniu_img_domain}}',
+        tmp_img_data = null;
 </script>
 @include('tpl.default.footer')

@@ -91,6 +91,7 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/login', 'WebController@login');
     Route::get('/logout', 'WebController@logout');
     Route::post('/qiniu_callback', 'WebController@qiniuCallback');
+    Route::get('/task', 'WebController@task');
 });
 
 //前端涉及到用户登录的操作

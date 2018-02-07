@@ -128,7 +128,10 @@ class WebController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
-        $data = ['qiniu_access_token' => $this->getQiniuUploadToken()];
+        $data = [
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
         return view('tpl.default.need_form', $data);
     }
 
@@ -153,5 +156,16 @@ class WebController extends Controller
             return;
         }
         QiniuUploadModel::create($data);
+    }
+
+    public function task(Request $request)
+    {
+        if (!$symbol = $request->get('symbol')) {
+            $return = ['code' => 1, '标志不存在'];
+        } else {
+            $res = QiniuUploadModel::where('symbol', $symbol)->find(1);
+            $return = $res ? ['code' => 0, 'data' => ['key' => $res->key, 'hash' => $res->hash]] : ['code' => -1, '无相关数据'];
+        }
+        return json_encode($return);
     }
 }
