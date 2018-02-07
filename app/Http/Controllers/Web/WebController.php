@@ -163,8 +163,8 @@ class WebController extends Controller
         if (!$symbol = $request->get('symbol')) {
             $return = ['code' => 1, '标志不存在'];
         } else {
-            $res = QiniuUploadModel::where('symbol', $symbol)->find(1);
-            $return = $res ? ['code' => 0, 'data' => ['key' => $res->key, 'hash' => $res->hash]] : ['code' => -1, '无相关数据'];
+            $res = QiniuUploadModel::where('symbol', $symbol)->first();
+            $return = $res ? ['code' => 0, 'data' => ['key' => $res->key, 'hash' => $res->hash]] : ['code' => -1, 'msg' => '无相关数据'];
         }
         return json_encode($return);
     }
