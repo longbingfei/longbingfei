@@ -7,12 +7,13 @@ $(function () {
     $('#qiniu').click(function () {
         $('body').find('.qiniuform').remove();
         var _symbol = (new Date).getTime() + '_' + user_id;
-        $('body').append($('<form class="qiniuform" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data">' +
+        $('body').append($('<form class="qiniuform" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data" target="nm_iframe">' +
             '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
             ' <input name="x:symbol" type="hidden" value="' + _symbol + '">' +
             '  <input name="file" type="file"/>' +
-            '  <input type="submit" value="上传"/>' +
-            '</form>'));
+            '</form>')).on('change', '.qiniuform > input[name=file]', function () {
+            $('.qiniuform').submit();
+        });
         $('.qiniuform > input[name=file]').off().click();
     })
 });

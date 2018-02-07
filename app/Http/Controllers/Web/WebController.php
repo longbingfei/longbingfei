@@ -139,7 +139,7 @@ class WebController extends Controller
             'scope' => env('QINIU_BUCKET'),
             'deadline' => time() + 3600,
             'callbackUrl' => env('QINIU_CALLBACK_URL'),
-            'callbackBody' => '{"key":"$(key)","hash":"$(etag)","w":"$(imageInfo.width)","h":"$(imageInfo.height)","symbol":"$(symbol)"}',
+            'callbackBody' => '{"key":"$(key)","hash":"$(etag)","w":"$(imageInfo.width)","h":"$(imageInfo.height)","symbol":"$(x:symbol)"}',
             'callbackBodyType' => 'application/json'
         ];
         $upToken = $auth->uploadToken(env('QINIU_BUCKET'), null, 3600, $policy);

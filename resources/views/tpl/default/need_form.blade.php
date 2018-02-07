@@ -98,6 +98,7 @@
         </div>
     </div>
 </section>
+<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
 <script>
     var user_id = '{{session("id")}}',
         qiniu_access_token = '{{$qiniu_access_token}}';
