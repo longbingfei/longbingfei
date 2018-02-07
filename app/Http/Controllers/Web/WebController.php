@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
 use Qiniu\Auth as QiniuAuth;
+use App\Models\QiniuUpload as QiniuUploadModel;
 
-//use Qiniu\Storage\UploadManager;
 
 class WebController extends Controller
 {
@@ -148,6 +148,10 @@ class WebController extends Controller
 
     public function qiniuCallback(Request $request)
     {
-        file_put_contents('123.txt', var_export($request->all(), 1), FILE_APPEND);
+        $data = $request->only(['key', 'hash', 'w', 'h', 'symbol']);
+        if (!isset($data['key']) || !$data['key']) {
+            return;
+        }
+        QiniuUploadModel::create($data);
     }
 }
