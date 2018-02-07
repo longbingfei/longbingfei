@@ -7,7 +7,9 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Qiniu\Auth as QiniuAuth;
+
+//use Qiniu\Storage\UploadManager;
 
 class WebController extends Controller
 {
@@ -119,5 +121,33 @@ class WebController extends Controller
         Auth::login($user);
         session($user->toArray());
         return redirect('/');
+    }
+
+    public function createNeed()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $data = ['qiniu_access_token' => $this->getQiniuUploadToken()];
+        return view('tpl.default.need_form', $data);
+    }
+
+    private function getQiniuUploadToken()
+    {
+        $auth = new QiniuAuth('-u-Xkb6750ZFc7x0_ymb0Tig3GJwQwGUSmYGL_W6', 'wlJiz10cNHTlyO2D1QpDk1i8QzQheUEuPknMJiRD');
+        $policy = [
+            'scope' => env('QINIU_BUCKET'),
+            'deadline' => time() + 3600,
+            'callbackUrl' => env('QINIU_CALLBACK_URL'),
+            'callbackBody' => '{"key":"$(key)","hash":"$(etag)","w":"$(imageInfo.width)","h":"$(imageInfo.height)","symbol":"$(symbol)"}',
+            'callbackBodyType' => 'application/json'
+        ];
+        $upToken = $auth->uploadToken(env('QINIU_BUCKET'), null, 3600, $policy);
+        return $upToken;
+    }
+
+    public function qiniuCallback(Request $request)
+    {
+        file_put_contents('123.txt', var_export($request->all(), 1), FILE_APPEND);
     }
 }

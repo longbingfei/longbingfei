@@ -2,6 +2,20 @@ $(function () {
     $('.js1 > .z9').css('width', function () {
         return ($(this).parent().width() - 25) / 4 + 'px';
     });
+
+    //图片上传七牛云
+    $('#qiniu').click(function () {
+        $('body').find('.qiniuform').remove();
+        var _symbol = (new Date).getTime() + '_' + user_id;
+        $('body').append($('<form class="qiniuform" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data">' +
+            '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
+            '  <input name="custom_name" type="hidden" value="symbol">' +
+            '  <input name="custom_value" type="hidden" value="' + _symbol + '">' +
+            '  <input name="file" type="file"/>' +
+            '  <input type="submit" value="上传"/>' +
+            '</form>'));
+        $('.qiniuform > input[name=file]').off().click();
+    })
 });
 
 (function ($) {

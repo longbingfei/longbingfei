@@ -95,10 +95,17 @@
                                 <div class="space-20"></div>
                                 <div class="g-userreleasebg"></div>
                                 <div class="space-10"></div>
-                                <p class="cor-gray51 text-size14">我是厂家</p>
-                                <p class="cor-gray51 text-size14">提供优质产品服务</p>
-                                <div class="space-10"></div>
-                                <div class="g-userhintbtn"><a href="/p">发布产品</a></div>
+                                @if(!session('type'))
+                                    <p class="cor-gray51 text-size14">成为厂家</p>
+                                    <p class="cor-gray51 text-size14">提供优质产品服务</p>
+                                    <div class="space-10"></div>
+                                    <div class="g-userhintbtn"><a href="/establish">厂家入驻</a></div>
+                                @else
+                                    <p class="cor-gray51 text-size14">我是厂家</p>
+                                    <p class="cor-gray51 text-size14">提供优质产品服务</p>
+                                    <div class="space-10"></div>
+                                    <div class="g-userhintbtn"><a href="/createp">发布产品</a></div>
+                                @endif
                                 <div class="space-20"></div>
                             </div>
                         </div>
@@ -116,7 +123,8 @@
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <ul id="p_a_1" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
+                        <ul id="p_a_1"
+                            class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
                             <li class="g-usernoinfo g-usernoinfo-noinfo">暂无需求哦！快去<a>发布</a>吧</li>
                         </ul>
                         <ul id="p_a_2" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">

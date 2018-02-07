@@ -452,8 +452,21 @@ product
 .itb td:nth-child(even){
     text-align: left;
 }
-
-
+.pl10{
+    padding-left: 10px;
+}
+.ml10{
+    margin-left: 10px;
+}
+.mt10{
+    margin-top: 10px;
+}
+.needform input{
+    border-color: #eaeaea;
+}
+.needform span{
+    border:0;
+}
 
 @media screen and (min-width: 1200px) {
     .m-homelist {

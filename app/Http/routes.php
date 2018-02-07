@@ -75,6 +75,7 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/index', 'WebController@index');
     Route::get('/need', 'WebController@need');
     Route::get('/need/{id}', 'WebController@needDetail');
+    Route::get('/create_need', 'WebController@createNeed');
     Route::get('/company', 'WebController@company');
     Route::get('/company/{id}', 'WebController@companyDetail');
     Route::get('/p', 'WebController@product');
@@ -89,6 +90,7 @@ Route::group(['namespace' => 'Web'], function () {
     });
     Route::post('/login', 'WebController@login');
     Route::get('/logout', 'WebController@logout');
+    Route::get('/qiniu_callback', 'WebController@qiniuCallback');
 });
 
 //前端涉及到用户登录的操作
