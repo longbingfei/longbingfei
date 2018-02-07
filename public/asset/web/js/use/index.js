@@ -31,6 +31,7 @@ $(function () {
 });
 
 function checkUploadStatus(symbol, callback) {
+    clearInterval(taskMark);
     $.Confirm({message: '图片上传中...', hideToolBar: true});
     var st = (new Date).getTime();
     taskMark = setInterval(function () {
@@ -42,7 +43,7 @@ function checkUploadStatus(symbol, callback) {
             if (data && data.code === 0) {
                 tmp_img_data = data.data;
                 clearInterval(taskMark);
-                $.Confirm({message: '图片上传成功!', callback: callback});
+                return $.Confirm({message: '图片上传成功!', callback: callback});
             }
         });
     }, 2000);
