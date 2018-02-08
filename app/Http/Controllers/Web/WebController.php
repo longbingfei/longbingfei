@@ -9,7 +9,7 @@ use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
-use App\Models\Need as NeedModel;
+use App\Models\NeedWork as NeedWorkModel;
 
 
 class WebController extends Controller
@@ -29,7 +29,7 @@ class WebController extends Controller
 
     public function needDetail($id)
     {
-        $data = NeedModel::findOrFail($id);
+        $data = NeedWorkModel::findOrFail($id);
         $data->images = unserialize($data->images);
         return view('tpl.default.need_detail', ['data' => $data->toArray()]);
     }
@@ -70,7 +70,7 @@ class WebController extends Controller
         $data = request()->only($filters);
         $data['user_id'] = session('id');
         try {
-            $return = ['code' => 0, 'data' => ['id' => NeedModel::create(array_filter($data))->id]];
+            $return = ['code' => 0, 'data' => ['id' => NeedWorkModel::create(array_filter($data))->id]];
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '需求创建失败!'];
         }
