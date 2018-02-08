@@ -68,6 +68,7 @@ class WebController extends Controller
             'mark',
         ];
         $data = request()->only($filters);
+        $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['user_id'] = session('id');
         try {
             $return = ['code' => 0, 'data' => ['id' => DB::table('needs')->insertGetId(array_filter($data))]];
