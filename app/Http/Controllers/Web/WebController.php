@@ -70,6 +70,7 @@ class WebController extends Controller
         $data = request()->only($filters);
         $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['user_id'] = session('id');
+        $data['created_at'] = $data['updated_at'] = Date('Y-m-d H:i:s');
         try {
             $return = ['code' => 0, 'data' => ['id' => DB::table('needs')->insertGetId(array_filter($data))]];
         } catch (\Exception $e) {
