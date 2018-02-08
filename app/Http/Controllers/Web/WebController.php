@@ -9,7 +9,7 @@ use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
-use App\models\Need as NeedModel;
+use App\Models\Need as NeedModel;
 
 
 class WebController extends Controller
