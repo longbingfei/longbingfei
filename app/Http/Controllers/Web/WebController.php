@@ -24,7 +24,9 @@ class WebController extends Controller
 
     public function need()
     {
-        return view('tpl.default.need');
+        $needs = DB::table('needs')->get();
+        $data = ['data' => $needs];
+        return view('tpl.default.need', $data);
     }
 
     public function needDetail($id)
