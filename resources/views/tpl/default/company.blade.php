@@ -87,14 +87,7 @@
 
                     </ul>
                 </div>
-                <div class="clearfix">
-                    <div class="paginationwrap">
-                        <ul class="pagination">
-                            <li class="active"><span>1</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="space-14"></div>
+                <div class="space-20"></div>
             </div>
         </div>
     </div>

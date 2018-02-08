@@ -18,7 +18,7 @@ class CreateNeedsTable extends Migration
             $tables->tinyInteger('area_id')->default(1);
             $tables->tinyInteger('period'); //周期
             $tables->tinyInteger('status')->default(0);
-            $tables->tinyInteger('fork')->default(0); //收藏
+            $tables->tinyInteger('fork')->default(0); //报名
             $tables->tinyInteger('hot')->default(0); //热度
             $tables->string('title', 50);
             $tables->string('company_name', 50)->unique();

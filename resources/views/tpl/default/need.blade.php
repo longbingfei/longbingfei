@@ -73,7 +73,9 @@
                         </div>
                     </div>
                     @if(empty($data))
-                        暂无数据
+                        <div style="height:50px;padding-left: 10px;line-height: 50px;">
+                            暂无相关数据
+                        </div>
                     @else
                         <ul class="g-taskmainlist">
                             @foreach($data as $vo)
@@ -115,14 +117,7 @@
                         </ul>
                     @endif
                 </div>
-                <div class="clearfix">
-                    <div class="paginationwrap">
-                        <ul class="pagination">
-                            <li class="active"><span>1</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="space-14"></div>
+                <div class="space-20"></div>
             </div>
         </div>
     </div>
