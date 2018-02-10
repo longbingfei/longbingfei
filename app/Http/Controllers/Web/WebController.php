@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Company as CompanyModel;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -10,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
 use Illuminate\Support\Facades\DB;
+use App\Models\City as CityModel;
 
 
 class WebController extends Controller
@@ -81,6 +84,53 @@ class WebController extends Controller
         return json_encode($return);
     }
 
+    public function companyForm()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $provs = CityModel::where(['pid' => 1])->get()->toArray();
+        $data = [
+            'provs' => $provs,
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
+        return view('tpl.default.company_form', $data);
+    }
+
+    public function establish()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $filters = [
+            'company_name',
+            'name',
+            'tel',
+            'wechat',
+            'email',
+            'qq',
+            'area_ids',
+            'address',
+            'sort_ids',
+            'operate_ids',
+            'image',
+            'describe',
+            'mark',
+        ];
+        $params = request()->only($filters);
+        $params['area_ids'] = $params['area_ids'] ? implode(',', $params['area_ids']) : '';
+        $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
+        $params['operate_ids'] = $params['operate_ids'] ? implode(',', $params['operate_ids']) : '';
+        $params['user_id'] = session('id');
+        try {
+            $return = ['code' => 0, 'data' => ['id' => CompanyModel::create($params)->id]];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '企业入驻失败!'];
+        }
+        return json_encode($return);
+
+    }
 
     public function company()
     {
@@ -89,7 +139,14 @@ class WebController extends Controller
 
     public function companyDetail($id)
     {
-        return view('tpl.default.company_detail');
+        $data = CompanyModel::where(['id' => $id])->first();
+        $data->sort_ids = $data->sort_ids ? explode(',', $data->sort_ids) : '';
+        $data->operate_ids = $data->operate_ids ? explode(',', $data->operate_ids) : '';
+        if ($data->area_ids) {
+            $city = CityModel::whereIn('id', explode(',', $data->area_ids))->get()->toArray();
+            $data->city = implode(' ', array_column($city, 'name'));
+        }
+        return view('tpl.default.company_detail', ['data' => $data]);
     }
 
     public function product()
@@ -200,11 +257,16 @@ class WebController extends Controller
     public function task(Request $request)
     {
         if (!$symbol = $request->get('symbol')) {
-            $return = ['code' => 1, '标志不存在'];
+            $return = ['code' => 1, '任务标志不存在'];
         } else {
             $res = QiniuUploadModel::where('symbol', $symbol)->first();
             $return = $res ? ['code' => 0, 'data' => ['key' => $res->key, 'hash' => $res->hash]] : ['code' => -1, 'msg' => '无相关数据'];
         }
         return json_encode($return);
+    }
+
+    public function getCity($pid)
+    {
+        return CityModel::where(['pid' => $pid])->get()->all();
     }
 }

@@ -6,8 +6,8 @@
                 <div class="col-sm-12 col-left">
                     <div class="shop-main">
                         <div class="personal-info">
-                            @if(isset($bg) && $bg)
-                                <img src="/asset/web/image/logo.png" name="" class="personal-info-back-pic">
+                            @if($data->image)
+                                <img src="{{$data->image}}" name="" class="personal-info-back-pic">
                             @else
                                 <img src="/asset/web/image/bg_cp.jpg" name="" class="personal-info-back-pic">
                             @endif
@@ -19,21 +19,22 @@
                                 @endif
                                 <div class="personal-info-block">
                                     <div class="personal-info-block-name">
-                                        <h3 class="text-size20 cor-gray51">华为科技有限公司南京分111公司</h3>
+                                        <h3 class="text-size20 cor-gray51">{{$data->company_name}}</h3>
                                     </div>
-                                    <p class="hidden-xs cor-gray51">地&nbsp;&nbsp;&nbsp;址：&nbsp;</p>
+                                    <p class="hidden-xs cor-gray51">所在地：&nbsp;{{$data->city}}</p>
+                                    <p class="hidden-xs cor-gray51">详细地址：&nbsp;{{$data->address}}</p>
                                     <p class="personal-tag hidden-xs cor-gray51">分&nbsp;&nbsp;&nbsp;类：&nbsp;
-                                        <span class="cor-gray87">程序开发</span>
-                                        <span class="cor-gray87">软件皮肤</span>
-                                        <span class="cor-gray87">插件开发</span>
+                                        @foreach($data->sort_ids as $vo)
+                                            <span class="cor-gray87">{{$vo}}</span>
+                                        @endforeach
                                     </p>
                                     <p class="personal-tag hidden-xs cor-gray51">经营范围：&nbsp;
-                                        <span class="cor-gray87">1111</span>
-                                        <span class="cor-gray87">2222</span>
-                                        <span class="cor-gray87">3333333</span>
+                                        @foreach($data->operate_ids as $vo)
+                                            <span class="cor-gray87">{{$vo}}</span>
+                                        @endforeach
                                     </p>
-                                    <p class="hidden-xs cor-gray51">企业联系人:</p>
-                                    <p class="hidden-xs cor-gray51">企业联系方式:</p>
+                                    <p class="hidden-xs cor-gray51">企业联系人: {{$data->name}}</p>
+                                    <p class="hidden-xs cor-gray51">企业联系方式: {{$data->tel}}</p>
                                 </div>
                             </div>
                         </div>
@@ -49,6 +50,7 @@
                                 <div class="clearfix ">
                                     <div class="col-sm-1 col-xs-2">
                                         <div class="row">
+                                            {{$data->describe}}
                                         </div>
                                     </div>
                                     <div class="space"></div>

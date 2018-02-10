@@ -43,6 +43,44 @@ $(function () {
             }
         });
     });
+
+    //企业头背景
+    $('body').on('click', '.cp_h_img >span', function () {
+        clearInterval(taskMark);
+        $('body').find('.cp_h_img_form').remove();
+        var _symbol = (new Date).getTime() + '_' + user_id;
+        $('body').append($('<form class="cp_h_img_form" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data" target="nm_iframe">' +
+            '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
+            ' <input name="x:symbol" type="hidden" value="' + _symbol + '">' +
+            '  <input name="file" type="file"/>' +
+            '</form>')).on('change', '.cp_h_img_form > input[name=file]', function () {
+            $('.cp_h_img_form').submit();
+            checkUploadStatus(_symbol, function () {
+                tmp_img_data && $('.cp_h_img').html('').append($('<div class="dd_wrap_div" style="height:240px;"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '" style="height:240px"><input type="hidden" name="image" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+                tmp_img_data = null;
+            });
+        }).on('click', '.dd_img_delete', function () {
+            $(this).parent().parent().html('').append('<span class="glyphicon glyphicon-plus"> 添加企业背景图片</span>');
+        });
+        $('.cp_h_img_form > input[name=file]').off().click();
+    });
+
+    //企业入驻
+    $('.company_submit_btn').click(function () {
+        $.ajax({
+            url: '/establish',
+            type: 'post',
+            data: $('#companyForm').serialize(),
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: '企业入驻失败，请稍后再试!'});
+                }
+                location.href = '/company/' + data.data.id;
+            }
+        });
+    });
+
 });
 
 //图片上传查询
@@ -51,7 +89,7 @@ function checkUploadStatus(symbol, callback) {
     $.Confirm({message: '图片上传中...', hideToolBar: true});
     var st = (new Date).getTime();
     taskMark = setInterval(function () {
-        if ((new Date).getTime() - st > 10000) {
+        if ((new Date).getTime() - st > 20000) {
             clearInterval(taskMark);
             return $.Confirm({message: '图片上传失败，请稍后再试!'});
         }
@@ -193,4 +231,25 @@ function checkUploadStatus(symbol, callback) {
         }
     });
 })($);
+
+//省市区
+$('.cityselector').change(function () {
+    var pid = $(this).val(),
+        level = $(this).data('id'),
+        _next = $('.cityselector');
+    _next.each(function (x, y) {
+        $(y).data('id') > level && $(y).html("<option>--请选择--</option>");
+        if (pid && ($(y).data('id') === level + 1)) {
+            $.getJSON('/city/' + pid, function (data) {
+                if (data && data.length) {
+                    var html = "<option>--请选择--</option>";
+                    $(data).each(function (a, b) {
+                        html += "<option value='" + b.id + "'>" + b.name + "</option>";
+                    });
+                    $(y).html(html);
+                }
+            });
+        }
+    });
+});
 

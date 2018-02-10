@@ -81,6 +81,8 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/create_need', 'WebController@createNeed');
 
     //企业
+    Route::get('/establish', 'WebController@companyForm');
+    Route::post('/establish', 'WebController@establish');
     Route::get('/company', 'WebController@company');
     Route::get('/company/{id}', 'WebController@companyDetail');
 
@@ -103,6 +105,9 @@ Route::group(['namespace' => 'Web'], function () {
     //七牛上传回调
     Route::post('/qiniu_callback', 'WebController@qiniuCallback');
     Route::get('/task', 'WebController@task');
+
+    //获取城市
+    Route::get('/city/{pid}', 'WebController@getCity');
 });
 
 //前端涉及到用户登录的操作

@@ -486,6 +486,39 @@ product
     font-size: 20px;
     cursor:pointer
 }
+.cp_h_img{
+    height:240px;
+    line-height: 240px;
+    font-size:18px;
+    text-align: center;
+    cursor:pointer
+}
+.cp_c_table {
+    border:1px solid #eaeaea;
+}
+.cp_c_table  tr:first-child{
+    margin-top: 10px;
+}
+.cp_c_table  tr{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.cp_c_table  td{
+    display: inline-block;
+    text-align: center;
+}
+.cp_c_table  td:nth-child(odd){
+    width:100px;
+}
+.cp_c_table  td:nth-child(even){
+    width:250px;
+}
+.cp_tr_s > td:not(:first-child){
+    width:200px !important;
+}
+.cp_tr_s1 > td:not(:first-child){
+    width:150px !important;
+}
 
 @media screen and (min-width: 1200px) {
     .m-homelist {
