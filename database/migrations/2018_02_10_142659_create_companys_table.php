@@ -28,6 +28,7 @@ class CreateCompanysTable extends Migration
             $tables->string('wechat')->nullable();
             $tables->string('email')->nullable();
             $tables->text('image')->nullable();
+            $tables->text('logo')->nullable();
             $tables->text('describe')->nullable();
             $tables->text('mark')->nullable();
             $tables->integer('user_id');

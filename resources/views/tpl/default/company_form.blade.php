@@ -17,6 +17,14 @@
                         </div>
                         <table class="cp_c_table">
                             <tr>
+                                <td>logo</td>
+                                <td colspan="5" style="width:607px;height:60px;">
+                                    <div id="cp_logo_add">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>公司名称</td>
                                 <td><input type="text" class="form-control" name="company_name"></td>
                                 <td>姓名</td>

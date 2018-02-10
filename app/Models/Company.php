@@ -23,6 +23,7 @@ class Company extends Model
         'qq',
         'email',
         'image',
+        'logo',
         'describe',
         'mark',
         'user_id',

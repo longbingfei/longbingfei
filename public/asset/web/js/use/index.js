@@ -65,6 +65,27 @@ $(function () {
         $('.cp_h_img_form > input[name=file]').off().click();
     });
 
+    //企业logo
+    $('body').on('click', '#cp_logo_add i', function () {
+        clearInterval(taskMark);
+        $('body').find('.cp_logo_img_form').remove();
+        var _symbol = (new Date).getTime() + '_' + user_id;
+        $('body').append($('<form class="cp_logo_img_form" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data" target="nm_iframe">' +
+            '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
+            ' <input name="x:symbol" type="hidden" value="' + _symbol + '">' +
+            '  <input name="file" type="file"/>' +
+            '</form>')).on('change', '.cp_logo_img_form > input[name=file]', function () {
+            $('.cp_logo_img_form').submit();
+            checkUploadStatus(_symbol, function () {
+                tmp_img_data && $('#cp_logo_add').html('').append($('<div class="dd_wrap_div" style="width:50px;height:50px;"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '" style="width:50px;height:50px;"><input type="hidden" name="logo" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+                tmp_img_data = null;
+            });
+        }).on('click', '.dd_img_delete', function () {
+            $(this).parent().parent().html('').append('<i class="glyphicon glyphicon-plus"></i>');
+        });
+        $('.cp_logo_img_form > input[name=file]').off().click();
+    });
+
     //企业入驻
     $('.company_submit_btn').click(function () {
         $.ajax({

@@ -12,8 +12,8 @@
                                 <img src="/asset/web/image/bg_cp.jpg" name="" class="personal-info-back-pic">
                             @endif
                             <div class="personal-info-words">
-                                @if(isset($bg) && $bg)
-                                    <img src="/asset/web/image/kabuki.jpg" alt="" class="img-circle personal-info-pic">
+                                @if($data->logo)
+                                    <img src="{{$data->logo}}" alt="" class="img-circle personal-info-pic">
                                 @else
                                     <img src="/asset/web/image/kabuki.jpg" alt="" class="img-circle personal-info-pic">
                                 @endif

@@ -115,6 +115,7 @@ class WebController extends Controller
             'sort_ids',
             'operate_ids',
             'image',
+            'logo',
             'describe',
             'mark',
         ];
