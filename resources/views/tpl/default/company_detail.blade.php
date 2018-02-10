@@ -48,7 +48,7 @@
                                     <h4 class="pull-left text-size20">企业简介</h4>
                                 </div>
                                 <div class="clearfix ">
-                                    <div class="col-sm-1 col-xs-2">
+                                    <div class="col-md-12 col-xs-2">
                                             {!! $data->describe !!}
                                     </div>
                                     <div class="space"></div>
