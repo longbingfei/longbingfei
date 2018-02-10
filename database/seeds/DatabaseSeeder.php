@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         //front
         $this->call(UserSeeder::class);
         $this->call(WebUserSeeder::class);
+        $this->call(CitySeeder::class);
         Model::reguard();
     }
 }
