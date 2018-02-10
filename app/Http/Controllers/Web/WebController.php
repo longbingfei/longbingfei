@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Company as CompanyModel;
-use App\Models\Company;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -84,6 +83,13 @@ class WebController extends Controller
         return json_encode($return);
     }
 
+    public function company()
+    {
+        $companys = DB::table('companys')->get();
+        $data = ['data' => $companys];
+        return view('tpl.default.company', $data);
+    }
+
     public function companyForm()
     {
         if (!Auth::check()) {
@@ -126,16 +132,12 @@ class WebController extends Controller
         $params['user_id'] = session('id');
         try {
             $return = ['code' => 0, 'data' => ['id' => CompanyModel::create($params)->id]];
+            WebUserModel::where(['id' => session('id')])->update('type', 1);
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '企业入驻失败!'];
         }
         return json_encode($return);
 
-    }
-
-    public function company()
-    {
-        return view('tpl.default.company');
     }
 
     public function companyDetail($id)

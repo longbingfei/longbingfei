@@ -121,12 +121,12 @@
                                             <input type="text" name="keywords"
                                                    class="input-boxshaw form-control-feedback-btn form-control bor-radius2 hidden-sm hidden-xs">
                                             <a href="/task/create" type="submit"
-                                               class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布任务</a>
+                                               class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布需求</a>
                                         </div>
                                         <span class="hidden-md hidden-xs hidden-sm">
                                             <span class="u-tit">或</span>&nbsp;&nbsp;
                                             <a href="/task/create" type="submit"
-                                               class="btn btn-default f-click cor-blue bor-radius2">发布任务</a>
+                                               class="btn btn-default f-click cor-blue bor-radius2">发布需求</a>
                                         </span>
                                     </form>
                                 </li>

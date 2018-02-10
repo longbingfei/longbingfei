@@ -53,39 +53,25 @@
                             <a class="" href="">入驻时间</a>
                         </div>
                     </div>
-                    <ul class="g-taskmainlist js1">
-                        <li class="clearfix z9">
-                            <p><img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"></p>
-                            <p class="ecli"><a href="/company/1">华为科技有限公司南京分111公司</a></p>
-                            <p>互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网</p>
-                            <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>
-                        </li>
-                        <li class="clearfix z9">
-                            <p><img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"></p>
-                            <p class="ecli"><a href="/company/1">华为科技有限公司南京分111公司</a></p>
-                            <p>互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网</p>
-                            <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>
-                        </li>
-                        <li class="clearfix z9">
-                            <p><img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"></p>
-                            <p class="ecli"><a href="/company/1">华为科技有限公司南京分111公司</a></p>
-                            <p>互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网</p>
-                            <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>
-                        </li>
-                        <li class="clearfix z9">
-                            <p><img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"></p>
-                            <p class="ecli"><a href="/company/1">华为科技有限公司南京分111公司</a></p>
-                            <p>互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网</p>
-                            <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>
-                        </li>
-                        <li class="clearfix z9">
-                            <p><img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"></p>
-                            <p class="ecli"><a href="/company/1">华为科技有限公司南京分111公司</a></p>
-                            <p>互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网，互联网</p>
-                            <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>
-                        </li>
-
-                    </ul>
+                    @if(empty($data))
+                        <div style="height:50px;padding-left: 10px;line-height: 50px;">
+                            暂无相关数据
+                        </div>
+                    @else
+                        <ul class="g-taskmainlist js1">
+                            @foreach($data as $vo)
+                                <li class="clearfix z9">
+                                    <p>
+                                        <img src="{{$vo->logo}}">
+                                    </p>
+                                    <p class="ecli"><a href="/company/{{$vo->id}}">{{$vo->company_name}}</a></p>
+                                    <p>{{$vo->operate_ids}}</p>
+                                    <p style="text-align: center"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i></p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
                 <div class="space-20"></div>
             </div>

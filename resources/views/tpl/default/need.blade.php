@@ -83,7 +83,7 @@
                                     <div class="row zz">
                                         <div class="col-lg-9 col-sm-8">
                                             <div class="text-size16">
-                                                <a href="need/1">
+                                                <a href="need/{{$vo->id}}">
                                                     <b>{{$vo->title}}</b>
                                                 </a>
                                             </div>

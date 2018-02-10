@@ -90,25 +90,61 @@
                                 <div class="space-20"></div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-4 text-center">
-                            <div class="g-userhintrelease">
-                                <div class="space-20"></div>
-                                <div class="g-userreleasebg"></div>
-                                <div class="space-10"></div>
-                                @if(!session('type'))
+                        @if(!session('type'))
+                            <div class="col-sm-6 col-lg-4 text-center">
+                                <div class="g-userhintrelease">
+                                    <div class="space-20"></div>
+                                    <div class="g-userreleasebg"></div>
+                                    <div class="space-10"></div>
+
                                     <p class="cor-gray51 text-size14">成为厂家</p>
                                     <p class="cor-gray51 text-size14">提供优质产品服务</p>
                                     <div class="space-10"></div>
                                     <div class="g-userhintbtn"><a href="/establish">厂家入驻</a></div>
-                                @else
+                                    <div class="space-20"></div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="col-sm-6 col-lg-4 text-center">
+                                <div class="g-userhintrelease">
+                                    <div class="space-20"></div>
+                                    <div class="g-userreleasebg"></div>
+                                    <div class="space-10"></div>
+                                    <p class="cor-gray51 text-size14">我是厂家</p>
+                                    <p class="cor-gray51 text-size14">入驻信息修改</p>
+                                    <div class="space-10"></div>
+                                    <div class="g-userhintbtn"><a href="/updatep/{id}">修改入驻信息</a></div>
+
+                                    <div class="space-20"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4 text-center">
+                                <div class="g-userhintrelease">
+                                    <div class="space-20"></div>
+                                    <div class="g-userreleasebg"></div>
+                                    <div class="space-10"></div>
                                     <p class="cor-gray51 text-size14">我是厂家</p>
                                     <p class="cor-gray51 text-size14">提供优质产品服务</p>
                                     <div class="space-10"></div>
-                                    <div class="g-userhintbtn"><a href="/createp">发布产品</a></div>
-                                @endif
-                                <div class="space-20"></div>
+                                    <div class="g-userhintbtn"><a href="/createp/{id}">发布产品</a></div>
+
+                                    <div class="space-20"></div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-sm-6 col-lg-4 text-center">
+                                <div class="g-userhintrelease">
+                                    <div class="space-20"></div>
+                                    <div class="g-userreleasebg"></div>
+                                    <div class="space-10"></div>
+                                    <p class="cor-gray51 text-size14">我是厂家</p>
+                                    <p class="cor-gray51 text-size14">转让入驻信息</p>
+                                    <div class="space-10"></div>
+                                    <div class="g-userhintbtn"><a href="/exchange/{id}">厂家转让</a></div>
+
+                                    <div class="space-20"></div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="space-10"></div>
