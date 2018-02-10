@@ -132,7 +132,6 @@ class WebController extends Controller
         $params['user_id'] = session('id');
         try {
             $return = ['code' => 0, 'data' => ['id' => CompanyModel::create($params)->id]];
-            WebUserModel::where(['id' => session('id')])->update('type', 1);
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '企业入驻失败!'];
         }

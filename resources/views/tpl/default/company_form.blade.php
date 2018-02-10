@@ -112,8 +112,7 @@
                             <dl>
                                 <dt>企业简介:</dt>
                                 <dd style="margin-left: 0px">
-                                    <textarea name="describe" style="border:1px solid #eaeaea;resize:none"
-                                              class="form-control" rows="6"></textarea>
+                                    <script type="text/plain" id="describe"></script>
                                 </dd>
                             </dl>
                         </div>
@@ -129,10 +128,16 @@
     </div>
 </section>
 <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+<script type="text/javascript" charset="utf-8" src="{{url('editor/umeditor.config.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{url('editor/umeditor.min.js')}}"></script>
+<script type="text/javascript" src="{{url('editor/lang/zh-cn/zh-cn.js')}}"></script>
 <script>
     var user_id = '{{session("id")}}',
         qiniu_access_token = '{{$qiniu_access_token}}',
         qiniu_img_domain = '{{$qiniu_img_domain}}',
-        tmp_img_data = null;
+        tmp_img_data = null,
+        um = UM.getEditor('describe'),
+        content = '{!!  isset($single_data) ? $single_data['content'] : '' !!}';
+        um.setContent(content);
 </script>
 @include('tpl.default.footer')

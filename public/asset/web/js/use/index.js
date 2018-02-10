@@ -91,7 +91,7 @@ $(function () {
         $.ajax({
             url: '/establish',
             type: 'post',
-            data: $('#companyForm').serialize(),
+            data: $('#companyForm').serialize() + '&describe=' + um.getContent(),
             success: function (data) {
                 data = JSON.parse(data);
                 if (!data || data.code !== 0) {

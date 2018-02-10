@@ -19,7 +19,10 @@
     <link media="all" type="text/css" rel="stylesheet" href="/asset/web/css/station.css">
     <link rel="stylesheet" href="/asset/web/css/index11.css">
     <link rel="stylesheet" href="/asset/web/css/shop.css">
+    <link href="{{url('editor/themes/default/css/umeditor.css')}}" type="text/css" rel="stylesheet">
     <script src="/asset/web/plugins/ace/js/ace-extra.min.js"></script>
+    <script src="/asset/web/plugins/jquery/jquery.min.js"></script>
+    <script src="/asset/web/plugins/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header>

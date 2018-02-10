@@ -46,8 +46,6 @@
         </div>
     </div>
 </footer>
-<script src="/asset/web/plugins/jquery/jquery.min.js"></script>
-<script src="/asset/web/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="/asset/web/js/nav.js"></script>
 <script src="/asset/web/js/common.js"></script>
 <script src="/asset/web/plugins/jquery/superSlide/jquery.SuperSlide.2.1.1.js"></script>

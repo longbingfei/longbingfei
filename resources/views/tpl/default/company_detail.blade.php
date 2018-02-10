@@ -49,9 +49,7 @@
                                 </div>
                                 <div class="clearfix ">
                                     <div class="col-sm-1 col-xs-2">
-                                        <div class="row">
-                                            {{$data->describe}}
-                                        </div>
+                                            {!! $data->describe !!}
                                     </div>
                                     <div class="space"></div>
                                 </div>
