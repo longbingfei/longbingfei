@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WebUserSeeder::class);
         $this->call(CitySeeder::class);
         $this->call(CompanySeeder::class);
+        $this->call(PrdSeeder::class);
         Model::reguard();
     }
 }

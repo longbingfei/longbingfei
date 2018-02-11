@@ -12,6 +12,7 @@ use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\City as CityModel;
+use App\Models\Prd as PrdModel;
 
 
 class WebController extends Controller
@@ -126,7 +127,7 @@ class WebController extends Controller
             'mark',
         ];
         $params = request()->only($filters);
-        $params['area_ids'] = $params['area_ids'] ? implode(',', $params['area_ids']) : '';
+        $params['area_ids'] = $params['area_ids'] ? implode(',', array_filter($params['area_ids'])) : '';
         $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
         $params['operate_ids'] = $params['operate_ids'] ? implode(',', $params['operate_ids']) : '';
         $params['user_id'] = session('id');
@@ -136,7 +137,6 @@ class WebController extends Controller
             $return = ['code' => -1, 'msg' => '企业入驻失败!'];
         }
         return json_encode($return);
-
     }
 
     public function companyDetail($id)
@@ -156,9 +156,68 @@ class WebController extends Controller
         return view('tpl.default.product');
     }
 
+    public function productForm()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $companys = CompanyModel::where(['user_id' => session('id')])->get()->toArray();
+        $provs = CityModel::where(['pid' => 1])->get()->toArray();
+        $data = [
+            'provs' => $provs,
+            'companys' => $companys,
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
+        return view('tpl.default.product_form', $data);
+    }
+
+    public function productCreate()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        if (!session('type')) {
+            return json_encode(['code' => -1, 'msg' => '非商家无法发布!']);
+        }
+        $filters = [
+            'name',
+            'price',
+            'storage',
+            'images',
+            'sort_ids',
+            'area_ids',
+            'describe',
+            'company_id',
+        ];
+        $params = request()->only($filters);
+        $params['area_ids'] = $params['area_ids'] ? implode(',', array_filter($params['area_ids'])) : '';
+        $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
+        $params['images'] = $params['images'] ? serialize($params['images']) : '';
+        $params['user_id'] = session('id');
+        try {
+            $return = ['code' => 0, 'data' => ['id' => PrdModel::create($params)->id]];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '产品发布失败!'];
+        }
+        return json_encode($return);
+    }
+
     public function productDetail($id)
     {
-        return view('tpl.default.product_detail');
+        $data = PrdModel::where(['id' => $id])->first();
+        $data->sort_ids = $data->sort_ids ? explode(',', $data->sort_ids) : ['未定义'];
+        $data->images = json_encode(array_map(function ($y) {
+            return ['path' => $y, 'thumb' => $y];
+        }, unserialize($data->images)));
+        $data->company = CompanyModel::find($data->company_id);
+        $data->company->sort_ids = $data->company->sort_ids ? explode(',', $data->company->sort_ids) : ['未定义'];
+        $data->company->operate_ids = $data->company->operate_ids ? explode(',', $data->company->operate_ids) : ['未定义'];
+        if ($data->area_ids) {
+            $city = CityModel::whereIn('id', explode(',', $data->area_ids))->get()->toArray();
+            $data->city = implode(' ', array_column($city, 'name'));
+        }
+        return view('tpl.default.product_detail', ['data' => $data]);
     }
 
     public function zone($id)

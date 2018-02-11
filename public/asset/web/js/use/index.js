@@ -102,6 +102,21 @@ $(function () {
         });
     });
 
+    //发布产品
+    $('.product_submit_btn').click(function () {
+        $.ajax({
+            url: '/product',
+            type: 'post',
+            data: $('#productForm').serialize() + '&describe=' + um.getContent(),
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: '产品发布失败，请稍后再试!'});
+                }
+                location.href = '/product/' + data.data.id;
+            }
+        });
+    });
 });
 
 //图片上传查询
@@ -127,7 +142,6 @@ function checkUploadStatus(symbol, callback) {
 (function ($) {
     $.extend({
         Carousel: {
-            host: null,
             init: function (obj) {
                 var max = 8;
                 var images = obj.images;
@@ -135,9 +149,6 @@ function checkUploadStatus(symbol, callback) {
                 var time = obj.time ? obj.time : 3000;
                 if (!images || !images.length || !payload) {
                     return false;
-                }
-                if (obj.host) {
-                    this.host = obj.host;
                 }
                 images = JSON.parse(images);
                 var carouselDiv = $("<div><div></div></div>").css({
@@ -170,8 +181,8 @@ function checkUploadStatus(symbol, callback) {
                     if (x < max) {
                         var item = carouselListDiv.clone().css({
                             float: 'left',
-                            backgroundImage: 'url(' + that.host + y.thumb + ')'
-                        }).data({src: that.host + y.path, id: x});
+                            backgroundImage: 'url(' + y.thumb + ')'
+                        }).data({src:y.path, id: x});
                         $(carouselDiv.children()[0]).append(item);
                     }
                 });
@@ -179,7 +190,7 @@ function checkUploadStatus(symbol, callback) {
                     width: carouselDiv.width(),
                     height: carouselDiv.height()
                 });
-                img.attr('src', this.host + images[0].path).data('id', 0);
+                img.attr('src',images[0].path).data('id', 0);
                 img.appendTo(carouselDiv);
                 payload.append(carouselDiv);
                 $(".carousel_s-list").mouseover(function () {
@@ -193,7 +204,7 @@ function checkUploadStatus(symbol, callback) {
                 var img_ = $(".carousel_s").children("img")[0];
                 var id = $(img_).data('id');
                 id = id < images.length - 1 ? id + 1 : 0;
-                $(img_).attr('src', this.host + images[id].path).data('id', id);
+                $(img_).attr('src',images[id].path).data('id', id);
             }
         }
     });

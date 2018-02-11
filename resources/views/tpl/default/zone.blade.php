@@ -90,7 +90,7 @@
                                 <div class="space-20"></div>
                             </div>
                         </div>
-                        @if(!session('type'))
+                        @if(!session('type') && session('id') !== 1)
                             <div class="col-sm-6 col-lg-4 text-center">
                                 <div class="g-userhintrelease">
                                     <div class="space-20"></div>
@@ -113,7 +113,7 @@
                                     <p class="cor-gray51 text-size14">我是厂家</p>
                                     <p class="cor-gray51 text-size14">入驻信息修改</p>
                                     <div class="space-10"></div>
-                                    <div class="g-userhintbtn"><a href="/updatep/{id}">修改入驻信息</a></div>
+                                    <div class="g-userhintbtn"><a href="/updatep">修改入驻信息</a></div>
 
                                     <div class="space-20"></div>
                                 </div>
@@ -126,7 +126,7 @@
                                     <p class="cor-gray51 text-size14">我是厂家</p>
                                     <p class="cor-gray51 text-size14">提供优质产品服务</p>
                                     <div class="space-10"></div>
-                                    <div class="g-userhintbtn"><a href="/createp/{id}">发布产品</a></div>
+                                    <div class="g-userhintbtn"><a href="/product">发布产品</a></div>
 
                                     <div class="space-20"></div>
                                 </div>
@@ -139,7 +139,7 @@
                                     <p class="cor-gray51 text-size14">我是厂家</p>
                                     <p class="cor-gray51 text-size14">转让入驻信息</p>
                                     <div class="space-10"></div>
-                                    <div class="g-userhintbtn"><a href="/exchange/{id}">厂家转让</a></div>
+                                    <div class="g-userhintbtn"><a href="/exchange">厂家转让</a></div>
 
                                     <div class="space-20"></div>
                                 </div>
