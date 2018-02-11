@@ -29,7 +29,7 @@ class WebController extends Controller
 
     public function need()
     {
-        $needs = DB::table('needs')->paginate(10);
+        $needs = DB::table('needs')->where(['status' => 1])->paginate(10);
         $data = ['data' => $needs];
         return view('tpl.default.need', $data);
     }
@@ -92,7 +92,7 @@ class WebController extends Controller
 
     public function company()
     {
-        $companys = DB::table('companys')->paginate(10);
+        $companys = DB::table('companys')->where(['status' => 1])->paginate(10);
         $data = ['data' => $companys];
         return view('tpl.default.company', $data);
     }
@@ -165,7 +165,7 @@ class WebController extends Controller
 
     public function product()
     {
-        $data = ['data' => PrdModel::paginate(10)];
+        $data = ['data' => PrdModel::where(['status' => 1])->paginate(10)];
         return view('tpl.default.product', $data);
     }
 
@@ -284,7 +284,7 @@ class WebController extends Controller
         if (!session('id') || session('id') != 1) {
             return redirect('/');
         }
-        $needs = DB::table('needs')->paginate(15);
+        $needs = DB::table('needs')->where(['status' => 1])->paginate(15);
 
         $statusShow = [
             '0' => '待审核',

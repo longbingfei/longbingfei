@@ -18,7 +18,9 @@
                             <div class="pull-left">|</div>
                             <li class="a4"><a href="/admin_prd" target="nnn">产品管理</a></li>
                             <div class="pull-left">|</div>
-                            <li class="a5"><a>网站管理</a></li>
+                            <li class="a5"><a href="/admin_news" target="nnn">资讯管理</a></li>
+                            <div class="pull-left">|</div>
+                            <li class="a5"><a href="/admin_net" target="nnn">网站管理</a></li>
                         </ul>
                     </div>
                     <div class="tab-content niconico">
