@@ -52,62 +52,25 @@
                             <a class="" href="">热度</a>
                         </div>
                     </div>
-                    <ul class="g-taskmainlist js1">
-                        <li class="clearfix z9 z10">
-                            <p><img src="asset/web/image/kabuki.jpg"></p>
-                            <p class="ecli"><a href="/product/1">柳州机器人数控机床</a></p>
-                            <p>面议</p>
-                            <p>
-                                <span>2018/02/10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>关注(20)</span>
-                            </p>
-                        </li>
-                        <li class="clearfix z9 z10">
-                            <p><img src="asset/web/image/kabuki.jpg"></p>
-                            <p class="ecli"><a href="/product/1">柳州机器人数控机床</a></p>
-                            <p>面议</p>
-                            <p>
-                                <span>2018/02/10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>关注(20)</span>
-                            </p>
-                        </li>
-                        <li class="clearfix z9 z10">
-                            <p><img src="asset/web/image/kabuki.jpg"></p>
-                            <p class="ecli"><a href="/product/1">柳州机器人数控机床</a></p>
-                            <p>面议</p>
-                            <p>
-                                <span>2018/02/10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>关注(20)</span>
-                            </p>
-                        </li>
-                        <li class="clearfix z9 z10">
-                            <p><img src="asset/web/image/kabuki.jpg"></p>
-                            <p class="ecli"><a href="/product/1">柳州机器人数控机床</a></p>
-                            <p>面议</p>
-                            <p>
-                                <span>2018/02/10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>关注(20)</span>
-                            </p>
-                        </li>
-                        <li class="clearfix z9 z10">
-                            <p><img src="asset/web/image/kabuki.jpg"></p>
-                            <p class="ecli"><a href="/product/1">柳州机器人数控机床</a></p>
-                            <p>面议</p>
-                            <p>
-                                <span>2018/02/10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>关注(20)</span>
-                            </p>
-                        </li>
-                        <li class="clearfix z9 z10">
-                            <p><img src="asset/web/image/kabuki.jpg"></p>
-                            <p class="ecli"><a href="/product/1">柳州机器人数控机床</a></p>
-                            <p>面议</p>
-                            <p>
-                                <span>2018/02/10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span>关注(20)</span>
-                            </p>
-                        </li>
-                    </ul>
+                    @if(empty($data))
+                        <div style="height:50px;padding-left: 10px;line-height: 50px;">
+                            暂无相关数据
+                        </div>
+                    @else
+                        <ul class="g-taskmainlist js1">
+                            @foreach($data as $vo)
+                                <li class="clearfix z9 z10">
+                                    <p><img src="{{$vo['cover']}}"></p>
+                                    <p class="ecli"><a href="/prd/{{$vo['id']}}">{{$vo['name']}}</a></p>
+                                    <p>{{$vo['price']}}</p>
+                                    <p>
+                                        <span>{{Date('Y/m/d',strtotime($vo['created_at']))}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>关注<b style="color:darkolivegreen">({{$vo['fork']}})</b></span>
+                                    </p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
                 <div class="space-20"></div>
             </div>

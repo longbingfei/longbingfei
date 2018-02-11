@@ -153,7 +153,14 @@ class WebController extends Controller
 
     public function product()
     {
-        return view('tpl.default.product');
+        $product = PrdModel::get()->toArray();
+        $product = array_map(function ($y) {
+            $images = $y['images'] ? unserialize($y['images']) : '';
+            $y['cover'] = $images ? $images[0] : '/asset/web/image/kabuki.jpg';
+            return $y;
+        }, $product);
+        $data = ['data' => $product];
+        return view('tpl.default.product', $data);
     }
 
     public function productForm()

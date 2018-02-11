@@ -376,6 +376,7 @@ product
     text-align: left;
     font-size: 20px;
     line-height: 50px;
+    padding-left: 9px;
 }
 
 .z10 > p:nth-child(3) {
@@ -383,7 +384,7 @@ product
     line-height: 50px;
     text-align: left;
     color: orangered;
-    padding-left: 4px;
+    padding-left: 9px;
 }
 
 .z10 > p:nth-child(4) {

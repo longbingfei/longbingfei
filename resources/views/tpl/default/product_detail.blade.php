@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-sm-12 col-left">
                     <h2>商品描述</h2>
-                    <div style=" border:1px solid grey;min-height:200px;padding:10px;">
+                    <div style=" border:1px solid grey;padding:10px;">
                         {!! $data->describe !!}
                     </div>
                 </div>
