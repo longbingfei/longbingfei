@@ -160,7 +160,7 @@
     <div class="g-taskbarnav homemenu-taskbarnav">
         <div class="container clearfix">
             <div class="row g-nav">
-                <div class="col-xs-12 clearfix col-left col-right">
+                <div class="col-xs-12 clearfix col-left col-right" style="border-bottom: 2px solid blue">
                     <div class="pull-left hidden-xs">
                         @if(isset($index) && $index)
                             <div class="g-tasknavdrop" id="nav">资讯
