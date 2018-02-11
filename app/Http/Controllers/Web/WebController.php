@@ -91,7 +91,7 @@ class WebController extends Controller
 
     public function company()
     {
-        $companys = DB::table('companys')->paginate(1);
+        $companys = DB::table('companys')->paginate(10);
         $data = ['data' => $companys];
         return view('tpl.default.company', $data);
     }
