@@ -227,6 +227,15 @@
     padding: 3px;
 }
 
+
+.has-join {
+    display: inline-block;
+    /* border: 1px solid orange; */
+    background-color: green;
+    color: #fff;
+    padding: 3px;
+}
+
 .z7 h2 {
     margin: 36px 0;
 }

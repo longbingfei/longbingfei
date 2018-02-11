@@ -13,34 +13,38 @@
                         <img src="/asset/web/image/flow_1.jpg">
                     </div>
                     <div>
-                        <h1>{{$data['title']}}
-                            <small class="join">我要报名</small>
+                        <h1>{{$data->title}}
+                            {{--@if(!in_array($data->id, session('join_need_ids')))--}}
+                            {{--<small class="join">我要报名</small>--}}
+                            {{--@else--}}
+                            <small class="has-join">已报名</small>
+                            {{--@endif--}}
                         </h1>
                     </div>
                     <table class="ztb">
                         <tr>
                             <td>公司名称:</td>
-                            <td>{{$data['company_name']}}</td>
+                            <td>{{$data->company_name}}</td>
                             <td>预算金额:</td>
-                            <td>{{$data['budget']}}</td>
+                            <td>{{$data->budget}}</td>
                             <td>周期:</td>
-                            <td>{{$data['period']}}</td>
+                            <td>{{$data->period}}</td>
                         </tr>
                         <tr>
                             <td>联系电话:</td>
-                            <td>{{$data['tel']}}</td>
+                            <td>{{$data->tel}}</td>
                             <td>QQ:</td>
-                            <td>{{$data['qq']}}</td>
+                            <td>{{$data->qq}}</td>
                             <td>微信:</td>
-                            <td>{{$data['wechat']}}</td>
+                            <td>{{$data->wechat}}</td>
                         </tr>
                         <tr>
                             <td>报名人数:</td>
                             <td></td>
                             <td>发布时间:</td>
-                            <td>{{$data['created_at']}}</td>
+                            <td>{{Date('Y-m-d',strtotime($data->created_at))}}</td>
                             <td>状态:</td>
-                            <td>{{$data['status']}}</td>
+                            <td>{{$data->status}}</td>
                         </tr>
                     </table>
                     <div class="z7">
@@ -48,8 +52,8 @@
                         <dl>
                             <dt>产品图片:</dt>
                             <dd>
-                                @if($data['images'])
-                                    @foreach( $data['images'] as $vo)
+                                @if($data->images)
+                                    @foreach($data->images as $vo)
                                         <img src="{{$vo}}">
                                     @endforeach
                                 @else
@@ -60,89 +64,53 @@
                             </dd>
                             <dt>描述:</dt>
                             <dd>
-                                {{$data['describe']}}
+                                {{$data->describe}}
                             </dd>
                             <dt>备注:</dt>
                             <dd>
-                                {{$data['mark']}}
+                                {{$data->mark}}
                             </dd>
                         </dl>
                     </div>
                     <div class="z8 z9_">
                         <h2>报名企业</h2>
-                        <ul class="g-taskmainlist">
-                            <li class="clearfix zz1">
-                                <div class="row zz zzz">
-                                    <div class="col-lg-6 col-sm-8">
-                                        <div class="logo">
-                                            <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif">
+                        @if(!collect($data->companys)->toArray()['total'])
+                            <div style="height:50px;padding-left: 10px;line-height: 50px;">
+                                暂无相关数据
+                            </div>
+                        @else
+                            <ul class="g-taskmainlist">
+                                @foreach($data->companys as $vo)
+                                    <li class="clearfix zz1">
+                                        <div class="row zz zzz">
+                                            <div class="col-lg-6 col-sm-8">
+                                                <div class="logo">
+                                                    <img src="{{$vo->logo?:'/asset/web/image/kabuki.jpg'}}">
+                                                </div>
+                                                <div class="name">{{$vo->company_name}}</div>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-8">
+                                                <div class="info">
+                                                    <span>电话: {{$vo->tel}}</span>
+                                                    <span>Q Q: {{$vo->qq}}</span>
+                                                    <span class="ecli">地址: {{$vo->address}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-4">
+                                                <div class="z5 kk">
+                                                    <a href="/company/{{$vo->id}}">公司详情</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="name">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊ddddddddddddddd</div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-8">
-                                        <div class="info">
-                                            <span>电话: 15111515151</span>
-                                            <span>Q Q: 58988955</span>
-                                            <span class="ecli">地址: 水水水水水水水水水水水水水水水水水水水</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4">
-                                        <div class="z5 kk">
-                                            <a href="/company/1">公司详情</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="clearfix zz1">
-                                <div class="row zz zzz">
-                                    <div class="col-lg-6 col-sm-8">
-                                        <div class="logo">
-                                            <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif">
-                                        </div>
-                                        <div class="name">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊ddddddddddddddd</div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-8">
-                                        <div class="info">
-                                            <span>电话: 15111515151</span>
-                                            <span>Q Q: 58988955</span>
-                                            <span class="ecli">地址: 水水水水水水水水水水水水水水水水水水水</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4">
-                                        <div class="z5 kk">
-                                            <a href="/company/1">公司详情</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="clearfix zz1">
-                                <div class="row zz zzz">
-                                    <div class="col-lg-6 col-sm-8">
-                                        <div class="logo">
-                                            <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif">
-                                        </div>
-                                        <div class="name">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊ddddddddddddddd</div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-8">
-                                        <div class="info">
-                                            <span>电话: 15111515151</span>
-                                            <span>Q Q: 58988955</span>
-                                            <span class="ecli">地址: 水水水水水水水水水水水水水水水水水水水</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4">
-                                        <div class="z5 kk">
-                                            <a href="/company/1">公司详情</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            {!! $data->companys->render() !!}
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 @include('tpl.default.footer')

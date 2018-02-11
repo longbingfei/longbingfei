@@ -53,7 +53,7 @@
                             <a class="" href="">入驻时间</a>
                         </div>
                     </div>
-                    @if(empty($data))
+                    @if(!collect($data)->toArray()['total'])
                         <div style="height:50px;padding-left: 10px;line-height: 50px;">
                             暂无相关数据
                         </div>
@@ -72,6 +72,7 @@
                                 </li>
                             @endforeach
                         </ul>
+                        {!! $data->render() !!}
                     @endif
                 </div>
                 <div class="space-20"></div>

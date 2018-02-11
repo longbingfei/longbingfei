@@ -13,6 +13,7 @@ use App\Models\QiniuUpload as QiniuUploadModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\City as CityModel;
 use App\Models\Prd as PrdModel;
+use App\Models\NeedCompany as NCModel;
 
 
 class WebController extends Controller
@@ -27,7 +28,7 @@ class WebController extends Controller
 
     public function need()
     {
-        $needs = DB::table('needs')->get();
+        $needs = DB::table('needs')->paginate(10);
         $data = ['data' => $needs];
         return view('tpl.default.need', $data);
     }
@@ -36,7 +37,11 @@ class WebController extends Controller
     {
         $data = DB::table('needs')->where(['id' => $id])->first();
         $data->images = unserialize($data->images);
-        return view('tpl.default.need_detail', ['data' => collect($data)->toArray()]);
+        $data->companys = NCModel::where(['need_company.need_id' => $id])
+            ->leftJoin('companys', 'need_company.company_id', '=', 'companys.id')
+            ->groupBy('companys.id')
+            ->select(['companys.*'])->paginate(10);
+        return view('tpl.default.need_detail', ['data' => $data]);
     }
 
     public function needForm()
@@ -86,7 +91,7 @@ class WebController extends Controller
 
     public function company()
     {
-        $companys = DB::table('companys')->get();
+        $companys = DB::table('companys')->paginate(1);
         $data = ['data' => $companys];
         return view('tpl.default.company', $data);
     }
@@ -159,13 +164,7 @@ class WebController extends Controller
 
     public function product()
     {
-        $product = PrdModel::get()->toArray();
-        $product = array_map(function ($y) {
-            $images = $y['images'] ? unserialize($y['images']) : '';
-            $y['cover'] = $images ? $images[0] : '/asset/web/image/kabuki.jpg';
-            return $y;
-        }, $product);
-        $data = ['data' => $product];
+        $data = ['data' => PrdModel::paginate(10)];
         return view('tpl.default.product', $data);
     }
 

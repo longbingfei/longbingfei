@@ -52,7 +52,7 @@
                             <a class="" href="">热度</a>
                         </div>
                     </div>
-                    @if(empty($data))
+                    @if(!collect($data)->toArray()['total'])
                         <div style="height:50px;padding-left: 10px;line-height: 50px;">
                             暂无相关数据
                         </div>
@@ -60,16 +60,17 @@
                         <ul class="g-taskmainlist js1">
                             @foreach($data as $vo)
                                 <li class="clearfix z9 z10">
-                                    <p><img src="{{$vo['cover']}}"></p>
-                                    <p class="ecli"><a href="/prd/{{$vo['id']}}">{{$vo['name']}}</a></p>
-                                    <p>{{$vo['price']}}</p>
+                                    <p><img src="{{$vo->images ? unserialize($vo->images)[0] : '/asset/web/image/kabuki.jpg'}}"></p>
+                                    <p class="ecli"><a href="/prd/{{$vo->id}}">{{$vo->name}}</a></p>
+                                    <p>{{$vo->price}}</p>
                                     <p>
-                                        <span>{{Date('Y/m/d',strtotime($vo['created_at']))}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>关注<b style="color:darkolivegreen">({{$vo['fork']}})</b></span>
+                                        <span>{{Date('Y/m/d',strtotime($vo->created_at))}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>关注<b style="color:darkolivegreen">({{$vo->fork}})</b></span>
                                     </p>
                                 </li>
                             @endforeach
                         </ul>
+                        {!! $data->render() !!}
                     @endif
                 </div>
                 <div class="space-20"></div>
