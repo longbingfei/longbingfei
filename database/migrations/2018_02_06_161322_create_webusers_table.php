@@ -17,7 +17,7 @@ class CreateWebusersTable extends Migration
             $table->string('username', 12)->unique();
             $table->string('name', 6)->nullable();
             $table->string('password', 64);
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(0);
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('sex')->default(3);
             $table->bigInteger('tel')->nullable();

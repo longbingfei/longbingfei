@@ -23,7 +23,7 @@ class WebUserSeeder extends Seeder
             'type' => 2,
             'email' => 'test@163.com',
             'tel' => 12345678910,
-            'status' => 3,
+            'status' => 1,
             'last_login_time' => \Carbon\Carbon::now(),
             'last_login_ip' => '192.168.1.1',
             'creator_id' => '99999'
@@ -36,7 +36,7 @@ class WebUserSeeder extends Seeder
             'type' => 1,
             'email' => 'kotana@163.com',
             'tel' => 12345678910,
-            'status' => 2,
+            'status' => 1,
             'last_login_time' => \Carbon\Carbon::now(),
             'last_login_ip' => '10.0.5.224',
             'creator_id' => '1'
@@ -48,7 +48,7 @@ class WebUserSeeder extends Seeder
             'sex' => 2,
             'email' => 'yuri@163.com',
             'tel' => 12345678910,
-            'status' => 1,
+            'status' => 0,
             'last_login_time' => \Carbon\Carbon::now(),
             'last_login_ip' => '10.0.5.224',
             'creator_id' => '1'

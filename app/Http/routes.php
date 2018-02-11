@@ -32,6 +32,22 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/login', 'WebController@login');
     Route::get('/logout', 'WebController@logout');
     Route::get('/zone/{id}', 'WebController@zone');
+    Route::get('/admin_zone', 'WebController@adminZone');
+
+    Route::get('/admin_user', 'WebController@adminUser');
+    Route::post('/admin_change_user_status', 'WebController@adminCUS');
+
+    Route::get('/admin_need', 'WebController@adminNeed');
+    Route::post('/admin_change_need_status', 'WebController@adminCNS');
+    Route::get('/admin_change_need_delete/{id}', 'WebController@adminDN');
+
+    Route::get('/admin_company', 'WebController@adminCompany');
+    Route::post('/admin_change_company_status', 'WebController@adminCCS');
+    Route::get('/admin_change_company_delete/{id}', 'WebController@adminDC');
+
+    Route::get('/admin_prd', 'WebController@adminPrd');
+    Route::post('/admin_change_prd_status', 'WebController@adminCPS');
+    Route::get('/admin_change_prd_delete/{id}', 'WebController@adminDP');
 
     //七牛上传回调
     Route::post('/qiniu_callback', 'WebController@qiniuCallback');

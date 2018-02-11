@@ -104,6 +104,9 @@
                                 @else
                                     <li><a class="topborbtm" href="/login">个人中心</a></li>
                                 @endif
+                                @if(session('id')===1)
+                                    <li><a class="topborbtm" href="/admin_zone">管理中心</a></li>
+                                @endif
                                 <li class="pd-navppd">
                                     <form class="navbar-form navbar-left hd-seachW switchSearch" action="" role="search"
                                           method="get">
@@ -210,6 +213,9 @@
                                 <a href="/zone/{{ session('id') }}">个人中心</a>
                             @else
                                 <a href="/login">个人中心</a>
+                            @endif
+                            @if(session('id')===1)
+                                <a class="topborbtm" href="/admin_zone">管理中心</a>
                             @endif
                         </div>
                     </div>

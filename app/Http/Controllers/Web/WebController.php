@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Company as CompanyModel;
+use App\Models\WebUser;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -239,6 +240,152 @@ class WebController extends Controller
         }
         return view('tpl.default.zone');
     }
+
+    public function adminZone()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        return view('tpl.default.admin_zone');
+    }
+
+    //管理用户
+    public function adminUser()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $users = WebUser::paginate(15);
+        $statusShow = [
+            '0' => '冻结',
+            '1' => '正常',
+        ];
+        $typeShow = [
+            '0' => '普通用户',
+            '1' => '厂家',
+            '2' => '管理员',
+        ];
+        return view('tpl.default.admin_user', ['data' => $users, 'statusShow' => $statusShow, 'typeShow' => $typeShow]);
+    }
+
+    //更改用户状态
+    public function adminCUS()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $params = request()->all();
+        return json_encode(['code' => WebUser::where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
+    }
+
+    //管理需求
+    public function adminNeed()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $needs = DB::table('needs')->paginate(15);
+
+        $statusShow = [
+            '0' => '待审核',
+            '1' => '已审核',
+            '3' => '未通过',
+        ];
+
+        return view('tpl.default.admin_need', ['data' => $needs, 'statusShow' => $statusShow]);
+    }
+
+    //更改需求状态
+    public function adminCNS()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $params = request()->all();
+        return json_encode(['code' => DB::table('needs')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
+    }
+
+    //删除需求
+    public function adminDN($id)
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        return json_encode(['code' => DB::table('needs')->where(['id' => $id])->delete() ? 0 : '-1']);
+    }
+
+    //管理厂家
+    public function adminCompany()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $needs = DB::table('companys')->paginate(15);
+
+        $statusShow = [
+            '0' => '待审核',
+            '1' => '已审核',
+            '3' => '未通过',
+        ];
+
+        return view('tpl.default.admin_company', ['data' => $needs, 'statusShow' => $statusShow]);
+    }
+
+    //更改厂家状态
+    public function adminCCS()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $params = request()->all();
+        return json_encode(['code' => DB::table('companys')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
+    }
+
+    //删除厂家
+    public function adminDC($id)
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        return json_encode(['code' => DB::table('companys')->where(['id' => $id])->delete() ? 0 : '-1']);
+    }
+
+    //管理产品
+    public function adminPrd()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $needs = DB::table('prds')->paginate(15);
+
+        $statusShow = [
+            '0' => '待审核',
+            '1' => '已审核',
+            '3' => '未通过',
+        ];
+
+        return view('tpl.default.admin_product', ['data' => $needs, 'statusShow' => $statusShow]);
+    }
+
+    //更改产品状态
+    public function adminCPS()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        $params = request()->all();
+        return json_encode(['code' => DB::table('prds')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
+    }
+
+    //删除产品
+    public function adminDP($id)
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+        return json_encode(['code' => DB::table('prds')->where(['id' => $id])->delete() ? 0 : '-1']);
+    }
+
 
     public function login(Request $request)
     {

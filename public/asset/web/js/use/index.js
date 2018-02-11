@@ -182,7 +182,7 @@ function checkUploadStatus(symbol, callback) {
                         var item = carouselListDiv.clone().css({
                             float: 'left',
                             backgroundImage: 'url(' + y.thumb + ')'
-                        }).data({src:y.path, id: x});
+                        }).data({src: y.path, id: x});
                         $(carouselDiv.children()[0]).append(item);
                     }
                 });
@@ -190,7 +190,7 @@ function checkUploadStatus(symbol, callback) {
                     width: carouselDiv.width(),
                     height: carouselDiv.height()
                 });
-                img.attr('src',images[0].path).data('id', 0);
+                img.attr('src', images[0].path).data('id', 0);
                 img.appendTo(carouselDiv);
                 payload.append(carouselDiv);
                 $(".carousel_s-list").mouseover(function () {
@@ -204,7 +204,7 @@ function checkUploadStatus(symbol, callback) {
                 var img_ = $(".carousel_s").children("img")[0];
                 var id = $(img_).data('id');
                 id = id < images.length - 1 ? id + 1 : 0;
-                $(img_).attr('src',images[id].path).data('id', id);
+                $(img_).attr('src', images[id].path).data('id', id);
             }
         }
     });
@@ -283,5 +283,171 @@ $('.cityselector').change(function () {
             });
         }
     });
+});
+
+//admin
+$('.admin_change_user_status').click(function () {
+    var status = $(this).data('status'),
+        id = $(this).data('id'),
+        title = status > 0 ? '冻结' : '恢复';
+    return $.Confirm({
+        message: '确认' + title + '此用户吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_user_status',
+                type: 'post',
+                data: {'status': status > 0 ? 0 : 1, id: id},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '用户' + title + '失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+//need
+$('.admin_change_need_status').click(function () {
+    var status = $(this).data('status'),
+        id = $(this).data('id'),
+        title = (status == 0 || status == 3) ? '审核' : '打回';
+    return $.Confirm({
+        message: '确认' + title + '此需求吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_need_status',
+                type: 'post',
+                data: {'status': status == 1 ? 3 : 1, id: id},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '需求' + title + '失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+
+//need delete
+$('.admin_need_delete').click(function () {
+    var id=$(this).data('id');
+    return $.Confirm({
+        message: '确认删除此需求吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_need_delete/' + id,
+                type: 'get',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '需求删除失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+//company
+$('.admin_change_company_status').click(function () {
+    var status = $(this).data('status'),
+        id = $(this).data('id'),
+        title = (status == 0 || status == 3) ? '审核' : '打回';
+    return $.Confirm({
+        message: '确认' + title + '此厂家吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_company_status',
+                type: 'post',
+                data: {'status': status == 1 ? 3 : 1, id: id},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '厂家' + title + '失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+
+//company delete
+$('.admin_company_delete').click(function () {
+    var id=$(this).data('id');
+    return $.Confirm({
+        message: '确认删除此厂家吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_company_delete/' + id,
+                type: 'get',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '厂家删除失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+//product
+$('.admin_change_prd_status').click(function () {
+    var status = $(this).data('status'),
+        id = $(this).data('id'),
+        title = (status == 0 || status == 3) ? '审核' : '打回';
+    return $.Confirm({
+        message: '确认' + title + '此产品吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_prd_status',
+                type: 'post',
+                data: {'status': status == 1 ? 3 : 1, id: id},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '产品' + title + '失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+
+//company delete
+$('.admin_prd_delete').click(function () {
+    var id=$(this).data('id');
+    return $.Confirm({
+        message: '确认删除此产品吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_prd_delete/' + id,
+                type: 'get',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '产品删除失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
 });
 
