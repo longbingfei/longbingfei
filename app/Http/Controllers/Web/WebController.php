@@ -207,9 +207,9 @@ class WebController extends Controller
     {
         $data = PrdModel::where(['id' => $id])->first();
         $data->sort_ids = $data->sort_ids ? explode(',', $data->sort_ids) : ['未定义'];
-        $data->images = json_encode(array_map(function ($y) {
+        $data->images = $data->images ? json_encode(array_map(function ($y) {
             return ['path' => $y, 'thumb' => $y];
-        }, unserialize($data->images)));
+        }, unserialize($data->images))) : '';
         $data->company = CompanyModel::find($data->company_id);
         $data->company->sort_ids = $data->company->sort_ids ? explode(',', $data->company->sort_ids) : ['未定义'];
         $data->company->operate_ids = $data->company->operate_ids ? explode(',', $data->company->operate_ids) : ['未定义'];

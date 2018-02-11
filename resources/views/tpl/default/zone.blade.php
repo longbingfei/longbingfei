@@ -126,7 +126,7 @@
                                     <p class="cor-gray51 text-size14">我是厂家</p>
                                     <p class="cor-gray51 text-size14">提供优质产品服务</p>
                                     <div class="space-10"></div>
-                                    <div class="g-userhintbtn"><a href="/product">发布产品</a></div>
+                                    <div class="g-userhintbtn"><a href="/prd">发布产品</a></div>
 
                                     <div class="space-20"></div>
                                 </div>

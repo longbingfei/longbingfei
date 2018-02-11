@@ -84,7 +84,7 @@
 <script>
     //p详情轮播
     $.Carousel.init({
-        images: '{!! $data->images ?: '[{"path":"/asset/web/need_default1.jpg","thumb":"/asset/web/need_default1.jpg"}]' !!}',
+        images: '{!! $data->images ?: '[{"path":"/asset/web/image/need_default1.jpg","thumb":"/asset/web/image/need_default1.jpg"},{"path":"/asset/web/image/need_default2.jpg","thumb":"/asset/web/image/need_default2.jpg"}]' !!}',
         payload: $('.img-roll')
     });
 </script>

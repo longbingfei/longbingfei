@@ -105,7 +105,7 @@ $(function () {
     //发布产品
     $('.product_submit_btn').click(function () {
         $.ajax({
-            url: '/product',
+            url: '/prd',
             type: 'post',
             data: $('#productForm').serialize() + '&describe=' + um.getContent(),
             success: function (data) {
@@ -113,7 +113,7 @@ $(function () {
                 if (!data || data.code !== 0) {
                     return $.Confirm({message: '产品发布失败，请稍后再试!'});
                 }
-                location.href = '/product/' + data.data.id;
+                location.href = '/prd/' + data.data.id;
             }
         });
     });

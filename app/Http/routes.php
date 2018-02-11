@@ -17,9 +17,9 @@ Route::group(['namespace' => 'Web'], function () {
 
     //产品
     Route::get('/p', 'WebController@product');
-    Route::get('/product', 'WebController@productForm');
-    Route::post('/product', 'WebController@productCreate');
-    Route::get('/product/{id}', 'WebController@productDetail');
+    Route::get('/prd', 'WebController@productForm');
+    Route::post('/prd', 'WebController@productCreate');
+    Route::get('/prd/{id}', 'WebController@productDetail');
 
     //用户操作
     Route::get('/register', function () {
