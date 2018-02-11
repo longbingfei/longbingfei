@@ -62,11 +62,12 @@
                             @foreach($data as $vo)
                                 <li class="clearfix z9">
                                     <p>
-                                        <img src="{{$vo->logo}}">
+                                        <img src="{{$vo->logo ? $vo->logo : '/asset/web/image/kabuki.jpg'}}">
                                     </p>
                                     <p class="ecli"><a href="/company/{{$vo->id}}">{{$vo->company_name}}</a></p>
                                     <p>{{$vo->operate_ids}}</p>
-                                    <p style="text-align: center"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                    <p style="text-align: center"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                class="fa fa-star"></i><i
                                                 class="fa fa-star"></i></p>
                                 </li>
                             @endforeach
