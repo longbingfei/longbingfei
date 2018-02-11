@@ -63,17 +63,25 @@
                             <h4 class="pull-left text-size20">产品</h4>
                         </div>
                         <div class="shop-mainlistwrap">
-                            <ul class="row shop-mainlist">
-                                <li class="col-md-3 col-sm-4 col-xs-6">
-                                    <div class="shop-mainimg shop-mainimg234">
-                                        <a href="/product/1"> <img src="/asset/web/image/jp_head_bg.jpg"></a>
-                                    </div>
-                                    <div class="shop-maininfo">
-                                        <h5 class="text-size14 cor-gray51 p-space"><a href="/product/1">PHP小站</a></h5>
-                                        <div class="space-6"></div>
-                                    </div>
-                                </li>
-                            </ul>
+                            @if(empty($data))
+                                <div style="height:50px;padding-left: 10px;line-height: 50px;">
+                                    暂无相关数据
+                                </div>
+                            @else
+                                <ul class="row shop-mainlist">
+                                    @foreach($data->product as $vo)
+                                        <li class="col-md-3 col-sm-4 col-xs-6" style="margin-top: 10px;">
+                                            <div class="shop-mainimg shop-mainimg234">
+                                                <a href="/prd/{{$vo['id']}}"> <img src="{{$vo['cover']}}"></a>
+                                            </div>
+                                            <div class="shop-maininfo">
+                                                <h5 class="text-size14 cor-gray51 p-space"><a href="/prd/{{$vo['id']}}">{{$vo['name']}}</a></h5>
+                                                <div class="space-6"></div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
                     </div>
                 </div>

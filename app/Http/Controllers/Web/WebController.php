@@ -148,6 +148,12 @@ class WebController extends Controller
             $city = CityModel::whereIn('id', explode(',', $data->area_ids))->get()->toArray();
             $data->city = implode(' ', array_column($city, 'name'));
         }
+        $product = PrdModel::where(['company_id' => $id])->get()->toArray();
+        $data->product = array_map(function ($y) {
+            $images = $y['images'] ? unserialize($y['images']) : '';
+            $y['cover'] = $images ? $images[0] : '/asset/web/image/kabuki.jpg';
+            return $y;
+        }, $product);
         return view('tpl.default.company_detail', ['data' => $data]);
     }
 

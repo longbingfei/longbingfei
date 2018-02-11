@@ -19,7 +19,9 @@
                                 @endif
                                 <div class="personal-info-block">
                                     <div class="personal-info-block-name">
-                                        <h3 class="text-size20 cor-gray51">{{$data->company->company_name}}</h3>
+                                        <h3 class="text-size20 cor-gray51"><a
+                                                    href="/company/{{$data->company->id}}">{{$data->company->company_name}}</a>
+                                        </h3>
                                     </div>
                                     <p class="hidden-xs cor-gray51">
                                         地&nbsp;&nbsp;&nbsp;址：&nbsp;{{$data->company->address}}</p>

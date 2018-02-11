@@ -125,7 +125,7 @@
 
 .shop-service .shop-mainlist,
 .shop-wares .shop-mainlist {
-    height: 317px;
+    /*height: 317px;*/
     overflow: hidden
 }
 
