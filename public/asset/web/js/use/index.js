@@ -3,6 +3,9 @@ $(function () {
     $('.js1 > .z9').css('width', function () {
         return ($(this).parent().width() - 25) / 4 + 'px';
     });
+    $('body').on('click', '.dd_img_delete', function () {
+        $(this).parent().remove();
+    });
 
     //图片上传七牛云
     $('#qiniu').click(function () {
@@ -541,6 +544,73 @@ $('.admin_news_delete').click(function () {
                 }
             })
             ;
+        }
+    })
+});
+
+//net
+//图片上传七牛云
+$('#qiniu1').click(function () {
+    clearInterval(taskMark);
+    if ($('.p_img_dd1').find('.dd_wrap_div').length >= 5) {
+        return $.Confirm({message: '轮播图为5张！'});
+    }
+    $('body').find('.qiniuform').remove();
+    var _symbol = (new Date).getTime() + '_' + user_id;
+    $('body').append($('<form class="qiniuform" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data" target="nm_iframe">' +
+        '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
+        ' <input name="x:symbol" type="hidden" value="' + _symbol + '">' +
+        '  <input name="file" type="file"/>' +
+        '</form>')).on('change', '.qiniuform > input[name=file]', function () {
+        $('.qiniuform').submit();
+        checkUploadStatus(_symbol, function () {
+            tmp_img_data && $('.p_img_dd1').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="index_images[]" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+            tmp_img_data = null;
+        });
+    })
+    $('.qiniuform > input[name=file]').off().click();
+});
+
+//图片上传七牛云
+$('#qiniu2').click(function () {
+    clearInterval(taskMark);
+    if ($('.p_img_dd2').find('.dd_wrap_div').length >= 1) {
+        return $.Confirm({message: '登录注册图片为1张！'});
+    }
+    $('body').find('.qiniuform').remove();
+    var _symbol = (new Date).getTime() + '_' + user_id;
+    $('body').append($('<form class="qiniuform" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data" target="nm_iframe">' +
+        '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
+        ' <input name="x:symbol" type="hidden" value="' + _symbol + '">' +
+        '  <input name="file" type="file"/>' +
+        '</form>')).on('change', '.qiniuform > input[name=file]', function () {
+        $('.qiniuform').submit();
+        checkUploadStatus(_symbol, function () {
+            tmp_img_data && $('.p_img_dd2').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="login_image" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+            tmp_img_data = null;
+        });
+    })
+    $('.qiniuform > input[name=file]').off().click();
+});
+
+$('.btn_net_update').click(function () {
+    if ($('.p_img_dd1').find('.dd_wrap_div').length !== 5) {
+        return $.Confirm({message: '轮播图为5张！'});
+    }
+    if ($('.p_img_dd2').find('.dd_wrap_div').length !== 1) {
+        return $.Confirm({message: '登录注册图片为1张！'});
+    }
+    $.ajax({
+        url: '/admin_net/',
+        type: 'post',
+        data: $('#net_update_form').serialize(),
+        success: function (data) {
+            console.log(data);
+            data = JSON.parse(data);
+            if (!data || data.code !== 0) {
+                return $.Confirm({message: '网站图片更新失败，请稍后再试!'});
+            }
+            location.reload();
         }
     })
 });

@@ -25,8 +25,7 @@
     <div class="content-wrap">
         <div class="content-wrap-all">
             <div class="fl col-lg-7 col-md-7">
-                <img src=" http://demo.kppw.cn/attachment/sys/735cb089a4daa7fd411cb86e559c891e.png"
-                     class="img-responsive">
+                <img src="{{$image}}" class="img-responsive">
             </div>
             <div class="fr col-lg-5 col-md-5 col-sm-12 col-xs-12">
                 <div class="loginmain">
@@ -55,7 +54,6 @@
             </div>
             <div style="clear:both;"></div>
         </div>
-
     </div>
 </div>
 </body>

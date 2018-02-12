@@ -28,6 +28,7 @@ class WebController extends Controller
 
     public function index()
     {
+        $c_images = unserialize(DB::table('net')->first()->index_images);
         $news = NewsModel::where(['is_promote' => 1])->limit(4)->orderBy('id', 'desc')->get()->toArray();
         $news = array_map(function ($y) {
             $res = preg_match('<img.*?src=[\'\"](.*?)[\'\"]>', $y['content'], $m);
@@ -37,6 +38,7 @@ class WebController extends Controller
         $data = [
             'index' => true,
             'news' => $news,
+            'c_images' => $c_images,
         ];
         return view('tpl.default.index', $data);
     }
@@ -527,5 +529,34 @@ class WebController extends Controller
     public function getCity($pid)
     {
         return CityModel::where(['pid' => $pid])->get()->all();
+    }
+
+    public function adminNet()
+    {
+        $this->checkAdmin();
+        $net = DB::table('net')->first();
+        $data = [
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN'),
+            'c_images' => unserialize($net->index_images),
+            'login_image' => ($net->login_image)
+        ];
+        return view('tpl.default.admin_net', $data);
+    }
+
+    public function adminNetUpdate()
+    {
+        $params = request()->only(['index_images', 'login_image']);
+        if (!is_array($params['index_images']) || count($params['index_images']) !== 5 || !$params['login_image']) {
+            return json_encode(['code' => -1, 'msg' => '数据不合法!']);
+        }
+        $params['index_images'] = serialize($params['index_images']);
+        try {
+            DB::table('net')->where(['id' => 1])->update($params);
+            $return = ['code' => 0];
+        } catch (\Exception $e) {
+            $return = ['code' => '-1'];
+        }
+        return $return;
     }
 }

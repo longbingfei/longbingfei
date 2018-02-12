@@ -17,47 +17,27 @@
             <div class="item active item-banner1">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive itm-banner"
+                        <img src="{{$c_images[0]}}" alt="..." class="img-responsive itm-banner"
                              data-adaptive-background='1'>
                     </div>
                 </a>
             </div>
-            <div class="item item-banner2">
-                <a href="javascript:;">
-                    <div>
-                        <img src="/asset/web/images/banner2.jpg" alt="..." class="img-responsive itm-banner"
-                             data-adaptive-background='2'>
+            @foreach($c_images as $k => $v)
+                @if($k > 0)
+                    <div class="item item-banner1">
+                        <a href="javascript:;">
+                            <div>
+                                <img src="{{$v}}" alt="..." class="img-responsive itm-banner"
+                                     data-adaptive-background='{{$k+1}}'>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            <div class="item item-banner3">
+                @endif
+            @endforeach
+            <div class="item item-banner1">
                 <a href="javascript:;">
                     <div>
-                        <img src="/asset/web/images/banner3.jpg" alt="..." class="img-responsive itm-banner"
-                             data-adaptive-background='3'>
-                    </div>
-                </a>
-            </div>
-            <div class="item item-banner4">
-                <a href="javascript:;">
-                    <div>
-                        <img src="/asset/web/images/banner4.jpg" alt="..." class="img-responsive itm-banner"
-                             data-adaptive-background='4'>
-                    </div>
-                </a>
-            </div>
-            <div class="item item-banner5">
-                <a href="javascript:;">
-                    <div>
-                        <img src="/asset/web/images/banner5.jpg" alt="..." class="img-responsive itm-banner"
-                             data-adaptive-background='5'>
-                    </div>
-                </a>
-            </div>
-            <div class="item item-banner6">
-                <a href="javascript:;">
-                    <div>
-                        <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive itm-banner"
+                        <img src="{{$c_images[0]}}" alt="..." class="img-responsive itm-banner"
                              data-adaptive-background='6'>
                     </div>
                 </a>
@@ -183,7 +163,8 @@
                                         </tr>
                                     </table>
                                     <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
                                         <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
                                         <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
                                     </div>
@@ -200,7 +181,8 @@
                                         </tr>
                                     </table>
                                     <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
                                         <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
                                         <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
                                     </div>
@@ -217,7 +199,8 @@
                                         </tr>
                                     </table>
                                     <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
                                         <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
                                         <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
                                     </div>
@@ -250,7 +233,8 @@
                                         </tr>
                                     </table>
                                     <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
                                         <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
                                         <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
                                     </div>
@@ -267,7 +251,8 @@
                                         </tr>
                                     </table>
                                     <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
                                         <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
                                         <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
                                     </div>
@@ -284,7 +269,8 @@
                                         </tr>
                                     </table>
                                     <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span class="info">洛阳市</span></span>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
                                         <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
                                         <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
                                     </div>
@@ -309,7 +295,8 @@
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                                 <div class="z2">
                                     <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
+                                             alt="logo">
                                     </div>
                                     <div>
                                         <table>
@@ -317,7 +304,8 @@
                                                 <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -326,7 +314,8 @@
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                                 <div class="z2">
                                     <div>
-                                        <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif" alt="logo">
+                                        <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif"
+                                             alt="logo">
                                     </div>
                                     <div>
                                         <table>
@@ -334,7 +323,8 @@
                                                 <td colspan="2" title="暴漫">暴漫</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -343,7 +333,8 @@
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                                 <div class="z2">
                                     <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
+                                             alt="logo">
                                     </div>
                                     <div>
                                         <table>
@@ -351,7 +342,8 @@
                                                 <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -376,7 +368,8 @@
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                                 <div class="z2">
                                     <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
+                                             alt="logo">
                                     </div>
                                     <div>
                                         <table>
@@ -384,7 +377,8 @@
                                                 <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -393,7 +387,8 @@
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                                 <div class="z2">
                                     <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
+                                             alt="logo">
                                     </div>
                                     <div>
                                         <table>
@@ -401,7 +396,8 @@
                                                 <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -410,7 +406,8 @@
                             <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                                 <div class="z2">
                                     <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58" alt="logo">
+                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
+                                             alt="logo">
                                     </div>
                                     <div>
                                         <table>
@@ -418,7 +415,8 @@
                                                 <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
                                             </tr>
                                         </table>
                                     </div>

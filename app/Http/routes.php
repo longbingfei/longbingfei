@@ -23,11 +23,13 @@ Route::group(['namespace' => 'Web'], function () {
 
     //用户操作
     Route::get('/register', function () {
-        return view('tpl.default.register');
+        $image = \Illuminate\Support\Facades\DB::table('net')->first()->login_image;
+        return view('tpl.default.register', ['image' => $image]);
     });
     Route::post('/register', 'WebController@register');
     Route::get('/login', function () {
-        return view('tpl.default.login');
+        $image = \Illuminate\Support\Facades\DB::table('net')->first()->login_image;
+        return view('tpl.default.login', ['image' => $image]);
     });
     Route::post('/login', 'WebController@login');
     Route::get('/logout', 'WebController@logout');
@@ -59,6 +61,9 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/admin_news/{id}', 'WebController@adminNewsUpdate');
     Route::post('/admin_change_news_status', 'WebController@adminCNES');
     Route::get('/admin_news_delete/{id}', 'WebController@adminDNES');
+
+    Route::get('/admin_net', 'WebController@adminNet');
+    Route::post('/admin_net', 'WebController@adminNetUpdate');
 
     //七牛上传回调
     Route::post('/qiniu_callback', 'WebController@qiniuCallback');
