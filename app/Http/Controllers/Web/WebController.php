@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Company as CompanyModel;
-use App\Models\WebUser;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -15,16 +14,36 @@ use Illuminate\Support\Facades\DB;
 use App\Models\City as CityModel;
 use App\Models\Prd as PrdModel;
 use App\Models\NeedCompany as NCModel;
+use App\Models\News as NewsModel;
 
 
 class WebController extends Controller
 {
     public function index()
     {
+        $news = NewsModel::where(['is_promote' => 1])->limit(4)->orderBy('id', 'desc')->get()->toArray();
+//        $news = array_map(function($y){
+//
+//        },$news);
         $data = [
-            'index' => true
+            'index' => true,
+            'news' => $news,
         ];
         return view('tpl.default.index', $data);
+    }
+
+    public function news()
+    {
+        $news = NewsModel::where(['is_promote' => 1])->orderBy('id', 'desc')->paginate(15)->get()->toArray();
+        $data = [
+            'news' => $news,
+        ];
+        return view('tpl.default.news', $data);
+    }
+
+    public function newsDetail($id)
+    {
+        return view('tpl.default.newsDetail', ['news' => NewsModel::find($id)]);
     }
 
     public function need()
@@ -255,7 +274,7 @@ class WebController extends Controller
         if (!session('id') || session('id') != 1) {
             return redirect('/');
         }
-        $users = WebUser::paginate(15);
+        $users = WebUserModel::paginate(15);
         $statusShow = [
             '0' => '冻结',
             '1' => '正常',
@@ -275,7 +294,7 @@ class WebController extends Controller
             return redirect('/');
         }
         $params = request()->all();
-        return json_encode(['code' => WebUser::where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
+        return json_encode(['code' => WebUserModel::where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
     }
 
     //管理需求
@@ -384,6 +403,20 @@ class WebController extends Controller
             return redirect('/');
         }
         return json_encode(['code' => DB::table('prds')->where(['id' => $id])->delete() ? 0 : '-1']);
+    }
+
+    public function adminNewsCreate()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+    }
+
+    public function adminNewsUpdate($id)
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
     }
 
 

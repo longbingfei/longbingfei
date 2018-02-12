@@ -165,42 +165,18 @@
                         @if(isset($index) && $index)
                             <div class="g-tasknavdrop" id="nav">资讯
                                 <ul class="sub nav-dex text-left">
-                                    <li>
-                                        <div class="u-navitem">
-                                            <h4><a href="" class="text-size14 cor-white">资讯1</a></h4>
-                                        </div>
-                                        <div class="g-subshow">
-                                            <div>资讯1</div>
-                                            <p>123</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="u-navitem">
-                                            <h4><a href="" class="text-size14 cor-white">资讯2</a></h4>
-                                        </div>
-                                        <div class="g-subshow">
-                                            <div>资讯2</div>
-                                            <p>123</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="u-navitem">
-                                            <h4><a href="" class="text-size14 cor-white">资讯3</a></h4>
-                                        </div>
-                                        <div class="g-subshow">
-                                            <div>资讯3</div>
-                                            <p>123</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="u-navitem">
-                                            <h4><a href="" class="text-size14 cor-white">资讯4</a></h4>
-                                        </div>
-                                        <div class="g-subshow">
-                                            <div>资讯4</div>
-                                            <p>123</p>
-                                        </div>
-                                    </li>
+                                    @foreach($news as $vo)
+                                        <li>
+                                            <div class="u-navitem">
+                                                <h4><a href="/news/{{$vo['id']}}"
+                                                       class="text-size14 cor-white">{{$vo['title']}}</a></h4>
+                                            </div>
+                                            <div class="g-subshow">
+                                                <div><a href="/news/{{$vo['id']}}"><img width="300px" src="/asset/web/image/news_default.jpg"></a></div>
+                                                <p><a href="/news/{{$vo['id']}}">{{mb_substr($vo['content'],0,200)}}</a></p>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         @endif
