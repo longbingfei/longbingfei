@@ -12,7 +12,7 @@
                         @if($news)
                             <h1 style="text-align: center">{{$news->title}}</h1>
                             <h6 style="text-align: right;padding-right:10px;">{{$news->created_at}}</h6>
-                            <div style="padding:10px;margin-top: 20px;">{{$news->content}}</div>
+                            <div style="padding:10px;margin-top: 20px;">{!! $news->content !!}</div>
                         @else
                             <h2 style="padding:10px;text-align: center">资讯不存在!</h2>
                         @endif

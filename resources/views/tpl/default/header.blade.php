@@ -165,18 +165,38 @@
                         @if(isset($index) && $index)
                             <div class="g-tasknavdrop" id="nav">资讯
                                 <ul class="sub nav-dex text-left">
-                                    @foreach($news as $vo)
+                                    @if($news)
+                                        @foreach($news as $vo)
+                                            <li style="overflow: hidden">
+                                                <div class="u-navitem">
+                                                    <h4><a href="/news/{{$vo['id']}}"
+                                                           class="text-size14 cor-white">{{$vo['title']}}</a></h4>
+                                                </div>
+                                                <div class="g-subshow" style="overflow: hidden">
+                                                    <div><a href="/news/{{$vo['id']}}">
+                                                            <img width="300px" src="/asset/web/image/news_default.jpg"></a>
+                                                    </div>
+                                                    <p style="overflow: hidden">
+                                                        <a href="/news/{{$vo['id']}}">{!! $vo['content'] !!}</a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    @else
                                         <li>
                                             <div class="u-navitem">
-                                                <h4><a href="/news/{{$vo['id']}}"
-                                                       class="text-size14 cor-white">{{$vo['title']}}</a></h4>
+                                                <h6>暂无资讯</h6>
                                             </div>
                                             <div class="g-subshow">
-                                                <div><a href="/news/{{$vo['id']}}"><img width="300px" src="/asset/web/image/news_default.jpg"></a></div>
-                                                <p><a href="/news/{{$vo['id']}}">{{mb_substr($vo['content'],0,200)}}</a></p>
+                                                <div>
+                                                    <img width="300px" src="/asset/web/image/news_default.jpg">
+                                                </div>
+                                                <p>
+                                                    暂无资讯
+                                                </p>
                                             </div>
                                         </li>
-                                    @endforeach
+                                    @endif
                                 </ul>
                             </div>
                         @endif

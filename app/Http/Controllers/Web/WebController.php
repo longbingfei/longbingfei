@@ -19,6 +19,13 @@ use App\Models\News as NewsModel;
 
 class WebController extends Controller
 {
+    private function checkAdmin()
+    {
+        if (!session('id') || session('id') != 1) {
+            return redirect('/');
+        }
+    }
+
     public function index()
     {
         $news = NewsModel::where(['is_promote' => 1])->limit(4)->orderBy('id', 'desc')->get()->toArray();
@@ -43,7 +50,8 @@ class WebController extends Controller
 
     public function newsDetail($id)
     {
-        return view('tpl.default.newsDetail', ['news' => NewsModel::find($id)]);
+
+        return request()->get('is_ajax') ? NewsModel::find($id) : view('tpl.default.newsDetail', ['news' => NewsModel::find($id)]);
     }
 
     public function need()
@@ -262,18 +270,14 @@ class WebController extends Controller
 
     public function adminZone()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         return view('tpl.default.admin_zone');
     }
 
     //管理用户
     public function adminUser()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $users = WebUserModel::paginate(15);
         $statusShow = [
             '0' => '冻结',
@@ -290,9 +294,7 @@ class WebController extends Controller
     //更改用户状态
     public function adminCUS()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $params = request()->all();
         return json_encode(['code' => WebUserModel::where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
     }
@@ -300,9 +302,7 @@ class WebController extends Controller
     //管理需求
     public function adminNeed()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $needs = DB::table('needs')->where(['status' => 1])->paginate(15);
 
         $statusShow = [
@@ -317,9 +317,7 @@ class WebController extends Controller
     //更改需求状态
     public function adminCNS()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $params = request()->all();
         return json_encode(['code' => DB::table('needs')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
     }
@@ -327,18 +325,14 @@ class WebController extends Controller
     //删除需求
     public function adminDN($id)
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         return json_encode(['code' => DB::table('needs')->where(['id' => $id])->delete() ? 0 : '-1']);
     }
 
     //管理厂家
     public function adminCompany()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $needs = DB::table('companys')->paginate(15);
 
         $statusShow = [
@@ -353,9 +347,7 @@ class WebController extends Controller
     //更改厂家状态
     public function adminCCS()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $params = request()->all();
         return json_encode(['code' => DB::table('companys')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
     }
@@ -363,18 +355,14 @@ class WebController extends Controller
     //删除厂家
     public function adminDC($id)
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         return json_encode(['code' => DB::table('companys')->where(['id' => $id])->delete() ? 0 : '-1']);
     }
 
     //管理产品
     public function adminPrd()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $needs = DB::table('prds')->paginate(15);
 
         $statusShow = [
@@ -389,9 +377,7 @@ class WebController extends Controller
     //更改产品状态
     public function adminCPS()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         $params = request()->all();
         return json_encode(['code' => DB::table('prds')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
     }
@@ -399,24 +385,42 @@ class WebController extends Controller
     //删除产品
     public function adminDP($id)
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
         return json_encode(['code' => DB::table('prds')->where(['id' => $id])->delete() ? 0 : '-1']);
+    }
+
+    public function adminNews()
+    {
+        $this->checkAdmin();
+        return view('tpl.default.admin_news', ['data' => NewsModel::paginate(10)]);
     }
 
     public function adminNewsCreate()
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
+        $params = request()->only(['title', 'content']);
+        $params['user_id'] = session('id');
+        return json_encode(['code' => NewsModel::create($params) ? 0 : '-1']);
     }
 
     public function adminNewsUpdate($id)
     {
-        if (!session('id') || session('id') != 1) {
-            return redirect('/');
-        }
+        $this->checkAdmin();
+        $info = request()->only(['title', 'content']);
+        return json_encode(['code' => NewsModel::where(['id' => $id])->update($info) ? 0 : '-1']);
+    }
+
+    public function adminCNES()
+    {
+        $this->checkAdmin();
+        $params = request()->all();
+        return json_encode(['code' => DB::table('news')->where(['id' => $params['id']])->update(['is_promote' => $params['status']]) ? 0 : '-1']);
+    }
+
+    public function adminDNES($id)
+    {
+        $this->checkAdmin();
+        return json_encode(['code' => DB::table('news')->where(['id' => $id])->delete() ? 0 : '-1']);
     }
 
 

@@ -54,6 +54,12 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/news', 'WebController@adminNewsCreate');
     Route::post('/news/{id}', 'WebController@adminNewsUpdate');
 
+    Route::get('/admin_news', 'WebController@adminNews');
+    Route::post('/admin_news', 'WebController@adminNewsCreate');
+    Route::post('/admin_news/{id}', 'WebController@adminNewsUpdate');
+    Route::post('/admin_change_news_status', 'WebController@adminCNES');
+    Route::get('/admin_news_delete/{id}', 'WebController@adminDNES');
+
     //七牛上传回调
     Route::post('/qiniu_callback', 'WebController@qiniuCallback');
     Route::get('/task', 'WebController@task');

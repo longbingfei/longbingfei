@@ -338,7 +338,7 @@ $('.admin_change_need_status').click(function () {
 
 //need delete
 $('.admin_need_delete').click(function () {
-    var id=$(this).data('id');
+    var id = $(this).data('id');
     return $.Confirm({
         message: '确认删除此需求吗?', callback: function () {
             $.ajax({
@@ -385,7 +385,7 @@ $('.admin_change_company_status').click(function () {
 
 //company delete
 $('.admin_company_delete').click(function () {
-    var id=$(this).data('id');
+    var id = $(this).data('id');
     return $.Confirm({
         message: '确认删除此厂家吗?', callback: function () {
             $.ajax({
@@ -432,7 +432,7 @@ $('.admin_change_prd_status').click(function () {
 
 //company delete
 $('.admin_prd_delete').click(function () {
-    var id=$(this).data('id');
+    var id = $(this).data('id');
     return $.Confirm({
         message: '确认删除此产品吗?', callback: function () {
             $.ajax({
@@ -442,6 +442,100 @@ $('.admin_prd_delete').click(function () {
                     data = JSON.parse(data);
                     if (!data || data.code !== 0) {
                         return $.Confirm({message: '产品删除失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+//news
+$('.admin_change_news_status').click(function () {
+    var status = $(this).data('status'),
+        id = $(this).data('id'),
+        title = status == 1 ? '撤销' : '发布';
+    return $.Confirm({
+        message: '确认' + title + '此资讯吗?', callback: function () {
+            $.ajax({
+                url: '/admin_change_news_status',
+                type: 'post',
+                data: {'status': status == 1 ? 0 : 1, id: id},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '资讯' + title + '失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+            ;
+        }
+    })
+});
+
+//news_add
+$('.news_add_submit').click(function () {
+    var title = $('.title1').val(),
+        content = um1.getContent();
+    $.ajax({
+        url: '/admin_news',
+        type: 'post',
+        data: {title: title, content: content},
+        success: function (data) {
+            data = JSON.parse(data);
+            console.log(data);
+            if (!data || data.code !== 0) {
+                return $.Confirm({message: '资讯新增失败，请稍后再试!'});
+            }
+            location.reload();
+        }
+    })
+});
+
+
+//news_edit
+$('.admin_news_edit').click(function () {
+    var id = $(this).data('id');
+    $.getJSON('/news/' + id + '?is_ajax=1', function (data) {
+        $('.title2').val(data.title);
+        um2.setContent(data.content);
+        $('#update_news').modal('show')
+        $('.news_update_submit').click(function () {
+            var title = $('.title2').val(),
+                content = um2.getContent();
+            $.ajax({
+                url: '/admin_news/' + id,
+                type: 'post',
+                data: {title: title, content: content},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '资讯更新失败，请稍后再试!'});
+                    }
+                    location.reload();
+                }
+            })
+        });
+    });
+});
+
+
+//company delete
+$('.admin_news_delete').click(function () {
+    var id = $(this).data('id');
+    return $.Confirm({
+        message: '确认删除此资讯吗?', callback: function () {
+            $.ajax({
+                url: '/admin_news_delete/' + id,
+                type: 'get',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: '资讯删除失败，请稍后再试!'});
                     }
                     location.reload();
                 }
