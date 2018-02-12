@@ -605,12 +605,15 @@ $('.btn_net_update').click(function () {
         type: 'post',
         data: $('#net_update_form').serialize(),
         success: function (data) {
-            console.log(data);
             data = JSON.parse(data);
             if (!data || data.code !== 0) {
                 return $.Confirm({message: '网站图片更新失败，请稍后再试!'});
             }
-            location.reload();
+            return $.Confirm({
+                message: '网站图片修改成功!', callback: function () {
+                    location.reload();
+                }
+            });
         }
     })
 });

@@ -557,6 +557,6 @@ class WebController extends Controller
         } catch (\Exception $e) {
             $return = ['code' => '-1'];
         }
-        return $return;
+        return json_encode($return);
     }
 }
