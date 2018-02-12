@@ -17,7 +17,7 @@
             <div class="item active item-banner1">
                 <a href="javascript:;">
                     <div>
-                        <img src="{{$c_images[0]}}" alt="..." class="img-responsive itm-banner"
+                        <img src="{{$c_images[0]}}" style="height:460px !important;" class="img-responsive itm-banner"
                              data-adaptive-background='1'>
                     </div>
                 </a>
@@ -27,7 +27,7 @@
                     <div class="item item-banner1">
                         <a href="javascript:;">
                             <div>
-                                <img src="{{$v}}" alt="..." class="img-responsive itm-banner"
+                                <img src="{{$v}}" style="height:460px !important;" class="img-responsive itm-banner"
                                      data-adaptive-background='{{$k+1}}'>
                             </div>
                         </a>
@@ -37,7 +37,7 @@
             <div class="item item-banner1">
                 <a href="javascript:;">
                     <div>
-                        <img src="{{$c_images[0]}}" alt="..." class="img-responsive itm-banner"
+                        <img src="{{$c_images[0]}}" style="height:460px !important;" class="img-responsive itm-banner"
                              data-adaptive-background='6'>
                     </div>
                 </a>
@@ -67,36 +67,21 @@
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
                             <a href="javascript:;" class="u-item1">
-                                <img src="/asset/web/images/banner1.jpg" alt="..." class="img-responsive">
+                                <img src="{{$c_images[0]}}" style="height:260px !important;" class="img-responsive">
                             </a>
                         </div>
+                        @foreach($c_images as $k => $v)
+                            @if($k > 0)
+                                <div class="item">
+                                    <a href="javascript:;">
+                                        <img src="{{$v}}" style="height:260px !important;" class="img-responsive">
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
                         <div class="item">
                             <a href="javascript:;">
-                                <img src="/asset/web/images/banner2.jpg" height="460" width="100%" alt="..."
-                                     class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="javascript:;">
-                                <img src="/asset/web/images/banner3.jpg" height="460" width="100%" alt="..."
-                                     class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="javascript:;" class="u-item1">
-                                <img src="/asset/web/images/banner4.jpg" alt="..." class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="javascript:;">
-                                <img src="/asset/web/images/banner5.jpg" height="460" width="100%" alt="..."
-                                     class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="javascript:;">
-                                <img src="/asset/web/images/banner1.jpg" height="460" width="100%" alt="..."
-                                     class="img-responsive">
+                                <img src="{{$c_images[0]}}" style="height:260px !important;" class="img-responsive">
                             </a>
                         </div>
                     </div>
