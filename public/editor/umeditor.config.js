@@ -146,7 +146,7 @@
             'undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor  |',
             'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
             '| justifyleft justifycenter justifyright justifyjustify |',
-            'link unlink | emotion | map',
+            'link unlink | emotion image | map',
             '| horizontal preview'
         ]
         //,toolbar:[
