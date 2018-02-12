@@ -29,9 +29,11 @@ class WebController extends Controller
     public function index()
     {
         $news = NewsModel::where(['is_promote' => 1])->limit(4)->orderBy('id', 'desc')->get()->toArray();
-//        $news = array_map(function($y){
-//
-//        },$news);
+        $news = array_map(function ($y) {
+            $res = preg_match('<img.*?src=[\'\"](.*?)[\'\"]>', $y['content'], $m);
+            $y['cover'] = $res ? $m[1] : '/asset/web/image/news_default.jpg';
+            return $y;
+        }, $news);
         $data = [
             'index' => true,
             'news' => $news,

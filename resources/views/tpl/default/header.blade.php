@@ -174,7 +174,7 @@
                                                 </div>
                                                 <div class="g-subshow" style="overflow: hidden">
                                                     <div><a href="/news/{{$vo['id']}}">
-                                                            <img width="300px" src="/asset/web/image/news_default.jpg"></a>
+                                                            <img width="300px" src="{{$vo['cover']}}"></a>
                                                     </div>
                                                     <p style="overflow: hidden">
                                                         <a href="/news/{{$vo['id']}}">{!! $vo['content'] !!}</a>
