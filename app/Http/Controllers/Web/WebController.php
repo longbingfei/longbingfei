@@ -467,15 +467,18 @@ class WebController extends Controller
         $info = $request->only(['username', 'password']);
         $userInfo = WebUserModel::where('username', trim($info['username']));
         if (!$userInfo->count()) {
-            return ['error_code' => '用户不存在'];
+            return ['error_msg' => '用户不存在'];
+        }
+        if (!$userInfo->status) {
+            return ['error_msg' => '用户冻结中'];
         }
         $password = $userInfo->first()->password;
         if (!password_verify(trim($info['password']), $password)) {
-            return ['error_code' => '密码错误'];
+            return ['error_msg' => '密码错误'];
         }
         Auth::login($userInfo->first());
         if (!Auth::check()) {
-            return ['error_code' => '登录失败'];
+            return ['error_msg' => '登录失败'];
         }
         $currentUser = WebUserModel::where('id', Auth::id());
         $timenow = Carbon::now();
