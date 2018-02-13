@@ -18,6 +18,13 @@ class CreateNeedsTable extends Migration
             $tables->tinyInteger('area_id')->default(1);
             $tables->tinyInteger('period'); //周期
             $tables->tinyInteger('status')->default(0);
+            //$statusShow = [
+//            '0' => '待审核',
+//            '1' => '招标中',
+//            '2' => '线下对接中',
+//            '3' => '已完成',
+//            '-1' => '审核未通过',
+//        ];
             $tables->tinyInteger('fork')->default(0); //报名
             $tables->tinyInteger('hot')->default(0); //热度
             $tables->string('title', 50);

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Exception;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
 use Illuminate\Support\Facades\DB;
@@ -60,7 +61,11 @@ class WebController extends Controller
 
     public function need()
     {
-        $needs = DB::table('needs')->where(['status' => 1])->paginate(10);
+        $needs = DB::table('needs')->where('needs.status', '>', 0)
+            ->leftjoin('need_company', 'need_company.need_id', '=', 'needs.id')
+            ->groupBy('needs.id')
+            ->select(['needs.*', DB::raw('count(need_company.need_id) as baomingshu')])
+            ->paginate(10);
         $data = ['data' => $needs];
         return view('tpl.default.need', $data);
     }
@@ -73,6 +78,13 @@ class WebController extends Controller
             ->leftJoin('companys', 'need_company.company_id', '=', 'companys.id')
             ->groupBy('companys.id')
             ->select(['companys.*'])->paginate(10);
+        $data->companys_user = array_map(function ($y) {
+            return $y['user_id'];
+        }, $data->companys->toArray()['data']);
+        if (session('id') && session('type')) {
+            $self_company = CompanyModel::where('user_id', session('id'))->first();
+        }
+        $data->self_company = isset($self_company) ? $self_company->id : 0;
         return view('tpl.default.need_detail', ['data' => $data]);
     }
 
@@ -117,6 +129,26 @@ class WebController extends Controller
             $return = ['code' => 0, 'data' => ['id' => DB::table('needs')->insertGetId(array_filter($data))]];
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '需求创建失败!'];
+        }
+        return json_encode($return);
+    }
+
+    public function needBaoming()
+    {
+        $params = request()->only(['uid', 'cid', 'nid']);
+        if (!Auth::check() || session('id') != $params['uid']) {
+            $return = ['code' => -1, 'msg' => '当前用户认证失败!'];
+        } else {
+            try {
+                if (NCModel::where(['company_id' => $params['cid'], 'need_id' => $params['nid']])->count()) {
+                    $return = ['code' => -1, 'msg' => '请勿重复报名!'];
+                } else {
+                    NCModel::create(['company_id' => $params['cid'], 'need_id' => $params['nid']]);
+                    $return = ['code' => 0];
+                }
+            } catch (\Exception $e) {
+                $return = ['code' => -1, 'msg' => '报名失败!'];
+            }
         }
         return json_encode($return);
     }
@@ -307,12 +339,14 @@ class WebController extends Controller
     public function adminNeed()
     {
         $this->checkAdmin();
-        $needs = DB::table('needs')->where(['status' => 1])->paginate(15);
+        $needs = DB::table('needs')->paginate(15);
 
         $statusShow = [
             '0' => '待审核',
-            '1' => '已审核',
-            '3' => '未通过',
+            '1' => '招标中',
+            '2' => '线下对接中',
+            '3' => '已完成',
+            '-1' => '审核未通过',
         ];
 
         return view('tpl.default.admin_need', ['data' => $needs, 'statusShow' => $statusShow]);

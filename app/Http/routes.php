@@ -6,6 +6,7 @@ Route::group(['namespace' => 'Web'], function () {
     //需求
     Route::get('/need', 'WebController@need');
     Route::get('/need/{id}', 'WebController@needDetail');
+    Route::post('/need_baoming', 'WebController@needBaoming');
     Route::get('/create_need', 'WebController@needForm');
     Route::post('/create_need', 'WebController@createNeed');
 

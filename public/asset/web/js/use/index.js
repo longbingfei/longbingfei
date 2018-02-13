@@ -317,13 +317,13 @@ $('.admin_change_user_status').click(function () {
 $('.admin_change_need_status').click(function () {
     var status = $(this).data('status'),
         id = $(this).data('id'),
-        title = (status == 0 || status == 3) ? '审核' : '打回';
+        title = (status <= 0) ? '审核' : '打回';
     return $.Confirm({
         message: '确认' + title + '此需求吗?', callback: function () {
             $.ajax({
                 url: '/admin_change_need_status',
                 type: 'post',
-                data: {'status': status == 1 ? 3 : 1, id: id},
+                data: {'status': status <= 0 ? 1 : -1, id: id},
                 success: function (data) {
                     data = JSON.parse(data);
                     console.log(data);
@@ -616,5 +616,47 @@ $('.btn_net_update').click(function () {
             });
         }
     })
+});
+
+$('.join').click(function () {
+    if (!is_login) {
+        location.href = '/login';
+        return false;
+    }
+    if (!is_company) {
+        return $.Confirm({
+            message: '个人无法报名，请先入驻!', callback: function () {
+                location.reload();
+            }
+        });
+    }
+    if (status != 1 || !self_company) {
+        return $.Confirm({
+            message: '当前无法入驻!', callback: function () {
+                location.reload();
+            }
+        });
+    }
+    return $.Confirm({
+        message: '确认报名吗?', callback: function () {
+            $.ajax({
+                url: '/need_baoming',
+                type: 'post',
+                data: {cid: self_company, uid: is_login, nid: nid},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg});
+                    } else {
+                        $.Confirm({
+                            message: '报名成功!', callback: function () {
+                                location.reload();
+                            }
+                        });
+                    }
+                }
+            })
+        }
+    });
 });
 

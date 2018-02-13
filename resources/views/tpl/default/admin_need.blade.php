@@ -52,7 +52,7 @@
             <td>{{$vo->user_id}}</td>
             <td>{{$vo->created_at}}</td>
             <td>
-                @if(!$vo->status || $vo->status == 3)
+                @if($vo->status <=0)
                     <button class="btn btn-xs btn-danger admin_need_approve admin_change_need_status"
                             data-status="{{$vo->status}}"
                             data-id="{{$vo->id}}">审核

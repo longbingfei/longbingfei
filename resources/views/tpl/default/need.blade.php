@@ -93,7 +93,7 @@
                                                     <span>预算金额</span>
                                                 </p>
                                                 <p>
-                                                    <span>{{$vo->fork}}</span>
+                                                    <span>{{$vo->baomingshu}}</span>
                                                     <span>报名人数</span>
                                                 </p>
                                             </div>

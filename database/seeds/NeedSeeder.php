@@ -38,7 +38,6 @@ class NeedSeeder extends Seeder
         NeedCompany::create([
             'company_id' => '1',
             'need_id' => '1',
-            'status' => '1',
         ]);
     }
 }

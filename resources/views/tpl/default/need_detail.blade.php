@@ -10,15 +10,23 @@
                 <div class="row ee">
                     <div class="status_img">
                         <h2>需求状态</h2>
-                        <img src="/asset/web/image/flow_1.jpg">
+                        @if($data->status === 1)
+                            <img src="/asset/web/image/flow_1.jpg">
+                        @elseif($data->status === 2)
+                            <img src="/asset/web/image/flow_2.jpg">
+                        @elseif($data->status === 3)
+                            <img src="/asset/web/image/flow_3.jpg">
+                        @endif
                     </div>
                     <div>
                         <h1>{{$data->title}}
-                            {{--@if(!in_array($data->id, session('join_need_ids')))--}}
-                            {{--<small class="join">我要报名</small>--}}
-                            {{--@else--}}
-                            <small class="has-join">已报名</small>
-                            {{--@endif--}}
+                            @if($data->status === 1)
+                                @if(!session('id') || !in_array(session('id'),$data->companys_user))
+                                    <small class="join">我要报名</small>
+                                @else
+                                    <small class="has-join">已报名</small>
+                                @endif
+                            @endif
                         </h1>
                     </div>
                     <table class="ztb">
@@ -32,19 +40,19 @@
                         </tr>
                         <tr>
                             <td>联系电话:</td>
-                            <td>{{$data->tel}}</td>
+                            <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->tel}}</td>
                             <td>QQ:</td>
-                            <td>{{$data->qq}}</td>
+                            <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->qq}}</td>
                             <td>微信:</td>
-                            <td>{{$data->wechat}}</td>
+                            <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->wechat}}</td>
                         </tr>
                         <tr>
                             <td>报名人数:</td>
-                            <td></td>
+                            <td>{{count(array_unique($data->companys_user))}}</td>
                             <td>发布时间:</td>
                             <td>{{Date('Y-m-d',strtotime($data->created_at))}}</td>
                             <td>状态:</td>
-                            <td>{{$data->status}}</td>
+                            <td>{{$data->status == 1 ?'报名中':($data->status == 2 ? '线下对接中':'已完成')}}</td>
                         </tr>
                     </table>
                     <div class="z7">
@@ -113,4 +121,11 @@
         </div>
     </div>
 </section>
+<script>
+    var is_login = '{{session('id')}}' | 0,
+        is_company = '{{session('type')}}' | 0,
+        self_company = '{{$data->self_company}}' | 0,
+        status = '{{$data->status}}' | 0,
+        nid = '{{$data->id}}' | 0;
+</script>
 @include('tpl.default.footer')
