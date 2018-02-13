@@ -100,6 +100,24 @@ class WebController extends Controller
         return view('tpl.default.need_form', $data);
     }
 
+    public function needUpdateForm($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $data = DB::table('needs')->where(['id' => $id])->first();
+        if (!$data || !in_array(session('id'), [1, $data->user_id])) {
+            return ['error_msg' => '不合法的修改请求！'];
+        }
+        $data->images = $data->images ? unserialize($data->images) : [];
+        $data = [
+            'detail' => $data,
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
+        return view('tpl.default.need_update_form', $data);
+    }
+
     public function createNeed()
     {
         if (!Auth::check()) {
@@ -132,6 +150,43 @@ class WebController extends Controller
         }
         return json_encode($return);
     }
+
+    public function needUpdate($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $need = DB::table('needs')->where(['id' => $id])->first();
+        if (!$need || !in_array(session('id'), [1, $need->user_id])) {
+            return ['error_msg' => '不合法的修改请求！'];
+        }
+        $filters = [
+            'sort_id',
+            'area_id',
+            'period',
+            'fork',
+            'hot',
+            'title',
+            'company_name',
+            'budget',
+            'tel',
+            'qq',
+            'wechat',
+            'images',
+            'describe',
+            'mark',
+        ];
+        $data = request()->only($filters);
+        $data['images'] = $data['images'] ? serialize($data['images']) : '';
+        $data['updated_at'] = Date('Y-m-d H:i:s');
+        try {
+            $return = ['code' => 0, 'data' => ['id' =>  DB::table('needs')->where(['id' => $id])->update($data)]];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '需求更新失败!'];
+        }
+        return json_encode($return);
+    }
+
 
     public function needBaoming()
     {
@@ -301,7 +356,20 @@ class WebController extends Controller
         if (!session('id') || session('id') != $id) {
             return redirect('/');
         }
-        return view('tpl.default.zone');
+        $needs = DB::table('needs')
+            ->leftjoin('need_company', 'need_company.need_id', '=', 'needs.id')
+            ->groupBy('needs.id')
+            ->select(['needs.*', DB::raw('count(need_company.need_id) as baomingshu')])
+            ->paginate(10);
+        $neesStatusShow = [
+            '0' => '待审核',
+            '1' => '招标中',
+            '2' => '线下对接中',
+            '3' => '已完成',
+            '-1' => '审核未通过',
+        ];
+        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow];
+        return view('tpl.default.zone', $data);
     }
 
     public function adminZone()

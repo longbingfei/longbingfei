@@ -132,11 +132,35 @@
                             <li><a>我发布的产品</a></li>
                         </ul>
                     </div>
-                    <div class="tab-content">
-                        <ul id="p_a_1"
-                            class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无需求哦！快去<a>发布</a>吧</li>
-                        </ul>
+                    <div class="tab-content" style="height:273px">
+                        @if(!collect($need)->toArray()['total'])
+                            <ul id="p_a_1"
+                                class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
+                                <li class="g-usernoinfo g-usernoinfo-noinfo">暂无需求哦！快去<a href="/create_need">发布</a>吧</li>
+                            </ul>
+                        @else
+                            <table class="table">
+                                <tr>
+                                    <th>序号</th>
+                                    <th>需求名称</th>
+                                    <th>状态</th>
+                                    <th>报名人数</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                @foreach($need as $key=>$vo)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$vo->title}}</td>
+                                        <td>{{$neesStatusShow[$vo->status]}}</td>
+                                        <td>{{$vo->baomingshu}}</td>
+                                        <td>{{$vo->created_at}}</td>
+                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a href="/update_need/{{$vo->id}}" target="_blank">修改</a> | 删除</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                            {!! $need->render() !!}
+                        @endif
                         <ul id="p_a_2" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">
                             <li class="g-usernoinfo g-usernoinfo-noinfo">暂无需求哦！快去<a>接收</a>吧</li>
                         </ul>

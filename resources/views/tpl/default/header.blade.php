@@ -126,12 +126,12 @@
                                                     class="form-control-feedback fa fa-search s-navfonticon hidden-sm hidden-xs"></button>
                                             <input type="text" name="keywords"
                                                    class="input-boxshaw form-control-feedback-btn form-control bor-radius2 hidden-sm hidden-xs">
-                                            <a href="/task/create" type="submit"
+                                            <a href="/create_need" type="submit"
                                                class="btn btn-default f-click cor-blue bor-radius2 hidden-lg hidden-md">发布需求</a>
                                         </div>
                                         <span class="hidden-md hidden-xs hidden-sm">
                                             <span class="u-tit">或</span>&nbsp;&nbsp;
-                                            <a href="/task/create" type="submit"
+                                            <a href="/create_need" type="submit"
                                                class="btn btn-default f-click cor-blue bor-radius2">发布需求</a>
                                         </span>
                                     </form>
@@ -216,7 +216,7 @@
                         </div>
                     </div>
                     <div class="pull-right g-tasknavbtn hidden-sm hidden-xs">
-                        <a href="/task/create" class="u-ahref">发布需求</a>
+                        <a href="/create_need" class="u-ahref">发布需求</a>
                     </div>
                     @if(isset($index) && $index)
                         <div class="banner-r hidden-sm hidden-xs hidden-md" style="top:319px">

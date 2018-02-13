@@ -42,7 +42,34 @@ $(function () {
                 if (!data || data.code !== 0) {
                     return $.Confirm({message: '需求创建失败，请稍后再试!'});
                 }
-                location.href = '/need/' + data.data.id;
+                return $.Confirm({
+                    message: '需求创建成功!', callback: function () {
+                        location.href = '/need/' + data.data.id;
+                    }
+                });
+            }
+        });
+    });
+
+    //修改需求
+    $('.need_change_submit_btn').click(function () {
+        if (!nid) {
+            return $.Confirm({message: '修改请求不合法!'});
+        }
+        $.ajax({
+            url: '/update_need/' + nid,
+            type: 'post',
+            data: $('#needChangeForm').serialize(),
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: '需求修改失败，请稍后再试!'});
+                }
+                return $.Confirm({
+                    message: '需求修改成功!', callback: function () {
+                        location.href = '/need/' + nid;
+                    }
+                });
             }
         });
     });

@@ -8,6 +8,8 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/need/{id}', 'WebController@needDetail');
     Route::post('/need_baoming', 'WebController@needBaoming');
     Route::get('/create_need', 'WebController@needForm');
+    Route::get('/update_need/{id}', 'WebController@needUpdateForm');
+    Route::post('/update_need/{id}', 'WebController@needUpdate');
     Route::post('/create_need', 'WebController@createNeed');
 
     //企业
