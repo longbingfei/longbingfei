@@ -4,27 +4,27 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12 g-address col-left">
                     <div>
-                        <a target="_blank" href="/article/aboutUs/29">关于我们</a>
+                        <a target="_blank" href="">关于我们</a>
                         <span></span>
-                        <a target="_blank" href="/article/aboutUs/30">服务条款</a>
+                        <a target="_blank" href="">服务条款</a>
                         <span></span>
-                        <a target="_blank" href="/article/aboutUs/31">帮助中心</a>
+                        <a target="_blank" href="">帮助中心</a>
                         <span></span>
-                        <a target="_blank" href="/article/aboutUs/39">空间规则</a>
+                        <a target="_blank" href="">空间规则</a>
                         <span></span>
                     </div>
                     <div class="space-6"></div>
-                    <p class="cor-gray87">地址：武汉市洪山区珞瑜路786号9层</p>
+                    <p class="cor-gray87">地址：</p>
                     <p class="cor-gray87 kppw-tit">
-                        Powered by <a href="http://www.kppw.cn" target="_blank">KPPW</a>3.0
-                        copyright 2015-2025 kppw.cn 版权所有
+                        Powered by <a href="" target="_blank">Sign</a>
+                        copyright 2015-2025 kotana.cn 版权所有
                     </p>
                 </div>
                 <div class="col-lg-3 g-contact visible-lg-block hidden-sm hidden-md hidden-xs">
                     <div class="cor-gray71 text-size14 g-contacthd"><span>联系方式</span></div>
                     <div class="space-6"></div>
-                    <p class="cor-gray97">服务热线：027-87733922</p>
-                    <p class="cor-gray97">Email：vip@kppw.com</p>
+                    <p class="cor-gray97">服务热线：</p>
+                    <p class="cor-gray97">Email：</p>
                 </div>
                 <div class="col-lg-3 focusus visible-lg-block hidden-sm hidden-md hidden-xs col-left">
                     <div class="cor-gray71 text-size14 focusushd"><span>微信号</span></div>
