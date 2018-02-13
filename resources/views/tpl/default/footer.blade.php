@@ -35,8 +35,7 @@
                             <div class="foc-ewm">
                                 <div class="foc-ewm-arrow1"></div>
                                 <div class="foc-ewm-arrow2"></div>
-                                <img src="http://localhost:8000/attachment/sys/9d964f8f9e9cec692e02e9d532ed2068.png"
-                                     alt="" width="100" height="100">
+                                <img src="" alt="" width="100" height="100">
                             </div>
                         </div>
 

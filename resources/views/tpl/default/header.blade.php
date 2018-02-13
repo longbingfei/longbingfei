@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/asset/web/css/blue/style.css">
     <link media="all" type="text/css" rel="stylesheet" href="/asset/web/css/index.css">
     <link media="all" type="text/css" rel="stylesheet" href="/asset/web/css/taskbar/taskindex.css">
-    <link media="all" type="text/css" rel="stylesheet" href="/asset/web/css/station.css">
     <link rel="stylesheet" href="/asset/web/css/index11.css">
     <link rel="stylesheet" href="/asset/web/css/shop.css">
     <link href="{{url('editor/themes/default/css/umeditor.css')}}" type="text/css" rel="stylesheet">

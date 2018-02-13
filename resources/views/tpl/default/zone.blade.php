@@ -122,17 +122,17 @@
                     </div>
                 </div>
                 <div class="space-10"></div>
-                <div class="g-userhint g-userlist tabbable">
+                <div class="g-userhint g-userlist tabbable kiki_wrap">
                     <div class="clearfix g-userlisthead">
-                        <ul class="pull-left text-size16 nav nav-tabs">
-                            <li class="active"><a>我发布的需求</a></li>
+                        <ul class="pull-left text-size16 nav nav-tabs kiki_tab">
+                            <li class="active" data-id="1"><a>我发布的需求</a></li>
                             <div class="pull-left">|</div>
-                            <li><a>我接受的需求</a></li>
+                            <li data-id="2"><a>我接受的需求</a></li>
                             <div class="pull-left">|</div>
-                            <li><a>我发布的产品</a></li>
+                            <li data-id="3"><a>我发布的产品</a></li>
                         </ul>
                     </div>
-                    <div class="tab-content" style="height:273px">
+                    <div class="tab-content" style="height:273px" data-id="1">
                         @if(!collect($need)->toArray()['total'])
                             <ul id="p_a_1"
                                 class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
@@ -155,17 +155,25 @@
                                         <td>{{$neesStatusShow[$vo->status]}}</td>
                                         <td>{{$vo->baomingshu}}</td>
                                         <td>{{$vo->created_at}}</td>
-                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a href="/update_need/{{$vo->id}}" target="_blank">修改</a> | 删除</td>
+                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a
+                                                    href="/update_need/{{$vo->id}}" target="_blank">修改</a> | 删除
+                                        </td>
                                     </tr>
                                 @endforeach
                             </table>
                             {!! $need->render() !!}
                         @endif
-                        <ul id="p_a_2" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无需求哦！快去<a>接收</a>吧</li>
+                    </div>
+                    <div class="tab-content" style="height:273px;display:none" data-id="2">
+                        <ul id="p_a_1"
+                            class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
+                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无接收的需求哦！快去<a href="/create_need">接收</a>吧</li>
                         </ul>
-                        <ul id="p_a_3" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无产品哦！快去<a>发布</a>吧</li>
+                    </div>
+                    <div class="tab-content" style="height:273px;display:none" data-id="3">
+                        <ul id="p_a_1"
+                            class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
+                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无发布的产品哦！快去<a href="/create_need">发布</a>吧</li>
                         </ul>
                     </div>
                 </div>

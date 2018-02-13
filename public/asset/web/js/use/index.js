@@ -687,3 +687,16 @@ $('.join').click(function () {
     });
 });
 
+$('.kiki_tab >li').click(function () {
+    !$(this).hasClass('active') && $(this).addClass('active');
+    $(this).siblings('li').removeClass('active');
+    var id = $(this).data('id');
+    $('.kiki_wrap').find('.tab-content').each(function (x, y) {
+        if($(y).data('id') === id){
+            $(y).css('display','block');
+        }else{
+            $(y).css('display','none');
+        }
+    });
+});
+
