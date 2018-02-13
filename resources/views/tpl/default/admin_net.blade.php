@@ -48,18 +48,64 @@
             </dd>
         </dl>
     </div>
-    {{--关于我们 服务条款 帮助中心 空间规则--}}
-    {{--地址：--}}
-
-    {{--Powered by Sign copyright 2015-2025 kotana.cn 版权所有--}}
-
-    {{--联系方式--}}
-    {{--服务热线：--}}
-
-    {{--Email：--}}
-
-    {{--微信号--}}
-
+    <div class="z7">
+        <dl>
+            <dt>微信二维码图片替换:
+                <button type="button" id="qiniu3">上传图片</button>
+                <span style="font-size: 13px;">(仅允许上传1张图片)</span></dt>
+            <dd class="p_img_dd3" style="height:150px;border:1px solid #eaeaea;margin-left: 0px">
+                <div class="dd_wrap_div">
+                    <span class="glyphicon glyphicon-remove-circle dd_img_delete"></span>
+                    <img src="">
+                    <input type="hidden" name="wechat_image" value="">
+                </div>
+            </dd>
+        </dl>
+    </div>
+    <div class="z7">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">关于我们(链接)</span>
+                <input type="text" class="form-control" name="about_us">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">服务条款(链接)</span>
+                <input type="text" class="form-control" name="service">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">帮助中心(链接)</span>
+                <input type="text" class="form-control" name="help">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">空间规则(链接)</span>
+                <input type="text" class="form-control" name="zone">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">公司地址</span>
+                <input type="text" class="form-control" name="address">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">服务热线</span>
+                <input type="text" class="form-control" name="tel">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Email</span>
+                <input type="text" class="form-control" name="email">
+            </div>
+        </div>
+    </div>
 </form>
 <div style="text-align: center">
     <button class="btn btn-large btn-default btn_net_update" style="margin-bottom: 10px" data-toggle="modal"

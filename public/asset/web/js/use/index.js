@@ -620,6 +620,28 @@ $('#qiniu2').click(function () {
     $('.qiniuform > input[name=file]').off().click();
 });
 
+//微信图片
+$('#qiniu3').click(function () {
+    clearInterval(taskMark);
+    if ($('.p_img_dd3').find('.dd_wrap_div').length >= 1) {
+        return $.Confirm({message: '登录注册图片为1张！'});
+    }
+    $('body').find('.qiniuform').remove();
+    var _symbol = (new Date).getTime() + '_' + user_id;
+    $('body').append($('<form class="qiniuform" style="display:none" method="post" action="http://up-z2.qiniu.com" enctype="multipart/form-data" target="nm_iframe">' +
+        '  <input name="token" type="hidden" value="' + qiniu_access_token + '">' +
+        ' <input name="x:symbol" type="hidden" value="' + _symbol + '">' +
+        '  <input name="file" type="file"/>' +
+        '</form>')).on('change', '.qiniuform > input[name=file]', function () {
+        $('.qiniuform').submit();
+        checkUploadStatus(_symbol, function () {
+            tmp_img_data && $('.p_img_dd3').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="weixin_image" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+            tmp_img_data = null;
+        });
+    })
+    $('.qiniuform > input[name=file]').off().click();
+});
+
 $('.btn_net_update').click(function () {
     if ($('.p_img_dd1').find('.dd_wrap_div').length !== 5) {
         return $.Confirm({message: '轮播图为5张！'});

@@ -644,14 +644,22 @@ class WebController extends Controller
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN'),
             'c_images' => unserialize($net->index_images),
-            'login_image' => ($net->login_image)
+            'login_image' => $net->login_image,
+            'wechat_image' => $net->wechat_image,
+            'about_us' => $net->about_us,
+            'service' => $net->service,
+            'help' => $net->help,
+            'zone' => $net->zone,
+            'address' => $net->address,
+            'tel' => $net->tel,
+            'email' => $net->email,
         ];
         return view('tpl.default.admin_net', $data);
     }
 
     public function adminNetUpdate()
     {
-        $params = request()->only(['index_images', 'login_image']);
+        $params = request()->only(['index_images', 'login_image', 'wechat_image', 'about_us', 'service', 'help', 'zone', 'address', 'tel', 'email']);
         if (!is_array($params['index_images']) || count($params['index_images']) !== 5 || !$params['login_image']) {
             return json_encode(['code' => -1, 'msg' => '数据不合法!']);
         }

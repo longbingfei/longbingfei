@@ -12,10 +12,18 @@ class CreateNetTable extends Migration
      */
     public function up()
     {
-        Schema::create('net', function(Blueprint $tables) {
+        Schema::create('net', function (Blueprint $tables) {
             $tables->increments('id')->unsigned();
             $tables->text('index_images');
             $tables->text('login_image');
+            $tables->text('wechat_image')->nullable();
+            $tables->text('about_us')->nullable();
+            $tables->text('service')->nullable();
+            $tables->text('help')->nullable();
+            $tables->text('zone')->nullable();
+            $tables->text('address')->nullable();
+            $tables->text('tel')->nullable();
+            $tables->text('email')->nullable();
         });
     }
 
