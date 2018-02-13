@@ -10,6 +10,7 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/create_need', 'WebController@needForm');
     Route::get('/update_need/{id}', 'WebController@needUpdateForm');
     Route::post('/update_need/{id}', 'WebController@needUpdate');
+    Route::get('/delete_need/{id}', 'WebController@needDelete');
     Route::post('/create_need', 'WebController@createNeed');
 
     //企业

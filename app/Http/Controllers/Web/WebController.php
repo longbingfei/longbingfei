@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Company as CompanyModel;
+use App\Models\Need;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -40,6 +41,18 @@ class WebController extends Controller
             'news' => $news,
             'c_images' => $c_images,
         ];
+        $net = DB::table('net')->first();
+        $net = [
+            'wechat_image' => $net->wechat_image,
+            'about_us' => $net->about_us,
+            'service' => $net->service,
+            'help' => $net->help,
+            'zone' => $net->zone,
+            'address' => $net->address,
+            'tel' => $net->tel,
+            'email' => $net->email,
+        ];
+        session(['net' => $net]);
         return view('tpl.default.index', $data);
     }
 
@@ -207,6 +220,22 @@ class WebController extends Controller
         return json_encode($return);
     }
 
+    public function needDelete($id)
+    {
+        if (!Auth::check() || !$need = Need::find($id)) {
+            $return = ['code' => -1, 'msg' => '当前用户认证失败!'];
+        } else {
+            try {
+                Need::where(['id' => $id])->delete();
+                NCModel::where(['need_id' => $id])->delete();
+                $return = ['code' => 0, 'msg' => '相关报名信息已删除!'];
+            } catch (\Exception $e) {
+                $return = ['code' => -1, 'msg' => '删除失败!'];
+            }
+        }
+        return json_encode($return);
+    }
+
     public function company()
     {
         $companys = DB::table('companys')->where(['status' => 1])->paginate(10);
@@ -360,6 +389,7 @@ class WebController extends Controller
             ->groupBy('needs.id')
             ->select(['needs.*', DB::raw('count(need_company.need_id) as baomingshu')])
             ->paginate(10);
+
         $neesStatusShow = [
             '0' => '待审核',
             '1' => '招标中',
@@ -560,18 +590,6 @@ class WebController extends Controller
             ]);
         $currentUser = $currentUser->get()->toArray();
         session($currentUser[0]);
-        $net = DB::table('net')->first();
-        $net = [
-            'wechat_image' => $net->wechat_image,
-            'about_us' => $net->about_us,
-            'service' => $net->service,
-            'help' => $net->help,
-            'zone' => $net->zone,
-            'address' => $net->address,
-            'tel' => $net->tel,
-            'email' => $net->email,
-        ];
-        session(['net' => $net]);
         return redirect('/');
     }
 

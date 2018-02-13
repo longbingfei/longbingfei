@@ -126,10 +126,12 @@
                     <div class="clearfix g-userlisthead">
                         <ul class="pull-left text-size16 nav nav-tabs kiki_tab">
                             <li class="active" data-id="1"><a>我发布的需求</a></li>
-                            <div class="pull-left">|</div>
-                            <li data-id="2"><a>我接受的需求</a></li>
-                            <div class="pull-left">|</div>
-                            <li data-id="3"><a>我发布的产品</a></li>
+                            @if(session('type'))
+                                <div class="pull-left">|</div>
+                                <li data-id="2"><a>我接受的需求</a></li>
+                                <div class="pull-left">|</div>
+                                <li data-id="3"><a>我发布的产品</a></li>
+                            @endif
                         </ul>
                     </div>
                     <div class="tab-content" style="height:273px" data-id="1">
@@ -156,7 +158,9 @@
                                         <td>{{$vo->baomingshu}}</td>
                                         <td>{{$vo->created_at}}</td>
                                         <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a
-                                                    href="/update_need/{{$vo->id}}" target="_blank">修改</a> | 删除
+                                                    href="/update_need/{{$vo->id}}" target="_blank">修改</a> | <a
+                                                    class="need_delete_a" href="javascript:;"
+                                                    _href="/delete_need/{{$vo->id}}">删除</a>
                                         </td>
                                     </tr>
                                 @endforeach

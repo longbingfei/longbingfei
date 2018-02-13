@@ -715,10 +715,29 @@ $('.kiki_tab >li').click(function () {
     $(this).siblings('li').removeClass('active');
     var id = $(this).data('id');
     $('.kiki_wrap').find('.tab-content').each(function (x, y) {
-        if($(y).data('id') === id){
-            $(y).css('display','block');
-        }else{
-            $(y).css('display','none');
+        if ($(y).data('id') === id) {
+            $(y).css('display', 'block');
+        } else {
+            $(y).css('display', 'none');
+        }
+    });
+});
+
+$('.need_delete_a').click(function () {
+    var url = $(this).attr('_href');
+    return $.Confirm({
+        message: '确认删除此需求吗?', callback: function () {
+            $.getJSON(url, function (data) {
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg});
+                } else {
+                    $.Confirm({
+                        message: '需求删除成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
         }
     });
 });
