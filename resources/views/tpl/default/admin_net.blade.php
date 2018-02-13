@@ -56,8 +56,8 @@
             <dd class="p_img_dd3" style="height:150px;border:1px solid #eaeaea;margin-left: 0px">
                 <div class="dd_wrap_div">
                     <span class="glyphicon glyphicon-remove-circle dd_img_delete"></span>
-                    <img src="">
-                    <input type="hidden" name="wechat_image" value="">
+                    <img src="{{$wechat_image}}">
+                    <input type="hidden" name="wechat_image" value="{{$wechat_image}}">
                 </div>
             </dd>
         </dl>
@@ -66,43 +66,43 @@
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">关于我们(链接)</span>
-                <input type="text" class="form-control" name="about_us">
+                <input type="text" class="form-control" name="about_us" value="{{$about_us}}">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">服务条款(链接)</span>
-                <input type="text" class="form-control" name="service">
+                <input type="text" class="form-control" name="service" value="{{$service}}">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">帮助中心(链接)</span>
-                <input type="text" class="form-control" name="help">
+                <input type="text" class="form-control" name="help" value="{{$help}}">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">空间规则(链接)</span>
-                <input type="text" class="form-control" name="zone">
+                <input type="text" class="form-control" name="zone" value="{{$zone}}">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">公司地址</span>
-                <input type="text" class="form-control" name="address">
+                <input type="text" class="form-control" name="address" value="{{$address}}">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">服务热线</span>
-                <input type="text" class="form-control" name="tel">
+                <input type="text" class="form-control" name="tel" value="{{$tel}}">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Email</span>
-                <input type="text" class="form-control" name="email">
+                <input type="text" class="form-control" name="email" value="{{$email}}">
             </div>
         </div>
     </div>

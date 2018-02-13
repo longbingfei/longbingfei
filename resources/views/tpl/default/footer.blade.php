@@ -4,41 +4,40 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12 g-address col-left">
                     <div>
-                        <a target="_blank" href="">关于我们</a>
+                        <a target="_blank" href="{{session('net')['about_us']}}">关于我们</a>
                         <span></span>
-                        <a target="_blank" href="">服务条款</a>
+                        <a target="_blank" href="{{session('net')['service']}}">服务条款</a>
                         <span></span>
-                        <a target="_blank" href="">帮助中心</a>
+                        <a target="_blank" href="{{session('net')['help']}}">帮助中心</a>
                         <span></span>
-                        <a target="_blank" href="">空间规则</a>
+                        <a target="_blank" href="{{session('net')['zone']}}">空间规则</a>
                         <span></span>
                     </div>
                     <div class="space-6"></div>
-                    <p class="cor-gray87">地址：</p>
+                    <p class="cor-gray87">地址：{{session('net')['address']}}</p>
                     <p class="cor-gray87 kppw-tit">
-                        Powered by <a href="" target="_blank">Sign</a>
-                        copyright 2015-2025 kotana.cn 版权所有
+                        Powered by <a href="http://kotana.cn" target="_blank">Sign</a>
+                        copyright 2012-2022 kotana.cn 版权所有
                     </p>
                 </div>
                 <div class="col-lg-3 g-contact visible-lg-block hidden-sm hidden-md hidden-xs">
                     <div class="cor-gray71 text-size14 g-contacthd"><span>联系方式</span></div>
                     <div class="space-6"></div>
-                    <p class="cor-gray97">服务热线：</p>
-                    <p class="cor-gray97">Email：</p>
+                    <p class="cor-gray97">服务热线：{{session('net')['tel']}}</p>
+                    <p class="cor-gray97">Email：{{session('net')['email']}}</p>
                 </div>
                 <div class="col-lg-3 focusus visible-lg-block hidden-sm hidden-md hidden-xs col-left">
                     <div class="cor-gray71 text-size14 focusushd"><span>微信号</span></div>
                     <div class="space-8"></div>
                     <div class="clearfix">
                         <div class="foc foc-bg">
-                            <a class="focususwx foc-wx" href=""></a>
+                            <a class="focususwx foc-wx" href="{{session('net')['wechat_image']}}"></a>
                             <div class="foc-ewm">
                                 <div class="foc-ewm-arrow1"></div>
                                 <div class="foc-ewm-arrow2"></div>
-                                <img src="" alt="" width="100" height="100">
+                                <img src="{{session('net')['wechat_image']}}" alt="" width="100" height="100">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

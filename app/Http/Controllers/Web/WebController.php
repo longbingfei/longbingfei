@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
-use Mockery\Exception;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
 use Illuminate\Support\Facades\DB;
@@ -561,6 +560,18 @@ class WebController extends Controller
             ]);
         $currentUser = $currentUser->get()->toArray();
         session($currentUser[0]);
+        $net = DB::table('net')->first();
+        $net = [
+            'wechat_image' => $net->wechat_image,
+            'about_us' => $net->about_us,
+            'service' => $net->service,
+            'help' => $net->help,
+            'zone' => $net->zone,
+            'address' => $net->address,
+            'tel' => $net->tel,
+            'email' => $net->email,
+        ];
+        session(['net' => $net]);
         return redirect('/');
     }
 

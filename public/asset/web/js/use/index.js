@@ -3,6 +3,7 @@ $(function () {
     $('.js1 > .z9').css('width', function () {
         return ($(this).parent().width() - 25) / 4 + 'px';
     });
+
     $('body').on('click', '.dd_img_delete', function () {
         $(this).parent().remove();
     });
@@ -635,7 +636,7 @@ $('#qiniu3').click(function () {
         '</form>')).on('change', '.qiniuform > input[name=file]', function () {
         $('.qiniuform').submit();
         checkUploadStatus(_symbol, function () {
-            tmp_img_data && $('.p_img_dd3').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="weixin_image" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
+            tmp_img_data && $('.p_img_dd3').append($('<div class="dd_wrap_div"><span class="glyphicon glyphicon-remove-circle dd_img_delete"></span><img src="' + qiniu_img_domain + tmp_img_data.key + '"><input type="hidden" name="wechat_image" value="' + qiniu_img_domain + tmp_img_data.key + '"></div>'));
             tmp_img_data = null;
         });
     })
@@ -721,4 +722,6 @@ $('.kiki_tab >li').click(function () {
         }
     });
 });
+
+
 
