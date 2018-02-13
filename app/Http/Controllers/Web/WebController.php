@@ -469,7 +469,7 @@ class WebController extends Controller
         if (!$userInfo->count()) {
             return ['error_msg' => '用户不存在'];
         }
-        if (!$userInfo->status) {
+        if (!$userInfo->first()->status) {
             return ['error_msg' => '用户冻结中'];
         }
         $password = $userInfo->first()->password;
