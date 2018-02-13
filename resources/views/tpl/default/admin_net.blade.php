@@ -48,6 +48,18 @@
             </dd>
         </dl>
     </div>
+    {{--关于我们 服务条款 帮助中心 空间规则--}}
+    {{--地址：--}}
+
+    {{--Powered by Sign copyright 2015-2025 kotana.cn 版权所有--}}
+
+    {{--联系方式--}}
+    {{--服务热线：--}}
+
+    {{--Email：--}}
+
+    {{--微信号--}}
+
 </form>
 <div style="text-align: center">
     <button class="btn btn-large btn-default btn_net_update" style="margin-bottom: 10px" data-toggle="modal"
