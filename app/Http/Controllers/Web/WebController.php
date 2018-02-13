@@ -180,7 +180,7 @@ class WebController extends Controller
         $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['updated_at'] = Date('Y-m-d H:i:s');
         try {
-            $return = ['code' => 0, 'data' => ['id' =>  DB::table('needs')->where(['id' => $id])->update($data)]];
+            $return = ['code' => 0, 'data' => ['id' => DB::table('needs')->where(['id' => $id])->update($data)]];
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '需求更新失败!'];
         }
@@ -356,7 +356,7 @@ class WebController extends Controller
         if (!session('id') || session('id') != $id) {
             return redirect('/');
         }
-        $needs = DB::table('needs')
+        $needs = DB::table('needs')->where('needs.user_id', session('id'))
             ->leftjoin('need_company', 'need_company.need_id', '=', 'needs.id')
             ->groupBy('needs.id')
             ->select(['needs.*', DB::raw('count(need_company.need_id) as baomingshu')])
