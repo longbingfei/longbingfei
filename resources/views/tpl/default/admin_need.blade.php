@@ -63,9 +63,9 @@
                             data-id="{{$vo->id}}">打回
                     </button>
                 @endif
-                <button class="btn btn-xs btn-info admin_need_edit" data-status="{{$vo->status}}"
-                        data-id="{{$vo->id}}">修改
-                </button>
+                    <a class="btn btn-xs btn-info admin_need_edit" data-status="{{$vo->status}}"
+                       data-id="{{$vo->id}}" href="/update_need/{{$vo->id}}" target="_blank">修改
+                    </a>
                 <button class="btn btn-xs btn-success admin_need_delete" data-status="{{$vo->status}}"
                         data-id="{{$vo->id}}">删除
                 </button>
