@@ -32,7 +32,7 @@
                     <table class="ztb">
                         <tr>
                             <td>公司名称:</td>
-                            <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->company_name}}/td>
+                            <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->company_name}}</td>
                             <td>预算金额:</td>
                             <td>{{$data->budget}}</td>
                             <td>周期:</td>
