@@ -41,7 +41,7 @@
             <td>{{$vo->storage}}</td>
             <td>{{$vo->price}}</td>
             <td>{{$vo->hot}}</td>
-            <td>{{$vo->user_id}}</td>
+            <td>{{$users[$vo->user_id]}}</td>
             <td>{{$vo->created_at}}</td>
             <td>
                 @if(!$vo->status || $vo->status == 3)

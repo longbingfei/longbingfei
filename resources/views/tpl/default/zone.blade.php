@@ -130,7 +130,7 @@
                                 <div class="pull-left">|</div>
                                 <li data-id="2"><a>我的入驻信息</a></li>
                                 <div class="pull-left">|</div>
-                                <li data-id="3"><a>我接受的需求</a></li>
+                                <li data-id="3"><a>我报名的需求</a></li>
                                 <div class="pull-left">|</div>
                                 <li data-id="4"><a>我发布的产品</a></li>
                             @endif
@@ -197,7 +197,7 @@
                             </table>
                     </div>
                     <div class="tab-content" style="height:273px;display:none" data-id="3">
-                        @if(!collect($need)->toArray()['total'])
+                        @if(!collect($getNeeds)->toArray()['total'])
                             <ul id="p_a_1"
                                 class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
                                 <li class="g-usernoinfo g-usernoinfo-noinfo">暂无接收的需求哦！快去<a href="/create_need">接收</a>吧</li>
@@ -208,28 +208,20 @@
                                     <th>序号</th>
                                     <th>需求名称</th>
                                     <th>状态</th>
-                                    <th>报名人数</th>
                                     <th>创建时间</th>
-                                    <th>修改时间</th>
                                     <th>操作</th>
                                 </tr>
-                                @foreach($need as $key=>$vo)
+                                @foreach($getNeeds as $key=>$vo)
                                     <tr>
                                         <td>{{$key+1}}</td>
                                         <td>{{$vo->title}}</td>
                                         <td>{{$neesStatusShow[$vo->status]}}</td>
-                                        <td>{{$vo->baomingshu}}</td>
                                         <td>{{$vo->created_at}}</td>
-                                        <td>{{$vo->updated_at}}</td>
-                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a
-                                                    href="/update_need/{{$vo->id}}" target="_blank">修改</a> | <a
-                                                    class="need_delete_a" href="javascript:;"
-                                                    _href="/delete_need/{{$vo->id}}">删除</a>
-                                        </td>
+                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a></td>
                                     </tr>
                                 @endforeach
                             </table>
-                            {!! $need->render() !!}
+                            {!! $getNeeds->render() !!}
                         @endif
                     </div>
                     <div class="tab-content" style="height:273px;display:none" data-id="4">
@@ -265,7 +257,7 @@
                                     </tr>
                                 @endforeach
                             </table>
-                            {!! $need->render() !!}
+                            {!! $prds->render() !!}
                         @endif
                     </div>
                 </div>

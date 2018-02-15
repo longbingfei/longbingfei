@@ -539,9 +539,16 @@ class WebController extends Controller
         ];
         $prds = DB::table('prds')->where('user_id', session('id'))
             ->paginate(10);
-
         $company = CompanyModel::where(['user_id' => $id])->get();
-        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow, 'pStatus' => $pStatus, 'prds' => $prds,'company'=>$company,'cStatus'=>$cStatus];
+        $getNeeds = [];
+        if($company){
+            $company_ids = array_column($company->toArray(),'id');
+            $getNeeds = DB::table('need_company')->whereIn('need_company.company_id',$company_ids)
+                ->leftJoin('needs','need_company.need_id', '=', 'needs.id')
+                ->groupBy('need_company.need_id')
+                ->paginate(10);
+        }
+        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow, 'pStatus' => $pStatus, 'prds' => $prds,'company'=>$company,'cStatus'=>$cStatus,'getNeeds'=>$getNeeds];
         return view('tpl.default.zone', $data);
     }
 
@@ -589,8 +596,8 @@ class WebController extends Controller
             '3' => '已完成',
             '-1' => '审核未通过',
         ];
-
-        return view('tpl.default.admin_need', ['data' => $needs, 'statusShow' => $statusShow]);
+        $users =array_column(WebUserModel::select(['id','username'])->get()->toArray(),'username','id');
+        return view('tpl.default.admin_need', ['data' => $needs, 'statusShow' => $statusShow,'users'=>$users]);
     }
 
     //更改需求状态
@@ -619,8 +626,8 @@ class WebController extends Controller
             '1' => '已审核',
             '3' => '未通过',
         ];
-
-        return view('tpl.default.admin_company', ['data' => $needs, 'statusShow' => $statusShow]);
+        $users =array_column(WebUserModel::select(['id','username'])->get()->toArray(),'username','id');
+        return view('tpl.default.admin_company', ['data' => $needs, 'statusShow' => $statusShow,'users'=>$users]);
     }
 
     //更改厂家状态
@@ -673,8 +680,8 @@ class WebController extends Controller
             '1' => '已审核',
             '3' => '未通过',
         ];
-
-        return view('tpl.default.admin_product', ['data' => $needs, 'statusShow' => $statusShow]);
+        $users =array_column(WebUserModel::select(['id','username'])->get()->toArray(),'username','id');
+        return view('tpl.default.admin_product', ['data' => $needs, 'statusShow' => $statusShow,'users'=>$users]);
     }
 
     //更改产品状态

@@ -49,7 +49,7 @@
             <td>{{$vo->wechat}}</td>
             <td>{{$vo->fork}}</td>
             <td>{{$vo->hot}}</td>
-            <td>{{$vo->user_id}}</td>
+            <td>{{$users[$vo->user_id]}}</td>
             <td>{{$vo->created_at}}</td>
             <td>
                 @if($vo->status <=0)
