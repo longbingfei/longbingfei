@@ -89,7 +89,7 @@ class WebController extends Controller
         $data->companys = NCModel::where(['need_company.need_id' => $id])
             ->leftJoin('companys', 'need_company.company_id', '=', 'companys.id')
             ->groupBy('companys.id')
-            ->select(['companys.*'])->paginate(10);
+            ->select(['companys.*','need_company.status as biao_status'])->paginate(10);
         $data->companys_user = array_map(function ($y) {
             return $y['user_id'];
         }, $data->companys->toArray()['data']);
@@ -231,6 +231,38 @@ class WebController extends Controller
                 $return = ['code' => 0, 'msg' => '相关报名信息已删除!'];
             } catch (\Exception $e) {
                 $return = ['code' => -1, 'msg' => '删除失败!'];
+            }
+        }
+        return json_encode($return);
+    }
+    public function chooseNeed($id)
+    {
+        $need = Need::where(['id'=>$id])->first();
+        if (!Auth::check() || !$need || !in_array($need->user_id,[1,session('id')]) || !request()->get('cid')) {
+            $return = ['code' => -1, 'msg' => '当前用户认证失败!'];
+        } else {
+            try {
+                NCModel::where(['need_id' => $id,'company_id'=>request()->get('cid')])->update(['status'=>1]);
+                Need::where(['id'=>$id])->update(['status' => 2]);
+                $return = ['code' => 0, 'msg' => '选标成功!'];
+            } catch (\Exception $e) {
+                $return = ['code' => -1, 'msg' => '选标失败!'];
+            }
+        }
+        return json_encode($return);
+    }
+    public function overNeed($id)
+    {
+        $need = Need::where(['id'=>$id])->first();
+        if (!Auth::check() || !$need || !in_array($need->user_id,[1,session('id')])) {
+            $return = ['code' => -1, 'msg' => '当前用户认证失败!'];
+        } else {
+            try {
+                NCModel::where(['need_id' => $id,'status'=>1])->update(['status'=>2]);
+                Need::where(['id'=>$id])->update(['status' => 3]);
+                $return = ['code' => 0];
+            } catch (\Exception $e) {
+                $return = ['code' => -1, 'msg' => '操作失败!'];
             }
         }
         return json_encode($return);

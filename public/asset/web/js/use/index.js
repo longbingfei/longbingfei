@@ -802,5 +802,44 @@ $('.prd_delete_a').click(function () {
     });
 });
 
+$('.choose_need').click(function(){
+    var cid = $(this).data('cid'),
+        nid = $(this).data('nid');
+    return $.Confirm({
+        message: '确认选择此厂家吗?', callback: function () {
+            $.getJSON('/choose_need/'+nid+'?cid='+cid, function (data) {
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg});
+                } else {
+                    $.Confirm({
+                        message: '选标成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+$('.need_over').click(function(){
+    var url = $(this).attr('_href');
+    return $.Confirm({
+        message: '确认完成此需求吗?', callback: function () {
+            $.getJSON(url, function (data) {
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg});
+                } else {
+                    $.Confirm({
+                        message: '需求已完成!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
 
 

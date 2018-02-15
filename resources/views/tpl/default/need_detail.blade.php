@@ -104,11 +104,26 @@
                                                     <span class="ecli">地址: {{$vo->address}}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-sm-4">
+                                            <div class="col-lg-2 col-sm-4">
                                                 <div class="z5 kk">
                                                     <a href="/company/{{$vo->id}}">公司详情</a>
                                                 </div>
                                             </div>
+                                            @if($data->status == 1 && in_array(session('id'),[1,$data->user_id]))
+                                            <div class="col-lg-1 col-sm-4" style="height:30px;line-height: 30px;text-align: center;margin-top: 35px;font-size: 16px">
+                                                    <a href="javascript:;" class="choose_need" data-cid="{{$vo->id}}" data-nid="{{$data->id}}">选择</a>
+                                            </div>
+                                            @endif
+                                            @if($data->status == 2 && $vo->biao_status==1)
+                                                <div class="col-lg-1 col-sm-4" style="height:30px;line-height: 30px;text-align: center;margin-top: 35px;font-size: 16px">
+                                                    <a href="javascript:;" style="color:green">已中标</a>
+                                                </div>
+                                            @endif
+                                            @if($data->status == 3 && $vo->biao_status==2)
+                                                <div class="col-lg-1 col-sm-4" style="height:30px;line-height: 30px;text-align: center;margin-top: 35px;font-size: 16px">
+                                                    <a href="javascript:;" style="color:green">已完成</a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </li>
                                 @endforeach
