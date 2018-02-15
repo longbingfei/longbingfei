@@ -10,17 +10,17 @@
                 <div class="row ee">
                     <div class="status_img">
                         <h2>需求状态</h2>
-                        @if($data->status === 1)
+                        @if($data->status == 1)
                             <img src="/asset/web/image/flow_1.jpg">
-                        @elseif($data->status === 2)
+                        @elseif($data->status == 2)
                             <img src="/asset/web/image/flow_2.jpg">
-                        @elseif($data->status === 3)
+                        @elseif($data->status == 3)
                             <img src="/asset/web/image/flow_3.jpg">
                         @endif
                     </div>
                     <div>
                         <h1>{{$data->title}}
-                            @if($data->status === 1)
+                            @if($data->status == 1)
                                 @if(!session('id') || !in_array(session('id'),$data->companys_user))
                                     <small class="join">我要报名</small>
                                 @else
@@ -32,7 +32,7 @@
                     <table class="ztb">
                         <tr>
                             <td>公司名称:</td>
-                            <td>{{$data->company_name}}</td>
+                            <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->company_name}}/td>
                             <td>预算金额:</td>
                             <td>{{$data->budget}}</td>
                             <td>周期:</td>
