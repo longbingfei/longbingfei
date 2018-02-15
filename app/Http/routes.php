@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/establish', 'WebController@establish');
     Route::get('/company', 'WebController@company');
     Route::get('/company/{id}', 'WebController@companyDetail');
+    Route::get('/update_company/{id}', 'WebController@companyUpdateForm');
+    Route::post('/update_company/{id}', 'WebController@companyUpdate');
 
     //产品
     Route::get('/p', 'WebController@product');

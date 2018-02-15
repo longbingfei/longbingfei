@@ -257,6 +257,26 @@ class WebController extends Controller
         return view('tpl.default.company_form', $data);
     }
 
+    public function companyUpdateForm($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $c = DB::table('companys')->where(['id' => $id])->first();
+        if (!$c || !in_array(session('id'), [1, $c->user_id])) {
+            return ['error_msg' => '不合法的修改请求！'];
+        }
+        $c->operate_ids = $c->operate_ids ? explode(',', $c->operate_ids) : [];
+        $provs = CityModel::where(['pid' => 1])->get()->toArray();
+        $data = [
+            'company'=>$c,
+            'provs' => $provs,
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
+        return view('tpl.default.company_update_form', $data);
+    }
+
     public function establish()
     {
         if (!Auth::check()) {
@@ -287,6 +307,43 @@ class WebController extends Controller
             $return = ['code' => 0, 'data' => ['id' => CompanyModel::create($params)->id]];
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '企业入驻失败!'];
+        }
+        return json_encode($return);
+    }
+    public function companyUpdate($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $c = DB::table('companys')->where(['id' => $id])->first();
+        if (!$c || !in_array(session('id'), [1, $c->user_id])) {
+            return ['error_msg' => '不合法的修改请求！'];
+        }
+        $filters = [
+            'company_name',
+            'name',
+            'tel',
+            'wechat',
+            'email',
+            'qq',
+            'area_ids',
+            'address',
+            'sort_ids',
+            'operate_ids',
+            'image',
+            'logo',
+            'describe',
+            'mark',
+        ];
+        $params = request()->only($filters);
+        $params['area_ids'] = $params['area_ids'] ? implode(',', array_filter($params['area_ids'])) : '';
+        $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
+        $params['operate_ids'] = $params['operate_ids'] ? implode(',', $params['operate_ids']) : '';
+        try {
+            CompanyModel::where('id',$id)->update($params);
+            $return = ['code' => 0];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '企业入驻信息修改失败!'];
         }
         return json_encode($return);
     }
@@ -475,9 +532,16 @@ class WebController extends Controller
             '1' => '发布中',
             '-1' => '未通过'
         ];
+        $cStatus = [
+            '0' => '待审核',
+            '1' => '正常',
+            '-1' => '未通过'
+        ];
         $prds = DB::table('prds')->where('user_id', session('id'))
             ->paginate(10);
-        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow, 'pStatus' => $pStatus, 'prds' => $prds];
+
+        $company = CompanyModel::where(['user_id' => $id])->get();
+        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow, 'pStatus' => $pStatus, 'prds' => $prds,'company'=>$company,'cStatus'=>$cStatus];
         return view('tpl.default.zone', $data);
     }
 
@@ -564,14 +628,38 @@ class WebController extends Controller
     {
         $this->checkAdmin();
         $params = request()->all();
-        return json_encode(['code' => DB::table('companys')->where(['id' => $params['id']])->update(['status' => $params['status']]) ? 0 : '-1']);
+        try{
+            $c = CompanyModel::find($params['id']);
+            DB::table('companys')->where(['id' => $params['id']])->update(['status' => $params['status']]);
+            if($c && ($c->user_id != 1) && (!$c->type) && ($params['status'] >= 0)){
+                WebUserModel::where('id',$c->user_id)->update(['type'=>1]);
+            }
+            if($c && ($c->user_id != 1) && ($c->type) && ($params['status'] < 0)){
+                WebUserModel::where('id',$c->user_id)->update(['type'=>0]);
+            }
+            $return = ['code'=>0];
+        }catch(\Exception $e){
+            $return = ['code'=>'-1'];
+        }
+
+        return json_encode($return);
     }
 
     //删除厂家
     public function adminDC($id)
     {
         $this->checkAdmin();
-        return json_encode(['code' => DB::table('companys')->where(['id' => $id])->delete() ? 0 : '-1']);
+        try{
+            $c = CompanyModel::find($id);
+            DB::table('companys')->where(['id' => $id])->delete();
+            if($c && ($c->user_id != 1) && ($c->type)){
+                WebUserModel::where('id',$c->user_id)->update(['type'=>0]);
+            }
+            $return = ['code'=>0];
+        }catch(\Exception $e){
+            $return = ['code'=>'-1'];
+        }
+        return json_encode($return);
     }
 
     //管理产品

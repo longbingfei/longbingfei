@@ -117,7 +117,6 @@ $(function () {
         $('.cp_logo_img_form > input[name=file]').off().click();
     });
 
-    //企业入驻
     $('.company_submit_btn').click(function () {
         $.ajax({
             url: '/establish',
@@ -129,6 +128,24 @@ $(function () {
                     return $.Confirm({message: '企业入驻失败，请稍后再试!'});
                 }
                 location.href = '/company/' + data.data.id;
+            }
+        });
+    });
+
+    $('.company_update_btn').click(function () {
+        if (!cid) {
+            return $.Confirm({message: '修改请求不合法!'});
+        }
+        $.ajax({
+            url: '/update_company/'+cid,
+            type: 'post',
+            data: $('#companyUpdateform').serialize() + '&describe=' + um.getContent(),
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: '企业入驻信息修改失败，请稍后再试!'});
+                }
+                location.href = '/company/' + cid;
             }
         });
     });

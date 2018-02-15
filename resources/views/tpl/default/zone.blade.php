@@ -128,9 +128,11 @@
                             <li class="active" data-id="1"><a>我发布的需求</a></li>
                             @if(session('type'))
                                 <div class="pull-left">|</div>
-                                <li data-id="2"><a>我接受的需求</a></li>
+                                <li data-id="2"><a>我的入驻信息</a></li>
                                 <div class="pull-left">|</div>
-                                <li data-id="3"><a>我发布的产品</a></li>
+                                <li data-id="3"><a>我接受的需求</a></li>
+                                <div class="pull-left">|</div>
+                                <li data-id="4"><a>我发布的产品</a></li>
                             @endif
                         </ul>
                     </div>
@@ -148,6 +150,7 @@
                                     <th>状态</th>
                                     <th>报名人数</th>
                                     <th>创建时间</th>
+                                    <th>修改时间</th>
                                     <th>操作</th>
                                 </tr>
                                 @foreach($need as $key=>$vo)
@@ -157,6 +160,7 @@
                                         <td>{{$neesStatusShow[$vo->status]}}</td>
                                         <td>{{$vo->baomingshu}}</td>
                                         <td>{{$vo->created_at}}</td>
+                                        <td>{{$vo->updated_at}}</td>
                                         <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a
                                                     href="/update_need/{{$vo->id}}" target="_blank">修改</a> | <a
                                                     class="need_delete_a" href="javascript:;"
@@ -169,6 +173,30 @@
                         @endif
                     </div>
                     <div class="tab-content" style="height:273px;display:none" data-id="2">
+                            <table class="table">
+                                <tr>
+                                    <th>序号</th>
+                                    <th>厂家名称</th>
+                                    <th>状态</th>
+                                    <th>创建时间</th>
+                                    <th>修改时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                @foreach($company as $key=>$vo)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$vo->company_name}}</td>
+                                        <td>{{$cStatus[$vo->status]}}</td>
+                                        <td>{{$vo->created_at}}</td>
+                                        <td>{{$vo->updated_at}}</td>
+                                        <td><a href="/company/{{$vo->id}}" target="_blank">查看</a> | <a
+                                                    href="/update_company/{{$vo->id}}" target="_blank">修改</a> | <a href="javascript:;">转让</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                    </div>
+                    <div class="tab-content" style="height:273px;display:none" data-id="3">
                         @if(!collect($need)->toArray()['total'])
                             <ul id="p_a_1"
                                 class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
@@ -182,6 +210,7 @@
                                     <th>状态</th>
                                     <th>报名人数</th>
                                     <th>创建时间</th>
+                                    <th>修改时间</th>
                                     <th>操作</th>
                                 </tr>
                                 @foreach($need as $key=>$vo)
@@ -191,6 +220,7 @@
                                         <td>{{$neesStatusShow[$vo->status]}}</td>
                                         <td>{{$vo->baomingshu}}</td>
                                         <td>{{$vo->created_at}}</td>
+                                        <td>{{$vo->updated_at}}</td>
                                         <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a
                                                     href="/update_need/{{$vo->id}}" target="_blank">修改</a> | <a
                                                     class="need_delete_a" href="javascript:;"
@@ -202,7 +232,7 @@
                             {!! $need->render() !!}
                         @endif
                     </div>
-                    <div class="tab-content" style="height:273px;display:none" data-id="3">
+                    <div class="tab-content" style="height:273px;display:none" data-id="4">
                         @if(!collect($prds)->toArray()['total'])
                             <ul id="p_a_1"
                                 class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
