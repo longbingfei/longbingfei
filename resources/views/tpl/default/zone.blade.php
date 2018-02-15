@@ -169,16 +169,74 @@
                         @endif
                     </div>
                     <div class="tab-content" style="height:273px;display:none" data-id="2">
-                        <ul id="p_a_1"
-                            class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无接收的需求哦！快去<a href="/create_need">接收</a>吧</li>
-                        </ul>
+                        @if(!collect($need)->toArray()['total'])
+                            <ul id="p_a_1"
+                                class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
+                                <li class="g-usernoinfo g-usernoinfo-noinfo">暂无接收的需求哦！快去<a href="/create_need">接收</a>吧</li>
+                            </ul>
+                        @else
+                            <table class="table">
+                                <tr>
+                                    <th>序号</th>
+                                    <th>需求名称</th>
+                                    <th>状态</th>
+                                    <th>报名人数</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                @foreach($need as $key=>$vo)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$vo->title}}</td>
+                                        <td>{{$neesStatusShow[$vo->status]}}</td>
+                                        <td>{{$vo->baomingshu}}</td>
+                                        <td>{{$vo->created_at}}</td>
+                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> | <a
+                                                    href="/update_need/{{$vo->id}}" target="_blank">修改</a> | <a
+                                                    class="need_delete_a" href="javascript:;"
+                                                    _href="/delete_need/{{$vo->id}}">删除</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                            {!! $need->render() !!}
+                        @endif
                     </div>
                     <div class="tab-content" style="height:273px;display:none" data-id="3">
-                        <ul id="p_a_1"
-                            class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无发布的产品哦！快去<a href="/create_need">发布</a>吧</li>
-                        </ul>
+                        @if(!collect($prds)->toArray()['total'])
+                            <ul id="p_a_1"
+                                class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
+                                <li class="g-usernoinfo g-usernoinfo-noinfo">暂无发布的产品哦！快去<a href="/prd">发布</a>吧</li>
+                            </ul>
+                        @else
+                            <table class="table">
+                                <tr>
+                                    <th>序号</th>
+                                    <th>产品名称</th>
+                                    <th>状态</th>
+                                    <th>价格</th>
+                                    <th>库存</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                @foreach($prds as $key=>$vo)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$vo->name}}</td>
+                                        <td>{{$pStatus[$vo->status]}}</td>
+                                        <td>{{$vo->price}}</td>
+                                        <td>{{$vo->storage}}</td>
+                                        <td>{{$vo->created_at}}</td>
+                                        <td><a href="/prd/{{$vo->id}}" target="_blank">查看</a> | <a
+                                                    href="/update_prd/{{$vo->id}}" target="_blank">修改</a> | <a
+                                                    class="prd_delete_a" href="javascript:;"
+                                                    _href="/delete_prd/{{$vo->id}}">删除</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                            {!! $need->render() !!}
+                        @endif
                     </div>
                 </div>
             </div>

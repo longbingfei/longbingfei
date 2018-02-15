@@ -379,6 +379,79 @@ class WebController extends Controller
         return view('tpl.default.product_detail', ['data' => $data]);
     }
 
+    public function productUpdateForm($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $companys = CompanyModel::where(['user_id' => session('id')])->get()->toArray();
+        $provs = CityModel::where(['pid' => 1])->get()->toArray();
+        $data = DB::table('prds')->where(['id' => $id])->first();
+        if (!$data || !in_array(session('id'), [1, $data->user_id])) {
+            return ['error_msg' => '不合法的修改请求！'];
+        }
+        $data->images = $data->images ? unserialize($data->images) : [];
+        $data = [
+            'detail' => $data,
+            'companys' => $companys,
+            'provs' => $provs,
+            'qiniu_access_token' => $this->getQiniuUploadToken(),
+            'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
+        ];
+        return view('tpl.default.product_update_form', $data);
+    }
+
+    public function productUpdate($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $prd = DB::table('prds')->where(['id' => $id])->first();
+        if (!$prd || !in_array(session('id'), [1, $prd->user_id])) {
+            return ['error_msg' => '不合法的修改请求！'];
+        }
+        $filters = [
+            'sort_ids',
+            'area_ids',
+            'name',
+            'price',
+            'storage',
+            'images',
+            'describe',
+            'mark',
+        ];
+        $data = request()->only($filters);
+        $data['images'] = $data['images'] ? serialize($data['images']) : '';
+        $data['sort_ids'] = $data['sort_ids'] ? implode(',',$data['sort_ids']) : '';
+        $data['area_ids'] = $data['area_ids'] ? implode(',',$data['area_ids']) : '';
+        $data['updated_at'] = Date('Y-m-d H:i:s');
+        try {
+            $return = ['code' => 0, 'data' => ['id' => DB::table('prds')->where(['id' => $id])->update($data)]];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '产品更新失败!'];
+        }
+        return json_encode($return);
+    }
+    public function productDelete($id)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        $prd = DB::table('prds')->where(['id' => $id])->first();
+        if (!$prd || !in_array(session('id'), [1, $prd->user_id])) {
+            return ['error_msg' => '不合法的删除请求！'];
+        }
+        try {
+            DB::table('prds')->where(['id' => $id])->delete();
+            $return = ['code' => 0];
+        } catch (\Exception $e) {
+            $return = ['code' => -1, 'msg' => '产品删除失败!'];
+        }
+        return json_encode($return);
+    }
+
+
+
     public function zone($id)
     {
         if (!session('id') || session('id') != $id) {
@@ -397,7 +470,14 @@ class WebController extends Controller
             '3' => '已完成',
             '-1' => '审核未通过',
         ];
-        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow];
+        $pStatus = [
+            '0' => '待审核',
+            '1' => '发布中',
+            '-1' => '未通过'
+        ];
+        $prds = DB::table('prds')->where('user_id', session('id'))
+            ->paginate(10);
+        $data = ['need' => $needs, 'neesStatusShow' => $neesStatusShow, 'pStatus' => $pStatus, 'prds' => $prds];
         return view('tpl.default.zone', $data);
     }
 

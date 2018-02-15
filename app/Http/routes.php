@@ -23,7 +23,10 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/p', 'WebController@product');
     Route::get('/prd', 'WebController@productForm');
     Route::post('/prd', 'WebController@productCreate');
+    Route::get('/update_prd/{id}', 'WebController@productUpdateForm');
+    Route::post('/update_prd/{id}', 'WebController@productUpdate');
     Route::get('/prd/{id}', 'WebController@productDetail');
+    Route::get('/delete_prd/{id}', 'WebController@productDelete');
 
     //用户操作
     Route::get('/register', function () {

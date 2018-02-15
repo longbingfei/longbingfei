@@ -148,6 +148,30 @@ $(function () {
             }
         });
     });
+
+    //修改需求
+    $('.product_update_btn').click(function () {
+        if (!pid) {
+            return $.Confirm({message: '修改请求不合法!'});
+        }
+        $.ajax({
+            url: '/update_prd/' + pid,
+            type: 'post',
+            data: $('#productChangeForm').serialize()+'&describe='+um.getContent(),
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: '产品修改失败，请稍后再试!'});
+                }
+                return $.Confirm({
+                    message: '产品修改成功!', callback: function () {
+                        location.href = '/prd/' + pid;
+                    }
+                });
+            }
+        });
+    });
+
 });
 
 //图片上传查询
@@ -733,6 +757,25 @@ $('.need_delete_a').click(function () {
                 } else {
                     $.Confirm({
                         message: '需求删除成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+$('.prd_delete_a').click(function () {
+    var url = $(this).attr('_href');
+    return $.Confirm({
+        message: '确认删除此产品吗?', callback: function () {
+            $.getJSON(url, function (data) {
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg});
+                } else {
+                    $.Confirm({
+                        message: '产品删除成功!', callback: function () {
                             location.reload();
                         }
                     });
