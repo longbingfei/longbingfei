@@ -841,5 +841,92 @@ $('.need_over').click(function(){
     });
 });
 
+$('.c_sort_submit').click(function(){
+    var name = $('input[name=c_sort_name1]').val();
+    if(!name){
+        return  $.Confirm({
+            message: '厂家分类名称不能为空!'
+        });
+    }
+    $.ajax({
+        url: '/c_sort',
+        type: 'post',
+        data: {name: name},
+        success: function (data) {
+            data = JSON.parse(data);
+            if (!data || data.code !== 0) {
+                return $.Confirm({message: data.msg});
+            } else {
+                $.Confirm({
+                    message: '厂家分类创建成功!', callback: function () {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    })
+
+});
+$('.admin_c_sort_rename').click(function () {
+    var id = $(this).data('id');
+    $.getJSON('/c_sort/' + id, function (data) {
+        if (!data || !data[0]) {
+            return $.Confirm({message: '分类读取错误'});
+        }
+        $('input[name=c_sort_name2]').val(data[0].name);
+        $('#update_c_sort').modal('show')
+        $('.c_sort_update').click(function () {
+            var name = $('input[name=c_sort_name2]').val();
+            if(!name){
+                return  $.Confirm({
+                    message: '厂家分类名称不能为空!'
+                });
+            }
+            $.ajax({
+                url: '/c_sort/' + id,
+                type: 'post',
+                data: {name: name},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg || '厂家分类名更新失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: '厂家分类更新成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        });
+    });
+});
+
+
+$('.admin_c_sort_delete').click(function () {
+    var id = $(this).data('id');
+    return $.Confirm({
+        message: '确认删除此分类吗?', callback: function () {
+            $.ajax({
+                url: '/c_sort/' + id,
+                type: 'post',
+                data: {_method: 'delete'},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg || '厂家分类删除失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: '厂家分类删除成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+
 
 

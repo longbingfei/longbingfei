@@ -16,6 +16,8 @@
                             <div class="pull-left">|</div>
                             <li class="a3"><a href="/admin_company" target="nnn">厂家管理</a></li>
                             <div class="pull-left">|</div>
+                            <li class="a5"><a href="/c_sort" target="nnn">厂家分类管理</a></li>
+                            <div class="pull-left">|</div>
                             <li class="a4"><a href="/admin_prd" target="nnn">产品管理</a></li>
                             <div class="pull-left">|</div>
                             <li class="a5"><a href="/admin_news" target="nnn">资讯管理</a></li>

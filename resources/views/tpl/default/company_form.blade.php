@@ -73,24 +73,37 @@
                                 <td>企业类别</td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>11</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($c_sort as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>22</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($c_sort as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>33</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($c_sort as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>44</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($c_sort as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
+
                             </tr>
                             <tr class="cp_tr_s1">
                                 <td>经营范围</td>

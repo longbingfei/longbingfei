@@ -82,5 +82,12 @@ Route::group(['namespace' => 'Web'], function () {
 
     //获取城市
     Route::get('/city/{pid}', 'WebController@getCity');
+
+    //厂家分类
+    Route::get('/c_sort','WebController@c_sort_list');
+    Route::get('/c_sort/{id}','WebController@c_sort_detail');
+    Route::post('/c_sort','WebController@c_sort_create');
+    Route::post('/c_sort/{id}','WebController@c_sort_update');
+    Route::delete('/c_sort/{id}','WebController@c_sort_delete');
 });
 

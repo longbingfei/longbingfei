@@ -296,6 +296,7 @@ class WebController extends Controller
         $provs = CityModel::where(['pid' => 1])->get()->toArray();
         $data = [
             'provs' => $provs,
+            'c_sort'=>$this->getCsort(),
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
         ];
@@ -347,8 +348,8 @@ class WebController extends Controller
         ];
         $params = request()->only($filters);
         $params['area_ids'] = $params['area_ids'] ? implode(',', array_filter($params['area_ids'])) : '';
-        $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
-        $params['operate_ids'] = $params['operate_ids'] ? implode(',', $params['operate_ids']) : '';
+        $params['sort_ids'] = $params['sort_ids'] ? implode(',', array_filter($params['sort_ids'])) : '';
+        $params['operate_ids'] = $params['operate_ids'] ? implode(',', array_filter($params['operate_ids'])) : '';
         $params['user_id'] = session('id');
         try {
             $return = ['code' => 0, 'data' => ['id' => CompanyModel::create($params)->id]];
@@ -842,9 +843,12 @@ class WebController extends Controller
         $info['creator_id'] = 1;
         $info['login_time'] = Carbon::now();
         $info['login_ip'] = $info['ip'];
-        $user = WebUserModel::create($info);
-        Auth::login($user);
-        session($user->toArray());
+        try{
+            WebUserModel::create($info);
+            return redirect('/login');
+        }catch (\Exception $e){
+            return ['error_code' => '注册失败'];
+        }
         return redirect('/');
     }
 
@@ -922,5 +926,62 @@ class WebController extends Controller
             $return = ['code' => '-1'];
         }
         return json_encode($return);
+    }
+
+    public function c_sort_list(){
+        $sorts = DB::table('c_sorts')->paginate(10);
+
+        return view('tpl.default.admin_c_sort', ['data'=>$sorts]);
+    }
+    public function c_sort_detail($id){
+        $sort= DB::table('c_sorts')->where(['id'=>$id])->get();
+
+        return $sort;
+    }
+
+    public function c_sort_create(){
+        if(!$name = trim(request()->get('name'))){
+            return json_encode(['code' => '-1','msg'=>'分类名称为空']);
+        }
+        if(DB::table('c_sorts')->where(['name'=>$name])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类名称已存在']);
+        }
+        try{
+            DB::table('c_sorts')->insert(['name'=>$name]);
+            return json_encode(['code'=>0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+
+    }
+
+    public function c_sort_update($id){
+        if(!DB::table('c_sorts')->where(['id'=>$id])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类ID不存在']);
+        }
+        if(!$name = trim(request()->get('name'))){
+            return json_encode(['code' => '-1','msg'=>'分类名称为空']);
+        }
+        try{
+            DB::table('c_sorts')->where(['id'=>$id])->update(['name'=>$name]);
+            return json_encode(['code'=> 0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
+
+    public function c_sort_delete($id){
+        if(!DB::table('c_sorts')->where(['id'=>$id])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类ID不存在']);
+        }
+        if(CompanyModel::whereRaw("FIND_IN_SET({$id},sort_ids)")->count()){
+            return json_encode(['code' => '-1','msg'=>'此分类下存在厂家，不能删除!']);
+        }
+        try{
+            DB::table('c_sorts')->where(['id'=>$id])->delete();
+            return json_encode(['code'=>0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
     }
 }
