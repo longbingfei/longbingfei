@@ -78,7 +78,7 @@ class WebController extends Controller
             ->groupBy('needs.id')
             ->select(['needs.*', DB::raw('count(need_company.need_id) as baomingshu')])
             ->paginate(10);
-        $data = ['data' => $needs];
+        $data = ['data' => $needs,'sorts'=>$this->getNsort(), 'provs' => CityModel::where(['pid' => 1])->get()->toArray()];
         return view('tpl.default.need', $data);
     }
 
@@ -273,6 +273,8 @@ class WebController extends Controller
         $companys = DB::table('companys')->where(['status' => 1])->paginate(10);
         $data = [
             'data' => $companys,
+            'sort'=>$this->getCsort(),
+            'provs' => CityModel::where(['pid' => 1])->get()->toArray()
         ];
         return view('tpl.default.company', $data);
     }
@@ -280,6 +282,26 @@ class WebController extends Controller
     private function getCsort(){
 
         $c_sort = DB::table('c_sorts')->get();
+        $r = [];
+        foreach ($c_sort as $vo){
+            $r[$vo->id] = $vo->name;
+
+        }
+        return $r;
+    }
+    private function getNsort(){
+
+        $c_sort = DB::table('n_sorts')->get();
+        $r = [];
+        foreach ($c_sort as $vo){
+            $r[$vo->id] = $vo->name;
+
+        }
+        return $r;
+    }
+    private function getPsort(){
+
+        $c_sort = DB::table('p_sorts')->get();
         $r = [];
         foreach ($c_sort as $vo){
             $r[$vo->id] = $vo->name;
@@ -979,6 +1001,121 @@ class WebController extends Controller
         }
         try{
             DB::table('c_sorts')->where(['id'=>$id])->delete();
+            return json_encode(['code'=>0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
+
+
+    public function n_sort_list(){
+        $sorts = DB::table('n_sorts')->paginate(10);
+
+        return view('tpl.default.admin_n_sort', ['data'=>$sorts]);
+    }
+    public function n_sort_detail($id){
+        $sort= DB::table('n_sorts')->where(['id'=>$id])->get();
+
+        return $sort;
+    }
+
+    public function n_sort_create(){
+        if(!$name = trim(request()->get('name'))){
+            return json_encode(['code' => '-1','msg'=>'分类名称为空']);
+        }
+        if(DB::table('n_sorts')->where(['name'=>$name])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类名称已存在']);
+        }
+        try{
+            DB::table('n_sorts')->insert(['name'=>$name]);
+            return json_encode(['code'=>0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+
+    }
+
+    public function n_sort_update($id){
+        if(!DB::table('n_sorts')->where(['id'=>$id])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类ID不存在']);
+        }
+        if(!$name = trim(request()->get('name'))){
+            return json_encode(['code' => '-1','msg'=>'分类名称为空']);
+        }
+        try{
+            DB::table('n_sorts')->where(['id'=>$id])->update(['name'=>$name]);
+            return json_encode(['code'=> 0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
+
+    public function n_sort_delete($id){
+        if(!DB::table('n_sorts')->where(['id'=>$id])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类ID不存在']);
+        }
+        if(Need::whereRaw("FIND_IN_SET({$id},sort_id)")->count()){
+            return json_encode(['code' => '-1','msg'=>'此分类下存在需求，不能删除!']);
+        }
+        try{
+            DB::table('n_sorts')->where(['id'=>$id])->delete();
+            return json_encode(['code'=>0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
+
+    public function p_sort_list(){
+        $sorts = DB::table('p_sorts')->paginate(10);
+
+        return view('tpl.default.admin_p_sort', ['data'=>$sorts]);
+    }
+    public function p_sort_detail($id){
+        $sort= DB::table('p_sorts')->where(['id'=>$id])->get();
+
+        return $sort;
+    }
+
+    public function p_sort_create(){
+        if(!$name = trim(request()->get('name'))){
+            return json_encode(['code' => '-1','msg'=>'分类名称为空']);
+        }
+        if(DB::table('p_sorts')->where(['name'=>$name])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类名称已存在']);
+        }
+        try{
+            DB::table('p_sorts')->insert(['name'=>$name]);
+            return json_encode(['code'=>0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+
+    }
+
+    public function p_sort_update($id){
+        if(!DB::table('p_sorts')->where(['id'=>$id])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类ID不存在']);
+        }
+        if(!$name = trim(request()->get('name'))){
+            return json_encode(['code' => '-1','msg'=>'分类名称为空']);
+        }
+        try{
+            DB::table('p_sorts')->where(['id'=>$id])->update(['name'=>$name]);
+            return json_encode(['code'=> 0]);
+        }catch (\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
+
+    public function p_sort_delete($id){
+        if(!DB::table('p_sorts')->where(['id'=>$id])->count()){
+            return json_encode(['code' => '-1','msg'=>'分类ID不存在']);
+        }
+        if(PrdModel::whereRaw("FIND_IN_SET({$id},sort_ids)")->count()){
+            return json_encode(['code' => '-1','msg'=>'此分类下存在产品，不能删除!']);
+        }
+        try{
+            DB::table('p_sorts')->where(['id'=>$id])->delete();
             return json_encode(['code'=>0]);
         }catch (\Exception $e){
             return json_encode(['code'=>'-1']);

@@ -927,6 +927,181 @@ $('.admin_c_sort_delete').click(function () {
     });
 });
 
+$('.n_sort_submit').click(function(){
+    var name = $('input[name=n_sort_name1]').val();
+    if(!name){
+        return  $.Confirm({
+            message: '需求分类名称不能为空!'
+        });
+    }
+    $.ajax({
+        url: '/n_sort',
+        type: 'post',
+        data: {name: name},
+        success: function (data) {
+            data = JSON.parse(data);
+            if (!data || data.code !== 0) {
+                return $.Confirm({message: data.msg});
+            } else {
+                $.Confirm({
+                    message: '需求分类创建成功!', callback: function () {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    })
+
+});
+$('.admin_n_sort_rename').click(function () {
+    var id = $(this).data('id');
+    $.getJSON('/n_sort/' + id, function (data) {
+        if (!data || !data[0]) {
+            return $.Confirm({message: '分类读取错误'});
+        }
+        $('input[name=n_sort_name2]').val(data[0].name);
+        $('#update_n_sort').modal('show')
+        $('.n_sort_update').click(function () {
+            var name = $('input[name=n_sort_name2]').val();
+            if(!name){
+                return  $.Confirm({
+                    message: '需求分类名称不能为空!'
+                });
+            }
+            $.ajax({
+                url: '/n_sort/' + id,
+                type: 'post',
+                data: {name: name},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg || '需求分类名更新失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: '需求分类更新成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        });
+    });
+});
+
+
+$('.admin_n_sort_delete').click(function () {
+    var id = $(this).data('id');
+    return $.Confirm({
+        message: '确认删除此分类吗?', callback: function () {
+            $.ajax({
+                url: '/n_sort/' + id,
+                type: 'post',
+                data: {_method: 'delete'},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg || '需求分类删除失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: '需求分类删除成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+$('.p_sort_submit').click(function(){
+    var name = $('input[name=p_sort_name1]').val();
+    if(!name){
+        return  $.Confirm({
+            message: '产品分类名称不能为空!'
+        });
+    }
+    $.ajax({
+        url: '/p_sort',
+        type: 'post',
+        data: {name: name},
+        success: function (data) {
+            data = JSON.parse(data);
+            if (!data || data.code !== 0) {
+                return $.Confirm({message: data.msg});
+            } else {
+                $.Confirm({
+                    message: '产品分类创建成功!', callback: function () {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    })
+
+});
+$('.admin_p_sort_rename').click(function () {
+    var id = $(this).data('id');
+    $.getJSON('/p_sort/' + id, function (data) {
+        if (!data || !data[0]) {
+            return $.Confirm({message: '分类读取错误'});
+        }
+        $('input[name=p_sort_name2]').val(data[0].name);
+        $('#update_p_sort').modal('show')
+        $('.p_sort_update').click(function () {
+            var name = $('input[name=p_sort_name2]').val();
+            if(!name){
+                return  $.Confirm({
+                    message: '产品分类名称不能为空!'
+                });
+            }
+            $.ajax({
+                url: '/p_sort/' + id,
+                type: 'post',
+                data: {name: name},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg || '产品分类名更新失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: '产品分类更新成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        });
+    });
+});
+
+
+$('.admin_p_sort_delete').click(function () {
+    var id = $(this).data('id');
+    return $.Confirm({
+        message: '确认删除此分类吗?', callback: function () {
+            $.ajax({
+                url: '/p_sort/' + id,
+                type: 'post',
+                data: {_method: 'delete'},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: data.msg || '产品分类删除失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: '产品分类删除成功!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+
+
+
 
 
 

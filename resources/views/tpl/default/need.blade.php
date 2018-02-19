@@ -28,25 +28,53 @@
                             <div class="row">
                                 <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">需求类型</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
-                                    <a class="bg-blue" href="">1</a>
-                                    <a class="" href="">2</a>
-                                    <a class="" href="">3</a>
+                                    @foreach($sorts as $k => $v)
+                                    <a class="" href="{{$k}}">{{$v}}</a>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 clearfix task-type">
                             <div class="row">
-                                <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">发布区域</div>
+                                <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" style="margin-top: 10px;">所在地区</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
-                                    北京
+                                    <table>
+                                        <tr class="cp_tr_s">
+                                            <td style="width:150px;border:0px;">
+                                                <select class="form-control cityselector" name="area_ids[]" data-id="1" style="border:0px;">
+                                                    <option>不限</option>
+                                                    @foreach($provs as $vo)
+                                                        <option value="{{$vo['id']}}">{{$vo['name']}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td style="width:150px;border:0px;">
+                                                <select class="form-control cityselector" name="area_ids[]" data-id="2"  style="border:0px;">
+                                                    <option>不限</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:150px;border:0px;">
+                                                <select class="form-control cityselector" name="area_ids[]" data-id="3"  style="border:0px;">
+                                                    <option>不限</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 clearfix task-type">
                             <div class="row">
-                                <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">项目周期</div>
+                                <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" style="margin-top:7px;">项目周期</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
-                                    111
+                                    <select class="form-control" name="period"  style="border:0px;width:150px;">
+                                        <option value="">不限</option>
+                                        <option value="1">一周以内</option>
+                                        <option value="2">两周以内</option>
+                                        <option value="3">一月以内</option>
+                                        <option value="4">半年以内</option>
+                                        <option value="5">半年以上</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

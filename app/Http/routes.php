@@ -89,5 +89,19 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/c_sort','WebController@c_sort_create');
     Route::post('/c_sort/{id}','WebController@c_sort_update');
     Route::delete('/c_sort/{id}','WebController@c_sort_delete');
+
+    //需求分类
+    Route::get('/n_sort','WebController@n_sort_list');
+    Route::get('/n_sort/{id}','WebController@n_sort_detail');
+    Route::post('/n_sort','WebController@n_sort_create');
+    Route::post('/n_sort/{id}','WebController@n_sort_update');
+    Route::delete('/n_sort/{id}','WebController@n_sort_delete');
+
+    //产品分类
+    Route::get('/p_sort','WebController@p_sort_list');
+    Route::get('/p_sort/{id}','WebController@p_sort_detail');
+    Route::post('/p_sort','WebController@p_sort_create');
+    Route::post('/p_sort/{id}','WebController@p_sort_update');
+    Route::delete('/p_sort/{id}','WebController@p_sort_delete');
 });
 

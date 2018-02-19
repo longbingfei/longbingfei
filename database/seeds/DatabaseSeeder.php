@@ -34,6 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call(NewsSeeder::class);
         $this->call(NetSeeder::class);
         $this->call(CsortSeeder::class);
+        $this->call(NsortSeeder::class);
+        $this->call(PsortSeeder::class);
         Model::reguard();
     }
 }
