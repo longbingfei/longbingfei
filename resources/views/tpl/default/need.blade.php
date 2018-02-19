@@ -26,10 +26,11 @@
                     <div class="g-taskclassify clearfix  table-responsive">
                         <div class="col-xs-12 clearfix task-type">
                             <div class="row">
-                                <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">需求类型</div>
+                                <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">需求类别</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
+                                    <a href="javascript:;" class="sb" data-s="sort_id" data-v="0">不限</a>
                                     @foreach($sorts as $k => $v)
-                                    <a class="" href="{{$k}}">{{$v}}</a>
+                                    <a href="javascript:;" class="sb" data-s="sort_id" data-v="{{$k}}">{{$v}}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -82,11 +83,11 @@
                             <div class="row">
                                 <div class="col-lg-1 col-sm-2 col-md-2 cor-gray51 text-size14 col-xs-12">需求状态</div>
                                 <div class="col-lg-11 col-sm-10 col-md-10 col-xs-12">
-                                    <a class="bg-blue" href="">全部</a>
-                                    <a href="">报名中</a>
-                                    <a href="">线下对接中</a>
-                                    <a href="">已结束</a>
-                                    <a href="">流标</a>
+                                    <a class="bg-blue sb" href="javascript:;" data-s="status" data-v="0">全部</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="1">报名中</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="2">线下对接中</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="3">已结束</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="4">流标</a>
                                 </div>
                             </div>
                         </div>

@@ -1099,6 +1099,27 @@ $('.admin_p_sort_delete').click(function () {
     });
 });
 
+$(".sb").click(function(){
+    var s=$(this).data('s'),
+        v=$(this).data('v'),
+        m = location.href.split('?'),
+    url = m[0]+'?',
+    params = {};
+    if(m[1]){
+         $(m[1].split('&')).each(function(x,y){
+             y = y.split('=');
+             params[y[0]] = y[1];
+         });
+    }
+    if(s && v !== ''){
+        params[s] = v;
+    }
+    for(var i in params){
+        url+=(i+'='+params[i]+'&');
+    }
+    (url.slice(-1) === '&') && (url = url.slice(0,-1));
+    location.href = url;
+});
 
 
 

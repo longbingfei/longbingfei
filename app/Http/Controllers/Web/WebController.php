@@ -106,6 +106,8 @@ class WebController extends Controller
             return redirect('/login');
         }
         $data = [
+            'sorts'=>$this->getNsort(),
+            'provs' => CityModel::where(['pid' => 1])->get()->toArray(),
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
         ];
@@ -124,6 +126,8 @@ class WebController extends Controller
         $data->images = $data->images ? unserialize($data->images) : [];
         $data = [
             'detail' => $data,
+            'sorts'=>$this->getNsort(),
+            'provs' => CityModel::where(['pid' => 1])->get()->toArray(),
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
         ];
