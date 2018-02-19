@@ -271,8 +271,21 @@ class WebController extends Controller
     public function company()
     {
         $companys = DB::table('companys')->where(['status' => 1])->paginate(10);
-        $data = ['data' => $companys];
+        $data = [
+            'data' => $companys,
+        ];
         return view('tpl.default.company', $data);
+    }
+
+    private function getCsort(){
+
+        $c_sort = DB::table('c_sorts')->get();
+        $r = [];
+        foreach ($c_sort as $vo){
+            $r[$vo->id] = $vo->name;
+
+        }
+        return $r;
     }
 
     public function companyForm()
@@ -299,9 +312,11 @@ class WebController extends Controller
             return ['error_msg' => '不合法的修改请求！'];
         }
         $c->operate_ids = $c->operate_ids ? explode(',', $c->operate_ids) : [];
+        $c->sort_ids = $c->sort_ids ? explode(',', $c->sort_ids) : null;
         $provs = CityModel::where(['pid' => 1])->get()->toArray();
         $data = [
             'company'=>$c,
+            'c_sort'=>$this->getCsort(),
             'provs' => $provs,
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
@@ -369,8 +384,8 @@ class WebController extends Controller
         ];
         $params = request()->only($filters);
         $params['area_ids'] = $params['area_ids'] ? implode(',', array_filter($params['area_ids'])) : '';
-        $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
-        $params['operate_ids'] = $params['operate_ids'] ? implode(',', $params['operate_ids']) : '';
+        $params['sort_ids'] = $params['sort_ids'] ? implode(',', array_filter($params['sort_ids'])) : '';
+        $params['operate_ids'] = $params['operate_ids'] ? implode(',', array_filter($params['operate_ids'])) : '';
         try {
             CompanyModel::where('id',$id)->update($params);
             $return = ['code' => 0];
@@ -395,7 +410,7 @@ class WebController extends Controller
             $y['cover'] = $images ? $images[0] : '/asset/web/image/kabuki.jpg';
             return $y;
         }, $product);
-        return view('tpl.default.company_detail', ['data' => $data]);
+        return view('tpl.default.company_detail', ['data' => $data,'c_sort'=>$this->getCsort()]);
     }
 
     public function product()

@@ -25,7 +25,7 @@
                                     <p class="hidden-xs cor-gray51">详细地址：&nbsp;{{$data->address}}</p>
                                     <p class="personal-tag hidden-xs cor-gray51">分&nbsp;&nbsp;&nbsp;类：&nbsp;
                                         @foreach($data->sort_ids as $vo)
-                                            <span class="cor-gray87">{{$vo}}</span>
+                                            <span class="cor-gray87">{{isset($c_sort[$vo]) ? $c_sort[$vo]: ''}}</span>
                                         @endforeach
                                     </p>
                                     <p class="personal-tag hidden-xs cor-gray51">经营范围：&nbsp;

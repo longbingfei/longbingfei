@@ -21,7 +21,6 @@
     <tr>
         <th>序号</th>
         <th>厂家名称</th>
-        <th>分类</th>
         <th>状态</th>
         <th>联系人</th>
         <th>电话</th>
@@ -35,7 +34,6 @@
         <tr>
             <td>{{$key+1}}</td>
             <td>{{$vo->company_name}}</td>
-            <td>{{$vo->sort_ids}}</td>
             <td>{{$statusShow[$vo->status]}}</td>
             <td>{{$vo->name}}</td>
             <td>{{$vo->tel}}</td>
