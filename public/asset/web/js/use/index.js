@@ -342,11 +342,11 @@ $('.cityselector').change(function () {
         level = $(this).data('id'),
         _next = $('.cityselector');
     _next.each(function (x, y) {
-        $(y).data('id') > level && $(y).html("<option value=''>--请选择--</option>");
+        $(y).data('id') > level && $(y).html("<option value=''>不限</option>");
         if (pid && ($(y).data('id') === level + 1)) {
             $.getJSON('/city/' + pid, function (data) {
                 if (data && data.length) {
-                    var html = "<option value=''>--请选择--</option>";
+                    var html = "<option value=''>不限</option>";
                     $(data).each(function (a, b) {
                         html += "<option value='" + b.id + "'>" + b.name + "</option>";
                     });

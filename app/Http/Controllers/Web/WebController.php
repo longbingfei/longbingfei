@@ -313,7 +313,22 @@ class WebController extends Controller
 
     public function company()
     {
-        $companys = DB::table('companys')->where(['status' => 1])->paginate(10);
+        $filters = ['sort_id','city','order'];
+        $condition = request()->only($filters);
+        $order = [
+            null,
+            'companys.id',
+            'hot',
+            'created_at',
+        ];
+        $companys = DB::table('companys')->where(['status' => 1]);
+        $condition['sort_id'] && $companys = $companys->whereRaw("FIND_IN_SET({$condition['sort_id']},sort_ids)");
+        if($condition['city']){
+            $city = explode(',',$condition['city']);
+            $_city = array_pop($city);
+            $_city && $companys = $companys->whereRaw("FIND_IN_SET({$_city},area_ids)");
+        }
+        $companys = $companys->orderBy($condition['order'] ? $order[$condition['order']] : 'companys.id','desc')->paginate(10);
         $data = [
             'data' => $companys,
             'sort'=>$this->getCsort(),

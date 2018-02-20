@@ -96,7 +96,7 @@
                 <div class="g-taskmain">
                     <div class="clearfix g-taskmainhd">
                         <div class="pull-left">
-                            <a class="sb" href="javascript:;" data-s="order" data-v="1">默认</a><span>|</span>
+                            <a class="sb bg-blue" href="javascript:;" data-s="order" data-v="1">默认</a><span>|</span>
                             <a class="sb" href="javascript:;" data-s="order" data-v="2">发布时间</a><span>|</span>
                             <a class="sb" href="javascript:;" data-s="order" data-v="3">热度</a>
                         </div>

@@ -30,7 +30,7 @@
                                 <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">厂家分类</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
                                     @foreach($sort as $key => $vo)
-                                        <a href="">{{$vo}}</a>
+                                        <a href="javascript:;" class="sb" data-s="sort_id" data-v="{{$key}}">{{$vo}}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -40,26 +40,26 @@
                                 <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" style="margin-top: 10px;">所在地区</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
                                     <table>
-                                    <tr class="cp_tr_s">
-                                        <td style="width:150px;border:0px;">
-                                            <select class="form-control cityselector" name="area_ids[]" data-id="1" style="border:0px;">
-                                                <option>不限</option>
-                                                @foreach($provs as $vo)
-                                                    <option value="{{$vo['id']}}">{{$vo['name']}}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td style="width:150px;border:0px;">
-                                            <select class="form-control cityselector" name="area_ids[]" data-id="2"  style="border:0px;">
-                                                <option>不限</option>
-                                            </select>
-                                        </td>
-                                        <td style="width:150px;border:0px;">
-                                            <select class="form-control cityselector" name="area_ids[]" data-id="3"  style="border:0px;">
-                                                <option>不限</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+                                        <tr class="cp_tr_s">
+                                            <td style="width:150px;border:0px;">
+                                                <select class="form-control cityselector city_s city_s_1" name="area_ids[]" data-id="1" style="border:0px;">
+                                                    <option value="0">不限</option>
+                                                    @foreach($provs as $vo)
+                                                        <option value="{{$vo['id']}}">{{$vo['name']}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td style="width:150px;border:0px;">
+                                                <select class="form-control cityselector city_s city_s_2" name="area_ids[]" data-id="2"  style="border:0px;">
+                                                    <option value="0">不限</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:150px;border:0px;">
+                                                <select class="form-control cityselector city_s city_s_3" name="area_ids[]" data-id="3"  style="border:0px;">
+                                                    <option value="0">不限</option>
+                                                </select>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -69,9 +69,9 @@
                 <div class="g-taskmain">
                     <div class="clearfix g-taskmainhd">
                         <div class="pull-left">
-                            <a class="g-taskmact" href="">默认</a><span>|</span>
-                            <a class=" g-taskmaintime" href="">浏览量</a><span>|</span>
-                            <a class="" href="">入驻时间</a>
+                            <a class="sb bg-blue" href="javascript:;" data-s="order" data-v="1">默认</a><span>|</span>
+                            <a class="sb" href="javascript:;" data-s="order" data-v="2">浏览量</a><span>|</span>
+                            <a class="sb" href="javascript:;" data-s="order" data-v="3">入驻时间</a>
                         </div>
                     </div>
                     @if(!collect($data)->toArray()['total'])
