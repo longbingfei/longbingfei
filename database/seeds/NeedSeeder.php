@@ -17,7 +17,7 @@ class NeedSeeder extends Seeder
         DB::table('needs')->truncate();
         Need::create([
             'sort_id' => '1',
-            'area_id' => 1,
+            'area_ids' => 1,
             'period' => 10,
             'status' => 1,
             'fork' => 10,

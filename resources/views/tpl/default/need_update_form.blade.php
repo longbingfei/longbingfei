@@ -25,7 +25,7 @@
                                     <tr class="cp_tr_s">
                                         <td>发布区域</td>
                                         <td>
-                                            <select class="form-control cityselector" name="area_id[]" data-id="1" style="border:0px;width:150px;">
+                                            <select class="form-control cityselector" name="area_ids[]" data-id="1" style="border:0px;width:150px;">
                                                 <option value="">请选择</option>
                                                 @foreach($provs_1 as $vo)
                                                     <option value="{{$vo['id']}}" {{isset($detail->up_sort_id[0]) && ($detail->up_sort_id[0] == $vo['id']) ? 'selected' :''}}>{{$vo['name']}}</option>
@@ -33,7 +33,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control cityselector" name="area_id[]" data-id="2" style="border:0px;width:150px;">
+                                            <select class="form-control cityselector" name="area_ids[]" data-id="2" style="border:0px;width:150px;">
                                                 <option value="">请选择</option>
                                                 @if(!empty($provs_2))
                                                     @foreach($provs_2 as $vo)
@@ -43,7 +43,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control cityselector" name="area_id[]" data-id="3" style="border:0px;width:150px;">
+                                            <select class="form-control cityselector" name="area_ids[]" data-id="3" style="border:0px;width:150px;">
                                                 <option value="">请选择</option>
                                                 @if(!empty($provs_3))
                                                     @foreach($provs_3 as $vo)

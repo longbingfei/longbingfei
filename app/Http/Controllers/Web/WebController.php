@@ -100,7 +100,7 @@ class WebController extends Controller
         if($condition['city']){
             $city = explode(',',$condition['city']);
             $_city = array_pop($city);
-            $_city && $needs = $needs->where('area_id',$_city);
+            $_city && $needs = $needs->whereRaw("FIND_IN_SET({$_city},area_ids)");
         }
         $condition['status'] && $needs = $needs->where('needs.status',$condition['status']);
         $order = [
@@ -112,12 +112,16 @@ class WebController extends Controller
         $needs = $needs
             ->leftjoin('need_company', 'need_company.need_id', '=', 'needs.id')
             ->leftjoin('n_sorts', 'n_sorts.id', '=', 'needs.sort_id')
-            ->leftjoin('citys', 'citys.id', '=', 'needs.area_id')
         ->groupBy('needs.id')
         ->orderBy($condition['order'] ? $order[$condition['order']] : 'needs.id','desc')
-        ->select(['needs.*','n_sorts.name as sort_name','citys.name as city_name',DB::raw('count(need_company.need_id) as baomingshu')])
+        ->select(['needs.*','n_sorts.name as sort_name',DB::raw('count(need_company.need_id) as baomingshu')])
         ->paginate(10);
-        $data = ['data' => $needs,'sorts'=>$this->getNsort(), 'provs' => CityModel::where(['pid' => 1])->get()->toArray()];
+        $_needs = $needs->toArray();
+        $_needs['data'] = array_map(function($value) {
+            $value->add = DB::table('citys')->whereIn('id',explode(',',$value->area_ids))->select([DB::raw('group_concat(name) as adds')])->first()->adds;
+            return $value;
+        }, $_needs['data']);
+        $data = ['data' => $needs,'_data'=>$_needs,'sorts'=>$this->getNsort(), 'provs' => CityModel::where(['pid' => 1])->get()->toArray()];
         return view('tpl.default.need', $data);
     }
 
@@ -163,7 +167,8 @@ class WebController extends Controller
             return ['error_msg' => '不合法的修改请求！'];
         }
         $data->images = $data->images ? unserialize($data->images) : [];
-        $city = CityModel::where(['id' => $data->area_id])->first(); //最下级
+        $area = explode(',',$data->area_ids);
+        $city = CityModel::where(['id' => array_pop($area)])->first(); //最下级
         $provs_2 = $provs_3 = $data->up_sort_id = [];
         if(!$city->level || $city->level == 1){
             $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
@@ -202,7 +207,7 @@ class WebController extends Controller
         }
         $filters = [
             'sort_id',
-            'area_id',
+            'area_ids',
             'period',
             'fork',
             'hot',
@@ -217,8 +222,8 @@ class WebController extends Controller
             'mark',
         ];
         $data = request()->only($filters);
-        $data['area_id'] = array_filter($data['area_id']);
-        $data['area_id'] = empty($data['area_id']) ? []: array_pop($data['area_id']);
+        $data['area_ids'] = array_filter($data['area_ids']);
+        $data['area_ids'] = empty($data['area_ids']) ? '': implode(',',$data['area_ids']);
         $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['user_id'] = session('id');
         $data['created_at'] = $data['updated_at'] = Date('Y-m-d H:i:s');
@@ -241,7 +246,7 @@ class WebController extends Controller
         }
         $filters = [
             'sort_id',
-            'area_id',
+            'area_ids',
             'period',
             'fork',
             'hot',
@@ -255,8 +260,8 @@ class WebController extends Controller
             'mark',
         ];
         $data = request()->only($filters);
-        $data['area_id'] = array_filter($data['area_id']);
-        $data['area_id'] = empty($data['area_id']) ? []: array_pop($data['area_id']);
+        $data['area_ids'] = array_filter($data['area_ids']);
+        $data['area_ids'] = empty($data['area_ids']) ? '': implode(',',$data['area_ids']);
         $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['updated_at'] = Date('Y-m-d H:i:s');
         try {

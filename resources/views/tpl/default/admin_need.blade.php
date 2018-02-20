@@ -40,7 +40,7 @@
             <td>{{$key+1}}</td>
             <td>{{$vo->title}}</td>
             <td>{{$vo->sort_id}}</td>
-            <td>{{$vo->area_id}}</td>
+            <td>{{$vo->area_ids}}</td>
             <td>{{$vo->period}}</td>
             <td>{{$vo->budget}}</td>
             <td>{{$statusShow[$vo->status]}}</td>

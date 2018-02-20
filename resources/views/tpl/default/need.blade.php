@@ -101,13 +101,13 @@
                             <a class="sb" href="javascript:;" data-s="order" data-v="3">热度</a>
                         </div>
                     </div>
-                    @if(!collect($data)->toArray()['total'])
+                    @if(!$_data['total'])
                         <div style="height:50px;padding-left: 10px;line-height: 50px;">
                             暂无相关数据
                         </div>
                     @else
                         <ul class="g-taskmainlist">
-                            @foreach($data as $vo)
+                            @foreach($_data['data'] as $vo)
                                 <li class="clearfix zz1">
                                     <div class="row zz">
                                         <div class="col-lg-9 col-sm-8">
@@ -136,7 +136,7 @@
                                             <span title="需求类型"><i class="glyphicon glyphicon-th-large"></i> <span
                                                         class="info">{{$vo->sort_name}}</span></span>
                                             <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                        class="info">{{$vo->city_name}}</span></span>
+                                                        class="info">{{$vo->add}}</span></span>
                                             <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span
                                                         class="info">{{Date('Y-m-d',strtotime($vo->created_at))}}</span></span>
                                         </div>

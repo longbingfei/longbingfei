@@ -15,7 +15,7 @@ class CreateNeedsTable extends Migration
         Schema::create('needs', function (Blueprint $tables) {
             $tables->increments('id')->unsigned();
             $tables->tinyInteger('sort_id')->default(0);
-            $tables->tinyInteger('area_id')->default(1);
+            $tables->string('area_ids');
             $tables->tinyInteger('period'); //周期
             $tables->tinyInteger('status')->default(0);
             //$statusShow = [

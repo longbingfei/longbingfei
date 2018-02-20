@@ -10,7 +10,7 @@ class Need extends Model
 
     protected $fillable = [
         'sort_id',
-        'area_id',
+        'area_ids',
         'period',
         'status',
         'fork',
