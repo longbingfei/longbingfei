@@ -163,13 +163,35 @@ class WebController extends Controller
             return ['error_msg' => '不合法的修改请求！'];
         }
         $data->images = $data->images ? unserialize($data->images) : [];
+        $city = CityModel::where(['id' => $data->area_id])->first(); //最下级
+        $provs_2 = $provs_3 = $data->up_sort_id = [];
+        if(!$city->level || $city->level == 1){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $city->level == 1 && $provs_2 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $city->level == 1 && $data->up_sort_id = [$city->id];
+        }
+        if($city->level == 2){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $provs_2 = CityModel::where(['pid' => $city->pid])->get()->toArray();
+            $provs_3 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $data->up_sort_id = [CityModel::where(['pid' => $city->pid])->first()->pid,$city->id];
+        }
+        if($city->level == 3){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $provs_2 = CityModel::where(['pid' => CityModel::where(['id' => $city->pid])->first()->pid])->get()->toArray();
+            $provs_3 = CityModel::where(['pid' => $city->pid])->get()->toArray();
+            $data->up_sort_id = [CityModel::where(['id' => $city->pid])->first()->pid,$city->pid,$city->id];
+        }
         $data = [
             'detail' => $data,
             'sorts'=>$this->getNsort(),
-            'provs' => CityModel::where(['pid' => 1])->get()->toArray(),
+            'provs_1' => $provs_1,
+            'provs_2' => $provs_2,
+            'provs_3' => $provs_3,
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
         ];
+
         return view('tpl.default.need_update_form', $data);
     }
 
@@ -195,6 +217,8 @@ class WebController extends Controller
             'mark',
         ];
         $data = request()->only($filters);
+        $data['area_id'] = array_filter($data['area_id']);
+        $data['area_id'] = empty($data['area_id']) ? []: array_pop($data['area_id']);
         $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['user_id'] = session('id');
         $data['created_at'] = $data['updated_at'] = Date('Y-m-d H:i:s');
@@ -226,16 +250,18 @@ class WebController extends Controller
             'budget',
             'tel',
             'qq',
-            'wechat',
             'images',
             'describe',
             'mark',
         ];
         $data = request()->only($filters);
+        $data['area_id'] = array_filter($data['area_id']);
+        $data['area_id'] = empty($data['area_id']) ? []: array_pop($data['area_id']);
         $data['images'] = $data['images'] ? serialize($data['images']) : '';
         $data['updated_at'] = Date('Y-m-d H:i:s');
         try {
-            $return = ['code' => 0, 'data' => ['id' => DB::table('needs')->where(['id' => $id])->update($data)]];
+            DB::table('needs')->where('id' ,$id)->update($data);
+            $return = ['code' => 0];
         } catch (\Exception $e) {
             $return = ['code' => -1, 'msg' => '需求更新失败!'];
         }

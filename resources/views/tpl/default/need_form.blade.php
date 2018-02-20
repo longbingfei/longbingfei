@@ -10,37 +10,44 @@
                     <div class="row ee">
                         <div class="">
                             <div class="g-taskclassify clearfix  table-responsive">
-                                <div class="col-xs-12 clearfix task-type">
-                                    <div class="row">
-                                        <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">需求类别</div>
-                                        <div class="col-lg-11 col-sm-10  col-xs-12">
-                                            <a class="bg-blue" href="">1</a>
-                                            <a class="" href="">2</a>
-                                            <a class="" href="">3</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 clearfix task-type">
-                                    <div class="row">
-                                        <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">发布区域</div>
-                                        <div class="col-lg-11 col-sm-10  col-xs-12">
-                                            北京
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 clearfix task-type">
-                                    <div class="row">
-                                        <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">项目周期</div>
-                                        <div class="col-lg-11 col-sm-10  col-xs-12">
-                                            111
-                                        </div>
-                                    </div>
+                                <div class="col-xs-12 clearfix task-type" style="margin-left: -22px;font-size: 15px;">
+                                    <table>
+                                        <tr class="cp_tr_s1">
+                                            <td>需求类别</td>
+                                            <td>
+                                                <select class="form-control" name="sort_id" style="border:0px;width:150px;">
+                                                    <option value="0">请选择</option>
+                                                    @foreach($sorts as $k=>$v)
+                                                        <option value="{{$k}}">{{$v}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr class="cp_tr_s">
+                                            <td>发布区域</td>
+                                            <td>
+                                                <select class="form-control cityselector" name="area_id[]" data-id="1" style="border:0px;width:150px;">
+                                                    <option value="">请选择</option>
+                                                    @foreach($provs as $vo)
+                                                        <option value="{{$vo['id']}}">{{$vo['name']}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control cityselector" name="area_id[]" data-id="2" style="border:0px;width:150px;">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control cityselector" name="area_id[]" data-id="3" style="border:0px;width:150px;">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="sort_id" value="1">
-                        <input type="hidden" name="area_id" value="1">
-                        <input type="hidden" name="period" value="30">
                         <div class="form-group mt10">
                             <div class="input-group">
                                 <span class="input-group-addon">需求标题</span>
@@ -61,6 +68,8 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
+                                <span class="input-group-addon">周期</span>
+                                <input type="text" class="form-control" name="period">
                                 <span class="input-group-addon">QQ</span>
                                 <input type="text" class="form-control" name="qq">
                                 <span class="input-group-addon">预算</span>
