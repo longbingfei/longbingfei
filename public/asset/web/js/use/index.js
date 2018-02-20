@@ -1198,11 +1198,11 @@ $('.period_s').change(function(){
                 level = 1,
                 _next = $('.cityselector');
             _next.each(function (x, y) {
-                $(y).data('id') > level && $(y).html("<option value=''>--请选择--</option>");
+                $(y).data('id') > level && $(y).html("<option value=''>不限</option>");
                 if (pid && ($(y).data('id') == level + 1)) {
                     $.getJSON('/city/' + pid, function (data) {
                         if (data && data.length) {
-                            var html = "<option value=''>--请选择--</option>";
+                            var html = "<option value=''>不限</option>";
                             $(data).each(function (a, b) {
                                 html += "<option value='" + b.id + "'"+(citys[1] && citys[1]==b.id ? 'selected':'')+">" + b.name + "</option>";
                             });
@@ -1214,7 +1214,7 @@ $('.period_s').change(function(){
                 if (citys[1] && ($(y).data('id') == 3)) {
                     $.getJSON('/city/' + citys[1], function (data) {
                         if (data && data.length) {
-                            var html = "<option value=''>--请选择--</option>";
+                            var html = "<option value=''>不限</option>";
                             $(data).each(function (a, b) {
                                 html += "<option value='" + b.id + "'"+(citys[2] && citys[2]==b.id ? 'selected':'')+">" + b.name + "</option>";
                             });

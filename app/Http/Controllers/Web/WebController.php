@@ -496,7 +496,28 @@ class WebController extends Controller
 
     public function product()
     {
-        $data = ['data' => PrdModel::where(['status' => 1])->paginate(10)];
+        $filters = ['sort_id','city','order'];
+        $condition = request()->only($filters);
+        $order = [
+            null,
+            'id',
+            'hot',
+            'created_at',
+        ];
+        $p = PrdModel::where(['status' => 1]);
+        $condition['sort_id'] && $p = $p->whereRaw("FIND_IN_SET({$condition['sort_id']},sort_ids)");
+        if($condition['city']){
+            $city = explode(',',$condition['city']);
+            $_city = array_pop($city);
+            $_city && $p = $p->whereRaw("FIND_IN_SET({$_city},area_ids)");
+        }
+
+        $p = $p->orderBy($condition['order'] ? $order[$condition['order']] : 'id','desc')->paginate(10);
+        $data = [
+            'sorts'=>$this->getPsort(),
+            'provs' => CityModel::where(['pid' => 1])->get()->toArray(),
+            'data' => $p
+        ];
         return view('tpl.default.product', $data);
     }
 
