@@ -342,11 +342,11 @@ $('.cityselector').change(function () {
         level = $(this).data('id'),
         _next = $('.cityselector');
     _next.each(function (x, y) {
-        $(y).data('id') > level && $(y).html("<option>--请选择--</option>");
+        $(y).data('id') > level && $(y).html("<option value=''>--请选择--</option>");
         if (pid && ($(y).data('id') === level + 1)) {
             $.getJSON('/city/' + pid, function (data) {
                 if (data && data.length) {
-                    var html = "<option>--请选择--</option>";
+                    var html = "<option value=''>--请选择--</option>";
                     $(data).each(function (a, b) {
                         html += "<option value='" + b.id + "'>" + b.name + "</option>";
                     });
@@ -1099,6 +1099,8 @@ $('.admin_p_sort_delete').click(function () {
     });
 });
 
+
+//条件点击收索
 $(".sb").click(function(){
     var s=$(this).data('s'),
         v=$(this).data('v'),
@@ -1121,8 +1123,115 @@ $(".sb").click(function(){
     location.href = url;
 });
 
+//select框城市联动search
+$('.city_s').change(function(){
+    var s='city',
+        v=[],
+        m = location.href.split('?'),
+        url = m[0]+'?',
+        params = {};
+    $('.city_s').each(function(x,y){
+        $(y).val() && v.push($(y).val());
+    });
+    v = v.join(',');
+    if(m[1]){
+        $(m[1].split('&')).each(function(x,y){
+            y = y.split('=');
+            params[y[0]] = y[1];
+        });
+    }
+    if(s && v !== ''){
+        params[s] = v;
+    }
+    for(var i in params){
+        url+=(i+'='+params[i]+'&');
+    }
+    (url.slice(-1) === '&') && (url = url.slice(0,-1));
+    location.href = url;
+});
 
+//select 周期选择
+$('.period_s').change(function(){
+    var s='period',
+        v=$(this).val(),
+        m = location.href.split('?'),
+        url = m[0]+'?',
+        params = {};
+    if(m[1]){
+        $(m[1].split('&')).each(function(x,y){
+            y = y.split('=');
+            params[y[0]] = y[1];
+        });
+    }
+    if(s && v !== ''){
+        params[s] = v;
+    }
+    for(var i in params){
+        url+=(i+'='+params[i]+'&');
+    }
+    (url.slice(-1) === '&') && (url = url.slice(0,-1));
+    location.href = url;
+});
 
+(function () {
+    //载入收索条件值补充
+    var m = location.href.split('?'),
+        params = {};
+    if(m[1]){
+        $(m[1].split('&')).each(function(x,y){
+            y = y.split('=');
+            params[y[0]] = y[1];
+        });
+        $('.sb').each(function(x,y){
+            for(var i in params){
+                if((i == $(y).data('s')) && (params[i] == $(y).data('v'))){
+                    $(y).addClass('bg-blue');
+                    $(y).siblings().removeClass('bg-blue');
+                }
+            }
+        });
+        //城市收索框值
+        if(params.city){
+            var citys = params.city.split(',');
+            $('.city_s_1').find('option[value='+citys[0]+']')[0].setAttribute('selected','selected');
+            var pid = citys[0],
+                level = 1,
+                _next = $('.cityselector');
+            _next.each(function (x, y) {
+                $(y).data('id') > level && $(y).html("<option value=''>--请选择--</option>");
+                if (pid && ($(y).data('id') == level + 1)) {
+                    $.getJSON('/city/' + pid, function (data) {
+                        if (data && data.length) {
+                            var html = "<option value=''>--请选择--</option>";
+                            $(data).each(function (a, b) {
+                                html += "<option value='" + b.id + "'"+(citys[1] && citys[1]==b.id ? 'selected':'')+">" + b.name + "</option>";
+                            });
+                            $(y).html(html);
+                        }
+                    });
+                }
+                //三级联动
+                if (citys[1] && ($(y).data('id') == 3)) {
+                    $.getJSON('/city/' + citys[1], function (data) {
+                        if (data && data.length) {
+                            var html = "<option value=''>--请选择--</option>";
+                            $(data).each(function (a, b) {
+                                html += "<option value='" + b.id + "'"+(citys[2] && citys[2]==b.id ? 'selected':'')+">" + b.name + "</option>";
+                            });
+                            $(y).html(html);
+                        }
+                    });
+                }
+            });
+        }
 
+        //select 周期选择
+
+        if(params.period){
+            $('.period_s').find('option[value='+params.period+']')[0].setAttribute('selected','selected');
+        }
+
+    }
+})();
 
 

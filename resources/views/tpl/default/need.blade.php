@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">需求类别</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
-                                    <a href="javascript:;" class="sb" data-s="sort_id" data-v="0">不限</a>
+                                    <a href="javascript:;" class="sb bg-blue" data-s="sort_id" data-v="0">不限</a>
                                     @foreach($sorts as $k => $v)
                                     <a href="javascript:;" class="sb" data-s="sort_id" data-v="{{$k}}">{{$v}}</a>
                                     @endforeach
@@ -42,21 +42,21 @@
                                     <table>
                                         <tr class="cp_tr_s">
                                             <td style="width:150px;border:0px;">
-                                                <select class="form-control cityselector" name="area_ids[]" data-id="1" style="border:0px;">
-                                                    <option>不限</option>
+                                                <select class="form-control cityselector city_s city_s_1" name="area_ids[]" data-id="1" style="border:0px;">
+                                                    <option value="0">不限</option>
                                                     @foreach($provs as $vo)
                                                         <option value="{{$vo['id']}}">{{$vo['name']}}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
                                             <td style="width:150px;border:0px;">
-                                                <select class="form-control cityselector" name="area_ids[]" data-id="2"  style="border:0px;">
-                                                    <option>不限</option>
+                                                <select class="form-control cityselector city_s city_s_2" name="area_ids[]" data-id="2"  style="border:0px;">
+                                                    <option value="0">不限</option>
                                                 </select>
                                             </td>
                                             <td style="width:150px;border:0px;">
-                                                <select class="form-control cityselector" name="area_ids[]" data-id="3"  style="border:0px;">
-                                                    <option>不限</option>
+                                                <select class="form-control cityselector city_s city_s_3" name="area_ids[]" data-id="3"  style="border:0px;">
+                                                    <option value="0">不限</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -68,8 +68,8 @@
                             <div class="row">
                                 <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" style="margin-top:7px;">项目周期</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
-                                    <select class="form-control" name="period"  style="border:0px;width:150px;">
-                                        <option value="">不限</option>
+                                    <select class="form-control period_s" name="period"  style="border:0px;width:150px;">
+                                        <option value="0">不限</option>
                                         <option value="1">一周以内</option>
                                         <option value="2">两周以内</option>
                                         <option value="3">一月以内</option>
@@ -83,7 +83,7 @@
                             <div class="row">
                                 <div class="col-lg-1 col-sm-2 col-md-2 cor-gray51 text-size14 col-xs-12">需求状态</div>
                                 <div class="col-lg-11 col-sm-10 col-md-10 col-xs-12">
-                                    <a class="bg-blue sb" href="javascript:;" data-s="status" data-v="0">全部</a>
+                                    <a class="bg-blue sb" href="javascript:;" data-s="status" data-v="0">不限</a>
                                     <a href="javascript:;" class="sb" data-s="status" data-v="1">报名中</a>
                                     <a href="javascript:;" class="sb" data-s="status" data-v="2">线下对接中</a>
                                     <a href="javascript:;" class="sb" data-s="status" data-v="3">已结束</a>
@@ -96,9 +96,9 @@
                 <div class="g-taskmain">
                     <div class="clearfix g-taskmainhd">
                         <div class="pull-left">
-                            <a class="g-taskmact" href="">默认</a><span>|</span>
-                            <a class=" g-taskmaintime" href="">发布时间</a><span>|</span>
-                            <a class="" href="">热度</a>
+                            <a class="sb" href="javascript:;" data-s="order" data-v="1">默认</a><span>|</span>
+                            <a class="sb" href="javascript:;" data-s="order" data-v="2">发布时间</a><span>|</span>
+                            <a class="sb" href="javascript:;" data-s="order" data-v="3">热度</a>
                         </div>
                     </div>
                     @if(!collect($data)->toArray()['total'])
@@ -134,9 +134,9 @@
                                         </div>
                                         <div class="z6">
                                             <span title="需求类型"><i class="glyphicon glyphicon-th-large"></i> <span
-                                                        class="info">计算机编程</span></span>
+                                                        class="info">{{$vo->sort_name}}</span></span>
                                             <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                        class="info">洛阳市</span></span>
+                                                        class="info">{{$vo->city_name}}</span></span>
                                             <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span
                                                         class="info">{{Date('Y-m-d',strtotime($vo->created_at))}}</span></span>
                                         </div>
@@ -152,4 +152,7 @@
         </div>
     </div>
 </section>
+<script>
+    var CITY = JSON.parse('{!! json_encode($provs) !!}');
+</script>
 @include('tpl.default.footer')

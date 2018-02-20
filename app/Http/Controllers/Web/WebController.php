@@ -73,11 +73,50 @@ class WebController extends Controller
 
     public function need()
     {
-        $needs = DB::table('needs')->where('needs.status', '>', 0)
+        $filters = ['sort_id','period','city','order','status'];
+        $condition = request()->only($filters);
+        $needs = DB::table('needs')->where('needs.status', '>', 0);
+        $condition['sort_id'] && $needs = $needs->where('sort_id',$condition['sort_id']);
+        if($condition['period']){
+            switch($condition['period']){
+                case '1':
+                    $needs = $needs->where('period','<=','7');
+                    break;
+                case '2':
+                    $needs = $needs->where('period','<=','14');
+                    break;
+                case '3':
+                    $needs = $needs->where('period','<=','31');
+                    break;
+                case '4':
+                    $needs = $needs->where('period','<=','183');
+                    break;
+                case '5':
+                    $needs = $needs->where('period','>','183');
+                    break;
+            }
+            $needs = $needs->where('period',$condition['sort_id']);
+        }
+        if($condition['city']){
+            $city = explode(',',$condition['city']);
+            $_city = array_pop($city);
+            $_city && $needs = $needs->where('area_id',$_city);
+        }
+        $condition['status'] && $needs = $needs->where('needs.status',$condition['status']);
+        $order = [
+            null,
+            'needs.id',
+            'created_at',
+            'hot'
+        ];
+        $needs = $needs
             ->leftjoin('need_company', 'need_company.need_id', '=', 'needs.id')
-            ->groupBy('needs.id')
-            ->select(['needs.*', DB::raw('count(need_company.need_id) as baomingshu')])
-            ->paginate(10);
+            ->leftjoin('n_sorts', 'n_sorts.id', '=', 'needs.sort_id')
+            ->leftjoin('citys', 'citys.id', '=', 'needs.area_id')
+        ->groupBy('needs.id')
+        ->orderBy($condition['order'] ? $order[$condition['order']] : 'needs.id','desc')
+        ->select(['needs.*','n_sorts.name as sort_name','citys.name as city_name',DB::raw('count(need_company.need_id) as baomingshu')])
+        ->paginate(10);
         $data = ['data' => $needs,'sorts'=>$this->getNsort(), 'provs' => CityModel::where(['pid' => 1])->get()->toArray()];
         return view('tpl.default.need', $data);
     }
