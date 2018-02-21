@@ -58,6 +58,13 @@
                     <a class="btn btn-xs btn-info admin_need_edit" data-status="{{$vo->status}}"
                        data-id="{{$vo->id}}" href="/update_prd/{{$vo->id}}" target="_blank">修改
                     </a>
+                    @if($vo->is_promote)
+                        <a class="btn btn-xs btn-warning admin_promote _cancel" data-c="prds" data-id="{{$vo->id}}" data-s="{{$vo->status}}" href="javascript:;">取消推荐
+                        </a>
+                    @else
+                        <a class="btn btn-xs btn-warning admin_promote" data-c="prds" data-id="{{$vo->id}}" data-s="{{$vo->status}}" href="javascript:;">推荐
+                        </a>
+                    @endif
                 <button class="btn btn-xs btn-success admin_prd_delete" data-status="{{$vo->status}}"
                         data-id="{{$vo->id}}">删除
                 </button>

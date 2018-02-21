@@ -1285,4 +1285,33 @@ class WebController extends Controller
             return json_encode(['code'=>'-1']);
         }
     }
+
+    public function adminPromote($id){
+        $type = request()->get('type');
+        $models = [
+            'prds'=>PrdModel::class,
+            'company'=>CompanyModel::class,
+            'need'=>Need::class,
+        ];
+        try{
+            $models[$type]::where('id',$id)->update(['is_promote'=>1]);
+            return json_encode(['code'=>0]);
+        }catch(\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
+    public function adminCancelPromote($id){
+        $type = request()->get('type');
+        $models = [
+            'prds'=>PrdModel::class,
+            'company'=>CompanyModel::class,
+            'need'=>Need::class,
+        ];
+        try{
+            $models[$type]::where('id',$id)->update(['is_promote'=>0]);
+            return json_encode(['code'=>0]);
+        }catch(\Exception $e){
+            return json_encode(['code'=>'-1']);
+        }
+    }
 }

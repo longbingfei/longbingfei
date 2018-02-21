@@ -22,6 +22,7 @@ class Prd extends Model
         'describe',
         'mark',
         'user_id',
-        'company_id'
+        'company_id',
+        'is_promote'
     ];
 }

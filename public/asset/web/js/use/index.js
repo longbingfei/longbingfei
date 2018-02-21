@@ -191,6 +191,36 @@ $(function () {
 
 });
 
+//推荐
+$('.admin_promote').click(function(){
+    var v = $(this).data('c'),
+        id = $(this).data('id'),
+        s = $(this).data('s'),
+        url = $(this).hasClass('_cancel') ? '/admin_cancel_promote/':'/admin_promote/';
+    if(s < 1){
+        return $.Confirm({
+            message: '审核通过后再做此操作!'
+        });
+    }else{
+        $.ajax({
+            url: url + id,
+            type: 'post',
+            data: {type: v},
+            success: function (data) {
+                data = JSON.parse(data);
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg || '操作失败!'});
+                }
+                return $.Confirm({
+                    message: '操作成功!', callback: function () {
+                        location.reload();
+                    }
+                });
+            }
+        })
+    }
+});
+
 //图片上传查询
 function checkUploadStatus(symbol, callback) {
     clearInterval(taskMark);

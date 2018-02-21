@@ -27,5 +27,6 @@ class Company extends Model
         'describe',
         'mark',
         'user_id',
+        'is_promote'
     ];
 }

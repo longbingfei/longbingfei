@@ -76,6 +76,10 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/admin_net', 'WebController@adminNet');
     Route::post('/admin_net', 'WebController@adminNetUpdate');
 
+
+    Route::post('/admin_promote/{id}', 'WebController@adminPromote');
+    Route::post('/admin_cancel_promote/{id}', 'WebController@adminCancelPromote');
+
     //七牛上传回调
     Route::post('/qiniu_callback', 'WebController@qiniuCallback');
     Route::get('/task', 'WebController@task');

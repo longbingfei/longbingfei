@@ -19,6 +19,7 @@ class CreateCompanysTable extends Migration
             $tables->tinyInteger('status')->default(0);//审核状态
             $tables->tinyInteger('fork')->default(0); //关注
             $tables->tinyInteger('hot')->default(0); //热度
+            $tables->tinyInteger('is_promote')->default(0); //推荐
             $tables->string('area_ids',20);
             $tables->string('company_name', 50)->unique();
             $tables->string('address', 50);

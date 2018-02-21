@@ -101,12 +101,12 @@
                     <div class="col-md-3 s-ico clearfix">
                         <div class="pull-right">
                             <h4 class="text-size16 cor-gray51">有需求？</h4>
-                            <p class="cor-gray97">万千威客为您出谋划策</p>
+                            <p class="cor-gray97">万千厂家为您出谋划策</p>
                         </div>
                     </div>
                     <div class="col-md-3 s-ico s-ico2">
                         <div class="pull-right">
-                            <h4 class="text-size16 cor-gray51">找任务</h4>
+                            <h4 class="text-size16 cor-gray51">找需求</h4>
                             <p class="cor-gray97">海量需求任你来挑</p>
                         </div>
                     </div>
@@ -156,6 +156,60 @@
                                 </div>
                             </li>
                             <li class="col-md-4 col-sm-5 col-xs-6">
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-md-4 col-sm-5 col-xs-6 ">
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-md-4 col-sm-5 col-xs-6 ">
+                                <div class="z1">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">预算: 10000000</td>
+                                        </tr>
+                                    </table>
+                                    <div>
+                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
+                                                    class="info">洛阳市</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-md-4 col-sm-5 col-xs-6 ">
                                 <div class="z1">
                                     <table>
                                         <tr>

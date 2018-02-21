@@ -27,6 +27,7 @@ class CreateNeedsTable extends Migration
 //        ];
             $tables->tinyInteger('fork')->default(0); //报名
             $tables->tinyInteger('hot')->default(0); //热度
+            $tables->tinyInteger('is_promote')->default(0); //推荐
             $tables->string('title', 50);
             $tables->string('company_name', 50)->unique();
             $tables->integer('budget')->unsigned(); //预算

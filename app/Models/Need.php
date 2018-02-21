@@ -25,5 +25,6 @@ class Need extends Model
         'describe',
         'mark',
         'user_id',
+        'is_promote'
     ];
 }
