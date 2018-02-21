@@ -32,6 +32,17 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/prd/{id}', 'WebController@productDetail');
     Route::get('/delete_prd/{id}', 'WebController@productDelete');
 
+    //search
+    Route::get('/_need/keywords/{id?}', function($id=""){
+        return redirect("/need?keywords={$id}");
+    });
+    Route::get('/_company/keywords/{id?}', function($id=""){
+        return redirect("/company?keywords={$id}");
+    });
+    Route::get('/_p/keywords/{id?}', function($id=""){
+        return redirect("/p?keywords={$id}");
+    });
+
     //用户操作
     Route::get('/register', function () {
         $image = \Illuminate\Support\Facades\DB::table('net')->first()->login_image;

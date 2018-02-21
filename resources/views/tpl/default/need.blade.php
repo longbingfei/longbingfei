@@ -91,6 +91,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-12 clearfix keywords1" style="display:none">
+                            <div class="row">
+                                <div class="col-lg-1 col-sm-2 col-md-2 cor-gray51 text-size14 col-xs-12">关键词</div>
+                                <div class="col-lg-11 col-sm-10 col-md-10 col-xs-12">
+                                    <a class="bg-blue sb keywords2" href="javascript:;" data-s="keywords" data-v=""></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="g-taskmain">

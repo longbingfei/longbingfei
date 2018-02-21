@@ -104,7 +104,7 @@ class WebController extends Controller
 
     public function need()
     {
-        $filters = ['sort_id','period','city','order','status'];
+        $filters = ['sort_id','period','city','order','status','keywords'];
         $condition = request()->only($filters);
         $needs = DB::table('needs')->where('needs.status', '>', 0);
         $condition['sort_id'] && $needs = $needs->where('sort_id',$condition['sort_id']);
@@ -133,6 +133,7 @@ class WebController extends Controller
             $_city = array_pop($city);
             $_city && $needs = $needs->whereRaw("FIND_IN_SET({$_city},area_ids)");
         }
+        $condition['keywords'] && $needs = $needs->where('needs.title','like','%'.$condition['keywords'].'%');
         $condition['status'] && $needs = $needs->where('needs.status',$condition['status']);
         $order = [
             null,
@@ -375,7 +376,7 @@ class WebController extends Controller
 
     public function company()
     {
-        $filters = ['sort_id','city','order'];
+        $filters = ['sort_id','city','order','keywords'];
         $condition = request()->only($filters);
         $order = [
             null,
@@ -385,6 +386,7 @@ class WebController extends Controller
         ];
         $companys = DB::table('companys')->where(['status' => 1]);
         $condition['sort_id'] && $companys = $companys->whereRaw("FIND_IN_SET({$condition['sort_id']},sort_ids)");
+        $condition['keywords'] && $companys = $companys->where('company_name','like','%'.$condition['keywords'].'%');
         if($condition['city']){
             $city = explode(',',$condition['city']);
             $_city = array_pop($city);
@@ -582,7 +584,7 @@ class WebController extends Controller
 
     public function product()
     {
-        $filters = ['sort_id','city','order'];
+        $filters = ['sort_id','city','order','keywords'];
         $condition = request()->only($filters);
         $order = [
             null,
@@ -592,6 +594,7 @@ class WebController extends Controller
         ];
         $p = PrdModel::where(['status' => 1]);
         $condition['sort_id'] && $p = $p->whereRaw("FIND_IN_SET({$condition['sort_id']},sort_ids)");
+        $condition['keywords'] && $p = $p->where('name','like','%'.$condition['keywords'].'%');
         if($condition['city']){
             $city = explode(',',$condition['city']);
             $_city = array_pop($city);

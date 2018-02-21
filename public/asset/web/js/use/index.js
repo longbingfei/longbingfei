@@ -6,6 +6,23 @@ $(function () {
 
     $('body').on('click', '.dd_img_delete', function () {
         $(this).parent().remove();
+    }).on('click','._search_btn',function(){
+        var va = $('._search_a').html(),
+            action = null;
+        switch(va){
+            case '找需求':
+                action = '/_need/keywords/';
+                break;
+            case '找厂家':
+                action = '/_company/keywords/';
+                break;
+            case '找产品':
+                action = '/_p/keywords/';
+                break;
+
+        }
+        action += $('._search_input').val();
+        $('._search_form').attr('action', action);
     });
 
     //图片上传七牛云
@@ -1147,6 +1164,9 @@ $(".sb").click(function(){
         params[s] = v;
     }
     for(var i in params){
+        if($(this).hasClass('keywords2')){
+            continue;
+        }
         url+=(i+'='+params[i]+'&');
     }
     (url.slice(-1) === '&') && (url = url.slice(0,-1));
@@ -1259,6 +1279,11 @@ $('.period_s').change(function(){
 
         if(params.period){
             $('.period_s').find('option[value='+params.period+']')[0].setAttribute('selected','selected');
+        }
+        if(params.keywords){
+            $('.keywords2').data('v',params.keywords);
+            $('.keywords2').html(decodeURIComponent(params.keywords));
+            $('.keywords1').css('display','block');
         }
 
     }

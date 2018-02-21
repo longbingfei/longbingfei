@@ -62,13 +62,11 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
                         <div class="g-tasksearch row">
-                            <form action="" method="get" class="switchSearch">
+                            <form action="" method="get" class="_search_form">
                                 <div class="btn-group search-aBtn" role="group">
                                     <a href="javascript:;" type="button"
-                                       class="btn btn-default dropdown-toggle search-btn-toggle" data-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false">
-                                        找需求
-                                    </a>
+                                       class="btn btn-default dropdown-toggle search-btn-toggle _search_a" data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">找需求</a>
                                     <span class="fa fa-angle-down"></span>
                                     <ul class="dropdown-menu search-btn-select" aria-labelledby="dLabel">
                                         <li><a>找需求</a></li>
@@ -77,8 +75,8 @@
                                     </ul>
                                 </div>
                                 <i class="fa fa-search"></i>
-                                <input type="text" class="input-boxshaw" placeholder="输入关键词" value=""/>
-                                <button>搜索</button>
+                                <input type="text" class="input-boxshaw _search_input" placeholder="输入关键词" value=""/>
+                                <button class="_search_btn">搜索</button>
                             </form>
                         </div>
                     </div>
