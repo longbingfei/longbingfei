@@ -891,6 +891,8 @@ class WebController extends Controller
         try{
             $c = CompanyModel::find($id);
             DB::table('companys')->where(['id' => $id])->delete();
+            //删除厂家所有产品
+            DB::table('prds')->where(['company_id' => $id])->delete();
             if($c && ($c->user_id != 1) && ($c->type)){
                 WebUserModel::where('id',$c->user_id)->update(['type'=>0]);
             }

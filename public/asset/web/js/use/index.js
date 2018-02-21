@@ -459,7 +459,7 @@ $('.admin_change_company_status').click(function () {
 $('.admin_company_delete').click(function () {
     var id = $(this).data('id');
     return $.Confirm({
-        message: '确认删除此厂家吗?', callback: function () {
+        message: '确认删除此厂家吗?对应产品也将全部删除！', callback: function () {
             $.ajax({
                 url: '/admin_change_company_delete/' + id,
                 type: 'get',
