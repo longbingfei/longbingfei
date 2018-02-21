@@ -214,24 +214,10 @@
                     </div>
                     <div class="pull-right g-tasknavbtn hidden-sm hidden-xs">
                         <a href="/create_need" class="u-ahref">发布需求</a>
+                        @if(!session('type'))
+                        <a href="/establish" class="u-ahref">厂家入驻</a>
+                        @endif
                     </div>
-                    @if(isset($index) && $index)
-                        <div class="banner-r hidden-sm hidden-xs hidden-md" style="top:319px">
-                            <div class="tab-content tab-top">
-                            </div>
-                            <div class="tabbable" style="text-align: center">
-                                <p><a class="text-under">企业入驻</a></p>
-                                <p><a class="text-under">企业管理</a></p>
-                                <p><a class="text-under">发布需求</a></p>
-                            </div>
-                            @if(!session('id'))
-                                <div class="tab-bot" style="text-align: center">
-                                    <a href="/register" class=""><i class="fa fa-user"></i> 注册</a>
-                                    <a href="/login" class=""><i class="fa fa-sign-in"></i> 登录</a>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
                     <nav class="navbar navbar-default navbar-static navbar-static-position hidden-sm hidden-md hidden-lg col-xs-12"
                          id="navbar-example" role="navigation">
                         <div class="collapse navbar-collapse bs-js-navbar-scrollspy">
