@@ -585,6 +585,7 @@ class WebController extends Controller
         $provs = CityModel::where(['pid' => 1])->get()->toArray();
         $data = [
             'provs' => $provs,
+            'sorts' => $this->getPsort(),
             'companys' => $companys,
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
@@ -646,16 +647,42 @@ class WebController extends Controller
             return redirect('/login');
         }
         $companys = CompanyModel::where(['user_id' => session('id')])->get()->toArray();
-        $provs = CityModel::where(['pid' => 1])->get()->toArray();
+
         $data = DB::table('prds')->where(['id' => $id])->first();
         if (!$data || !in_array(session('id'), [1, $data->user_id])) {
             return ['error_msg' => '不合法的修改请求！'];
         }
         $data->images = $data->images ? unserialize($data->images) : [];
+
+        $data->sort_ids = $data->sort_ids ? explode(',', $data->sort_ids) : null;
+        $area = explode(',',$data->area_ids);
+        $city = CityModel::where(['id' => array_pop($area)])->first(); //最下级
+        $provs_2 = $provs_3 = $data->up_sort_id = [];
+        if(!$city->level || $city->level == 1){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $city->level == 1 && $provs_2 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $city->level == 1 && $data->up_sort_id = [$city->id];
+        }
+        if($city->level == 2){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $provs_2 = CityModel::where(['pid' => $city->pid])->get()->toArray();
+            $provs_3 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $data->up_sort_id = [CityModel::where(['pid' => $city->pid])->first()->pid,$city->id];
+        }
+        if($city->level == 3){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $provs_2 = CityModel::where(['pid' => CityModel::where(['id' => $city->pid])->first()->pid])->get()->toArray();
+            $provs_3 = CityModel::where(['pid' => $city->pid])->get()->toArray();
+            $data->up_sort_id = [CityModel::where(['id' => $city->pid])->first()->pid,$city->pid,$city->id];
+        }
+
         $data = [
             'detail' => $data,
             'companys' => $companys,
-            'provs' => $provs,
+            'sorts'=>$this->getPsort(),
+            'provs_1' => $provs_1,
+            'provs_2' => $provs_2,
+            'provs_3' => $provs_3,
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
         ];

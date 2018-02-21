@@ -32,43 +32,65 @@
                                 <td>产品类别</td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>11</option>
+                                        <option value="0">---请选择--</option>
+                                        @foreach($sorts as $key => $vo)
+                                            <option value="{{$key}}" {{isset($detail->sort_ids[0]) ? ($key == $detail->sort_ids[0] ? 'selected' : ''):'' }}>{{$vo}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>22</option>
+                                        <option value="0">---请选择--</option>
+                                        @foreach($sorts as $key => $vo)
+                                            <option value="{{$key}}" {{isset($detail->sort_ids[1]) ? ($key == $detail->sort_ids[1] ? 'selected' : ''):'' }}>{{$vo}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>33</option>
+                                        <option value="0">---请选择--</option>
+                                        @foreach($sorts as $key => $vo)
+                                            <option value="{{$key}}" {{isset($detail->sort_ids[2]) ? ($key == $detail->sort_ids[2] ? 'selected' : ''):'' }}>{{$vo}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>44</option>
+                                        <option value="0">---请选择--</option>
+                                        @foreach($sorts as $key => $vo)
+                                            <option value="{{$key}}" {{isset($detail->sort_ids[3]) ? ($key == $detail->sort_ids[3] ? 'selected' : ''):'' }}>{{$vo}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                             </tr>
                             <tr class="cp_tr_s">
                                 <td>发布区域</td>
                                 <td>
-                                    <select class="form-control cityselector" name="area_ids[]" data-id="1">
-                                        <option value="">--请选择--</option>
-                                        @foreach($provs as $vo)
-                                            <option value="{{$vo['id']}}">{{$vo['name']}}</option>
+                                    <select class="form-control cityselector" name="area_ids[]" data-id="1" style="border:0px;width:150px;">
+                                        <option value="">请选择</option>
+                                        @foreach($provs_1 as $vo)
+                                            <option value="{{$vo['id']}}" {{isset($detail->up_sort_id[0]) && ($detail->up_sort_id[0] == $vo['id']) ? 'selected' :''}}>{{$vo['name']}}</option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control cityselector" name="area_ids[]" data-id="2">
-                                        <option value="">--请选择--</option>
+                                    <select class="form-control cityselector" name="area_ids[]" data-id="2" style="border:0px;width:150px;">
+                                        <option value="">请选择</option>
+                                        @if(!empty($provs_2))
+                                            @foreach($provs_2 as $vo)
+                                                <option value="{{$vo['id']}}" {{isset($detail->up_sort_id[1]) && ($detail->up_sort_id[1] == $vo['id']) ? 'selected' :''}}>{{$vo['name']}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control cityselector" name="area_ids[]" data-id="3">
-                                        <option value="">--请选择--</option>
+                                    <select class="form-control cityselector" name="area_ids[]" data-id="3" style="border:0px;width:150px;">
+                                        <option value="">请选择</option>
+                                        @if(!empty($provs_3))
+                                            @foreach($provs_3 as $vo)
+                                                <option value="{{$vo['id']}}" {{isset($detail->up_sort_id[2]) && ($detail->up_sort_id[2] == $vo['id']) ? 'selected' :''}}>{{$vo['name']}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </td>
                             </tr>

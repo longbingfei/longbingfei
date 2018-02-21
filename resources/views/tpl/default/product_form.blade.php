@@ -32,22 +32,34 @@
                                 <td>产品类别</td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>11</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($sorts as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>22</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($sorts as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>33</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($sorts as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <select class="form-control" name="sort_ids[]">
-                                        <option>44</option>
+                                        <option value="0">--请选择--</option>
+                                        @foreach($sorts as $k=>$v)
+                                            <option value="{{$k}}">{{$v}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                             </tr>
