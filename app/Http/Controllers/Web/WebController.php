@@ -437,6 +437,9 @@ class WebController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
+        if(session('type') && session('id') != 1){
+            return ['error'=>'invalid!!'];
+        }
         $provs = CityModel::where(['pid' => 1])->get()->toArray();
         $data = [
             'provs' => $provs,
@@ -496,6 +499,9 @@ class WebController extends Controller
     {
         if (!Auth::check()) {
             return redirect('/login');
+        }
+        if(session('type') && session('id') != 1){
+            return ['code'=>'-1','msg'=>'invalid!!'];
         }
         $filters = [
             'company_name',
