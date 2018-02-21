@@ -299,7 +299,7 @@
                                             <div>
                                                 <table>
                                                     <tr>
-                                                        <td colspan="2" title="{{$vo['name']}}">{{$vo['name']}}</td>
+                                                        <td colspan="2" title="{{$vo['name']}}"><a href="/prd/{{$vo['id']}}" target="_blank">{{$vo['name']}}</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2">发布时间: <span>{{Date('Y/m/d',strtotime($vo['created_at']))}}</span></td>
@@ -336,7 +336,7 @@
                                             <div>
                                                 <table>
                                                     <tr>
-                                                        <td colspan="2" title="{{$vo['name']}}">{{$vo['name']}}</td>
+                                                        <td colspan="2" title="{{$vo['name']}}"><a href="/prd/{{$vo['id']}}" target="_blank">{{$vo['name']}}</a></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2">发布时间: <span>{{Date('Y/m/d',strtotime($vo['created_at']))}}</span></td>
