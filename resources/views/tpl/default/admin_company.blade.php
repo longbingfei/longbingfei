@@ -17,6 +17,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<a class="btn btn-large btn-default" style="margin-bottom: 10px" href="/establish" target="_blank">添加厂家</a>
 <table class="table">
     <tr>
         <th>序号</th>
