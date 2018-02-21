@@ -27,7 +27,7 @@
                                         地&nbsp;&nbsp;&nbsp;址：&nbsp;{{$data->company->address}}</p>
                                     <p class="personal-tag hidden-xs cor-gray51">分&nbsp;&nbsp;&nbsp;类：&nbsp;
                                         @foreach($data->company->sort_ids as $vo)
-                                            <span class="cor-gray87">{{$vo}}</span>
+                                            <span class="cor-gray87">{{isset($data->city_value[$vo]) ? $data->city_value[$vo]: ''}}</span>
                                         @endforeach
                                     </p>
                                     <p class="personal-tag hidden-xs cor-gray51">经营范围：&nbsp;

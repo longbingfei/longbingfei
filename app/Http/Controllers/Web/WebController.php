@@ -637,6 +637,7 @@ class WebController extends Controller
         if ($data->area_ids) {
             $city = CityModel::whereIn('id', explode(',', $data->area_ids))->get()->toArray();
             $data->city = implode(' ', array_column($city, 'name'));
+            $data->city_value = $this->getCsort();
         }
         return view('tpl.default.product_detail', ['data' => $data]);
     }
