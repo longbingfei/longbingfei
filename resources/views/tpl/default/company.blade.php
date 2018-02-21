@@ -29,7 +29,8 @@
                             <div class="row">
                                 <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">厂家分类</div>
                                 <div class="col-lg-11 col-sm-10  col-xs-12">
-                                    @foreach($sort as $key => $vo)
+                                    <a href="javascript:;" class="sb bg-blue" data-s="sort_id" data-v="0">不限</a>
+                                @foreach($sort as $key => $vo)
                                         <a href="javascript:;" class="sb" data-s="sort_id" data-v="{{$key}}">{{$vo}}</a>
                                     @endforeach
                                 </div>

@@ -425,11 +425,34 @@ class WebController extends Controller
         }
         $c->operate_ids = $c->operate_ids ? explode(',', $c->operate_ids) : [];
         $c->sort_ids = $c->sort_ids ? explode(',', $c->sort_ids) : null;
-        $provs = CityModel::where(['pid' => 1])->get()->toArray();
+
+        $area = explode(',',$c->area_ids);
+        $city = CityModel::where(['id' => array_pop($area)])->first(); //最下级
+        $provs_2 = $provs_3 = $c->up_sort_id = [];
+        if(!$city->level || $city->level == 1){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $city->level == 1 && $provs_2 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $city->level == 1 && $c->up_sort_id = [$city->id];
+        }
+        if($city->level == 2){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $provs_2 = CityModel::where(['pid' => $city->pid])->get()->toArray();
+            $provs_3 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $c->up_sort_id = [CityModel::where(['pid' => $city->pid])->first()->pid,$city->id];
+        }
+        if($city->level == 3){
+            $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
+            $provs_2 = CityModel::where(['pid' => CityModel::where(['id' => $city->pid])->first()->pid])->get()->toArray();
+            $provs_3 = CityModel::where(['pid' => $city->pid])->get()->toArray();
+            $c->up_sort_id = [CityModel::where(['id' => $city->pid])->first()->pid,$city->pid,$city->id];
+        }
+
         $data = [
             'company'=>$c,
             'c_sort'=>$this->getCsort(),
-            'provs' => $provs,
+            'provs_1' => $provs_1,
+            'provs_2' => $provs_2,
+            'provs_3' => $provs_3,
             'qiniu_access_token' => $this->getQiniuUploadToken(),
             'qiniu_img_domain' => env('QINIU_IMG_DOMAIN')
         ];
@@ -458,7 +481,8 @@ class WebController extends Controller
             'mark',
         ];
         $params = request()->only($filters);
-        $params['area_ids'] = $params['area_ids'] ? implode(',', array_filter($params['area_ids'])) : '';
+        $params['area_ids'] = array_filter($params['area_ids']);
+        $params['area_ids'] = empty($params['area_ids']) ? '': implode(',',$params['area_ids']);
         $params['sort_ids'] = $params['sort_ids'] ? implode(',', array_filter($params['sort_ids'])) : '';
         $params['operate_ids'] = $params['operate_ids'] ? implode(',', array_filter($params['operate_ids'])) : '';
         $params['user_id'] = session('id');
