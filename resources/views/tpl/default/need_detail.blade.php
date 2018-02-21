@@ -34,7 +34,7 @@
                             <td>公司名称:</td>
                             <td>{{(!session('id') || !in_array(session('id'),$data->companys_user)) ? '****':$data->company_name}}</td>
                             <td>预算金额:</td>
-                            <td>{{$data->budget}}</td>
+                            <td>{{$data->budget?:'面议'}}</td>
                             <td>周期:</td>
                             <td>{{$data->period}}</td>
                         </tr>

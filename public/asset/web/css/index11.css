@@ -52,6 +52,17 @@
     line-height: 30px;
 }
 
+.z1 > div > span:nth-child(1) {
+    display: inline-block;
+    width: 120px;
+    height: 30px;
+    line-height: 48px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 .z2 > div:nth-child(1) {
     float: left;
     background-color: #e7c3c3;

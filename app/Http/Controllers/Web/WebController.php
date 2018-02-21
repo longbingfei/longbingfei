@@ -36,9 +36,40 @@ class WebController extends Controller
             $y['cover'] = $res ? $m[1] : '/asset/web/image/news_default.jpg';
             return $y;
         }, $news);
+        $new_needs = Need::where('status','>','0')->orderBy('id','DESC')->offset(0)->limit(6)->get();
+        $new_needs = array_map(function($value) {
+            $value['city_name'] = DB::table('citys')->whereIn('id',explode(',',$value['area_ids']))->select([DB::raw('group_concat(name) as adds')])->first()->adds;
+            $value['baoming_count'] = DB::table('need_company')->where('need_id',$value['id'])->count();
+            return $value;
+        }, $new_needs->toArray());
+        $promote_needs = Need::where('status','>','0')->where('is_promote','1')->orderBy('id','DESC')->offset(0)->limit(6)->get();
+        $promote_needs = array_map(function($value) {
+            $value['city_name'] = DB::table('citys')->whereIn('id',explode(',',$value['area_ids']))->select([DB::raw('group_concat(name) as adds')])->first()->adds;
+            $value['baoming_count'] = DB::table('need_company')->where('need_id',$value['id'])->count();
+            return $value;
+        }, $promote_needs->toArray());
+        $new_companys = CompanyModel::where('status','>','0')->orderBy('id','DESC')->offset(0)->limit(6)->get()->toArray();
+        $promote_companys = CompanyModel::where('status','>','0')->where('is_promote','1')->orderBy('id','DESC')->offset(0)->limit(6)->get()->toArray();
+
+        $new_prds = PrdModel::where('status','>','0')->orderBy('id','DESC')->offset(0)->limit(6)->get()->toArray();
+        $new_prds = array_map(function($value) {
+            $value['logo'] = $value['images'] ? unserialize($value['images'])[0] : '/asset/web/image/kabuki.jpg';
+            return $value;
+        },$new_prds);
+        $promote_prds = PrdModel::where('status','>','0')->where('is_promote','1')->orderBy('id','DESC')->offset(0)->limit(6)->get()->toArray();
+        $promote_prds = array_map(function($value) {
+            $value['logo'] = $value['images'] ? unserialize($value['images'])[0] : '/asset/web/image/kabuki.jpg';
+            return $value;
+        },$promote_prds);
         $data = [
             'index' => true,
             'news' => $news,
+            'new_needs'=>$new_needs,
+            'promote_needs'=>$promote_needs,
+            'new_companys'=>$new_companys,
+            'promote_companys'=>$promote_companys,
+            'new_prds'=>$new_prds,
+            'promote_prds'=>$promote_prds,
             'c_images' => $c_images,
         ];
         $net = DB::table('net')->first();

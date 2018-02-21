@@ -137,114 +137,28 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
+                            @if(!empty($new_needs))
+                                @foreach($new_needs as $vo)
                             <li class="col-md-4 col-sm-5 col-xs-6">
                                 <div class="z1">
                                     <table>
                                         <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
+                                            <td colspan="2" title="{{$vo['title']}}"><a href="/need/{{$vo['id']}}" target="_blank">{{$vo['title']}}</a></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">预算: 10000000</td>
+                                            <td colspan="2">预算: {{$vo['budget']?:'面议'}}</td>
                                         </tr>
                                     </table>
                                     <div>
                                         <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
+                                                    class="info" title="{{$vo['city_name']}}">{{$vo['city_name']}}</span></span>
+                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">{{$vo['baoming_count']}}</span></span>
+                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">{{Date('Y/m/d',strtotime($vo['created_at']))}}</span></span>
                                     </div>
                                 </div>
                             </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 ">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 ">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 ">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 ">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -261,60 +175,28 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
+                            @if(!empty($promote_needs))
+                                @foreach($promote_needs as $vo)
+                                    <li class="col-md-4 col-sm-5 col-xs-6">
+                                        <div class="z1">
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2" title="{{$vo['title']}}"><a href="/need/{{$vo['id']}}" target="_blank">{{$vo['title']}}</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">预算: {{$vo['budget']?:'面议'}}</td>
+                                                </tr>
+                                            </table>
+                                            <div>
                                         <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 ">
-                                <div class="z1">
-                                    <table>
-                                        <tr>
-                                            <td colspan="2" title="我勒个打去去去去去去去拉拉就来啊啊">我勒个打去去去去去去去拉拉就来啊啊</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">预算: 10000000</td>
-                                        </tr>
-                                    </table>
-                                    <div>
-                                        <span title="发布地址"><i class="glyphicon glyphicon-map-marker"></i> <span
-                                                    class="info">洛阳市</span></span>
-                                        <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">9527</span></span>
-                                        <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">2018/02/02</span></span>
-                                    </div>
-                                </div>
-                            </li>
+                                                    class="info" title="{{$vo['city_name']}}">{{$vo['city_name']}}</span></span>
+                                                <span title="报名人数"><i class="glyphicon glyphicon-user"></i> <span class="info">{{$vo['baoming_count']}}</span></span>
+                                                <span title="发布时间"><i class="glyphicon glyphicon-time"></i> <span class="info">{{Date('Y/m/d',strtotime($vo['created_at']))}}</span></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -331,63 +213,28 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2">
-                                    <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
-                                             alt="logo">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2">
-                                    <div>
-                                        <img src="http://bjmhasset.b0.upaiyun.com/assets/level3/layout/portal/home-3002c8dd8255b9d37e79af8a486b0a2c.gif"
-                                             alt="logo">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="暴漫">暴漫</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2">
-                                    <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
-                                             alt="logo">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
+                            @if(!empty($new_companys))
+                                @foreach($new_companys as $vo)
+                                    <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
+                                        <div class="z2">
+                                            <div>
+                                                <img src="{{$vo['logo']?:'/asset/web/image/kabuki.jpg'}}" alt="logo">
+                                            </div>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2" title="{{$vo['company_name']}}"><a href="/company/{{$vo['id']}}" target="_blank">{{$vo['company_name']}}</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -404,63 +251,28 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2">
-                                    <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
-                                             alt="logo">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2">
-                                    <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
-                                             alt="logo">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2">
-                                    <div>
-                                        <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1546389624,1783247210&fm=58"
-                                             alt="logo">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="华为科技有限公司南京分公司">华为科技有限公司南京分公司</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
+                            @if(!empty($promote_companys))
+                                @foreach($promote_companys as $vo)
+                                    <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
+                                        <div class="z2">
+                                            <div>
+                                                <img src="{{$vo['logo']?:'/asset/web/image/kabuki.jpg'}}" alt="logo">
+                                            </div>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2" title="{{$vo['company_name']}}"><a href="/company/{{$vo['id']}}" target="_blank">{{$vo['company_name']}}</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">总评: <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star"></i><i class="fa fa-star"></i></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -477,57 +289,27 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2 z3">
-                                    <div>
-                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2 z3">
-                                    <div>
-                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2 z3">
-                                    <div>
-                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
+                            @if(!empty($new_prds))
+                                @foreach($new_prds as $vo)
+                                    <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
+                                        <div class="z2 z3">
+                                            <div>
+                                                <img src="{{$vo['logo']}}">
+                                            </div>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2" title="{{$vo['name']}}">{{$vo['name']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">发布时间: <span>{{Date('Y/m/d',strtotime($vo['created_at']))}}</span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -544,57 +326,27 @@
                     <div class="g-taskleft b-border clearfix">
                         <div class="space"></div>
                         <ul class=" clearfix text-size14 m-homelist cor-grayC2 mg-margin col-sm-12">
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2 z3">
-                                    <div>
-                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2 z3">
-                                    <div>
-                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
-                                <div class="z2 z3">
-                                    <div>
-                                        <img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5434855adf62853586edda73f1861da3/48540923dd54564e5d3c1b91b9de9c82d1584f39.jpg">
-                                    </div>
-                                    <div>
-                                        <table>
-                                            <tr>
-                                                <td colspan="2" title="100楼吊着呢，帮忙递根烟，小苏就行。">100楼吊着，帮忙递根烟，小苏就行。</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">发布时间: <span>2018/02/02</span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </li>
+                            @if(!empty($promote_prds))
+                                @foreach($promote_prds as $vo)
+                                    <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
+                                        <div class="z2 z3">
+                                            <div>
+                                                <img src="{{$vo['logo']}}">
+                                            </div>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2" title="{{$vo['name']}}">{{$vo['name']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">发布时间: <span>{{Date('Y/m/d',strtotime($vo['created_at']))}}</span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
