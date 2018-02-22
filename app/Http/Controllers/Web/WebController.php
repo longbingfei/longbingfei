@@ -674,6 +674,7 @@ class WebController extends Controller
         $params['sort_ids'] = $params['sort_ids'] ? implode(',', $params['sort_ids']) : '';
         $params['images'] = $params['images'] ? serialize($params['images']) : '';
         $params['user_id'] = session('id');
+        $params['storage'] = 0;
         try {
             $return = ['code' => 0, 'data' => ['id' => PrdModel::create($params)->id]];
         } catch (\Exception $e) {

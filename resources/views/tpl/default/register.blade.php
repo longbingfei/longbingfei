@@ -32,16 +32,16 @@
                     <p class="text-size16">邮箱注册</p>
                     <form style="margin-top:30px;" action="/register" method="post">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="用户名" autocomplete="off">
+                            <input type="text" class="form-control" name="username" placeholder="用户名" autocomplete="off" required >
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="邮箱" autocomplete="off">
+                            <input type="email" class="form-control" name="email" placeholder="邮箱" autocomplete="off" required >
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="密码" autocomplete="off">
+                            <input type="password" class="form-control" name="password" placeholder="密码" autocomplete="off" required >
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="repassword" placeholder="确认密码" autocomplete="off">
+                            <input type="password" class="form-control" name="repassword" placeholder="确认密码" autocomplete="off" required >
                         </div>
                         <div class="checkbox">
                             <label>

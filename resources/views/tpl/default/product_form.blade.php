@@ -22,8 +22,8 @@
                             <tr>
                                 <td>产品名称</td>
                                 <td><input type="text" class="form-control" name="name"></td>
-                                <td>价格</td>
-                                <td><input type="text" class="form-control" name="price"></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -38,30 +38,10 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="form-control" name="sort_ids[]">
-                                        <option value="0">--请选择--</option>
-                                        @foreach($sorts as $k=>$v)
-                                            <option value="{{$k}}">{{$v}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control" name="sort_ids[]">
-                                        <option value="0">--请选择--</option>
-                                        @foreach($sorts as $k=>$v)
-                                            <option value="{{$k}}">{{$v}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control" name="sort_ids[]">
-                                        <option value="0">--请选择--</option>
-                                        @foreach($sorts as $k=>$v)
-                                            <option value="{{$k}}">{{$v}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                                <td>价格</td>
+                                <td><input type="text" class="form-control" name="price"></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr class="cp_tr_s">
                                 <td>发布区域</td>

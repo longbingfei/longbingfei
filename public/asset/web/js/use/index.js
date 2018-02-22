@@ -206,7 +206,7 @@ $(function () {
 
     //发布产品
     $('.product_submit_btn').click(function () {
-        if(!$('.company_id').val()){
+        if(!$('select[name=company_id]').val()){
             return $.Confirm({message: '请先选择厂家!'});
         }
         $.ajax({

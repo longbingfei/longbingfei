@@ -22,10 +22,10 @@
                             <tr>
                                 <td>产品名称</td>
                                 <td><input type="text" class="form-control" name="name" value="{{$detail->name}}"></td>
-                                <td>价格</td>
-                                <td><input type="text" class="form-control" name="price" value="{{$detail->price}}"></td>
-                                <td>库存</td>
-                                <td><input type="text" class="form-control" name="storage" value="{{$detail->storage}}"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                             <tr class="cp_tr_s1">
@@ -38,30 +38,10 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="form-control" name="sort_ids[]">
-                                        <option value="0">---请选择--</option>
-                                        @foreach($sorts as $key => $vo)
-                                            <option value="{{$key}}" {{isset($detail->sort_ids[1]) ? ($key == $detail->sort_ids[1] ? 'selected' : ''):'' }}>{{$vo}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control" name="sort_ids[]">
-                                        <option value="0">---请选择--</option>
-                                        @foreach($sorts as $key => $vo)
-                                            <option value="{{$key}}" {{isset($detail->sort_ids[2]) ? ($key == $detail->sort_ids[2] ? 'selected' : ''):'' }}>{{$vo}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control" name="sort_ids[]">
-                                        <option value="0">---请选择--</option>
-                                        @foreach($sorts as $key => $vo)
-                                            <option value="{{$key}}" {{isset($detail->sort_ids[3]) ? ($key == $detail->sort_ids[3] ? 'selected' : ''):'' }}>{{$vo}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                                <td>价格</td>
+                                <td><input type="text" class="form-control" name="price" value="{{$detail->price}}"></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr class="cp_tr_s">
                                 <td>发布区域</td>
