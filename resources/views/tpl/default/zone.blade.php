@@ -290,6 +290,7 @@
     </div>
 </div>
 <script>
-    var UID = '{{session('id')}}'|0;
+    var UID = '{{session('id')}}'|0,
+        UN = '{{session('username')}}'
 </script>
 @include('tpl.default.footer')

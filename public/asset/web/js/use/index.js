@@ -33,6 +33,9 @@ $(function () {
             if(!new_name){
                 return $.Confirm({message: '转出用户名不能为空！'});
             }
+            if(new_name == UN){
+                return $.Confirm({message: '不能转给自己！'});
+            }
             $.ajax({
                 url: '/c_exchange',
                 type: 'post',
