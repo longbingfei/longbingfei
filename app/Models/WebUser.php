@@ -30,6 +30,7 @@ class WebUser extends Model implements AuthenticatableContract,AuthorizableContr
             'last_login_time',
             'last_login_ip',
             'avatar',
+            'remember_token'
         ];
     protected $hidden = [
         'password',

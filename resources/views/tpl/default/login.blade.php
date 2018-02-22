@@ -42,6 +42,7 @@
                             立即登录
                         </button>
                     </form>
+                    <a href="/forget_pass" style="font-size: 10px;color:blue;float:right;margin-top: 10px">忘记密码</a>
                 </div>
             </div>
             <div style="clear:both;"></div>

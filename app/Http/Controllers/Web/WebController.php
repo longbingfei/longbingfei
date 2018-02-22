@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\WebUser as WebUserModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Qiniu\Auth as QiniuAuth;
 use App\Models\QiniuUpload as QiniuUploadModel;
 use Illuminate\Support\Facades\DB;
@@ -1423,5 +1424,54 @@ class WebController extends Controller
         } catch (\Exception $e) {
             return json_encode(['code' => '-1']);
         }
+    }
+
+    public function Email()
+    {
+        $name = request()->get('username');
+        if (!$user = WebUser::where('username', $name)->first()) {
+            return ['code' => '-1', 'msg' => '无此用户'];
+        }
+        if (!$email = $user->email) {
+            return view('tpl/default/mail_confirm', ['mail' => null]);
+        }
+        $time = time();
+        $md5 = md5($time . $name);
+        $flag = Mail::send('tpl/default/mail', ['domain' => env('EMAIL_DOMAIN'), 'name' => $name, 'md5' => $md5], function ($message) use ($email) {
+            $message->to($email)->subject('忘记密码');
+        });
+        if ($flag) {
+            WebUser::where('id', $user->id)->update(['remember_token' => $md5 . ',' . $time]);
+            return view('tpl/default/mail_confirm', ['mail' => $user->email]);
+        }
+    }
+
+    public function ResetPasswdForm($id)
+    {
+        if (!$id || (!$user = WebUser::where('remember_token', 'like', '%' . $id . '%')->first())) {
+            return ['code' => '-1', 'msg' => '操作不合法'];
+        }
+        $time = explode(',', $user->remember_token)[1];
+        if (time() > 30 * 60 + $time) {
+            return ['code' => '-1', 'msg' => '链接已失效'];
+        }
+        return view('tpl/default/reset_form', ['token' => $id]);
+    }
+
+    public function ResetPasswd()
+    {
+        $token = request()->get('token');
+        $new_pass = request()->get('password');
+        if (!$token || !$new_pass || !WebUser::where('remember_token', 'like', '%' . $token . '%')->count()) {
+            $return = ['code' => '-1', 'msg' => '信息不合法'];
+        } else {
+            try {
+                WebUser::where('remember_token', 'like', '%' . $token . '%')->update(['password' => password_hash($new_pass, PASSWORD_BCRYPT), 'remember_token' => '']);
+                $return = ['code' => 0];
+            } catch (\Exception $e) {
+                $return = ['code' => '-1'];
+            }
+        }
+        return view('tpl/default/reset_msg', ['return' => $return]);
     }
 }

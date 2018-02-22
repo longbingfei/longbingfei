@@ -121,5 +121,15 @@ Route::group(['namespace' => 'Web'], function () {
 
     //厂家转让
     Route::post('/c_exchange','WebController@c_exchange');
+
+    //忘记密码
+    Route::get('/forget_pass',function(){
+        return view('tpl/default/forget_form');
+    });
+    Route::get('/resetpassword/{id}','WebController@ResetPasswdForm');
+    Route::post('/reset_password','WebController@ResetPasswd');
+
+    //邮件发送
+    Route::post('/send_email','WebController@Email');
 });
 
