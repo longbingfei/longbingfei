@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="g-taskposition col-lg-12 col-left">您的位置：<a href="/">首页</a> > 产品</div>
-            <div class="col-lg-12 col-left">
+            <div class="col-lg-9 col-left">
                 <div class="g-taskprocess hidden-xs">
                     <div class="row">
                         <div class="col-md-4 col-xs-4">
@@ -104,6 +104,19 @@
                     @endif
                 </div>
                 <div class="space-20"></div>
+            </div>
+            <div class="col-lg-3 col-right" style="border:1px solid #eaeaea;height:100%">
+                <h4>推荐产品</h4>
+                @if(!empty($promote_prds))
+                    <ul class="promote_ul">
+                        @foreach($promote_prds as $vo)
+                            <li class="promote_ul_li"><a href="/prd/{{$vo['id']}}" target="_blank">{{$vo['name']}}</a></li>
+                            <li style="width: 250px;height:250px;display:none"><a href="/prd/{{$vo['id']}}" target="_blank"><img style="width: 250px;height:250px" src="{{$vo['logo']?:'/asset/web/image/kabuki.jpg'}}"></a></li>
+                        @endforeach
+                    </ul>
+                @else
+                    暂无
+                @endif
             </div>
         </div>
     </div>

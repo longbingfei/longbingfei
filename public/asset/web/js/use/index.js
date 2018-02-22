@@ -24,6 +24,9 @@ $(function () {
         action += $('._search_input').val();
         $('._search_form').attr('action', action);
     });
+    $('.promote_ul_li').hover(function(){
+        $(this).next('li').stop(0).slideToggle();
+    });
 
     //图片上传七牛云
     $('#qiniu').click(function () {

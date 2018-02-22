@@ -556,6 +556,24 @@ product
     height:600px;
     border:0px;
 }
+.promote_ul{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.promote_ul>li{
+    display:block;
+    margin-bottom: 10px;
+    width:250px;
+    height:40px;
+    line-height: 40px;
+    padding-left:4px;
+    cursor:pointer;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 @media screen and (min-width: 1200px) {
     .m-homelist {
