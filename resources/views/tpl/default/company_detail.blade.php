@@ -19,7 +19,7 @@
                                 @endif
                                 <div class="personal-info-block">
                                     <div class="personal-info-block-name">
-                                        <h3 class="text-size20 cor-gray51">{{$data->company_name}}</h3>
+                                        <h3 class="text-size20 cor-gray51">{{$data->company_name}}</h3><button class="btn btn-xs btn-success get_admin_qq" style="margin:10px 20px;">我要认领</button>
                                     </div>
                                     <p class="hidden-xs cor-gray51">所在地：&nbsp;{{$data->city}}</p>
                                     <p class="hidden-xs cor-gray51">详细地址：&nbsp;{{$data->address}}</p>

@@ -53,6 +53,10 @@ $(function () {
                 }
             });
         });
+    }).on('click','.get_admin_qq',function(){
+        return $.Confirm({
+            lineheight:'40px',message: '尊敬的客户你好!若想认领此厂家，请联系QQ:1527734488'
+        });
     });
     $('.promote_ul_li').hover(function(){
         $(this).next('li').stop(0).slideToggle();
@@ -399,7 +403,7 @@ function checkUploadStatus(symbol, callback) {
             }).addClass("msg_modal");
             var confirmBody = "<h4 style='margin: 0 0;height: 40px;line-height: 40px;'><span class='glyphicon glyphicon-exclamation-sign' style='color:indianred'></span>&nbsp&nbsp" +
                 (msg && msg.title ? msg.title : '提示') + "</h4><hr style='margin:4px 4px !important;'/>" +
-                "<div style='width:300px;height:100px;margin:0 auto;line-height:100px;font-size: 16px;'>" + msg.message + "</div>";
+                "<div style='width:300px;height:100px;margin:0 auto;line-height:"+(msg.lineheight?msg.lineheight:'100px')+";font-size: 16px;'>" + msg.message + "</div>";
             confirmBody += msg.hideToolBar ? '' : "<hr style='margin:4px 4px !important;' />" +
                 "<div style='height: 40px;line-height: 35px;'><botton class='btn btn-default btn-cancel' style='margin-right: 60px;height:40px'>取消</botton>" +
                 "<botton class='btn btn-default btn-small btn-ok' style='height:40px'>确定</botton></div>";
