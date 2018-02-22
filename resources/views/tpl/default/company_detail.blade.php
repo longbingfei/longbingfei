@@ -19,19 +19,26 @@
                                 @endif
                                 <div class="personal-info-block">
                                     <div class="personal-info-block-name">
-                                        <h3 class="text-size20 cor-gray51">{{$data->company_name}}</h3><button class="btn btn-xs btn-success get_admin_qq" style="margin:10px 20px;">我要认领</button>
+                                        <h3 class="text-size20 cor-gray51">{{$data->company_name}}</h3>
+                                        <button class="btn btn-xs btn-success get_admin_qq" style="margin:10px 20px;">
+                                            我要认领
+                                        </button>
                                     </div>
                                     <p class="hidden-xs cor-gray51">所在地：&nbsp;{{$data->city}}</p>
                                     <p class="hidden-xs cor-gray51">详细地址：&nbsp;{{$data->address}}</p>
                                     <p class="personal-tag hidden-xs cor-gray51">分&nbsp;&nbsp;&nbsp;类：&nbsp;
-                                        @foreach($data->sort_ids as $vo)
-                                            <span class="cor-gray87">{{isset($c_sort[$vo]) ? $c_sort[$vo]: ''}}</span>
-                                        @endforeach
+                                        @if($data->operate_ids)
+                                            @foreach($data->sort_ids as $vo)
+                                                <span class="cor-gray87">{{isset($c_sort[$vo]) ? $c_sort[$vo]: ''}}</span>
+                                            @endforeach
+                                        @endif
                                     </p>
                                     <p class="personal-tag hidden-xs cor-gray51">经营范围：&nbsp;
-                                        @foreach($data->operate_ids as $vo)
-                                            <span class="cor-gray87">{{$vo}}</span>
-                                        @endforeach
+                                        @if($data->operate_ids)
+                                            @foreach($data->operate_ids as $vo)
+                                                <span class="cor-gray87">{{$vo}}</span>
+                                            @endforeach
+                                        @endif
                                     </p>
                                     <p class="hidden-xs cor-gray51">企业联系人: {{$data->name}}</p>
                                     <p class="hidden-xs cor-gray51">企业联系方式: {{$data->tel}}</p>
@@ -49,7 +56,7 @@
                                 </div>
                                 <div class="clearfix ">
                                     <div class="col-md-12 col-xs-2">
-                                            {!! $data->describe !!}
+                                        {!! $data->describe !!}
                                     </div>
                                     <div class="space"></div>
                                 </div>
@@ -75,7 +82,8 @@
                                                 <a href="/prd/{{$vo['id']}}"> <img src="{{$vo['cover']}}"></a>
                                             </div>
                                             <div class="shop-maininfo">
-                                                <h5 class="text-size14 cor-gray51 p-space"><a href="/prd/{{$vo['id']}}">{{$vo['name']}}</a></h5>
+                                                <h5 class="text-size14 cor-gray51 p-space"><a
+                                                            href="/prd/{{$vo['id']}}">{{$vo['name']}}</a></h5>
                                                 <div class="space-6"></div>
                                             </div>
                                         </li>
