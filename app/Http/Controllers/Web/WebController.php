@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Company as CompanyModel;
 use App\Models\Need;
+use App\Models\WebUser;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -1387,6 +1388,38 @@ class WebController extends Controller
         try {
             $models[$type]::where('id', $id)->update(['is_promote' => 0]);
             return json_encode(['code' => 0]);
+        } catch (\Exception $e) {
+            return json_encode(['code' => '-1']);
+        }
+    }
+
+    public function c_exchange()
+    {
+        if (!Auth::check()) {
+            return json_encode(['code' => '-1', 'msg' => '登录超时!']);
+        }
+        if (!session('type')) {
+            return json_encode(['code' => '-1', 'msg' => '非法操作!']);
+        }
+        if (!CompanyModel::where('user_id', session('id'))->where('id', request()->get('cid'))->get()) {
+            return json_encode(['code' => '-1', 'msg' => '当前用户名下不存在此厂家!']);
+        }
+        if (!$new_user = WebUser::where('username', trim(request()->get('name')))->first()) {
+            return json_encode(['code' => '-1', 'msg' => '转入用户不存在!']);
+        }
+        if ($new_user->type && ($new_user->id != 1)) {
+            return json_encode(['code' => '-1', 'msg' => '转入用户已是厂家!']);
+        }
+        try {
+            CompanyModel::where('user_id', session('id'))->where('id', request()->get('cid'))->update(['user_id' => $new_user->id]);
+            if (session('id') != 1) {
+                if (!CompanyModel::where('user_id', session('id'))->count()) {
+                    WebUser::where('id', session('id'))->update(['type' => 0]);
+                }
+                WebUser::where('id', $new_user->id)->update(['type' => 1]);
+            }
+            return json_encode(['code' => 0]);
+
         } catch (\Exception $e) {
             return json_encode(['code' => '-1']);
         }

@@ -57,16 +57,12 @@
                                     <td>{{$data->price}}</td>
                                 </tr>
                                 <tr>
-                                    <td>月销量:</td>
-                                    <td>200</td>
+                                    <td>电话:</td>
+                                    <td>{{$data->company->tel}}</td>
                                 </tr>
                                 <tr>
-                                    <td>库存:</td>
-                                    <td>{{$data->storage}}</td>
-                                </tr>
-                                <tr>
-                                    <td>关注数:</td>
-                                    <td>{{$data->fork}}</td>
+                                    <td>地址:</td>
+                                    <td>{{$data->company->address}}</td>
                                 </tr>
                             </table>
                         </div>

@@ -23,6 +23,33 @@ $(function () {
         }
         action += $('._search_input').val();
         $('._search_form').attr('action', action);
+    }).on('click','.z7 dd>img,.carousel_s > img',function(){
+        window.open($(this).attr('src'));
+    }).on('click','.c_exchange',function(){
+        var cid = $(this).data('cid');
+        $('#exchange_c').modal('show')
+        $('.c_exchange_submit').click(function(){
+            var new_name = $('input[name=exchange_name]').val();
+            if(!new_name){
+                return $.Confirm({message: '转出用户名不能为空！'});
+            }
+            $.ajax({
+                url: '/c_exchange',
+                type: 'post',
+                data: {name:new_name,cid:cid},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (!data || data.code !== 0) {
+                        return $.Confirm({message: (data && data.msg) || '转让失败，请稍后再试!'});
+                    }
+                    return $.Confirm({
+                        message: UID == 1 ? '转让成功!':'转让成功!请重新登录', callback: function () {
+                            location.href = UID == 1 ? '/zone/'+UID : '/login';
+                        }
+                    });
+                }
+            });
+        });
     });
     $('.promote_ul_li').hover(function(){
         $(this).next('li').stop(0).slideToggle();
@@ -172,6 +199,9 @@ $(function () {
 
     //发布产品
     $('.product_submit_btn').click(function () {
+        if(!$('.company_id').val()){
+            return $.Confirm({message: '请先选择厂家!'});
+        }
         $.ajax({
             url: '/prd',
             type: 'post',

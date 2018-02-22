@@ -118,5 +118,8 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/p_sort','WebController@p_sort_create');
     Route::post('/p_sort/{id}','WebController@p_sort_update');
     Route::delete('/p_sort/{id}','WebController@p_sort_delete');
+
+    //厂家转让
+    Route::post('/c_exchange','WebController@c_exchange');
 });
 

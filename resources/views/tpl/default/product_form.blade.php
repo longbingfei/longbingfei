@@ -24,8 +24,8 @@
                                 <td><input type="text" class="form-control" name="name"></td>
                                 <td>价格</td>
                                 <td><input type="text" class="form-control" name="price"></td>
-                                <td>库存</td>
-                                <td><input type="text" class="form-control" name="storage"></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                             <tr class="cp_tr_s1">

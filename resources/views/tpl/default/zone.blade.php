@@ -193,7 +193,7 @@
                                         <td>{{$vo->created_at}}</td>
                                         <td>{{$vo->updated_at}}</td>
                                         <td><a href="/company/{{$vo->id}}" target="_blank">查看</a> | <a
-                                                    href="/update_company/{{$vo->id}}" target="_blank">修改</a> | <a href="javascript:;">转让</a>
+                                                    href="/update_company/{{$vo->id}}" target="_blank">修改</a> | <a class="c_exchange" href="javascript:;" data-cid="{{$vo->id}}">转让</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -268,4 +268,28 @@
         </div>
     </div>
 </section>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="exchange_c">
+    <div class="modal-dialog modal-lg" role="document" style="padding:10px;">
+        <div class="modal-content">
+            <div style="text-align: center">
+                <h3 style="text-align: center">店铺转让</h3>
+            </div>
+            <div class="form-group mt10">
+                <div class="input-group" style="padding:0px 10px">
+                    <span class="input-group-addon">请输入要转入的用户名称</span>
+                    <input type="text" class="form-control" name="exchange_name">
+                </div>
+                <div class="input-group" style="padding:0px 10px;color:red;font-size: 14px;margin-top: 10px;">
+                    请谨慎操作，操作成功后，此厂家将转移至你指定的用户账户中!
+                </div>
+            </div>
+            <div style="text-align: center">
+                <button class="btn btn-large btn-default c_exchange_submit" style="margin:10px auto">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var UID = '{{session('id')}}'|0;
+</script>
 @include('tpl.default.footer')

@@ -21,6 +21,7 @@ class WebUser extends Model implements AuthenticatableContract,AuthorizableContr
             'username',
             'name',
             'password',
+            'type',
             'sex',
             'email',
             'tel',
