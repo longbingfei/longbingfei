@@ -136,10 +136,10 @@ class WebController extends Controller
             $_city && $needs = $needs->whereRaw("FIND_IN_SET({$_city},area_ids)");
         }
         $condition['keywords'] && $needs = $needs->where('needs.title', 'like', '%' . $condition['keywords'] . '%');
-        if($condition['status']){
-            if($condition['status']==5) {
-                $needs = $needs->whereIn('needs.status', [2,5]);
-            }else{
+        if ($condition['status']) {
+            if ($condition['status'] == 5) {
+                $needs = $needs->whereIn('needs.status', [2, 5]);
+            } else {
                 $needs = $needs->where('needs.status', $condition['status']);
             }
         }
@@ -400,7 +400,12 @@ class WebController extends Controller
             try {
                 NCModel::where(['need_id' => $id, 'company_id' => request()->get('cid')])->update(['status' => 1]);
                 Need::where(['id' => $id])->update(['status' => 2]);
-                $return = ['code' => 0, 'msg' => '选标成功!'];
+                $res = $this->overNeed($id);
+                if ($res['code']) {
+                    $return = ['code' => -1, 'msg' => '选标失败!'];
+                } else {
+                    $return = ['code' => 0, 'msg' => '选标成功!'];
+                }
             } catch (\Exception $e) {
                 $return = ['code' => -1, 'msg' => '选标失败!'];
             }
@@ -422,7 +427,7 @@ class WebController extends Controller
                 $return = ['code' => -1, 'msg' => '操作失败!'];
             }
         }
-        return json_encode($return);
+        return $return;
     }
 
     public function company()
@@ -928,13 +933,14 @@ class WebController extends Controller
     {
         $this->checkAdmin();
         $needs = DB::table('needs')->paginate(15);
-
         $statusShow = [
             '0' => '待审核',
             '1' => '招标中',
             '2' => '线下对接中',
             '3' => '已完成',
+            '5' => '已锁标',
             '-1' => '审核未通过',
+            '-2' => '已流标',
         ];
         $users = array_column(WebUserModel::select(['id', 'username'])->get()->toArray(), 'username', 'id');
         return view('tpl.default.admin_need', ['data' => $needs, 'statusShow' => $statusShow, 'users' => $users]);

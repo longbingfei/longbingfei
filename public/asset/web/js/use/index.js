@@ -926,25 +926,25 @@ $('.choose_need').click(function(){
         }
     });
 });
-
-$('.need_over').click(function(){
-    var url = $(this).attr('_href');
-    return $.Confirm({
-        message: '确认完成此需求吗?', callback: function () {
-            $.getJSON(url, function (data) {
-                if (!data || data.code !== 0) {
-                    return $.Confirm({message: data.msg});
-                } else {
-                    $.Confirm({
-                        message: '需求已完成!', callback: function () {
-                            location.reload();
-                        }
-                    });
-                }
-            })
-        }
-    });
-});
+//
+// $('.need_over').click(function(){
+//     var url = $(this).attr('_href');
+//     return $.Confirm({
+//         message: '确认完成此需求吗?', callback: function () {
+//             $.getJSON(url, function (data) {
+//                 if (!data || data.code !== 0) {
+//                     return $.Confirm({message: data.msg});
+//                 } else {
+//                     $.Confirm({
+//                         message: '需求已完成!', callback: function () {
+//                             location.reload();
+//                         }
+//                     });
+//                 }
+//             })
+//         }
+//     });
+// });
 
 $('.throw_need').click(function(){
     var url = $(this).attr('_href');
