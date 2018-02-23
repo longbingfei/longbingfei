@@ -743,6 +743,10 @@ class WebController extends Controller
             return ['path' => $y, 'thumb' => $y];
         }, unserialize($data->images))) : '';
         $data->company = CompanyModel::find($data->company_id);
+        if ($data->company->area_ids) {
+            $city = CityModel::whereIn('id', explode(',', $data->company->area_ids))->get()->toArray();
+            $data->company->city = implode(' ', array_column($city, 'name'));
+        }
         $data->company->sort_ids = $data->company->sort_ids ? explode(',', $data->company->sort_ids) : ['未定义'];
         $data->company->operate_ids = $data->company->operate_ids ? explode(',', $data->company->operate_ids) : ['未定义'];
         if ($data->area_ids) {

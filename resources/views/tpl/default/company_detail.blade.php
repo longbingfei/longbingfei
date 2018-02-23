@@ -41,7 +41,9 @@
                                         @endif
                                     </p>
                                     <p class="hidden-xs cor-gray51">企业联系人: {{$data->name}}</p>
-                                    <p class="hidden-xs cor-gray51">企业联系方式: {{$data->tel}}</p>
+                                    <p class="hidden-xs cor-gray51" style="display: inline-block">企业联系方式: {{$data->tel}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <p class="hidden-xs cor-gray51" style="display: inline-block">企业QQ: {{$data->qq}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <p class="hidden-xs cor-gray51" style="display: inline-block">企业微信: {{$data->wechat}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
                                 </div>
                             </div>
                         </div>

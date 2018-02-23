@@ -24,7 +24,7 @@
                                         </h3>
                                     </div>
                                     <p class="hidden-xs cor-gray51">
-                                        地&nbsp;&nbsp;&nbsp;址：&nbsp;{{$data->company->address}}</p>
+                                        地&nbsp;&nbsp;&nbsp;址：&nbsp;{{$data->company->city}} {{$data->company->address}}</p>
                                     <p class="personal-tag hidden-xs cor-gray51">分&nbsp;&nbsp;&nbsp;类：&nbsp;
                                         @foreach($data->company->sort_ids as $vo)
                                             <span class="cor-gray87">{{isset($data->city_value[$vo]) ? $data->city_value[$vo]: ''}}</span>
@@ -37,6 +37,9 @@
                                     </p>
                                     <p class="hidden-xs cor-gray51">企业联系人: {{$data->company->name}}</p>
                                     <p class="hidden-xs cor-gray51">企业联系方式: {{$data->company->tel}}</p>
+                                    <p class="hidden-xs cor-gray51" style="display: inline-block">企业联系方式: {{$data->company->tel}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <p class="hidden-xs cor-gray51" style="display: inline-block">企业QQ: {{$data->company->qq}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <p class="hidden-xs cor-gray51" style="display: inline-block">企业微信: {{$data->company->wechat}}</p>&nbsp;&nbsp;&nbsp;&nbsp;
                                 </div>
                             </div>
                         </div>
@@ -62,7 +65,7 @@
                                 </tr>
                                 <tr>
                                     <td>地址:</td>
-                                    <td>{{$data->company->address}}</td>
+                                    <td>{{$data->company->city}} {{$data->company->address}}</td>
                                 </tr>
                             </table>
                         </div>
