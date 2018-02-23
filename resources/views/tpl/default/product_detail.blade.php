@@ -81,8 +81,10 @@
 @include('tpl.default.footer')
 <script>
     //p详情轮播
-    $.Carousel.init({
-        images: '{!! $data->images ?: '[{"path":"/asset/web/image/need_default1.jpg","thumb":"/asset/web/image/need_default1.jpg"},{"path":"/asset/web/image/need_default2.jpg","thumb":"/asset/web/image/need_default2.jpg"}]' !!}',
-        payload: $('.img-roll')
-    });
+    @if($data->images)
+        $.Carousel.init({
+            images: '{!! $data->images !!}',
+            payload: $('.img-roll')
+        });
+    @endif
 </script>

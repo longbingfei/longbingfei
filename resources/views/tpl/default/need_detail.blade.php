@@ -64,10 +64,6 @@
                                     @foreach($data->images as $vo)
                                         <img src="{{$vo}}">
                                     @endforeach
-                                @else
-                                    <img src="/asset/web/image/need_default1.jpg">
-                                    <img src="/asset/web/image/need_default2.jpg">
-                                    <img src="/asset/web/image/need_default3.jpg">
                                 @endif
                             </dd>
                             <dt>描述:</dt>

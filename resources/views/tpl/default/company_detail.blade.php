@@ -24,8 +24,8 @@
                                             我要认领
                                         </button>
                                     </div>
-                                    <p class="hidden-xs cor-gray51">所在地：&nbsp;{{$data->city}}</p>
-                                    <p class="hidden-xs cor-gray51">详细地址：&nbsp;{{$data->address}}</p>
+                                    <p class="hidden-xs cor-gray51">所在地：&nbsp;{{$data->city}} {{$data->address}}</p>
+                                    {{--<p class="hidden-xs cor-gray51">详细地址：&nbsp;</p>--}}
                                     <p class="personal-tag hidden-xs cor-gray51">分&nbsp;&nbsp;&nbsp;类：&nbsp;
                                         @if($data->operate_ids)
                                             @foreach($data->sort_ids as $vo)
