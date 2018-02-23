@@ -108,7 +108,7 @@ class WebController extends Controller
     {
         $filters = ['sort_id', 'period', 'city', 'order', 'status', 'keywords'];
         $condition = request()->only($filters);
-        $needs = DB::table('needs')->where('needs.status', '>', 0);
+        $needs = DB::table('needs')->where('needs.status', '<>', '-1');
         $condition['sort_id'] && $needs = $needs->where('sort_id', $condition['sort_id']);
         if ($condition['period']) {
             switch ($condition['period']) {
@@ -136,7 +136,13 @@ class WebController extends Controller
             $_city && $needs = $needs->whereRaw("FIND_IN_SET({$_city},area_ids)");
         }
         $condition['keywords'] && $needs = $needs->where('needs.title', 'like', '%' . $condition['keywords'] . '%');
-        $condition['status'] && $needs = $needs->where('needs.status', $condition['status']);
+        if($condition['status']){
+            if($condition['status']==5) {
+                $needs = $needs->whereIn('needs.status', [2,5]);
+            }else{
+                $needs = $needs->where('needs.status', $condition['status']);
+            }
+        }
         $order = [
             null,
             'needs.id',

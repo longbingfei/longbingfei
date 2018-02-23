@@ -12,7 +12,7 @@
                         <h2>需求状态</h2>
                         @if($data->status == 1)
                             <img src="/asset/web/image/flow_1.jpg">
-                        @elseif($data->status == 5)
+                        @elseif($data->status == 2 || $data->status == 5)
                             <img src="/asset/web/image/flow_2.jpg">
                         @elseif($data->status == 3 || $data->status == -2)
                             <img src="/asset/web/image/flow_3.jpg">
@@ -22,7 +22,7 @@
                         <h1>{{$data->title}}
                             @if($data->status == 1)
                                 @if(!session('id') || !in_array(session('id'),$data->companys_user))
-                                    <small class="join">我要报名</small>
+                                    <small class="join">我要报名</small><small style="font-size: 13px">(报名后可查看联系方式)</small>
                                 @else
                                     <small class="has-join">已报名</small>
                                 @endif

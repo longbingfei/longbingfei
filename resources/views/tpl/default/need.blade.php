@@ -85,9 +85,9 @@
                                 <div class="col-lg-11 col-sm-10 col-md-10 col-xs-12">
                                     <a class="bg-blue sb" href="javascript:;" data-s="status" data-v="0">不限</a>
                                     <a href="javascript:;" class="sb" data-s="status" data-v="1">报名中</a>
-                                    <a href="javascript:;" class="sb" data-s="status" data-v="2">线下对接中</a>
-                                    <a href="javascript:;" class="sb" data-s="status" data-v="3">已结束</a>
-                                    <a href="javascript:;" class="sb" data-s="status" data-v="4">流标</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="5">线下对接中</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="3">已完成</a>
+                                    <a href="javascript:;" class="sb" data-s="status" data-v="-2">流标</a>
                                 </div>
                             </div>
                         </div>
