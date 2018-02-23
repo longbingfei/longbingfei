@@ -166,9 +166,8 @@
                                                 <a class="lock_need" href="javascript:;" _href="/lock_need/{{$vo->id}}">锁标</a> |
                                             @elseif(in_array($vo->status,[-1,0]))
                                                 <a href="/update_need/{{$vo->id}}" target="_blank">修改</a> |
-                                            @elseif($vo->status==2)
+                                            @elseif($vo->status==5)
                                                 <a class="throw_need" href="javascript:;" _href="/throw_need/{{$vo->id}}">流标</a> |
-                                                <a class="need_over" href="javascript:;" _href="/over_need/{{$vo->id}}">完成需求</a>|
                                             @endif
                                                 <a class="need_delete_a" href="javascript:;" _href="/delete_need/{{$vo->id}}">删除</a>
                                         </td>
