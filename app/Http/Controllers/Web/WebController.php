@@ -174,7 +174,16 @@ class WebController extends Controller
             $self_company = CompanyModel::where('user_id', session('id'))->first();
         }
         $data->self_company = isset($self_company) ? $self_company->id : 0;
-        return view('tpl.default.need_detail', ['data' => $data]);
+        $neesStatusShow = [
+            '0' => '待审核',
+            '1' => '招标中',
+            '2' => '线下对接中',
+            '3' => '已完成',
+            '5' => '已锁标',
+            '-1' => '审核未通过',
+            '-2' => '已流标',
+        ];
+        return view('tpl.default.need_detail', ['data' => $data, 'neesStatusShow' => $neesStatusShow]);
     }
 
     public function needForm()
@@ -339,6 +348,38 @@ class WebController extends Controller
                 $return = ['code' => 0, 'msg' => '相关报名信息已删除!'];
             } catch (\Exception $e) {
                 $return = ['code' => -1, 'msg' => '删除失败!'];
+            }
+        }
+        return json_encode($return);
+    }
+
+    public function lockNeed($id)
+    {
+        $need = Need::where(['id' => $id])->first();
+        if (!Auth::check() || !$need || !in_array($need->user_id, [1, session('id')])) {
+            $return = ['code' => -1, 'msg' => '当前用户认证失败!'];
+        } else {
+            try {
+                Need::where(['id' => $id])->update(['status' => 5]);
+                $return = ['code' => 0, 'msg' => '锁标成功!'];
+            } catch (\Exception $e) {
+                $return = ['code' => -1, 'msg' => '锁标失败!'];
+            }
+        }
+        return json_encode($return);
+    }
+
+    public function throwNeed($id)
+    {
+        $need = Need::where(['id' => $id])->first();
+        if (!Auth::check() || !$need || !in_array($need->user_id, [1, session('id')])) {
+            $return = ['code' => -1, 'msg' => '当前用户认证失败!'];
+        } else {
+            try {
+                Need::where(['id' => $id])->update(['status' => -2]);
+                $return = ['code' => 0, 'msg' => '流标成功!'];
+            } catch (\Exception $e) {
+                $return = ['code' => -1, 'msg' => '流标失败!'];
             }
         }
         return json_encode($return);
@@ -816,7 +857,9 @@ class WebController extends Controller
             '1' => '招标中',
             '2' => '线下对接中',
             '3' => '已完成',
+            '5' => '已锁标',
             '-1' => '审核未通过',
+            '-2' => '已流标',
         ];
         $pStatus = [
             '0' => '待审核',

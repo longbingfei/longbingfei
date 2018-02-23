@@ -888,6 +888,24 @@ $('.prd_delete_a').click(function () {
         }
     });
 });
+$('.lock_need').click(function(){
+    var url = $(this).attr('_href');
+    return $.Confirm({
+        message: '确认锁标吗?锁标后厂家将无法报名！', callback: function () {
+            $.getJSON(url, function (data) {
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg});
+                } else {
+                    $.Confirm({
+                        message: '需求已锁定!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
 
 $('.choose_need').click(function(){
     var cid = $(this).data('cid'),
@@ -919,6 +937,25 @@ $('.need_over').click(function(){
                 } else {
                     $.Confirm({
                         message: '需求已完成!', callback: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
+
+$('.throw_need').click(function(){
+    var url = $(this).attr('_href');
+    return $.Confirm({
+        message: '确认流标吗?', callback: function () {
+            $.getJSON(url, function (data) {
+                if (!data || data.code !== 0) {
+                    return $.Confirm({message: data.msg});
+                } else {
+                    $.Confirm({
+                        message: '需求已流标!', callback: function () {
                             location.reload();
                         }
                     });

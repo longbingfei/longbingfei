@@ -161,13 +161,16 @@
                                         <td>{{$vo->baomingshu}}</td>
                                         <td>{{$vo->created_at}}</td>
                                         <td>{{$vo->updated_at}}</td>
-                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a>
-                                            @if($vo->status<=1)
-                                                | <a href="/update_need/{{$vo->id}}" target="_blank">修改</a> |
-                                            <a class="need_delete_a" href="javascript:;" _href="/delete_need/{{$vo->id}}">删除</a>
+                                        <td><a href="/need/{{$vo->id}}" target="_blank">查看</a> |
+                                            @if($vo->status == 1)
+                                                <a class="lock_need" href="javascript:;" _href="/lock_need/{{$vo->id}}">锁标</a> |
+                                            @elseif(in_array($vo->status,[-1,0]))
+                                                <a href="/update_need/{{$vo->id}}" target="_blank">修改</a> |
                                             @elseif($vo->status==2)
-                                                <a class="need_over" href="javascript:;" _href="/over_need/{{$vo->id}}">完成需求</a>
+                                                <a class="throw_need" href="javascript:;" _href="/throw_need/{{$vo->id}}">流标</a> |
+                                                <a class="need_over" href="javascript:;" _href="/over_need/{{$vo->id}}">完成需求</a>|
                                             @endif
+                                                <a class="need_delete_a" href="javascript:;" _href="/delete_need/{{$vo->id}}">删除</a>
                                         </td>
                                     </tr>
                                 @endforeach

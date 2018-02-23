@@ -14,6 +14,8 @@ Route::group(['namespace' => 'Web'], function () {
     Route::post('/create_need', 'WebController@createNeed');
     Route::get('/choose_need/{nid}', 'WebController@chooseNeed');
     Route::get('/over_need/{nid}', 'WebController@overNeed');
+    Route::get('/lock_need/{nid}', 'WebController@lockNeed');
+    Route::get('/throw_need/{nid}', 'WebController@throwNeed');
 
     //企业
     Route::get('/establish', 'WebController@companyForm');

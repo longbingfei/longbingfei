@@ -12,9 +12,9 @@
                         <h2>需求状态</h2>
                         @if($data->status == 1)
                             <img src="/asset/web/image/flow_1.jpg">
-                        @elseif($data->status == 2)
+                        @elseif($data->status == 5)
                             <img src="/asset/web/image/flow_2.jpg">
-                        @elseif($data->status == 3)
+                        @elseif($data->status == 3 || $data->status == -2)
                             <img src="/asset/web/image/flow_3.jpg">
                         @endif
                     </div>
@@ -52,7 +52,7 @@
                             <td>发布时间:</td>
                             <td>{{Date('Y-m-d',strtotime($data->created_at))}}</td>
                             <td>状态:</td>
-                            <td>{{$data->status == 1 ?'报名中':($data->status == 2 ? '线下对接中':'已完成')}}</td>
+                            <td>{{$neesStatusShow[$data->status]}}</td>
                         </tr>
                     </table>
                     <div class="z7">
@@ -109,7 +109,7 @@
                                                     <a href="/company/{{$vo->id}}">公司详情</a>
                                                 </div>
                                             </div>
-                                            @if($data->status == 1 && in_array(session('id'),[1,$data->user_id]))
+                                            @if($data->status == 5 && in_array(session('id'),[1,$data->user_id]))
                                             <div class="col-lg-1 col-sm-4" style="height:30px;line-height: 30px;text-align: center;margin-top: 35px;font-size: 16px">
                                                     <a href="javascript:;" class="choose_need" data-cid="{{$vo->id}}" data-nid="{{$data->id}}">选择</a>
                                             </div>
