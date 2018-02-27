@@ -74,7 +74,7 @@
                 <div class="col-sm-12 col-left">
                     <h2>商品描述</h2>
                     <div style=" border:1px solid grey;padding:10px;">
-                        {!! $data->describe !!}
+                        {!! urldecode($data->describe) !!}
                     </div>
                 </div>
             </div>

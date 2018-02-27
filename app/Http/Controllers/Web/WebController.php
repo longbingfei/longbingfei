@@ -774,18 +774,16 @@ class WebController extends Controller
         $area = explode(',', $data->area_ids);
         $city = CityModel::where(['id' => array_pop($area)])->first(); //最下级
         $provs_2 = $provs_3 = $data->up_sort_id = [];
-        if (!$city->level || $city->level == 1) {
+        if (!$city || !$city->level || $city->level == 1) {
             $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
-            $city->level == 1 && $provs_2 = CityModel::where(['pid' => $city->id])->get()->toArray();
-            $city->level == 1 && $data->up_sort_id = [$city->id];
-        }
-        if ($city->level == 2) {
+            $city && $city->level == 1 && $provs_2 = CityModel::where(['pid' => $city->id])->get()->toArray();
+            $city && $city->level == 1 && $data->up_sort_id = [$city->id];
+        }elseif ($city->level == 2) {
             $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
             $provs_2 = CityModel::where(['pid' => $city->pid])->get()->toArray();
             $provs_3 = CityModel::where(['pid' => $city->id])->get()->toArray();
             $data->up_sort_id = [CityModel::where(['pid' => $city->pid])->first()->pid, $city->id];
-        }
-        if ($city->level == 3) {
+        }elseif ($city->level == 3) {
             $provs_1 = CityModel::where(['pid' => 1])->get()->toArray();
             $provs_2 = CityModel::where(['pid' => CityModel::where(['id' => $city->pid])->first()->pid])->get()->toArray();
             $provs_3 = CityModel::where(['pid' => $city->pid])->get()->toArray();

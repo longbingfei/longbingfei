@@ -161,6 +161,6 @@
         cid = '{{$company->id}}'| 0,
         um = UM.getEditor('describe'),
         content = '{!!  $company->describe ? : '' !!}';
-        um.setContent(content);
+        um.setContent(decodeURIComponent(content));
 </script>
 @include('tpl.default.footer')

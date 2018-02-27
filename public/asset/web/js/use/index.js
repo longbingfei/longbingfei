@@ -175,7 +175,7 @@ $(function () {
         $.ajax({
             url: '/establish',
             type: 'post',
-            data: $('#companyForm').serialize() + '&describe=' + um.getContent(),
+            data: $('#companyForm').serialize() + '&describe=' + encodeURIComponent(um.getContent()),
             success: function (data) {
                 data = JSON.parse(data);
                 if (!data || data.code !== 0) {
@@ -193,7 +193,7 @@ $(function () {
         $.ajax({
             url: '/update_company/'+cid,
             type: 'post',
-            data: $('#companyUpdateform').serialize() + '&describe=' + um.getContent(),
+            data: $('#companyUpdateform').serialize() + '&describe=' + encodeURIComponent(um.getContent()),
             success: function (data) {
                 data = JSON.parse(data);
                 if (!data || data.code !== 0) {
@@ -212,7 +212,7 @@ $(function () {
         $.ajax({
             url: '/prd',
             type: 'post',
-            data: $('#productForm').serialize() + '&describe=' + um.getContent(),
+            data: $('#productForm').serialize() + '&describe=' + encodeURIComponent(um.getContent()),
             success: function (data) {
                 data = JSON.parse(data);
                 if (!data || data.code !== 0) {
@@ -231,7 +231,7 @@ $(function () {
         $.ajax({
             url: '/update_prd/' + pid,
             type: 'post',
-            data: $('#productChangeForm').serialize()+'&describe='+um.getContent(),
+            data: $('#productChangeForm').serialize()+'&describe='+ encodeURIComponent(um.getContent()),
             success: function (data) {
                 data = JSON.parse(data);
                 if (!data || data.code !== 0) {
@@ -638,7 +638,7 @@ $('.admin_change_news_status').click(function () {
 //news_add
 $('.news_add_submit').click(function () {
     var title = $('.title1').val(),
-        content = um1.getContent();
+        content = encodeURIComponent(um1.getContent());
     $.ajax({
         url: '/admin_news',
         type: 'post',
@@ -660,11 +660,11 @@ $('.admin_news_edit').click(function () {
     var id = $(this).data('id');
     $.getJSON('/news/' + id + '?is_ajax=1', function (data) {
         $('.title2').val(data.title);
-        um2.setContent(data.content);
+        um2.setContent(decodeURIComponent(data.content));
         $('#update_news').modal('show')
         $('.news_update_submit').click(function () {
             var title = $('.title2').val(),
-                content = um2.getContent();
+                content = encodeURIComponent(um2.getContent());
             $.ajax({
                 url: '/admin_news/' + id,
                 type: 'post',

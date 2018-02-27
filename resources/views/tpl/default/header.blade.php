@@ -174,7 +174,7 @@
                                                             <img width="300px" src="{{$vo['cover']}}"></a>
                                                     </div>
                                                     <p style="overflow: hidden">
-                                                        <a href="/news/{{$vo['id']}}">{!! $vo['content'] !!}</a>
+                                                        <a href="/news/{{$vo['id']}}">{!! urldecode($vo['content']) !!}</a>
                                                     </p>
                                                 </div>
                                             </li>

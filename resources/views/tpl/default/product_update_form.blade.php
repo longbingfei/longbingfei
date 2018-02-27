@@ -120,6 +120,6 @@
         pid = '{{$detail->id}}'|0,
         um = UM.getEditor('describe'),
         content = '{!!  $detail->describe ?: '' !!}';
-    um.setContent(content);
+    um.setContent(decodeURIComponent(content));
 </script>
 @include('tpl.default.footer')

@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="clearfix ">
                                     <div class="col-md-12 col-xs-2">
-                                        {!! $data->describe !!}
+                                        {!! urldecode($data->describe) !!}
                                     </div>
                                     <div class="space"></div>
                                 </div>
